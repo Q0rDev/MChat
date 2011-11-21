@@ -20,6 +20,16 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 		this.plugin = plugin;
 	}
 
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+
+        if (event.getMessage().contains("/mafk"))
+            return;
+
+		if (plugin.isAFK.get(player.getName()))
+            player.performCommand("mafk");
+    }
+
 	public void onPlayerChat(PlayerChatEvent event) {
 		if (event.isCancelled())
             return;
@@ -55,19 +65,24 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         } else
             player.setPlayerListName(plugin.mAPI.ParsePlayerList(player));
 
-		if (plugin.isConv.get(pName) == null)
-            return;
+        // PMChat
+        if (plugin.mChatPB) {
+		    if (plugin.isConv.get(pName) == null)
+                plugin.isConv.put(pName, false);
 
-		if (plugin.isConv.get(pName)) {
-			Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-			recipient.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
-			player.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
-			plugin.mAPI.log(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
-			event.setCancelled(true);
-		}
+		    if (plugin.isConv.get(pName)) {
+			    Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
+			    recipient.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
+			    player.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
+			    plugin.mAPI.log(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
+			    event.setCancelled(true);
+		    }
+        }
 
-		if (plugin.isAFK.get(player.getName()))
-            player.performCommand("mafk");
+        // MChatEssentials
+        if (plugin.mChatEB)
+		    if (plugin.isAFK.get(player.getName()))
+                player.performCommand("mafk");
 
 		if (plugin.spoutB) {
 			SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.mAPI.addColour(msg) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
@@ -94,9 +109,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 		if (msg == null)
             return;
 
-        plugin.chatt.put(player.getName(), false);
-		plugin.isAFK.put(player.getName(), false);
-        plugin.lastMove.put(player.getName(), new Date().getTime());
+        if (plugin.mChatEB) {
+            plugin.chatt.put(player.getName(), false);
+		    plugin.isAFK.put(player.getName(), false);
+            plugin.lastMove.put(player.getName(), new Date().getTime());
+        }
 
         // For Lazy People
         if (plugin.useAddDefault)
@@ -118,7 +135,8 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 		if (plugin.spoutB)
 			SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
 
-        event.setJoinMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Join"));
+        if (plugin.formatEvents)
+            event.setJoinMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Join"));
     }
 
 	public void onPlayerKick(PlayerKickEvent event) {

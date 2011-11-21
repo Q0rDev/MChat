@@ -38,10 +38,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Ping {
-    private static final File configFile = new File("plugins/mChat/stats.yml");
-    private static final String logFile = "plugins/mChat/statsLog.txt";
-    private static final YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    private static Logger logger = null;
+    static final File configFile = new File("plugins/mChat/stats.yml");
+    static final String logFile = "plugins/mChat/statsLog/log.txt";
+    static final YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+    static Logger logger = null;
 
     public static void init(Plugin plugin) {
         if (configExists(plugin) && logExists() && !config.getBoolean("opt-out")) {
@@ -50,7 +50,7 @@ public class Ping {
         }
     }
 
-    private static Boolean configExists(Plugin plugin) {
+    static Boolean configExists(Plugin plugin) {
         config.addDefault("opt-out", false);
         config.addDefault("guid", UUID.randomUUID().toString());
         if (!configFile.exists() || config.get("hash", null) == null) {
@@ -66,7 +66,7 @@ public class Ping {
         return true;
     }
 
-    private static Boolean logExists() {
+    static Boolean logExists() {
         try {
             FileHandler handler = new FileHandler(logFile, true);
             logger = Logger.getLogger("com.randomappdev");
@@ -81,9 +81,9 @@ public class Ping {
 }
 
 class Pinger implements Runnable {
-    private Plugin plugin;
-    private String guid;
-    private Logger logger;
+    Plugin plugin;
+    String guid;
+    Logger logger;
 
     public Pinger(Plugin plugin, String guid, Logger theLogger) {
         this.plugin = plugin;
@@ -95,7 +95,7 @@ class Pinger implements Runnable {
         pingServer();
     }
 
-    private void pingServer() {
+    void pingServer() {
         String authors = "";
 
         try {
