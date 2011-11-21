@@ -32,7 +32,8 @@ public class MConfigListener {
         plugin.chatFormat = config.getString("format.chat", plugin.chatFormat);
         plugin.nameFormat = config.getString("format.name", plugin.nameFormat);
         plugin.eventFormat = config.getString("format.event", plugin.eventFormat);
-        plugin.listFormat = config.getString("format.list", plugin.listFormat);
+        plugin.tabbedListFormat = config.getString("format.tabbedList", plugin.tabbedListFormat);
+        plugin.listCmdFormat = config.getString("format.listCmd", plugin.listCmdFormat);
         plugin.joinMessage = config.getString("message.join", plugin.joinMessage);
         plugin.leaveMessage = config.getString("message.leave", plugin.leaveMessage);
         plugin.kickMessage = config.getString("message.kick", plugin.kickMessage);
@@ -97,7 +98,8 @@ public class MConfigListener {
         config.set("format.chat", plugin.chatFormat);
         config.set("format.name", plugin.nameFormat);
         config.set("format.event", plugin.eventFormat);
-        config.set("format.list", plugin.listFormat);
+        config.set("format.tabbedList", plugin.tabbedListFormat);
+        config.set("format.listCmd", plugin.listCmdFormat);
         config.set("message.join", plugin.joinMessage);
         config.set("message.leave", plugin.leaveMessage);
         config.set("message.kick", plugin.kickMessage);
@@ -170,12 +172,14 @@ public class MConfigListener {
         editOption(config, "mchat-info-only", "info.useNewInfo");
         editOption(config, "mchat-oldNodes-only", "info.useOldNodes");
         editOption(config, "mchat-add-info-players", "info.addNewPlayers");
+        editOption(config, "format.list", "format.tabbedList");
 
         checkOption(config, "format.date", plugin.dateFormat);
         checkOption(config, "format.chat", plugin.chatFormat);
         checkOption(config, "format.name", plugin.nameFormat);
         checkOption(config, "format.event", plugin.eventFormat);
-        checkOption(config, "format.list", plugin.listFormat);
+        checkOption(config, "format.tabbedList", plugin.tabbedListFormat);
+        checkOption(config, "format.listCmd", plugin.listCmdFormat);
         checkOption(config, "message.join", plugin.joinMessage);
         checkOption(config, "message.leave", plugin.leaveMessage);
         checkOption(config, "message.kick", plugin.kickMessage);

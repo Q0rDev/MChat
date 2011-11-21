@@ -137,7 +137,8 @@ public class mChatSuite extends JavaPlugin {
 
     // Formatting
     String varIndicator = "+";
-    String listFormat = "+p+dn+s";
+    String tabbedListFormat = "+p+dn+s";
+    String listCmdFormat = "+p+dn+s";
     String chatFormat = "+p+dn+s&f: +m";
     String nameFormat = "+p+dn+s&e";
     String eventFormat = "+p+dn+s&e";

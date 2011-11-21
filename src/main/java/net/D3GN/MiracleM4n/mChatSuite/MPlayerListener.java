@@ -58,12 +58,12 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             }
 
         // For Cruxsky
-        if (plugin.mAPI.ParsePlayerList(player).length() > 15) {
-                String pLName = plugin.mAPI.ParsePlayerList(player);
+        if (plugin.mAPI.ParseTabbedList(player).length() > 15) {
+                String pLName = plugin.mAPI.ParseTabbedList(player);
                 pLName = pLName.substring(0, 16);
                 player.setPlayerListName(pLName);
         } else
-            player.setPlayerListName(plugin.mAPI.ParsePlayerList(player));
+            player.setPlayerListName(plugin.mAPI.ParseTabbedList(player));
 
         // PMChat
         if (plugin.mChatPB) {
@@ -123,12 +123,12 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 // For Cruxsky
-                if (plugin.mAPI.ParsePlayerList(player).length() > 15) {
-                        String pLName = plugin.mAPI.ParsePlayerList(player);
+                if (plugin.mAPI.ParseTabbedList(player).length() > 15) {
+                        String pLName = plugin.mAPI.ParseTabbedList(player);
                         pLName = pLName.substring(0, 16);
                         player.setPlayerListName(pLName);
                 } else
-                    player.setPlayerListName(plugin.mAPI.ParsePlayerList(player));
+                    player.setPlayerListName(plugin.mAPI.ParseTabbedList(player));
             }
         }, 20L);
 

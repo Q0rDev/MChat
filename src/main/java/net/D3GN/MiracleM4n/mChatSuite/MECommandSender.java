@@ -19,26 +19,6 @@ public class MECommandSender implements CommandExecutor {
 
 	public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
 		String commandName = command.getName();
-		if (commandName.equalsIgnoreCase("mchatessentials")) {
-			if (args.length == 1) {
-				if(args[0].equalsIgnoreCase("reload")) {
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						if (!plugin.mAPI.checkPermissions(player, "mchat.reload")) {
-                            sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + " reload."));
-							return true;
-                        }
-                    }
-
-                    plugin.reloadConfigs();
-				    plugin.setupConfigs();
-					sender.sendMessage(formatMessage(plugin.lListener.cReload));
-					return true;
-				}
-			}
-
-			return false;
-		}
 		if (commandName.equalsIgnoreCase("mchatme")) {
             if (args.length > 0) {
                 String message = "";
@@ -116,18 +96,19 @@ public class MECommandSender implements CommandExecutor {
 						}
 
 						SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					}
+					} else
+                        plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.nAFK);
 
 					player.setSleepingIgnored(false);
 					plugin.isAFK.put(player.getName(), false);
 
                     if (plugin.useAFKList)
-                        if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParsePlayerList(player)).length() > 15) {
-                                String pLName = "[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParsePlayerList(player);
+                        if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(player)).length() > 15) {
+                                String pLName = "[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(player);
                                 pLName = pLName.substring(0, 16);
                                 player.setPlayerListName(pLName);
                         } else
-                            player.setPlayerListName("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParsePlayerList(player));
+                            player.setPlayerListName("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(player));
 
                     return true;
 				} else {
@@ -143,19 +124,20 @@ public class MECommandSender implements CommandExecutor {
 						}
 
 						SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					}
+					} else
+                        plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.iAFK + " [" + message + " ]");
 
 					player.setSleepingIgnored(true);
 					plugin.isAFK.put(player.getName(), true);
 					plugin.AFKLoc.put(player.getName(), player.getLocation());
 
                     if (plugin.useAFKList)
-                        if (plugin.mAPI.ParsePlayerList(player).length() > 15) {
-                                String pLName = plugin.mAPI.ParsePlayerList(player);
+                        if (plugin.mAPI.ParseTabbedList(player).length() > 15) {
+                                String pLName = plugin.mAPI.ParseTabbedList(player);
                                 pLName = pLName.substring(0, 16);
                                 player.setPlayerListName(pLName);
                         } else
-                            player.setPlayerListName(plugin.mAPI.ParsePlayerList(player));
+                            player.setPlayerListName(plugin.mAPI.ParseTabbedList(player));
 
 					return true;
 				}
@@ -190,7 +172,7 @@ public class MECommandSender implements CommandExecutor {
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
             String iVar = plugin.mAPI.getInfo(players, plugin.listVar);
-            String mName = plugin.mAPI.ParsePlayerName(players.getName());
+            String mName = plugin.mAPI.ParseListCmd(players.getName());
 
             if (iVar.isEmpty())
                 continue;

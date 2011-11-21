@@ -257,8 +257,12 @@ public class mChatAPI {
         return ParseChatMessage(player.getName(), "", plugin.eventFormat);
     }
 
-    public String ParsePlayerList(Player player) {
-        return ParseChatMessage(player.getName(), "", plugin.listFormat).replaceAll("(§([a-z0-9]))", "");
+    public String ParseTabbedList(Player player) {
+        return ParseChatMessage(player.getName(), "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
+    }
+
+    public String ParseListCmd(Player player) {
+        return ParseChatMessage(player.getName(), "", plugin.listCmdFormat);
     }
 
     public String ParseChatMessage(String pName, String msg) {
@@ -276,8 +280,12 @@ public class mChatAPI {
         return ParseChatMessage(pName, "", plugin.eventFormat);
     }
 
-    public String ParsePlayerList(String pName) {
-        return ParseChatMessage(pName, "", plugin.listFormat).replaceAll("(§([a-z0-9]))", "");
+    public String ParseTabbedList(String pName) {
+        return ParseChatMessage(pName, "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
+    }
+
+    public String ParseListCmd(String pName) {
+        return ParseChatMessage(pName, "", plugin.listCmdFormat);
     }
 
     public String getGroupName(String group) {
