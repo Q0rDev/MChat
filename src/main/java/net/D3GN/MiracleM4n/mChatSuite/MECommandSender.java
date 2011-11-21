@@ -120,7 +120,16 @@ public class MECommandSender implements CommandExecutor {
 
 					player.setSleepingIgnored(false);
 					plugin.isAFK.put(player.getName(), false);
-					return true;
+
+                    if (plugin.useAFKList)
+                        if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParsePlayerList(player)).length() > 15) {
+                                String pLName = "[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParsePlayerList(player);
+                                pLName = pLName.substring(0, 16);
+                                player.setPlayerListName(pLName);
+                        } else
+                            player.setPlayerListName("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParsePlayerList(player));
+
+                    return true;
 				} else {
 					if (plugin.spoutB) {
 						if (plugin.spoutEnabled) {
@@ -139,6 +148,15 @@ public class MECommandSender implements CommandExecutor {
 					player.setSleepingIgnored(true);
 					plugin.isAFK.put(player.getName(), true);
 					plugin.AFKLoc.put(player.getName(), player.getLocation());
+
+                    if (plugin.useAFKList)
+                        if (plugin.mAPI.ParsePlayerList(player).length() > 15) {
+                                String pLName = plugin.mAPI.ParsePlayerList(player);
+                                pLName = pLName.substring(0, 16);
+                                player.setPlayerListName(pLName);
+                        } else
+                            player.setPlayerListName(plugin.mAPI.ParsePlayerList(player));
+
 					return true;
 				}
 			} else {

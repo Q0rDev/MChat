@@ -340,6 +340,10 @@ public class mChatAPI {
         return getRawInfo(player, "group");
     }
 
+    public String getRawSubGroup(Player player, Integer groupVal) {
+        return getRawInfo(player, "group" + groupVal);
+    }
+
     public String getInfo(Player player, String info) {
         return addColour(getRawInfo(player, info));
     }
@@ -546,8 +550,9 @@ public class mChatAPI {
      * GroupManager Stuff
      */
     String getGroupManagerInfo(Player player, String info) {
+        //if (info.substring(0, 4).equals("group"))
         if (info.equals("group"))
-            return getGroupManagerGroup(player);
+            return getGroupManagerGroups(player, info);
 
         String pName = player.getName();
         String group = plugin.gmPermissions.getGroup(pName);
@@ -562,9 +567,16 @@ public class mChatAPI {
         return plugin.gmPermissions.getGroupPermissionString(group, info);
     }
 
-    String getGroupManagerGroup(Player player) {
+    String getGroupManagerGroups(Player player, String info) {
         String pName = player.getName();
-        String group = plugin.gmPermissions.getGroup(pName);
+        //Integer groupVal;
+        String group;
+
+        //try {
+            //group = plugin.gmPermissions.getGroups(pName)[new Integer(info.charAt(5))];
+        //} catch (NumberFormatException ignored) {
+            group = plugin.gmPermissions.getGroup(pName);
+        //}
 
         if (group == null)
             return "";

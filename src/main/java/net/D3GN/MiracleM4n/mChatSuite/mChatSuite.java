@@ -173,6 +173,7 @@ public class mChatSuite extends JavaPlugin {
     Boolean spoutB = false;
     Boolean mAFKHQ = true;
     Boolean mChatEB = true;
+    Boolean useAFKList = false;
     Boolean mChatPB = true;
     Boolean spoutPM = false;
 
@@ -475,40 +476,42 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void setupTasks() {
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-            public void run() {
-                cListener.load();
+        if (AFKTimer > 0)
+            getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+                public void run() {
+                    cListener.load();
 
-                for (Player player : getServer().getOnlinePlayers()) {
-                    if (mAPI.checkPermissions(player, "mchat.afk.bypass"))
-                        continue;
+                    for (Player player : getServer().getOnlinePlayers()) {
+                        if (mAPI.checkPermissions(player, "mchat.afk.bypass"))
+                            continue;
 
-                    if (isAFK.get(player.getName()))
-                        continue;
+                        if (isAFK.get(player.getName()))
+                            continue;
 
-                    if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
-                        player.performCommand("mafk AutoAfk");
-                    } else
-                        isAFK.put(player.getName(), false);
+                        if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
+                            player.performCommand("mafk AutoAfk");
+                        } else
+                            isAFK.put(player.getName(), false);
+                    }
                 }
-            }
-        }, 20L * 5, 20L * 5);
+            }, 20L * 5, 20L * 5);
 
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-            public void run() {
-                cListener.load();
+        if (AFKKickTimer > 0)
+            getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+                public void run() {
+                    cListener.load();
 
-                for (Player player : getServer().getOnlinePlayers()) {
-                    if (mAPI.checkPermissions(player, "mchat.afkkick.bypass"))
-                        continue;
+                    for (Player player : getServer().getOnlinePlayers()) {
+                        if (mAPI.checkPermissions(player, "mchat.afkkick.bypass"))
+                            continue;
 
-                    if (!isAFK.get(player.getName()))
-                        continue;
+                        if (!isAFK.get(player.getName()))
+                            continue;
 
-                    if (new Date().getTime() - (AFKKickTimer * 1000) > lastMove.get(player.getName()))
-                        player.kickPlayer("mAFK Kick");
+                        if (new Date().getTime() - (AFKKickTimer * 1000) > lastMove.get(player.getName()))
+                            player.kickPlayer("mAFK Kick");
+                    }
                 }
-            }
-        }, 20L * 10, 20L * 10);
+            }, 20L * 10, 20L * 10);
     }
 }

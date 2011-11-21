@@ -188,7 +188,7 @@ public class MEntityListener extends EntityListener {
         else if (dMsg.contains("blew up")) 
             return deathMessage(pName, pCause, plugin.deathExplosion);
 
-        else if (dMsg.contains("was killed by magic")) 
+        else if (dMsg.contains("was killed by"))
             return deathMessage(pName, pCause, plugin.deathMagic);
 
         else if (dMsg.contains("was slain by")) 

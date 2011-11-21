@@ -66,6 +66,7 @@ public class MConfigListener {
         plugin.mIDefaultGroup = config.getString("info.defaultGroup", plugin.mIDefaultGroup);
 
         plugin.mChatEB = config.getBoolean("mchate.enable", plugin.mChatEB);
+        plugin.useAFKList = config.getBoolean("mchate.useAFKList", plugin.useAFKList);
         plugin.healthNotify = config.getBoolean("mchate.eHealthNotify", plugin.healthNotify);
         plugin.healthAchievement = config.getBoolean("mchate.eHealthAchievement", plugin.healthAchievement);
         plugin.mAFKHQ = config.getBoolean("mchate.eHQAFK", plugin.mAFKHQ);
@@ -137,6 +138,7 @@ public class MConfigListener {
         config.set("mchate.listVar", plugin.listVar);
         config.set("mchate.AFKTimer", plugin.AFKTimer);
         config.set("mchate.AFKKickTimer", plugin.AFKKickTimer);
+        config.set("mchate.useAFKList", plugin.useAFKList);
 
         config.set("pmchat.enable", plugin.spoutPM);
         config.set("pmchat.spoutPM", plugin.spoutPM);
@@ -214,6 +216,7 @@ public class MConfigListener {
         checkOption(config, "mchate.listVar", plugin.listVar);
         checkOption(config, "mchate.AFKTimer", plugin.AFKTimer);
         checkOption(config, "mchate.AFKKickTimer", plugin.AFKKickTimer);
+        checkOption(config, "mchate.useAFKList", plugin.useAFKList);
 
         checkOption(config, "pmchat.enable", plugin.mChatPB);
         checkOption(config, "pmchat.spoutPM", plugin.spoutPM);
