@@ -1,0 +1,216 @@
+name: mChatSuite
+main: net.D3GN.MiracleM4n.mChatSuite.mChatSuite
+version: 1.0.1
+author: MiracleM4n
+website: http://d3gn.net/
+thread: http://forums.bukkit.org/threads/22958/
+softdepend: [Permissions, GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
+description: Full mChat Suite
+commands:
+    mchat:
+        description:
+        usage: |
+            [mChat] Help Screen
+            - /<command> = See This Info.
+            - /<command> reload config = Reload Config.
+            - /<command> reload info = Reload Info.
+            - /<command> reload censor = Reload Info.
+            - /<command> reload all = Reload All Configs.
+            - /<command> user = Show Info User Help.
+            - /<command> group = Show Info Group Help.
+    mchatme:
+        description:
+        usage: |
+            /<command> *Message*
+            Example: /<command> - See this info.
+            Example: /<command> *Message* - Displays message.
+        aliases: [me]
+    mchatwho:
+        description:
+        usage: |
+            /<command> *PLAYER*
+            Example: /<command> - See this info.
+            Example: /<command> *PLAYER* - Displays info about player.
+        aliases: [who, mwho]
+    mchatlist:
+        description:
+        usage: |
+            /<command> *PLAYER*
+            Example: /<command> - See this info.
+            Example: /<command> *PLAYER* - Displays info about player.
+        aliases: [list, mlist, online, monline, playerlist]
+    mchatafk:
+        description:
+        usage: |
+            /<command>
+            Example: /<command> - Displays you as AFK.
+        aliases: [afk, mafk, maway, away]
+    pmchat:
+        usage: |
+            /<command> {player} *Message* - Sends PM to player.
+        aliases: [pm, msg, message, m]
+    pmchatreply:
+        usage: |
+            /<command> *Message* - Sends Reply to a players PM.
+        aliases: [pmchatr, pmreply, pmr, preply, reply, r]
+    pmchatinvite:
+        usage: |
+            /<command> {player} - Sends a private Convo invitation to player.
+        aliases: [pmchati, pminvite, pmi, pinvite, invite]
+    pmchataccept:
+        usage: |
+            /<command> - Accept pending Convo.
+        aliases: [pmchata, pmaccept, pma, paccept, accept]
+    pmchatdeny:
+        usage: |
+            /<command> - Deny pending Convo.
+        aliases: [pmchatd, pmdeny, pmd, pdeny, deny]
+    pmchatleave:
+        usage: |
+            /<command> - Ends convo.
+        aliases: [pmchatl, pmleave, pml, pleave, leave]
+permissions:
+    mchat.*:
+        description: Allows full use of mChat.
+        children:
+            mchat.reload: true
+            mchat.user: true
+            mchat.group: true
+            mchat.coloredchat: true
+            mchat.censorbypass: true
+    mchat.reload:
+        description: Allow usage of /mchat reload '[config/info/censor/all]'
+        children:
+            mchat.reload.config: true
+            mchat.reload.info: true
+            mchat.reload.censor: true
+            mchat.reload.all: true
+    mchat.user:
+        description: Allows full use of all user info related mChat commands.
+        children:
+            mchat.user.add: true
+            mchat.user.edit: true
+            mchat.user.remove: true
+    mchat.group:
+        description: Allows full use of all group info related mChat commands.
+        children:
+            mchat.group.add: true
+            mchat.group.edit: true
+            mchat.group.remove: true
+    mchat.user.add:
+        description: Allows full use of all user info add mChat commands.
+        children:
+            mchat.user.add.player: true
+            mchat.user.add.ivar: true
+            mchat.user.add.world: true
+            mchat.user.add.wvar: true
+    mchat.user.edit:
+        description: Allows full use of all user info edit mChat commands.
+        children:
+            mchat.user.edit.name: true
+            mchat.user.edit.ivar: true
+            mchat.user.edit.ival: true
+            mchat.user.edit.group: true
+            mchat.user.edit.world: true
+            mchat.user.edit.wvar: true
+            mchat.user.edit.wval: true
+    mchat.user.remove:
+        description: Allows full use of all user info remove mChat commands.
+        children:
+            mchat.user.remove.player: true
+            mchat.user.remove.ivar: true
+            mchat.user.remove.world: true
+            mchat.user.remove.wvar: true
+    mchat.group.add:
+        description: Allows full use of all group info add mChat commands.
+        children:
+            mchat.group.add.group: true
+            mchat.group.add.ivar: true
+            mchat.group.add.world: true
+            mchat.group.add.wvar: true
+    mchat.group.edit:
+        description: Allows full use of all group info edit mChat commands.
+        children:
+            mchat.group.edit.name: true
+            mchat.group.edit.ivar: true
+            mchat.group.edit.ival: true
+            mchat.group.edit.world: true
+            mchat.group.edit.wvar: true
+            mchat.group.edit.wval: true
+    mchat.group.remove:
+        description: Allows full use of all group info remove mChat commands.
+        children:
+            mchat.group.remove.group: true
+            mchat.group.remove.ivar: true
+            mchat.group.remove.world: true
+            mchat.group.remove.wvar: true
+    mchat.reload.config:
+        description: Allow usage of /mchat reload config
+    mchat.reload.info:
+        description: Allow usage of /mchat reload info
+    mchat.reload.censor:
+        description: Allow usage of /mchat reload censor
+    mchat.reload.all:
+        description: Allow usage of /mchat reload all
+    mchat.coloredchat:
+        description: Allow colour in chat messages.
+    mchat.censorbypass:
+        description: Allow bypass of msg censoring.
+    mchat.user.add.player:
+        description: Allow usage of /mchat user add player Player
+    mchat.user.add.ivar:
+        description: Allow usage of /mchat user add ivar Player InfoVariable InfoValue
+    mchat.user.add.world:
+        description: Allow usage of /mchat user add world Player World
+    mchat.user.add.wvar:
+        description: Allow usage of /mchat user add world Player World InfoVariable InfoValue
+    mchat.user.edit.name:
+        description: Allow usage of /mchat user edit name Player NewName
+    mchat.user.edit.ivar:
+        description: Allow usage of /mchat user edit ivar Player OldInfoVariable NewInfoVariable
+    mchat.user.edit.ival:
+        description: Allow usage of /mchat user edit ival Player InfoVariable NewValue
+    mchat.user.edit.group:
+        description: Allow usage of /mchat user edit group Player Group
+    mchat.user.edit.world:
+        description: Allow usage of /mchat user edit world Player OldWorld NewWorld
+    mchat.user.edit.wvar:
+        description: Allow usage of /mchat user edit wvar Player World OldInfoVariable NewInfoVariable
+    mchat.user.edit.wval:
+        description: Allow usage of /mchat user edit wval Player World InfoVariable NewValue
+    mchat.user.remove.player:
+        description: Allow usage of /mchat user remove Player
+    mchat.user.remove.ivar:
+        description: Allow usage of /mchat user remove Player InfoVariable
+    mchat.user.remove.world:
+        description: Allow usage of /mchat user remove Player World
+    mchat.user.remove.wvar:
+        description: Allow usage of /mchat user remove Player World InfoVariable
+    mchat.group.add.group:
+        description: Allow usage of /mchat group add group Group
+    mchat.group.add.ivar:
+        description: Allow usage of /mchat group add ivar Group InfoVariable InfoValue
+    mchat.group.add.world:
+        description: Allow usage of /mchat group add world Group World
+    mchat.group.add.wvar:
+        description: Allow usage of /mchat group add world Group World InfoVariable InfoValue
+    mchat.group.edit.name:
+        description: Allow usage of /mchat group edit name Group NewName
+    mchat.group.edit.ivar:
+        description: Allow usage of /mchat group edit ivar Group OldInfoVariable NewInfoVariable
+    mchat.group.edit.ival:
+        description: Allow usage of /mchat group edit ival Group InfoVariable NewValue
+    mchat.group.edit.world:
+        description: Allow usage of /mchat group edit world Group OldWorld NewWorld
+    mchat.group.edit.wvar:
+        description: Allow usage of /mchat group edit wvar Group World OldInfoVariable NewInfoVariable
+    mchat.group.edit.wval:
+        description: Allow usage of /mchat group edit wval Group World InfoVariable NewValue
+    mchat.group.remove.group:
+        description: Allow usage of /mchat group remove Group
+    mchat.group.remove.ivar:
+        description: Allow usage of /mchat group remove Group InfoVariable
+    mchat.group.remove.world:
+        description: Allow usage of /mchat group remove Group World
+    mchat.group.remove.wvar:
+        description: Allow usage of /mchat group remove Group World InfoVariable
