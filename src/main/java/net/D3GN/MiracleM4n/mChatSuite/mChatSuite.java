@@ -167,11 +167,11 @@ public class mChatSuite extends JavaPlugin {
     String hMasterF = "The Squire";
 
     // Booleans
-  	Boolean spoutEnabled = true;
-  	Boolean healthNotify = false;
+    Boolean spoutEnabled = true;
+    Boolean healthNotify = false;
     Boolean healthAchievement = true;
-	Boolean spoutB = false;
-	Boolean mAFKHQ = true;
+    Boolean spoutB = false;
+    Boolean mAFKHQ = true;
     Boolean mChatEB = true;
     Boolean mChatPB = true;
     Boolean spoutPM = false;
@@ -191,13 +191,13 @@ public class mChatSuite extends JavaPlugin {
 
     // Maps
     HashMap<String, Long> lastMove = new HashMap<String, Long>();
-	HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
-	HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
-	HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
-	HashMap<String, String> lastPMd = new HashMap<String, String>();
-	HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
-	HashMap<String, String> getInvite = new HashMap<String, String>();
-	HashMap<String, String> chatPartner = new HashMap<String, String>();
+    HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
+    HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
+    HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
+    HashMap<String, String> lastPMd = new HashMap<String, String>();
+    HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
+    HashMap<String, String> getInvite = new HashMap<String, String>();
+    HashMap<String, String> chatPartner = new HashMap<String, String>();
 
     public void onEnable() {
         // 1st Startup Timer
@@ -276,13 +276,13 @@ public class mChatSuite extends JavaPlugin {
 
         if (mChatEB) {
             getCommand("mchatme").setExecutor(mECSender);
-	        getCommand("mchatwho").setExecutor(mECSender);
-    	    getCommand("mchatlist").setExecutor(mECSender);
-		    getCommand("mchatafk").setExecutor(mECSender);
+            getCommand("mchatwho").setExecutor(mECSender);
+            getCommand("mchatlist").setExecutor(mECSender);
+            getCommand("mchatafk").setExecutor(mECSender);
         }
 
         if (mChatPB) {
-		    getCommand("pmchat").setExecutor(mPCSender);
+            getCommand("pmchat").setExecutor(mPCSender);
             getCommand("pmchatreply").setExecutor(mPCSender);
             getCommand("pmchatinvite").setExecutor(mPCSender);
             getCommand("pmchataccept").setExecutor(mPCSender);
@@ -301,12 +301,12 @@ public class mChatSuite extends JavaPlugin {
 
         if (mChatEB) {
             for (Player players : getServer().getOnlinePlayers()) {
-			    isAFK.put(players.getName(), false);
+                isAFK.put(players.getName(), false);
                 chatt.put(players.getName(), false);
                 lastMove.put(players.getName(), new Date().getTime());
 
-		        if (spoutB)
-		        SpoutManager.getAppearanceManager().setGlobalTitle(players, mAPI.ParsePlayerName(players));
+                if (spoutB)
+                    SpoutManager.getAppearanceManager().setGlobalTitle(players, mAPI.ParsePlayerName(players));
             }
         }
         // Check for Automatic Factions Support
@@ -335,13 +335,13 @@ public class mChatSuite extends JavaPlugin {
             pm.registerEvent(Event.Type.PLAYER_JOIN, pListener, Priority.Normal, this);
 
             if (mChatEB) {
-    		    pm.registerEvent(Event.Type.PLAYER_MOVE, pListener, Priority.Normal, this);
+                pm.registerEvent(Event.Type.PLAYER_MOVE, pListener, Priority.Normal, this);
                 pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, pListener, Priority.Normal, this);
                 pm.registerEvent(Event.Type.ENTITY_DAMAGE, eListener, Priority.Normal, this);
             }
 
-			if (spoutB)
-				pm.registerEvent(Event.Type.CUSTOM_EVENT, cusListener, Event.Priority.Normal, this);
+            if (spoutB)
+                pm.registerEvent(Event.Type.CUSTOM_EVENT, cusListener, Event.Priority.Normal, this);
 
             if (formatEvents) {
                 pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
@@ -460,8 +460,8 @@ public class mChatSuite extends JavaPlugin {
 
         mCListener.loadConfig();
 
-		lListener.checkLocale();
-		lListener.loadLocale();
+        lListener.checkLocale();
+        lListener.loadLocale();
     }
 
     void reloadConfigs() {
@@ -477,7 +477,7 @@ public class mChatSuite extends JavaPlugin {
     void setupTasks() {
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                reloadConfig();
+                cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (mAPI.checkPermissions(player, "mchat.afk.bypass"))
@@ -496,7 +496,7 @@ public class mChatSuite extends JavaPlugin {
 
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                reloadConfig();
+                cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (mAPI.checkPermissions(player, "mchat.afkkick.bypass"))

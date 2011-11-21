@@ -38,8 +38,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Ping {
-    static final File configFile = new File("plugins/mChat/stats.yml");
-    static final String logFile = "plugins/mChat/statsLog/log.txt";
+    static final File configFile = new File("plugins/mChatSuite/stats.yml");
+    static final String logFile = "plugins/mChatSuite/statsLog/log.txt";
     static final YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
     static Logger logger = null;
 
@@ -66,14 +66,19 @@ public class Ping {
         return true;
     }
 
+    @SuppressWarnings({"ResultOfMethodCallIgnored"})
     static Boolean logExists() {
         try {
+            File log = new File("plugins/mChatSuite/statsLog/");
+            log.mkdir();
+
             FileHandler handler = new FileHandler(logFile, true);
             logger = Logger.getLogger("com.randomappdev");
             logger.setUseParentHandlers(false);
             logger.addHandler(handler);
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
             System.out.println("Error creating PluginStats log file.");
+            ex.printStackTrace();
             return false;
         }
         return true;
@@ -91,7 +96,7 @@ class Pinger implements Runnable {
         this.logger = theLogger;
     }
 
-    public void run()  {
+    public void run() {
         pingServer();
     }
 
@@ -117,7 +122,6 @@ class Pinger implements Runnable {
                     URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
 
             new URL(url).openConnection().getInputStream();
-
             logger.log(Level.INFO, "PluginStats pinged the central server.");
 
         } catch (Exception ex) {
