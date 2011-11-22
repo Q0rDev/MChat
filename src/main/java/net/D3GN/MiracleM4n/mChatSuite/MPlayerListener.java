@@ -26,6 +26,10 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (event.getMessage().contains("/mafk"))
             return;
 
+        for (String aliases : plugin.getCommand("mafk").getAliases())
+            if (event.getMessage().contains("/" + aliases))
+                return;
+
 		if (plugin.isAFK.get(player.getName()))
             player.performCommand("mafk");
     }
