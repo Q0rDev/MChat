@@ -9,11 +9,11 @@ import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class MEntityListener extends EntityListener {
-	mChatSuite plugin;
+    mChatSuite plugin;
 
-	public MEntityListener(mChatSuite plugin) {
-		this.plugin = plugin;
-	}
+    public MEntityListener(mChatSuite plugin) {
+        this.plugin = plugin;
+    }
 
     Boolean messageTimeout = true;
 
@@ -21,7 +21,7 @@ public class MEntityListener extends EntityListener {
         if (!(event.getEntity() instanceof Player))
             return;
 
-    	if (!(event instanceof PlayerDeathEvent))
+        if (!(event instanceof PlayerDeathEvent))
             return;
 
         Player player = (Player) event.getEntity();
@@ -34,119 +34,119 @@ public class MEntityListener extends EntityListener {
         EntityDamageEvent dEvent = player.getLastDamageCause();
 
         if (dEvent instanceof EntityDamageByEntityEvent) {
-    			EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
+                EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
                 if (dEEvent.getDamager() instanceof Player)
                     pCause = plugin.mAPI.ParsePlayerName(((Player) dEEvent.getDamager()).getName()) + ".";
-    			else
+                else
                     pCause =  "a" + parseEntityName(dEEvent.getDamager()) + ".";
-    	}
+        }
 
         subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, subEvent));
     }
 
     public void onEntityDamage(EntityDamageEvent event) {
-		if (event.isCancelled())
+        if (event.isCancelled())
             return;
 
         if (event instanceof EntityDamageByEntityEvent) {
-			if (plugin.isAFK == null)
+            if (plugin.isAFK == null)
                 return;
 
             EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
-			Entity attacker = subEvent.getDamager();
-			Entity damaged = subEvent.getEntity();
+            Entity attacker = subEvent.getDamager();
+            Entity damaged = subEvent.getEntity();
 
             if (attacker instanceof Player) {
-				Player player = (Player) attacker;
+                Player player = (Player) attacker;
 
                 if (plugin.isAFK.get(player.getName()) == null)
                     return;
 
                 if (plugin.isAFK.get(player.getName())) {
-					damaged.setLastDamageCause(null);
-					event.setCancelled(true);
-				}
-			}
-		}
+                    damaged.setLastDamageCause(null);
+                    event.setCancelled(true);
+                }
+            }
+        }
 
-		if (event.getEntity() instanceof Player) {
-			final Player player = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player) {
+            final Player player = (Player) event.getEntity();
 
             if (plugin.isAFK != null) {
-				if (plugin.isAFK.get(player.getName()) != null) {
-					if (plugin.isAFK.get(player.getName())) {
-						event.setCancelled(true);
-						return;
-					}
-				}
-			}
+                if (plugin.isAFK.get(player.getName()) != null) {
+                    if (plugin.isAFK.get(player.getName())) {
+                        event.setCancelled(true);
+                        return;
+                    }
+                }
+            }
 
-			if (plugin.healthNotify) {
-				Runnable timeRunnable = new Runnable() {
-					public void run() {
-						messageTimeout = true;
-					}
-				};
+            if (plugin.healthNotify) {
+                Runnable timeRunnable = new Runnable() {
+                    public void run() {
+                        messageTimeout = true;
+                    }
+                };
 
                 Runnable runnable = new Runnable() {
-					public void run() {
-						SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
-					}
-				};
+                    public void run() {
+                        SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+                    }
+                };
 
                 if (messageTimeout) {
-					for (Player players : plugin.getServer().getOnlinePlayers()) {
-						if (players != player) {
-							if (plugin.spoutB) {
-								SpoutPlayer sPlayers = (SpoutPlayer) players;
+                    for (Player players : plugin.getServer().getOnlinePlayers()) {
+                        if (players != player) {
+                            if (plugin.spoutB) {
+                                SpoutPlayer sPlayers = (SpoutPlayer) players;
                                 if (plugin.healthAchievement) {
                                     if (sPlayers.isSpoutCraftEnabled()) {
-									    if(player.getName().length() >= 25)
+                                        if(player.getName().length() >= 25)
                                             sPlayers.sendNotification(healthBarDamage(player, event.getDamage()), player.getName().substring(0, 24), Material.LAVA);
                                         else
                                             sPlayers.sendNotification(healthBarDamage(player, event.getDamage()), player.getName(), Material.LAVA);
 
                                         continue;
-								    }
+                                    }
                                 }
-							}
-
-						    if ((player.getHealth() - event.getDamage()) < 1)
-								players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.pDied);
-							else
-								players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.pDamaged + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft);
-						} else {
-					        if (plugin.spoutB) {
-        						SpoutPlayer sPlayer = (SpoutPlayer) player;
-                                if (plugin.healthAchievement) {
-                                    if (sPlayer.isSpoutCraftEnabled()) {
-						        	    if ((player.getHealth() - event.getDamage()) < 1) {
-							            	sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.lListener.yDied, Material.LAVA);
-        							    } else {
-		        					    	sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.lListener.yHas + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft, Material.LAVA);
-				        			    }
-						            }
-                                }
-        					}
+                            }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-				        	    player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.lListener.yDied);
-						    else
-        					    player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.lListener.yDamaged + " " + plugin.lListener.yHas + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft);
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.pDied);
+                            else
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.pDamaged + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft);
+                        } else {
+                            if (plugin.spoutB) {
+                                SpoutPlayer sPlayer = (SpoutPlayer) player;
+                                if (plugin.healthAchievement) {
+                                    if (sPlayer.isSpoutCraftEnabled()) {
+                                        if ((player.getHealth() - event.getDamage()) < 1) {
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.lListener.yDied, Material.LAVA);
+                                        } else {
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.lListener.yHas + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft, Material.LAVA);
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ((player.getHealth() - event.getDamage()) < 1)
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.lListener.yDied);
+                            else
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.lListener.yDamaged + " " + plugin.lListener.yHas + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft);
                         }
-					}
+                    }
 
-					plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, timeRunnable, 20);
-					messageTimeout = false;
-				}
+                    plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, timeRunnable, 20);
+                    messageTimeout = false;
+                }
 
-				if (plugin.spoutB) {
-					plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4*20);
-					SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					plugin.chatt.put(player.getName(), false);
-				}
-			}
-		}
+                if (plugin.spoutB) {
+                    plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4*20);
+                    SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+                    plugin.chatt.put(player.getName(), false);
+                }
+            }
+        }
     }
 
     String handlePlayerDeath(String pName, String pCause, PlayerDeathEvent event) {

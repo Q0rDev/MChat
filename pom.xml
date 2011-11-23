@@ -20,7 +20,6 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
-        <!--
         <repository>
             <id>spout-repo</id>
             <url>http://repo.getspout.org</url>
@@ -31,7 +30,6 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
-        -->
         <repository>
             <id>cward-repo</id>
             <url>http://repo.chrisgward.com/repository</url>

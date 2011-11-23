@@ -11,15 +11,15 @@ import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class MECommandSender implements CommandExecutor {
-	mChatSuite plugin;
+    mChatSuite plugin;
 
-	public MECommandSender(mChatSuite plugin) {
-		this.plugin = plugin;
-	}
+    public MECommandSender(mChatSuite plugin) {
+        this.plugin = plugin;
+    }
 
-	public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
-		String commandName = command.getName();
-		if (commandName.equalsIgnoreCase("mchatme")) {
+    public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
+        String commandName = command.getName();
+        if (commandName.equalsIgnoreCase("mchatme")) {
             if (args.length > 0) {
                 String message = "";
 
@@ -28,41 +28,41 @@ public class MECommandSender implements CommandExecutor {
                 }
 
                 if (sender instanceof Player) {
-                	Player player = (Player) sender;
-                	String senderName = plugin.mAPI.ParsePlayerName(player);
-              		if (plugin.mAPI.checkPermissions(player, "mchat.me")) {
-        	            plugin.getServer().broadcastMessage("*" + " " + senderName + message);
-        	            plugin.mAPI.log("*" + " " + senderName + message);
-        	            return true;
-            		} else {
-            			sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
-            			return true;
-            		}
-    			} else {
-    				String senderName = "Console";
-    	            plugin.getServer().broadcastMessage("*" + " " + senderName + message);
-    	            plugin.mAPI.log("*" + " " + senderName + message);
-    	            return true;
-    			}
+                    Player player = (Player) sender;
+                    String senderName = plugin.mAPI.ParsePlayerName(player);
+                      if (plugin.mAPI.checkPermissions(player, "mchat.me")) {
+                        plugin.getServer().broadcastMessage("*" + " " + senderName + message);
+                        plugin.mAPI.log("*" + " " + senderName + message);
+                        return true;
+                    } else {
+                        sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                        return true;
+                    }
+                } else {
+                    String senderName = "Console";
+                    plugin.getServer().broadcastMessage("*" + " " + senderName + message);
+                    plugin.mAPI.log("*" + " " + senderName + message);
+                    return true;
+                }
             }
         } else if (commandName.equalsIgnoreCase("mchatwho")) {
             if (args.length > 0) {
                 if (sender instanceof Player) {
-			 		Player player = (Player) sender;
-			 		if (!plugin.mAPI.checkPermissions(player, "mchat.who")) {
-            			sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
-            			return true;
+                     Player player = (Player) sender;
+                     if (!plugin.mAPI.checkPermissions(player, "mchat.who")) {
+                        sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                        return true;
                     }
                 }
 
                 if (plugin.getServer().getPlayer(args[0]) == null) {
-    			    sender.sendMessage(formatPNF(args[0]));
-			        return true;
-    		    } else {
-			        Player receiver = plugin.getServer().getPlayer(args[0]);
-			        formatWho(sender, receiver);
-			        return true;
-    		    }
+                    sender.sendMessage(formatPNF(args[0]));
+                    return true;
+                } else {
+                    Player receiver = plugin.getServer().getPlayer(args[0]);
+                    formatWho(sender, receiver);
+                    return true;
+                }
             }
         } else if(commandName.equalsIgnoreCase("mchatafk")) {
             String message = " Away From Keyboard";
@@ -70,101 +70,127 @@ public class MECommandSender implements CommandExecutor {
             if (args.length > 0) {
                 message = "";
 
-                for (String arg : args) {
+                for (String arg : args)
                     message += " " + arg;
+            }
+
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                if (!plugin.mAPI.checkPermissions(player, "mchat.afk")) {
+                    player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                    return true;
+                }
+
+                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender + message);
+                return true;
+            } else {
+                plugin.mAPI.log(formatMessage("Console's can't be AFK."));
+                return true;
+            }
+        } else if(commandName.equalsIgnoreCase("mchatafkother")) {
+            String message = " Away From Keyboard";
+
+            if (args.length > 1) {
+                message = "";
+
+                for (int i = 1; i < args.length; ++i)
+                    message += " " + args[i];
+            }
+
+            if (sender instanceof Player) {
+                 Player player = (Player) sender;
+                 if (!plugin.mAPI.checkPermissions(player, "mchat.afkother")) {
+                    sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                    return true;
                 }
             }
 
-        	if (sender instanceof Player) {
-				Player player = (Player) sender;
-				if (!plugin.mAPI.checkPermissions(player, "mchat.afk")) {
-                    player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
-    				return true;
-                }
+            if (plugin.getServer().getPlayer(args[0]) == null) {
+                sender.sendMessage(formatPNF(args[0]));
+                return true;
+            }
 
-				if (plugin.isAFK.get(player.getName())) {
-					if (plugin.spoutB) {
-						if (plugin.spoutEnabled) {
-							for (Player players : plugin.getServer().getOnlinePlayers()) {
-								SpoutPlayer sPlayers = (SpoutPlayer) players;
+            Player afkTarget = plugin.getServer().getPlayer(args[0]);
 
-                                if (sPlayers.isSpoutCraftEnabled())
-									sPlayers.sendNotification(player.getName(), plugin.lListener.nAFK, Material.PAPER);
-								else
-                                    players.sendMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.nAFK);
-							}
-						}
+            if (plugin.isAFK.get(afkTarget.getName())) {
+                if (plugin.spoutB) {
+                    if (plugin.spoutEnabled) {
+                        for (Player players : plugin.getServer().getOnlinePlayers()) {
+                            SpoutPlayer sPlayers = (SpoutPlayer) players;
 
-						SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					} else
-                        plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.nAFK);
+                            if (sPlayers.isSpoutCraftEnabled())
+                                sPlayers.sendNotification(afkTarget.getName(), plugin.lListener.nAFK, Material.PAPER);
+                            else
+                                players.sendMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.nAFK);
+                        }
+                    }
 
-					player.setSleepingIgnored(false);
-					plugin.isAFK.put(player.getName(), false);
+                    SpoutManager.getAppearanceManager().setGlobalTitle(afkTarget, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
+                } else
+                    plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.nAFK);
 
-                    if (plugin.useAFKList)
-                        if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(player)).length() > 15) {
-                                String pLName = "[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(player);
-                                pLName = pLName.substring(0, 16);
-                                player.setPlayerListName(pLName);
-                        } else
-                            player.setPlayerListName("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(player));
+                afkTarget.setSleepingIgnored(false);
+                plugin.isAFK.put(afkTarget.getName(), false);
 
-                    return true;
-				} else {
-					if (plugin.spoutB) {
-						if (plugin.spoutEnabled) {
-							for (Player players : plugin.getServer().getOnlinePlayers()) {
-								SpoutPlayer sPlayers = (SpoutPlayer) players;
-								if (sPlayers.isSpoutCraftEnabled())
-									sPlayers.sendNotification(player.getName(), plugin.lListener.iAFK, Material.PAPER);
-							    else
-                                    players.sendMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.iAFK + " [" + message + " ]");
-                            }
-						}
+                if (plugin.useAFKList)
+                    if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget)).length() > 15) {
+                            String pLName = "[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget);
+                            pLName = pLName.substring(0, 16);
+                            afkTarget.setPlayerListName(pLName);
+                    } else
+                        afkTarget.setPlayerListName("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget));
 
-						SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					} else
-                        plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.iAFK + " [" + message + " ]");
+                return true;
+            } else {
+                if (plugin.spoutB) {
+                    if (plugin.spoutEnabled) {
+                        for (Player players : plugin.getServer().getOnlinePlayers()) {
+                            SpoutPlayer sPlayers = (SpoutPlayer) players;
+                            if (sPlayers.isSpoutCraftEnabled())
+                                sPlayers.sendNotification(afkTarget.getName(), plugin.lListener.iAFK, Material.PAPER);
+                            else
+                                players.sendMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.iAFK + " [" + message + " ]");
+                        }
+                    }
 
-					player.setSleepingIgnored(true);
-					plugin.isAFK.put(player.getName(), true);
-					plugin.AFKLoc.put(player.getName(), player.getLocation());
+                    SpoutManager.getAppearanceManager().setGlobalTitle(afkTarget, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
+                } else
+                    plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.iAFK + " [" + message + " ]");
 
-                    if (plugin.useAFKList)
-                        if (plugin.mAPI.ParseTabbedList(player).length() > 15) {
-                                String pLName = plugin.mAPI.ParseTabbedList(player);
-                                pLName = pLName.substring(0, 16);
-                                player.setPlayerListName(pLName);
-                        } else
-                            player.setPlayerListName(plugin.mAPI.ParseTabbedList(player));
+                afkTarget.setSleepingIgnored(true);
+                plugin.isAFK.put(afkTarget.getName(), true);
+                plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
-					return true;
-				}
-			} else {
-				plugin.mAPI.log(formatMessage("Console's can't be AFK."));
-				return true;
-			}
+                if (plugin.useAFKList)
+                    if (plugin.mAPI.ParseTabbedList(afkTarget).length() > 15) {
+                            String pLName = plugin.mAPI.ParseTabbedList(afkTarget);
+                            pLName = pLName.substring(0, 16);
+                            afkTarget.setPlayerListName(pLName);
+                    } else
+                        afkTarget.setPlayerListName(plugin.mAPI.ParseTabbedList(afkTarget));
+
+                return true;
+            }
         } else if(commandName.equalsIgnoreCase("mchatlist")) {
             if (sender instanceof Player) {
-			    Player player = (Player) sender;
-				if (!plugin.mAPI.checkPermissions(player, "mchat.list")) {
-					player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
-					return true;
-				}
+                Player player = (Player) sender;
+                if (!plugin.mAPI.checkPermissions(player, "mchat.list")) {
+                    player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                    return true;
+                }
             }
 
-		    // My Way
-		    // sender.sendMessage(plugin.mAPI.addColour("&4" + plugin.lListener.pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
+            // My Way
+            // sender.sendMessage(plugin.mAPI.addColour("&4" + plugin.lListener.pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
 
-		    // Waxdt's Way
+            // Waxdt's Way
             sender.sendMessage(plugin.mAPI.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
-		    formatList(sender);
+            formatList(sender);
             return true;
         }
 
-		return false;
-	}
+        return false;
+    }
 
     void formatList(CommandSender sender) {
         String msg = "";
@@ -209,30 +235,30 @@ public class MECommandSender implements CommandExecutor {
         sender.sendMessage(plugin.mAPI.addColour(msg));
     }
 
-	void formatWho(CommandSender sender, Player recipient) {
-		String recipientName = plugin.mAPI.ParsePlayerName(recipient);
-		Integer locX = (int) recipient.getLocation().getX();
-		Integer locY = (int) recipient.getLocation().getY();
-		Integer locZ = (int) recipient.getLocation().getZ();
-		String loc = ("X: " + locX + ", " + "Y: " + locY + ", " +"Z: " + locZ);
-		String world = recipient.getWorld().getName();
+    void formatWho(CommandSender sender, Player recipient) {
+        String recipientName = plugin.mAPI.ParsePlayerName(recipient);
+        Integer locX = (int) recipient.getLocation().getX();
+        Integer locY = (int) recipient.getLocation().getY();
+        Integer locZ = (int) recipient.getLocation().getZ();
+        String loc = ("X: " + locX + ", " + "Y: " + locY + ", " +"Z: " + locZ);
+        String world = recipient.getWorld().getName();
 
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + " Name: " + recipient.getName()));
         sender.sendMessage(plugin.mAPI.addColour("Display Name: " + recipient.getDisplayName()));
-		sender.sendMessage(plugin.mAPI.addColour("Formatted Name: " + recipientName));
+        sender.sendMessage(plugin.mAPI.addColour("Formatted Name: " + recipientName));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Location: [ " + loc + " ]"));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s World: " + world));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Health: " + plugin.mAPI.healthBar(recipient) + " " + recipient.getHealth() + "/20"));
-		sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
+        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
         sender.sendMessage(plugin.mAPI.addColour("Current Item: " + recipient.getItemInHand().toString().replace("ItemStack", "")));
         sender.sendMessage(plugin.mAPI.addColour("Entity ID: #" + recipient.getEntityId()));
-	}
+    }
 
-	String formatMessage(String message) {
-		return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
-	}
+    String formatMessage(String message) {
+        return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+    }
 
-	String formatPNF(String playerNotFound) {
+    String formatPNF(String playerNotFound) {
         return(plugin.mAPI.addColour(formatMessage("") + " " + plugin.lListener.player + " &e" + playerNotFound + " &4" + plugin.lListener.nFound));
     }
 }

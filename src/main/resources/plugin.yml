@@ -43,8 +43,14 @@ commands:
         description:
         usage: |
             /<command>
-            Example: /<command> - Displays you as AFK.
+            Example: /<command> [REASON] - Displays you as AFK (REASON is optional).
         aliases: [afk, mafk, maway, away]
+    mchatafkother:
+        description:
+        usage: |
+            /<command>
+            Example: /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
+        aliases: [afko, mafkother, mafko, mawayother, mawayo, awayother, awayo]
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.

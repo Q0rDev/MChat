@@ -281,6 +281,7 @@ public class mChatSuite extends JavaPlugin {
             getCommand("mchatwho").setExecutor(mECSender);
             getCommand("mchatlist").setExecutor(mECSender);
             getCommand("mchatafk").setExecutor(mECSender);
+            getCommand("mchatafkother").setExecutor(mECSender);
         }
 
         if (mChatPB) {
@@ -490,7 +491,7 @@ public class mChatSuite extends JavaPlugin {
                             continue;
 
                         if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
-                            player.performCommand("mafk AutoAfk");
+                            getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " AutoAfk");
                         } else
                             isAFK.put(player.getName(), false);
                     }

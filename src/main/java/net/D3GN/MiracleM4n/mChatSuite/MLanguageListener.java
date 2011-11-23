@@ -6,11 +6,11 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 import java.io.IOException;
 
 public class MLanguageListener {
-	mChatSuite plugin;
+    mChatSuite plugin;
 
-	public MLanguageListener(mChatSuite plugin) {
-		this.plugin = plugin;
-	}
+    public MLanguageListener(mChatSuite plugin) {
+        this.plugin = plugin;
+    }
 
     Boolean hasChanged = false;
 
@@ -20,8 +20,8 @@ public class MLanguageListener {
     String yDamaged = "You have lost health!";
     String yHas = "You have";
     String pHLeft = "health left.";
-  	String typingMessage = "*Typing*";
-	String spoutChatColour = "dark_red";
+      String typingMessage = "*Typing*";
+    String spoutChatColour = "dark_red";
     String configUpdated = "has been updated.";
     String sAFK = "You are still AFK.";
     String noPerm = "You are not allowed to use";
@@ -37,10 +37,10 @@ public class MLanguageListener {
         plugin.mELocale = YamlConfiguration.loadConfiguration(plugin.mELocaleF);
     }
 
-	void loadLocale() {
-		YamlConfiguration mELocale = plugin.mELocale;
+    void loadLocale() {
+        YamlConfiguration mELocale = plugin.mELocale;
 
-		spoutChatColour = mELocale.getString("mchat-spout-colouring", spoutChatColour);
+        spoutChatColour = mELocale.getString("mchat-spout-colouring", spoutChatColour);
         typingMessage = mELocale.getString("mchat-typing-message", typingMessage);
         pDied = mELocale.getString("mchat-pDied", pDied);
         pDamaged = mELocale.getString("mchat-pDamaged", pDamaged);
@@ -58,17 +58,17 @@ public class MLanguageListener {
         pOffline = mELocale.getString("mchat-pOnline", pOffline);
         player = mELocale.getString("mchat-player", player);
         nFound = mELocale.getString("mchat-nFound", nFound);
-	}
+    }
 
-	void defaultLocale() {
-		YamlConfiguration mELocale = plugin.mELocale;
+    void defaultLocale() {
+        YamlConfiguration mELocale = plugin.mELocale;
         YamlConfigurationOptions mELocaleO = mELocale.options();
 
-		mELocaleO.header(
+        mELocaleO.header(
             " mChatEssentials Locale file."
         );
 
-		mELocale.set("mchat-spout-colouring", spoutChatColour);
+        mELocale.set("mchat-spout-colouring", spoutChatColour);
         mELocale.set("mchat-typing-message", typingMessage);
         mELocale.set("mchat-pDied", pDied);
         mELocale.set("mchat-pDamaged", pDamaged);
@@ -92,11 +92,11 @@ public class MLanguageListener {
         } catch (IOException ignored) {}
     }
 
-	void checkLocale() {
+    void checkLocale() {
         if (!(plugin.mELocaleF).exists())
-			defaultLocale();
+            defaultLocale();
 
-		YamlConfiguration mELocale = plugin.mELocale;
+        YamlConfiguration mELocale = plugin.mELocale;
         YamlConfigurationOptions mELocaleO = mELocale.options();
 
         checkOption(mELocale, "mchat-spout-colouring", spoutChatColour);
@@ -118,8 +118,8 @@ public class MLanguageListener {
         checkOption(mELocale, "mchat-player", player);
         checkOption(mELocale, "mchat-nFound", nFound);
 
-		if (hasChanged) {
-		    mELocaleO.header(
+        if (hasChanged) {
+            mELocaleO.header(
                 " mChatEssentials Locale file."
             );
 
@@ -127,9 +127,9 @@ public class MLanguageListener {
                 mELocale.save(plugin.mELocaleF);
             } catch (IOException ignored) {}
 
-			System.out.println("[" + plugin.pdfFile.getName() + "] mELocale.yml " + configUpdated);
+            System.out.println("[" + plugin.pdfFile.getName() + "] mELocale.yml " + configUpdated);
         }
-	}
+    }
 
     void checkOption(YamlConfiguration config, String option, Object dOption) {
         if (config.get(option) == null) {

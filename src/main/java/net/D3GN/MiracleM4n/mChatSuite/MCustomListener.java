@@ -9,40 +9,40 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class MCustomListener extends InputListener {
-	mChatSuite plugin;
-	
-	public MCustomListener(mChatSuite plugin) {
-		this.plugin = plugin;
-	}
-	
-	public void onKeyPressedEvent(KeyPressedEvent event) {
-		SpoutPlayer player = event.getPlayer();
-		Keyboard key = event.getKey();
-		Keyboard chatKey = player.getChatKey();
-		Keyboard forwardKey = player.getForwardKey();
-		Keyboard backwardKey = player.getBackwardKey();
-		Keyboard leftKey = player.getLeftKey();
-		Keyboard rightKey = player.getRightKey();
+    mChatSuite plugin;
 
-		if (plugin.chatt.get(player.getName()) == null)
-			plugin.chatt.put(player.getName(), false);
+    public MCustomListener(mChatSuite plugin) {
+        this.plugin = plugin;
+    }
 
-		if (key == null) return;
+    public void onKeyPressedEvent(KeyPressedEvent event) {
+        SpoutPlayer player = event.getPlayer();
+        Keyboard key = event.getKey();
+        Keyboard chatKey = player.getChatKey();
+        Keyboard forwardKey = player.getForwardKey();
+        Keyboard backwardKey = player.getBackwardKey();
+        Keyboard leftKey = player.getLeftKey();
+        Keyboard rightKey = player.getRightKey();
 
-		if (key.equals(chatKey)) {
-			SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + plugin.mAPI.addColour(plugin.lListener.typingMessage) + '\n' + plugin.mAPI.ParsePlayerName(player));
-			plugin.chatt.put(player.getName(), true);
-		}
+        if (plugin.chatt.get(player.getName()) == null)
+            plugin.chatt.put(player.getName(), false);
 
-		if (plugin.chatt.get(player.getName())) {
-			if ((key.equals(forwardKey)) ||
-					(key.equals(backwardKey)) ||
-							(key.equals(leftKey)) ||
-									(key.equals(rightKey))) {
-				SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
-				plugin.chatt.put(player.getName(), false);
-			}
-		}
-	}
+        if (key == null) return;
+
+        if (key.equals(chatKey)) {
+            SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + plugin.mAPI.addColour(plugin.lListener.typingMessage) + '\n' + plugin.mAPI.ParsePlayerName(player));
+            plugin.chatt.put(player.getName(), true);
+        }
+
+        if (plugin.chatt.get(player.getName())) {
+            if ((key.equals(forwardKey)) ||
+                    (key.equals(backwardKey)) ||
+                            (key.equals(leftKey)) ||
+                                    (key.equals(rightKey))) {
+                SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+                plugin.chatt.put(player.getName(), false);
+            }
+        }
+    }
 }
 

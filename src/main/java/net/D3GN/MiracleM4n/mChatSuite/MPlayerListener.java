@@ -14,11 +14,11 @@ import org.getspout.spoutapi.SpoutManager;
 import java.util.Date;
 
 public class MPlayerListener extends PlayerListener implements Runnable {
-	mChatSuite plugin;
-	
-	public MPlayerListener(mChatSuite plugin) {
-		this.plugin = plugin;
-	}
+    mChatSuite plugin;
+
+    public MPlayerListener(mChatSuite plugin) {
+        this.plugin = plugin;
+    }
 
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
@@ -30,28 +30,28 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             if (event.getMessage().contains("/" + aliases))
                 return;
 
-		if (plugin.isAFK.get(player.getName()))
+        if (plugin.isAFK.get(player.getName()))
             player.performCommand("mafk");
     }
 
-	public void onPlayerChat(PlayerChatEvent event) {
-		if (event.isCancelled())
+    public void onPlayerChat(PlayerChatEvent event) {
+        if (event.isCancelled())
             return;
 
         final Player player = event.getPlayer();
-		String pName = player.getName();
-		String msg = event.getMessage();
+        String pName = player.getName();
+        String msg = event.getMessage();
 
-		if (msg == null)
+        if (msg == null)
             return;
 
         // For Dragonslife
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 if (players.getWorld() != player.getWorld()) {
-					event.getRecipients().remove(players);
-				} else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
-					event.getRecipients().remove(players);
+                    event.getRecipients().remove(players);
+                } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
+                    event.getRecipients().remove(players);
             }
 
         // For Obama?
@@ -71,51 +71,51 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         // PMChat
         if (plugin.mChatPB) {
-		    if (plugin.isConv.get(pName) == null)
+            if (plugin.isConv.get(pName) == null)
                 plugin.isConv.put(pName, false);
 
-		    if (plugin.isConv.get(pName)) {
-			    Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-			    recipient.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
-			    player.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
-			    plugin.mAPI.log(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
-			    event.setCancelled(true);
-		    }
+            if (plugin.isConv.get(pName)) {
+                Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
+                recipient.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
+                player.sendMessage(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
+                plugin.mAPI.log(plugin.mAPI.addColour("&4[Convo] " + plugin.mAPI.ParseChatMessage(pName, msg)));
+                event.setCancelled(true);
+            }
         }
 
         // MChatEssentials
         if (plugin.mChatEB)
-		    if (plugin.isAFK.get(player.getName()))
+            if (plugin.isAFK.get(player.getName()))
                 player.performCommand("mafk");
 
-		if (plugin.spoutB) {
-			SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.mAPI.addColour(msg) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+        if (plugin.spoutB) {
+            SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.mAPI.addColour(msg) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
 
             plugin.chatt.put(player.getName(), false);
 
             Runnable runnable = new Runnable() {
-				public void run() {
-					SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
-				}
-			};
+                public void run() {
+                    SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+                }
+            };
 
-			plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 7*20);
-		}
+            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 7*20);
+        }
 
         event.setFormat(plugin.mAPI.ParseChatMessage(pName, msg));
     }
 
-	public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-		String pName = player.getName();
-		String msg = event.getJoinMessage();
+        String pName = player.getName();
+        String msg = event.getJoinMessage();
 
-		if (msg == null)
+        if (msg == null)
             return;
 
         if (plugin.mChatEB) {
             plugin.chatt.put(player.getName(), false);
-		    plugin.isAFK.put(player.getName(), false);
+            plugin.isAFK.put(player.getName(), false);
             plugin.lastMove.put(player.getName(), new Date().getTime());
         }
 
@@ -136,15 +136,15 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             }
         }, 20L);
 
-		if (plugin.spoutB)
-			SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+        if (plugin.spoutB)
+            SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
 
         if (plugin.formatEvents)
             event.setJoinMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Join"));
     }
 
-	public void onPlayerKick(PlayerKickEvent event) {
-		if (event.isCancelled())
+    public void onPlayerKick(PlayerKickEvent event) {
+        if (event.isCancelled())
             return;
 
         String pName = event.getPlayer().getName();
@@ -159,18 +159,18 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (msg == null)
             return;
 
-		event.setLeaveMessage(plugin.mAPI.ParseEventName(pName) + " " + kickMsg);
+        event.setLeaveMessage(plugin.mAPI.ParseEventName(pName) + " " + kickMsg);
     }
-	
-	public void onPlayerQuit(PlayerQuitEvent event) {
-		String pName = event.getPlayer().getName();
-		String msg = event.getQuitMessage();
 
-		if (msg == null)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        String pName = event.getPlayer().getName();
+        String msg = event.getQuitMessage();
+
+        if (msg == null)
             return;
 
-		event.setQuitMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Quit"));
-	}
+        event.setQuitMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Quit"));
+    }
 
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
@@ -189,21 +189,21 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         }
     }
 
-	public void onPlayerMove(PlayerMoveEvent event) {
-		Player player = event.getPlayer();
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
 
-		if (plugin.isAFK.get(player.getName()))
-			if(plugin.mAFKHQ) {
+        if (plugin.isAFK.get(player.getName()))
+            if(plugin.mAFKHQ) {
                 if(plugin.AFKLoc.get(player.getName()) != null)
-				    player.teleport(plugin.AFKLoc.get(player.getName()));
+                    player.teleport(plugin.AFKLoc.get(player.getName()));
 
-				player.sendMessage(plugin.mCSender.formatMessage(plugin.lListener.sAFK));
-			} else
-				player.performCommand("mafk");
-	}
+                player.sendMessage(plugin.mCSender.formatMessage(plugin.lListener.sAFK));
+            } else
+                player.performCommand("mafk");
+    }
 
-	public void run() {}
+    public void run() {}
 }
 

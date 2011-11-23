@@ -4,11 +4,11 @@ import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.SignChangeEvent;
 
 public class MBlockListener extends BlockListener {
-	mChatSuite plugin;
+    mChatSuite plugin;
 
-	public MBlockListener(mChatSuite plugin) {
-		this.plugin = plugin;
-	}
+    public MBlockListener(mChatSuite plugin) {
+        this.plugin = plugin;
+    }
 
     public void onSignChange(SignChangeEvent event) {
         if (event.isCancelled()) return;

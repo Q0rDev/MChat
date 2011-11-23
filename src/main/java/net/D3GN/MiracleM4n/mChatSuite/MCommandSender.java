@@ -99,8 +99,8 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("p")
                             || args[2].equalsIgnoreCase("player")) {
-		    			if (sender instanceof Player)
-			    			if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.player")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.player")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -114,7 +114,7 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
-			    		if (sender instanceof Player)
+                        if (sender instanceof Player)
                             if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
@@ -129,8 +129,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
-				    	if (sender instanceof Player)
-					    	if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.world")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -144,8 +144,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
-					    if (sender instanceof Player)
-						    if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.wvar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.add.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -171,8 +171,8 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("n")
                             || args[2].equalsIgnoreCase("name")) {
-					    if (sender instanceof Player)
-						    if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.name")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.name")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -186,8 +186,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.ivar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -201,8 +201,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVal")
                             || args[2].equalsIgnoreCase("infoValue")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.ival")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.ival")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -216,8 +216,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("group")
                             || args[2].equalsIgnoreCase("g")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.group")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.group")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -231,8 +231,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.world")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -246,8 +246,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.wvar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -261,8 +261,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVal")
                             || args[2].equalsIgnoreCase("worldValue")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.wval")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.edit.wval")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -286,8 +286,8 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("p")
                             || args[2].equalsIgnoreCase("player")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.player")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.player")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -301,8 +301,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.ivar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -316,8 +316,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.world")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -331,8 +331,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.wvar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.user.remove.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -362,8 +362,8 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("g")
                             || args[2].equalsIgnoreCase("group")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.group")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.group")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -377,8 +377,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.ivar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -392,8 +392,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.world")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -407,8 +407,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.wvar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.add.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -433,8 +433,8 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("n")
                             || args[2].equalsIgnoreCase("name")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.name")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.name")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -448,8 +448,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.ivar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -463,8 +463,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVal")
                             || args[2].equalsIgnoreCase("infoValue")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.ival")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.ival")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -478,8 +478,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.world")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -493,8 +493,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.wvar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -508,8 +508,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVal")
                             || args[2].equalsIgnoreCase("worldValue")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.wval")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.edit.wval")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -533,8 +533,8 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("g")
                             || args[2].equalsIgnoreCase("group")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.group")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.group")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -548,8 +548,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.ivar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -563,8 +563,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.world")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -578,8 +578,8 @@ public class MCommandSender implements CommandExecutor {
                         }
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
-    					if (sender instanceof Player)
-    						if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.wvar")) {
+                        if (sender instanceof Player)
+                            if (!plugin.mAPI.checkPermissions(player, "mchat.group.remove.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
@@ -603,39 +603,39 @@ public class MCommandSender implements CommandExecutor {
                 }
 
                 if (sender instanceof Player) {
-                	String senderName = plugin.mAPI.ParsePlayerName(player);
-              		if (plugin.mAPI.checkPermissions(player, "mchat.me")) {
-        	            plugin.getServer().broadcastMessage("*" + " " + senderName + message);
-        	            plugin.mAPI.log("*" + " " + senderName + message);
-        	            return true;
-            		} else {
-            			sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
-            			return true;
-            		}
-    			} else {
-    				String senderName = "Console";
-    	            plugin.getServer().broadcastMessage("*" + " " + senderName + message);
-    	            plugin.mAPI.log("*" + " " + senderName + message);
-    	            return true;
-    			}
+                    String senderName = plugin.mAPI.ParsePlayerName(player);
+                      if (plugin.mAPI.checkPermissions(player, "mchat.me")) {
+                        plugin.getServer().broadcastMessage("*" + " " + senderName + message);
+                        plugin.mAPI.log("*" + " " + senderName + message);
+                        return true;
+                    } else {
+                        sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
+                        return true;
+                    }
+                } else {
+                    String senderName = "Console";
+                    plugin.getServer().broadcastMessage("*" + " " + senderName + message);
+                    plugin.mAPI.log("*" + " " + senderName + message);
+                    return true;
+                }
             }
         } else if (cmd.equalsIgnoreCase("mchatwho")) {
             if (args.length > 0) {
                 if (sender instanceof Player) {
-			 		if (!plugin.mAPI.checkPermissions(player, "mchat.who")) {
-            			sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
-            			return true;
+                     if (!plugin.mAPI.checkPermissions(player, "mchat.who")) {
+                        sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
+                        return true;
                     }
                 }
 
                 if (plugin.getServer().getPlayer(args[0]) == null) {
-    			    sender.sendMessage(formatPNF(args[0]));
-			        return true;
-    		    } else {
-			        Player receiver = plugin.getServer().getPlayer(args[0]);
-			        formatWho(sender, receiver);
-			        return true;
-    		    }
+                    sender.sendMessage(formatPNF(args[0]));
+                    return true;
+                } else {
+                    Player receiver = plugin.getServer().getPlayer(args[0]);
+                    formatWho(sender, receiver);
+                    return true;
+                }
             }
         } else if(cmd.equalsIgnoreCase("mchatafk")) {
             String message = " Away From Keyboard";
@@ -648,69 +648,69 @@ public class MCommandSender implements CommandExecutor {
                 }
             }
 
-        	if (sender instanceof Player) {
-				if (!plugin.mAPI.checkPermissions(player, "mchat.afk")) {
+            if (sender instanceof Player) {
+                if (!plugin.mAPI.checkPermissions(player, "mchat.afk")) {
                     player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
-    				return true;
+                    return true;
                 }
 
-				if (plugin.isAFK.get(player.getName())) {
-					if (plugin.spoutB) {
-						if (plugin.spoutEnabled) {
-							for (Player players : plugin.getServer().getOnlinePlayers()) {
-								SpoutPlayer sPlayers = (SpoutPlayer) players;
+                if (plugin.isAFK.get(player.getName())) {
+                    if (plugin.spoutB) {
+                        if (plugin.spoutEnabled) {
+                            for (Player players : plugin.getServer().getOnlinePlayers()) {
+                                SpoutPlayer sPlayers = (SpoutPlayer) players;
 
                                 if (sPlayers.isSpoutCraftEnabled())
-									sPlayers.sendNotification(player.getName(), plugin.lListener.nAFK, Material.PAPER);
-								else
+                                    sPlayers.sendNotification(player.getName(), plugin.lListener.nAFK, Material.PAPER);
+                                else
                                     players.sendMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.nAFK);
-							}
-						}
+                            }
+                        }
 
-						SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					}
+                        SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+                    }
 
-					player.setSleepingIgnored(false);
-					plugin.isAFK.put(player.getName(), false);
-					return true;
-				} else {
-					if (plugin.spoutB) {
-						if (plugin.spoutEnabled) {
-							for (Player players : plugin.getServer().getOnlinePlayers()) {
-								SpoutPlayer sPlayers = (SpoutPlayer) players;
-								if (sPlayers.isSpoutCraftEnabled())
-									sPlayers.sendNotification(player.getName(), plugin.lListener.iAFK, Material.PAPER);
-							    else
+                    player.setSleepingIgnored(false);
+                    plugin.isAFK.put(player.getName(), false);
+                    return true;
+                } else {
+                    if (plugin.spoutB) {
+                        if (plugin.spoutEnabled) {
+                            for (Player players : plugin.getServer().getOnlinePlayers()) {
+                                SpoutPlayer sPlayers = (SpoutPlayer) players;
+                                if (sPlayers.isSpoutCraftEnabled())
+                                    sPlayers.sendNotification(player.getName(), plugin.lListener.iAFK, Material.PAPER);
+                                else
                                     players.sendMessage(plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.iAFK + " [" + message + " ]");
                             }
-						}
+                        }
 
-						SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
-					}
+                        SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+                    }
 
-					player.setSleepingIgnored(true);
-					plugin.isAFK.put(player.getName(), true);
-					plugin.AFKLoc.put(player.getName(), player.getLocation());
-					return true;
-				}
-			} else {
-				plugin.mAPI.log(formatMessage("Console's can't be AFK."));
-				return true;
-			}
+                    player.setSleepingIgnored(true);
+                    plugin.isAFK.put(player.getName(), true);
+                    plugin.AFKLoc.put(player.getName(), player.getLocation());
+                    return true;
+                }
+            } else {
+                plugin.mAPI.log(formatMessage("Console's can't be AFK."));
+                return true;
+            }
         } else if(cmd.equalsIgnoreCase("mchatlist")) {
             if (sender instanceof Player) {
-				if (!plugin.mAPI.checkPermissions(player, "mchat.list")) {
-					player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
-					return true;
-				}
+                if (!plugin.mAPI.checkPermissions(player, "mchat.list")) {
+                    player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + cmd + "."));
+                    return true;
+                }
             }
 
-		    // My Way
-		    // sender.sendMessage(plugin.mAPI.addColour("&4" + plugin.lListener.pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
+            // My Way
+            // sender.sendMessage(plugin.mAPI.addColour("&4" + plugin.lListener.pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
 
-		    // Waxdt's Way
+            // Waxdt's Way
             sender.sendMessage(plugin.mAPI.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
-		    formatList(sender);
+            formatList(sender);
             return true;
         }
         
@@ -777,26 +777,26 @@ public class MCommandSender implements CommandExecutor {
         sender.sendMessage(plugin.mAPI.addColour(msg));
     }
 
-	void formatWho(CommandSender sender, Player recipient) {
-		String recipientName = plugin.mAPI.ParsePlayerName(recipient);
-		Integer locX = (int) recipient.getLocation().getX();
-		Integer locY = (int) recipient.getLocation().getY();
-		Integer locZ = (int) recipient.getLocation().getZ();
-		String loc = ("X: " + locX + ", " + "Y: " + locY + ", " +"Z: " + locZ);
-		String world = recipient.getWorld().getName();
+    void formatWho(CommandSender sender, Player recipient) {
+        String recipientName = plugin.mAPI.ParsePlayerName(recipient);
+        Integer locX = (int) recipient.getLocation().getX();
+        Integer locY = (int) recipient.getLocation().getY();
+        Integer locZ = (int) recipient.getLocation().getZ();
+        String loc = ("X: " + locX + ", " + "Y: " + locY + ", " +"Z: " + locZ);
+        String world = recipient.getWorld().getName();
 
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + " Name: " + recipient.getName()));
         sender.sendMessage(plugin.mAPI.addColour("Display Name: " + recipient.getDisplayName()));
-		sender.sendMessage(plugin.mAPI.addColour("Formatted Name: " + recipientName));
+        sender.sendMessage(plugin.mAPI.addColour("Formatted Name: " + recipientName));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Location: [ " + loc + " ]"));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s World: " + world));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Health: " + plugin.mAPI.healthBar(recipient) + " " + recipient.getHealth() + "/20"));
-		sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
+        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
         sender.sendMessage(plugin.mAPI.addColour("Current Item: " + recipient.getItemInHand().toString().replace("ItemStack", "")));
         sender.sendMessage(plugin.mAPI.addColour("Entity ID: #" + recipient.getEntityId()));
-	}
+    }
 
-	String formatPNF(String playerNotFound) {
+    String formatPNF(String playerNotFound) {
         return(plugin.mAPI.addColour(formatMessage("") + " " + plugin.lListener.player + " &e" + playerNotFound + " &4" + plugin.lListener.nFound));
     }
 }
