@@ -75,7 +75,10 @@ public class mChatAPI {
         String exp = String.valueOf(player.getExperience()) + "/" + ((player.getLevel() + 1) * 10);
         String expBar = basicBar(player.getExperience(), ((player.getLevel() + 1) * 10), 10);
         String tExp = String.valueOf(player.getTotalExperience());
-        String gMode = player.getGameMode().name();
+        String gMode = "";
+
+        if (player.getGameMode().name() != null)
+            gMode = player.getGameMode().name();
 
         // Time Var
         Date now = new Date();
