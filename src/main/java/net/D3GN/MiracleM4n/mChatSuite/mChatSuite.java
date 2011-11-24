@@ -481,6 +481,9 @@ public class mChatSuite extends JavaPlugin {
         if (AFKTimer > 0)
             getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 public void run() {
+                    if (mChatEB)
+                        return;
+
                     cListener.load();
 
                     for (Player player : getServer().getOnlinePlayers()) {
@@ -501,6 +504,9 @@ public class mChatSuite extends JavaPlugin {
         if (AFKKickTimer > 0)
             getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
                 public void run() {
+                    if (mChatEB)
+                        return;
+
                     cListener.load();
 
                     for (Player player : getServer().getOnlinePlayers()) {
