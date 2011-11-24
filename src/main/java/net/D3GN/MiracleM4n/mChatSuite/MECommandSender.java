@@ -81,7 +81,7 @@ public class MECommandSender implements CommandExecutor {
                     return true;
                 }
 
-                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender + message);
+                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender.getName() + message);
                 return true;
             } else {
                 plugin.mAPI.log(formatMessage("Console's can't be AFK."));
