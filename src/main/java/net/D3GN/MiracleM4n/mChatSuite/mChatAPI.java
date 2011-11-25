@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -680,24 +679,24 @@ public class mChatAPI {
 
     public String addColour(String string) {
         string = string.replace("`e", "")
-                        .replace("`r", ChatColor.RED.toString())             .replace("`R", ChatColor.DARK_RED.toString())
-                        .replace("`y", ChatColor.YELLOW.toString())          .replace("`Y", ChatColor.GOLD.toString())
-                        .replace("`g", ChatColor.GREEN.toString())           .replace("`G", ChatColor.DARK_GREEN.toString())
-                        .replace("`a", ChatColor.AQUA.toString())            .replace("`A", ChatColor.DARK_AQUA.toString())
-                        .replace("`b", ChatColor.BLUE.toString())            .replace("`B", ChatColor.DARK_BLUE.toString())
-                        .replace("`p", ChatColor.LIGHT_PURPLE.toString())    .replace("`P", ChatColor.DARK_PURPLE.toString())
-                        .replace("`k", ChatColor.BLACK.toString())           .replace("`s", ChatColor.GRAY.toString())
-                        .replace("`S", ChatColor.DARK_GRAY.toString())       .replace("`w", ChatColor.WHITE.toString());
+                       .replace("`r", "\u00A7c")           .replace("`R", "\u00A74")
+                       .replace("`y", "\u00A7e")           .replace("`Y", "\u00A76")
+                       .replace("`g", "\u00A7a")           .replace("`G", "\u00A72")
+                       .replace("`a", "\u00A7b")           .replace("`A", "\u00A73")
+                       .replace("`b", "\u00A79")           .replace("`B", "\u00A71")
+                       .replace("`p", "\u00A7d")           .replace("`P", "\u00A75")
+                       .replace("`k", "\u00A70")           .replace("`s", "\u00A77")
+                       .replace("`S", "\u00A78")           .replace("`w", "\u00A7f");
 
         string = string.replace("<r>", "")
-                        .replace("<black>", "\u00A70")                       .replace("<navy>", "\u00A71")
-                        .replace("<green>", "\u00A72")                       .replace("<teal>", "\u00A73")
-                        .replace("<red>", "\u00A74")                         .replace("<purple>", "\u00A75")
-                        .replace("<gold>", "\u00A76")                        .replace("<silver>", "\u00A77")
-                        .replace("<gray>", "\u00A78")                        .replace("<blue>", "\u00A79")
-                        .replace("<lime>", "\u00A7a")                        .replace("<aqua>", "\u00A7b")
-                        .replace("<rose>", "\u00A7c")                        .replace("<pink>", "\u00A7d")
-                        .replace("<yellow>", "\u00A7e")                      .replace("<white>", "\u00A7f");
+                       .replace("<black>", "\u00A70")      .replace("<navy>", "\u00A71")
+                       .replace("<green>", "\u00A72")      .replace("<teal>", "\u00A73")
+                       .replace("<red>", "\u00A74")        .replace("<purple>", "\u00A75")
+                       .replace("<gold>", "\u00A76")       .replace("<silver>", "\u00A77")
+                       .replace("<gray>", "\u00A78")       .replace("<blue>", "\u00A79")
+                       .replace("<lime>", "\u00A7a")       .replace("<aqua>", "\u00A7b")
+                       .replace("<rose>", "\u00A7c")       .replace("<pink>", "\u00A7d")
+                       .replace("<yellow>", "\u00A7e")     .replace("<white>", "\u00A7f");
 
         string = string.replaceAll("(§([a-fA-F0-9]))", "\u00A7$2");
 
@@ -827,7 +826,7 @@ public class mChatAPI {
         return msg;
     }
 
-    public void log(String loggedString) {
-        plugin.getServer().getConsoleSender().sendMessage(loggedString);
+    public void log(Object loggedObject) {
+        plugin.getServer().getConsoleSender().sendMessage(loggedObject.toString());
     }
 }

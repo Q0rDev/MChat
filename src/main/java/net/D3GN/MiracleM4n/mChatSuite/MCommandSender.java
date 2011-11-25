@@ -30,7 +30,17 @@ public class MCommandSender implements CommandExecutor {
             return false;
 
         if (cmd.equalsIgnoreCase("mchat")) {
-            if (args[0].equalsIgnoreCase("reload")
+            if (args[0].equalsIgnoreCase("1")) {
+                if (sender instanceof Player) {
+                    if (!plugin.mAPI.checkPermissions(player, "mchat.gui")) {
+                        sender.sendMessage(formatMessage("You are not to look at my fail GUI."));
+                        return true;
+                    }
+
+                    mChatSuite.mGUI.openPopup(player);
+                    return true;
+                }
+            } else if (args[0].equalsIgnoreCase("reload")
              || args[0].equalsIgnoreCase("r")) {
                 if (args.length > 1)
                     if (args[1].equalsIgnoreCase("config")
@@ -78,7 +88,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.reloadConfigs();
+                        plugin.loadConfigs();
                         plugin.setupConfigs();
                         sender.sendMessage(formatMessage("All Config's Reloaded."));
                         return true;

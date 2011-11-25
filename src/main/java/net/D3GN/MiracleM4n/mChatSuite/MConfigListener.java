@@ -83,7 +83,7 @@ public class MConfigListener {
 
         if (plugin.AFKKickTimer < 20)
             plugin.AFKKickTimer = 20;
-        
+
     }
 
     void defaultConfig() {

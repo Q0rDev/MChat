@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
+import net.D3GN.MiracleM4n.mChatSuite.GUI.*;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -52,6 +53,13 @@ public class mChatSuite extends JavaPlugin {
     MCConfigListener mCListener;
     MLanguageListener lListener;
     MCustomListener cusListener;
+
+    // GUI
+    public static Main mGUI;
+    public static GUIEvent mGUIEvent;
+    public static Labels mLabels;
+    public static Buttons mButtons;
+    public static TextFields mTextFields;
 
     // API
     public static mChatAPI API;
@@ -103,16 +111,16 @@ public class mChatSuite extends JavaPlugin {
     Boolean sClanB = false;
 
     // Configuration
-    YamlConfiguration mConfig = null;
-    YamlConfiguration mIConfig = null;
-    YamlConfiguration mCConfig = null;
-    YamlConfiguration mELocale = null;
+    public YamlConfiguration mConfig = null;
+    public YamlConfiguration mIConfig = null;
+    public YamlConfiguration mCConfig = null;
+    public YamlConfiguration mELocale = null;
 
     // Configuration Files
-    File mConfigF = null;
-    File mIConfigF = null;
-    File mCConfigF = null;
-    File mELocaleF = null;
+    public File mConfigF = null;
+    public File mIConfigF = null;
+    public File mCConfigF = null;
+    public File mELocaleF = null;
 
     // Optional mChatSuite only Info Support
     Boolean useNewInfo = false;
@@ -173,9 +181,9 @@ public class mChatSuite extends JavaPlugin {
     Boolean healthAchievement = true;
     Boolean spoutB = false;
     Boolean mAFKHQ = true;
-    Boolean mChatEB = true;
+    Boolean mChatEB = false;
     Boolean useAFKList = false;
-    Boolean mChatPB = true;
+    Boolean mChatPB = false;
     Boolean spoutPM = false;
 
     // Numbers
@@ -256,8 +264,15 @@ public class mChatSuite extends JavaPlugin {
             mPCSender = new MPCommandSender(this);
 
         if (!mAPIOnly) {
-            if (spoutB)
+            if (spoutB) {
                 cusListener = new MCustomListener(this);
+
+                mGUI = new Main(this);
+                mGUIEvent = new GUIEvent(this);
+                mLabels = new Labels(this);
+                mTextFields = new TextFields(this);
+                mButtons = new Buttons(this);
+            }
 
             pListener = new MPlayerListener(this);
             bListener = new MBlockListener(this);
@@ -343,8 +358,10 @@ public class mChatSuite extends JavaPlugin {
                 pm.registerEvent(Event.Type.ENTITY_DAMAGE, eListener, Priority.Normal, this);
             }
 
-            if (spoutB)
+            if (spoutB) {
                 pm.registerEvent(Event.Type.CUSTOM_EVENT, cusListener, Event.Priority.Normal, this);
+                pm.registerEvent(Event.Type.CUSTOM_EVENT, mGUIEvent, Event.Priority.Normal, this);
+            }
 
             if (formatEvents) {
                 pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
@@ -455,7 +472,7 @@ public class mChatSuite extends JavaPlugin {
             pm.disablePlugin(plugin);
     }
 
-    void setupConfigs() {
+    public void setupConfigs() {
         cListener.checkConfig();
         cListener.loadConfig();
 
@@ -467,7 +484,7 @@ public class mChatSuite extends JavaPlugin {
         lListener.loadLocale();
     }
 
-    void reloadConfigs() {
+    public void loadConfigs() {
         cListener.load();
 
         mCListener.load();
@@ -478,48 +495,52 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void setupTasks() {
-        if (AFKTimer > 0)
-            getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-                public void run() {
-                    if (mChatEB)
-                        return;
+        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                if (mChatEB)
+                    return;
 
-                    cListener.load();
+                if (AFKTimer < 0)
+                    return;
 
-                    for (Player player : getServer().getOnlinePlayers()) {
-                        if (mAPI.checkPermissions(player, "mchat.afk.bypass"))
-                            continue;
+                cListener.load();
 
-                        if (isAFK.get(player.getName()))
-                            continue;
+                for (Player player : getServer().getOnlinePlayers()) {
+                    if (mAPI.checkPermissions(player, "mchat.afk.bypass"))
+                        continue;
 
-                        if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
-                            getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " AutoAfk");
-                        } else
-                            isAFK.put(player.getName(), false);
-                    }
+                    if (isAFK.get(player.getName()))
+                        continue;
+
+                    if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
+                        getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " AutoAfk");
+                    } else
+                        isAFK.put(player.getName(), false);
                 }
-            }, 20L * 5, 20L * 5);
+            }
+        }, 20L * 5, 20L * 5);
 
-        if (AFKKickTimer > 0)
-            getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-                public void run() {
-                    if (mChatEB)
-                        return;
+        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                if (mChatEB)
+                    return;
 
-                    cListener.load();
+                if (AFKKickTimer < 0)
+                    return;
 
-                    for (Player player : getServer().getOnlinePlayers()) {
-                        if (mAPI.checkPermissions(player, "mchat.afkkick.bypass"))
-                            continue;
+                cListener.load();
 
-                        if (!isAFK.get(player.getName()))
-                            continue;
+                for (Player player : getServer().getOnlinePlayers()) {
+                    if (mAPI.checkPermissions(player, "mchat.afkkick.bypass"))
+                        continue;
 
-                        if (new Date().getTime() - (AFKKickTimer * 1000) > lastMove.get(player.getName()))
-                            player.kickPlayer("mAFK Kick");
-                    }
+                    if (!isAFK.get(player.getName()))
+                        continue;
+
+                    if (new Date().getTime() - (AFKKickTimer * 1000) > lastMove.get(player.getName()))
+                        player.kickPlayer("mAFK Kick");
                 }
-            }, 20L * 10, 20L * 10);
+            }
+        }, 20L * 10, 20L * 10);
     }
 }

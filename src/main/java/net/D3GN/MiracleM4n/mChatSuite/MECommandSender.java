@@ -133,12 +133,12 @@ public class MECommandSender implements CommandExecutor {
                 plugin.isAFK.put(afkTarget.getName(), false);
 
                 if (plugin.useAFKList)
-                    if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget)).length() > 15) {
-                            String pLName = "[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget);
+                    if (plugin.mAPI.ParseTabbedList(afkTarget).length() > 15) {
+                            String pLName = plugin.mAPI.ParseTabbedList(afkTarget);
                             pLName = pLName.substring(0, 16);
                             afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget));
+                        afkTarget.setPlayerListName(plugin.mAPI.ParseTabbedList(afkTarget));
 
                 return true;
             } else {
@@ -162,12 +162,12 @@ public class MECommandSender implements CommandExecutor {
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if (plugin.mAPI.ParseTabbedList(afkTarget).length() > 15) {
-                            String pLName = plugin.mAPI.ParseTabbedList(afkTarget);
+                    if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget)).length() > 15) {
+                            String pLName = plugin.mAPI.addColour("[<gold>" + plugin.lListener.AFK + "] " + afkTarget);
                             pLName = pLName.substring(0, 16);
                             afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.mAPI.ParseTabbedList(afkTarget));
+                        afkTarget.setPlayerListName(plugin.mAPI.addColour("<gold>[" + plugin.lListener.AFK + "] " + afkTarget));
 
                 return true;
             }

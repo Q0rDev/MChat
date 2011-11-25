@@ -149,5 +149,12 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.getspout</groupId>
+            <artifactId>spoutapi</artifactId>
+            <version>dev-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
