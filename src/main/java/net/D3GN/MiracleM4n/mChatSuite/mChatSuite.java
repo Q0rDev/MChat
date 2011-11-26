@@ -497,7 +497,7 @@ public class mChatSuite extends JavaPlugin {
     void setupTasks() {
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (mChatEB)
+                if (!mChatEB)
                     return;
 
                 if (AFKTimer < 0)
@@ -522,7 +522,7 @@ public class mChatSuite extends JavaPlugin {
 
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (mChatEB)
+                if (!mChatEB)
                     return;
 
                 if (AFKKickTimer < 0)
