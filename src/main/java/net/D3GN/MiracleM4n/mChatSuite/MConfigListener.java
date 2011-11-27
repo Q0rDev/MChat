@@ -34,6 +34,7 @@ public class MConfigListener {
         plugin.eventFormat = config.getString("format.event", plugin.eventFormat);
         plugin.tabbedListFormat = config.getString("format.tabbedList", plugin.tabbedListFormat);
         plugin.listCmdFormat = config.getString("format.listCmd", plugin.listCmdFormat);
+        plugin.meFormat = config.getString("format.me", plugin.meFormat);
         plugin.joinMessage = config.getString("message.join", plugin.joinMessage);
         plugin.leaveMessage = config.getString("message.leave", plugin.leaveMessage);
         plugin.kickMessage = config.getString("message.kick", plugin.kickMessage);
@@ -100,6 +101,7 @@ public class MConfigListener {
         config.set("format.event", plugin.eventFormat);
         config.set("format.tabbedList", plugin.tabbedListFormat);
         config.set("format.listCmd", plugin.listCmdFormat);
+        config.set("format.me", plugin.meFormat);
         config.set("message.join", plugin.joinMessage);
         config.set("message.leave", plugin.leaveMessage);
         config.set("message.kick", plugin.kickMessage);
@@ -180,6 +182,7 @@ public class MConfigListener {
         checkOption(config, "format.event", plugin.eventFormat);
         checkOption(config, "format.tabbedList", plugin.tabbedListFormat);
         checkOption(config, "format.listCmd", plugin.listCmdFormat);
+        checkOption(config, "format.me", plugin.meFormat);
         checkOption(config, "message.join", plugin.joinMessage);
         checkOption(config, "message.leave", plugin.leaveMessage);
         checkOption(config, "message.kick", plugin.kickMessage);

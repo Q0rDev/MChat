@@ -57,9 +57,7 @@ public class mChatSuite extends JavaPlugin {
     // GUI
     public static Main mGUI;
     public static GUIEvent mGUIEvent;
-    public static Labels mLabels;
-    public static Buttons mButtons;
-    public static TextFields mTextFields;
+    public static Pages mPages;
 
     // API
     public static mChatAPI API;
@@ -150,6 +148,7 @@ public class mChatSuite extends JavaPlugin {
     String chatFormat = "+p+dn+s&f: +m";
     String nameFormat = "+p+dn+s&e";
     String eventFormat = "+p+dn+s&e";
+    String meFormat = "** +p+dn+s&e +m";
     String dateFormat = "HH:mm:ss";
 
     // Messages
@@ -269,9 +268,7 @@ public class mChatSuite extends JavaPlugin {
 
                 mGUI = new Main(this);
                 mGUIEvent = new GUIEvent(this);
-                mLabels = new Labels(this);
-                mTextFields = new TextFields(this);
-                mButtons = new Buttons(this);
+                mPages = new Pages(this);
             }
 
             pListener = new MPlayerListener(this);

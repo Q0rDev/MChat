@@ -54,6 +54,9 @@ public class MIConfigListener {
         config.set("groups.admin.info.suffix", "");
         config.set("groups.admin.info.custVar", "");
 
+        config.set("mname.MiracleM4n", "M1r4c13M4n");
+        config.set("mname.Jessica_RS", "M1r4c13M4n's Woman");
+
         save();
     }
 
@@ -100,6 +103,14 @@ public class MIConfigListener {
 
             hasChanged = true;
         }
+
+        if (config.get("mname") == null) {
+            config.set("mname.MiracleM4n", "M1r4c13M4n");
+            config.set("mname.Jessica_RS", "M1r4c13M4n's Woman");
+
+            hasChanged = true;
+        }
+
 
         if (hasChanged) {
             configO.header(

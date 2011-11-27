@@ -167,7 +167,7 @@ public class mChatAPI {
             msg = replaceCensoredWords(msg);
 
         search = new String[] {
-                vI+"mname,"+vI+"mn",
+                vI+"mnameformat,"+vI+"mnf",
                 vI+"displayname,"+vI+"dname,"+vI+"dn",
                 vI+"experiencebar,"+vI+"expb,"+vI+"ebar,"+vI+"eb",
                 vI+"experience,"+vI+"exp",
@@ -180,6 +180,7 @@ public class mChatAPI {
                 vI+"location,"+vI+"loc",
                 vI+"level,"+vI+"l",
                 vI+"money,"+vI+"mon",
+                vI+"mname,"+vI+"mn",
                 vI+"name,"+vI+"n",
                 vI+"prefix,"+vI+"p",
                 vI+"suffix,"+vI+"s",
@@ -219,6 +220,7 @@ public class mChatAPI {
                 loc,
                 level,
                 money,
+                getmName(player),
                 player.getName(),
                 prefix,
                 suffix,
@@ -267,6 +269,10 @@ public class mChatAPI {
         return ParseChatMessage(player.getName(), "", plugin.listCmdFormat);
     }
 
+    public String ParseMe(Player player, String msg) {
+        return ParseChatMessage(player.getName(), msg, plugin.meFormat);
+    }
+
     public String ParseChatMessage(String pName, String msg) {
         return ParseChatMessage(pName, msg, plugin.chatFormat);
     }
@@ -290,6 +296,11 @@ public class mChatAPI {
         return ParseChatMessage(pName, "", plugin.listCmdFormat);
     }
 
+    public String ParseMe(String pName, String msg) {
+        return ParseChatMessage(pName, msg, plugin.meFormat);
+    }
+
+
     public String getGroupName(String group) {
         if (group.isEmpty())
             return "";
@@ -308,6 +319,22 @@ public class mChatAPI {
             return plugin.mIConfig.get("worldnames." + world).toString();
 
         return world;
+    }
+
+    public String getmName(String player) {
+        if (plugin.mIConfig.isSet("mname." + player))
+            if (!(plugin.mIConfig.getString("mname." + player).isEmpty()))
+                return plugin.mIConfig.getString("mname." + player);
+
+        return player;
+    }
+
+    public String getmName(Player player) {
+        if (plugin.mIConfig.isSet("mname." + player.getName()))
+            if (!(plugin.mIConfig.getString("mname." + player.getName()).isEmpty()))
+                return plugin.mIConfig.getString("mname." + player.getName());
+
+        return player.getName();
     }
 
     /*
@@ -389,10 +416,10 @@ public class mChatAPI {
         String world = player.getWorld().getName();
 
         if (plugin.mIConfig.isSet("users." + pName + ".info." + info))
-            return plugin.mIConfig.get("users." + pName + ".info." + info).toString();
+            return plugin.mIConfig.getString("users." + pName + ".info." + info);
 
         else if (plugin.mIConfig.isSet("users." + pName + ".worlds." + world + "." + info))
-            return plugin.mIConfig.get("users." + pName + ".worlds." + world + "." + info).toString();
+            return plugin.mIConfig.getString("users." + pName + ".worlds." + world + "." + info);
 
         return "";
     }
@@ -403,10 +430,10 @@ public class mChatAPI {
         String group = getmChatGroup(player);
 
         if (plugin.mIConfig.isSet("groups." + group + ".info." + info))
-            return plugin.mIConfig.get("groups." + group + ".info." + info).toString();
+            return plugin.mIConfig.getString("groups." + group + ".info." + info);
 
         else if (plugin.mIConfig.isSet("groups." + group + ".worlds." + world + "." + info))
-            return plugin.mIConfig.get("groups." + group + ".worlds." + world + "." + info).toString();
+            return plugin.mIConfig.getString("groups." + group + ".worlds." + world + "." + info);
 
         return "";
     }
@@ -414,7 +441,7 @@ public class mChatAPI {
     String getmChatGroup(Player player) {
         String pName = player.getName();
         if (plugin.mIConfig.isSet("users." + pName + ".group"))
-            return plugin.mIConfig.get("users." + pName + ".group").toString();
+            return plugin.mIConfig.getString("users." + pName + ".group");
 
         return "";
     }

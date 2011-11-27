@@ -17,31 +17,33 @@ public class Main {
         this.plugin = plugin;
     }
     HashMap<String, UUID> idMap = new HashMap<String, UUID>();
-
-    public void openPopup(Player player) {
-        SpoutPlayer sPlayer = (SpoutPlayer) player;
-
-        sPlayer.getMainScreen().attachPopupScreen(createPopup(player));
-    }
+    HashMap<String, String> popupMap = new HashMap<String, String>();
 
     public void closePopup(Player player) {
-        SpoutPlayer sPlayer = (SpoutPlayer) player;
+        SpoutPlayer sPlayer = (SpoutPlayer) player; 
 
-        sPlayer.getMainScreen().getActivePopup().close();
+        if (sPlayer.getMainScreen().getActivePopup() != null)
+            sPlayer.getMainScreen().getActivePopup().close();
     }
 
-    PopupScreen createPopup(Player player) {
+    public void openMainPopup(Player player) {
+        openPopup(player, "Main");
+    }
+
+    public void openPopup(Player player, String name) {
+        SpoutPlayer sPlayer = (SpoutPlayer) player; 
+
+        closePopup(player);
+
         PopupScreen popup = new GenericPopup();
 
-        mChatSuite.mLabels.attachLabels(player, popup);
-        mChatSuite.mTextFields.attachTextFields(player, popup);
-        mChatSuite.mButtons.attachButtons(player, popup);
+        mChatSuite.mPages.attachPage(player, popup, name);
 
         attachStaticItems(popup);
 
         idMap.put(player.getName(), popup.getId());
 
-        return popup;
+       sPlayer.getMainScreen().attachPopupScreen(popup);
     }
 
     PopupScreen attachStaticItems(PopupScreen popup) {
@@ -50,7 +52,8 @@ public class Main {
         mainPic.setUrl("http://mdev.in/plugins/mChatSuite/Main.png");
         mainPic.setWidth(230);
         mainPic.setHeight(56);
-        mainPic.setY(mainPic.getMaxHeight()-57);
+        mainPic.setY(2);
+        mainPic.setX(2);
 
         popup.attachWidget(plugin, mainPic);
 

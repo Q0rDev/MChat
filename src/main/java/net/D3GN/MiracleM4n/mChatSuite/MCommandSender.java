@@ -37,7 +37,7 @@ public class MCommandSender implements CommandExecutor {
                         return true;
                     }
 
-                    mChatSuite.mGUI.openPopup(player);
+                    mChatSuite.mGUI.openMainPopup(player);
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("reload")
