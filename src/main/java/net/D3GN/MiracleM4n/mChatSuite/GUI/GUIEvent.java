@@ -9,7 +9,6 @@ import org.getspout.spoutapi.event.screen.ScreenListener;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class GUIEvent extends ScreenListener {
     mChatSuite plugin;
@@ -18,13 +17,11 @@ public class GUIEvent extends ScreenListener {
         this.plugin = plugin;
     }
 
-    HashMap<String, String> lastPage = new HashMap<String, String>();
-
     public void onButtonClick(ButtonClickEvent event) {
         Player player = event.getPlayer();
         SpoutPlayer sPlayer = (SpoutPlayer) player;
 
-        if (sPlayer.getMainScreen().getActivePopup().getId() != mChatSuite.mGUI.idMap.get(player.getName()))
+        if (sPlayer.getMainScreen().getActivePopup().getId() != mChatSuite.mGUI.popupMap.get(player.getName()).getId())
             return;
 
         if (event.getButton().equals(mChatSuite.mPages.buttonMap.get("Back|" + player.getName())))

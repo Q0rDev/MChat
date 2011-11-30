@@ -18,6 +18,7 @@ public class Pages {
     HashMap<String, GenericLabel> labelMap = new HashMap<String, GenericLabel>();
     HashMap<String, GenericTextField> textFieldMap = new HashMap<String, GenericTextField>();
     HashMap<String, GenericButton> buttonMap = new HashMap<String, GenericButton>();
+    HashMap<String, GenericTexture> textureMap = new HashMap<String, GenericTexture>();
 
     void attachPage(Player player, PopupScreen popup, String name) {
         createCloseButton(player);
@@ -77,10 +78,14 @@ public class Pages {
     }
 
     void MainPage(Player player, PopupScreen popup) {
+        createLogo(player);
+
         createGenericButton(player, "GOptions", "General Options", 12, 84, 200, 40);
         createGenericButton(player, "FOptions", "Format Options", 12, 126, 200, 40);
         createGenericButton(player, "MOptions", "Message Options", 216, 84, 200, 40);
         createGenericButton(player, "IOptions", "Info Options", 216, 126, 200, 40);
+
+        popup.attachWidget(plugin, getLogo(player));
 
         popup.attachWidget(plugin, getButton(player, "GOptions"));
         popup.attachWidget(plugin, getButton(player, "FOptions"));
@@ -89,11 +94,91 @@ public class Pages {
     }
 
     void OptionsPage(Player player, PopupScreen popup) {
+        createGenericLabel(player, "bAPIOnly", "API Only:", 2, 84, 200, 8);
+        createGenericLabel(player, "bFormatEvents", "Format Events:", 2, 114, 200, 8);
+        createGenericLabel(player, "bUseSpout", "Use Spout:", 2, 142, 200, 8);
+        createGenericLabel(player, "iChatDistance", "Chat Distance (Negative to Disable):", 216, 84, 200, 8);
+        createGenericLabel(player, "vIndicator", "Variable Indicator:", 216, 114, 200, 8);
 
+        createGenericTextField(player, "bAPIOnly", plugin.mConfig.getBoolean("mchat.apiOnly"), "API Only", 2, 96, 150, 16);
+        createGenericTextField(player, "bFormatEvents", plugin.mConfig.getBoolean("mchat.formatEvents"), "Format Events", 2, 124, 150, 16);
+        createGenericTextField(player, "bUseSpout", plugin.mConfig.getBoolean("mchat.spout"), "Use Spout", 2, 152, 150, 16);
+        createGenericTextField(player, "iChatDistance", plugin.mConfig.getDouble("mchat.chatDistance"), "Chat Distance", 216, 96, 150, 16);
+        createGenericTextField(player, "vIndicator", plugin.mConfig.getString("mchat.varIndicator"), "Variable Indicator", 216, 124, 150, 16);
+
+        createGenericSubmitButton(player, "bAPIOnly", 154, 94);
+        createGenericSubmitButton(player, "bFormatEvents", 154, 122);
+        createGenericSubmitButton(player, "bUseSpout", 154, 150);
+        createGenericSubmitButton(player, "iChatDistance", 368, 94);
+        createGenericSubmitButton(player, "vIndicator", 368, 122);
+
+        createGenericButton(player, "mChatEOP", "mChatEssentials Options", 1, 172, 213, 20);
+        createGenericButton(player, "pmChatOP", "pmChat Options", 215, 172, 213, 20);
+
+        popup.attachWidget(plugin, getLabel(player, "bAPIOnly"));
+        popup.attachWidget(plugin, getLabel(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getLabel(player, "bUseSpout"));
+        popup.attachWidget(plugin, getLabel(player, "iChatDistance"));
+        popup.attachWidget(plugin, getLabel(player, "vIndicator"));
+
+        popup.attachWidget(plugin, getTextField(player, "bAPIOnly"));
+        popup.attachWidget(plugin, getTextField(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getTextField(player, "bUseSpout"));
+        popup.attachWidget(plugin, getTextField(player, "iChatDistance"));
+        popup.attachWidget(plugin, getTextField(player, "vIndicator"));
+
+        popup.attachWidget(plugin, getButton(player, "bAPIOnly"));
+        popup.attachWidget(plugin, getButton(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getButton(player, "bUseSpout"));
+        popup.attachWidget(plugin, getButton(player, "iChatDistance"));
+        popup.attachWidget(plugin, getButton(player, "vIndicator"));
+
+        popup.attachWidget(plugin, getButton(player, "mChatEOP"));
+        popup.attachWidget(plugin, getButton(player, "pmChatOP"));
     }
 
     void mChatEPage(Player player, PopupScreen popup) {
+        createGenericLabel(player, "bAPIOnly", "API Only:", 2, 84, 200, 8);
+        createGenericLabel(player, "bFormatEvents", "Format Events:", 2, 114, 200, 8);
+        createGenericLabel(player, "bUseSpout", "Use Spout:", 2, 142, 200, 8);
+        createGenericLabel(player, "iChatDistance", "Chat Distance (Negative to Disable):", 216, 84, 200, 8);
+        createGenericLabel(player, "vIndicator", "Variable Indicator:", 216, 114, 200, 8);
 
+        createGenericTextField(player, "bAPIOnly", plugin.mConfig.getBoolean("mchat.apiOnly"), "API Only", 2, 96, 150, 16);
+        createGenericTextField(player, "bFormatEvents", plugin.mConfig.getBoolean("mchat.formatEvents"), "Format Events", 2, 124, 150, 16);
+        createGenericTextField(player, "bUseSpout", plugin.mConfig.getBoolean("mchat.spout"), "Use Spout", 2, 152, 150, 16);
+        createGenericTextField(player, "iChatDistance", plugin.mConfig.getDouble("mchat.chatDistance"), "Chat Distance", 216, 96, 150, 16);
+        createGenericTextField(player, "vIndicator", plugin.mConfig.getString("mchat.varIndicator"), "Variable Indicator", 216, 124, 150, 16);
+
+        createGenericSubmitButton(player, "bAPIOnly", 154, 94);
+        createGenericSubmitButton(player, "bFormatEvents", 154, 122);
+        createGenericSubmitButton(player, "bUseSpout", 154, 150);
+        createGenericSubmitButton(player, "iChatDistance", 368, 94);
+        createGenericSubmitButton(player, "vIndicator", 368, 122);
+
+        createGenericButton(player, "mChatEOP", "mChatEssentials Options", 1, 172, 213, 20);
+        createGenericButton(player, "pmChatOP", "pmChat Options", 215, 172, 213, 20);
+
+        popup.attachWidget(plugin, getLabel(player, "bAPIOnly"));
+        popup.attachWidget(plugin, getLabel(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getLabel(player, "bUseSpout"));
+        popup.attachWidget(plugin, getLabel(player, "iChatDistance"));
+        popup.attachWidget(plugin, getLabel(player, "vIndicator"));
+
+        popup.attachWidget(plugin, getTextField(player, "bAPIOnly"));
+        popup.attachWidget(plugin, getTextField(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getTextField(player, "bUseSpout"));
+        popup.attachWidget(plugin, getTextField(player, "iChatDistance"));
+        popup.attachWidget(plugin, getTextField(player, "vIndicator"));
+
+        popup.attachWidget(plugin, getButton(player, "bAPIOnly"));
+        popup.attachWidget(plugin, getButton(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getButton(player, "bUseSpout"));
+        popup.attachWidget(plugin, getButton(player, "iChatDistance"));
+        popup.attachWidget(plugin, getButton(player, "vIndicator"));
+
+        popup.attachWidget(plugin, getButton(player, "mChatEOP"));
+        popup.attachWidget(plugin, getButton(player, "pmChatOP"));
     }
 
     void pmChatPage(Player player, PopupScreen popup) {
@@ -120,7 +205,7 @@ public class Pages {
         createGenericSubmitButton(player, "nFormat", 154, 94);
         createGenericSubmitButton(player, "cFormat", 154, 122);
         createGenericSubmitButton(player, "dFormat", 154, 150);
-        createGenericSubmitButton(player, "eFormat", 154, 180);
+        createGenericSubmitButton(player, "eFormat", 154, 178);
         createGenericSubmitButton(player, "mFormat", 368, 94);
         createGenericSubmitButton(player, "tFormat", 368, 122);
         createGenericSubmitButton(player, "lFormat", 368, 150);
@@ -242,14 +327,14 @@ public class Pages {
         buttonMap.put(name + "|" + player.getName(), button);
     }
 
-    void createGenericTextField(Player player, String name, String text, String toolTip, int atX, int atY, int SizeX, int SizeY) {
+    void createGenericTextField(Player player, String name, Object text, String toolTip, int atX, int atY, int SizeX, int SizeY) {
         GenericTextField field = new GenericTextField();
 
         field.setHeight(SizeY);
         field.setWidth(SizeX);
         field.setX(atX);
         field.setY(atY);
-        field.setText(text);
+        field.setText(text.toString());
         field.setTooltip(toolTip);
         field.setMaximumCharacters(100);
 
@@ -267,6 +352,22 @@ public class Pages {
         label.setTextColor(new Color(1.0F, 0, 0, 1.0F));
 
         labelMap.put(name + "|" + player.getName(), label);
+    }
+
+    void createLogo(Player player) {
+        GenericTexture mainPic = new GenericTexture();
+
+        mainPic.setUrl("http://mdev.in/plugins/mChatSuite/Main.png");
+        mainPic.setWidth(230);
+        mainPic.setHeight(56);
+        mainPic.setY(2);
+        mainPic.setX(2);
+
+        textureMap.put("mLogo" + "|" + player.getName(), mainPic);
+    }
+
+    GenericTexture getLogo(Player player) {
+        return textureMap.get("mLogo" + "|" + player.getName());
     }
 
     GenericButton getButton(Player player, String name) {
