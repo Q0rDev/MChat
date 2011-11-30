@@ -18,6 +18,8 @@ import com.nijikokun.register.payment.Methods;
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 
+import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
+
 import net.D3GN.MiracleM4n.mChannel.mChannel;
 
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
@@ -587,13 +589,14 @@ public class mChatAPI {
      * GroupManager Stuff
      */
     String getGroupManagerInfo(Player player, String info) {
-        //if (info.substring(0, 4).equals("group"))
+        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(player);
+
         if (info.equals("group"))
             return getGroupManagerGroups(player, info);
 
         String pName = player.getName();
-        String group = plugin.gmPermissions.getGroup(pName);
-        String userString = plugin.gmPermissions.getUserPermissionString(pName, info);
+        String group = gmPermissions.getGroup(pName);
+        String userString = gmPermissions.getUserPermissionString(pName, info);
 
         if (userString != null && !userString.isEmpty())
             return userString;
@@ -601,19 +604,14 @@ public class mChatAPI {
         if (group == null)
             return "";
 
-        return plugin.gmPermissions.getGroupPermissionString(group, info);
+        return gmPermissions.getGroupPermissionString(group, info);
     }
 
     String getGroupManagerGroups(Player player, String info) {
-        String pName = player.getName();
-        //Integer groupVal;
-        String group;
+        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(player);
 
-        //try {
-            //group = plugin.gmPermissions.getGroups(pName)[new Integer(info.charAt(5))];
-        //} catch (NumberFormatException ignored) {
-            group = plugin.gmPermissions.getGroup(pName);
-        //}
+        String pName = player.getName();
+        String group = gmPermissions.getGroup(pName);
 
         if (group == null)
             return "";
@@ -748,7 +746,7 @@ public class mChatAPI {
                 return true;
 
         if (plugin.gmPermissionsB)
-            if (plugin.gmPermissions.has(player, node))
+            if (plugin.gmPermissionsWH.getWorldPermissions(player).has(player, node))
                 return true;
 
         if (plugin.PEXB)
@@ -765,7 +763,7 @@ public class mChatAPI {
                 return true;
 
         if (plugin.gmPermissionsB)
-            if (plugin.gmPermissions.has(player, node))
+            if (plugin.gmPermissionsWH.getWorldPermissions(player).has(player, node))
                 return true;
 
         if (plugin.PEXB)

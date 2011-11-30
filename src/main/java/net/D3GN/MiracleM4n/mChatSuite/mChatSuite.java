@@ -27,7 +27,7 @@ import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
 import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
+import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 
 import org.getspout.spoutapi.SpoutManager;
 
@@ -75,7 +75,7 @@ public class mChatSuite extends JavaPlugin {
     Boolean permissionsB = false;
 
     // GroupManager
-    AnjoPermissionsHandler gmPermissions;
+    WorldsHolder gmPermissionsWH;
     Boolean gmPermissionsB = false;
 
     // PermissionsEX
@@ -409,7 +409,7 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("GroupManager");
         if (permTest != null) {
             gmPermissionsB = true;
-            gmPermissions = ((GroupManager) permTest).getWorldsHolder().getDefaultWorld().getPermissionsHandler();
+            gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
             mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
