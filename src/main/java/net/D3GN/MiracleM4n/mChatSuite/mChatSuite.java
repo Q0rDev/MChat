@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
-import net.D3GN.MiracleM4n.mChatSuite.GUI.*;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -27,9 +26,12 @@ import com.randomappdev.pluginstats.Ping;
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
+import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 
 import org.getspout.spoutapi.SpoutManager;
+
+import net.D3GN.MiracleM4n.mChatSuite.GUI.*;
 
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
@@ -407,6 +409,7 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("GroupManager");
         if (permTest != null) {
             gmPermissionsB = true;
+            gmPermissions = ((GroupManager) permTest).getWorldsHolder().getDefaultWorld().getPermissionsHandler();
             mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
