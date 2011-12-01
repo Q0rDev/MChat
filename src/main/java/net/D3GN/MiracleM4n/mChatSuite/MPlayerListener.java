@@ -140,7 +140,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
 
         if (plugin.formatEvents)
-            event.setJoinMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Join"));
+            if (plugin.suppressMessages) {
+                suppressEventMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Join"), "mchat.suppress.join");
+                event.setJoinMessage("");
+            } else
+                event.setJoinMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Join"));
     }
 
     public void onPlayerKick(PlayerKickEvent event) {
@@ -159,7 +163,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (msg == null)
             return;
 
-        event.setLeaveMessage(plugin.mAPI.ParseEventName(pName) + " " + kickMsg);
+        if (plugin.suppressMessages) {
+            suppressEventMessage(plugin.mAPI.ParseEventName(pName) + " " + kickMsg, "mchat.suppress.kick");
+            event.setLeaveMessage("");
+        } else
+            event.setLeaveMessage(plugin.mAPI.ParseEventName(pName) + " " + kickMsg);
     }
 
     public void onPlayerQuit(PlayerQuitEvent event) {
@@ -169,7 +177,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (msg == null)
             return;
 
-        event.setQuitMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Quit"));
+        if (plugin.suppressMessages) {
+            suppressEventMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Quit"), "mchat.suppress.quit");
+            event.setQuitMessage("");
+        } else
+            event.setQuitMessage(plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.getEventMessage("Quit"));
     }
 
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -205,5 +217,14 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     }
 
     public void run() {}
+
+    void suppressEventMessage(String format, String permNode) {
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            if (!plugin.mAPI.checkPermissions(player, permNode))
+                player.sendMessage(format);
+        }
+
+        plugin.mAPI.log(format);
+    }
 }
 

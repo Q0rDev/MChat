@@ -61,6 +61,7 @@ public class MConfigListener {
         plugin.chatDistance = config.getDouble("mchat.chatDistance", plugin.chatDistance);
         plugin.varIndicator = config.getString("mchat.varIndicator", plugin.varIndicator);
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
+        plugin.suppressMessages = config.getBoolean("mchat.suppressMessages", plugin.suppressMessages);
         plugin.useNewInfo = config.getBoolean("info.useNewInfo", plugin.useNewInfo);
         plugin.useLeveledNodes = config.getBoolean("info.useLeveledNodes", plugin.useLeveledNodes);
         plugin.useOldNodes = config.getBoolean("info.useOldNodes", plugin.useOldNodes);
@@ -128,12 +129,12 @@ public class MConfigListener {
         config.set("mchat.chatDistance", plugin.chatDistance);
         config.set("mchat.varIndicator", plugin.varIndicator);
         config.set("mchat.spout", plugin.spoutEnabled);
+        config.set("mchat.suppressMessages", plugin.suppressMessages);
         config.set("info.useNewInfo", plugin.useNewInfo);
         config.set("info.useLeveledNodes", plugin.useLeveledNodes);
         config.set("info.useOldNodes", plugin.useOldNodes);
         config.set("info.addNewPlayers", plugin.useAddDefault);
         config.set("info.defaultGroup", plugin.mIDefaultGroup);
-
         config.set("mchate.enable", plugin.mChatEB);
         config.set("mchat.spout", plugin.spoutEnabled);
         config.set("mchate.eHealthNotify", plugin.healthNotify);
@@ -209,6 +210,7 @@ public class MConfigListener {
         checkOption(config, "mchat.chatDistance", plugin.chatDistance);
         checkOption(config, "mchat.varIndicator", plugin.varIndicator);
         checkOption(config, "mchat.spout", plugin.spoutEnabled);
+        checkOption(config, "mchat.suppressMessages", plugin.suppressMessages);
         checkOption(config, "info.useNewInfo", plugin.useNewInfo);
         checkOption(config, "info.useLeveledNodes", plugin.useLeveledNodes);
         checkOption(config, "info.useOldNodes", plugin.useOldNodes);

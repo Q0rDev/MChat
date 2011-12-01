@@ -186,6 +186,7 @@ public class mChatSuite extends JavaPlugin {
     Boolean useAFKList = false;
     Boolean mChatPB = false;
     Boolean spoutPM = false;
+    Boolean suppressMessages = false;
 
     // Numbers
     Integer AFKTimer = 30;
