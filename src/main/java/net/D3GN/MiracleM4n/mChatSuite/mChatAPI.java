@@ -126,6 +126,7 @@ public class mChatAPI {
         if (plugin.heroesB) {
             Hero hero = plugin.heroes.getHeroManager().getHero(player);
 
+            HeroClass heroclass = hero.getHeroClass();
             int hL = Properties.getLevel(hero.getExperience());
             double hE = Properties.getExperience(hL);
 
@@ -141,7 +142,7 @@ public class mChatAPI {
             if (hero.getParty() != null)
                 hParty = hero.getParty().toString();
 
-            if (hero.isMaster())
+            if (hero.isMaster(heroClass))
                 hMastered = plugin.hMasterT;
             else
                 hMastered = plugin.hMasterF;
