@@ -96,6 +96,7 @@ public class mChatAPI {
         String money = "";
 
         // Heroes Vars
+        String hProfClass = "";
         String hClass = "";
         String hHealth = "";
         String hHBar = "";
@@ -141,11 +142,13 @@ public class mChatAPI {
 
             if (hero.getParty() != null)
                 hParty = hero.getParty().toString();
+            
+            if (hero.getSecondClass() != null)
+                hProfClass = hero.getSecondClass().getName();
+            
+            if (hero.isMaster(hero.getHeroClass()) && (hero.getSecondClass() == null || hero.isMaster(hero.getSecondClass()))) 
+            	{ hMastered = plugin.hMasterT;} else {hMastered = plugin.hMasterF;}
 
-            if (hero.isMaster(heroClass))
-                hMastered = plugin.hMasterT;
-            else
-                hMastered = plugin.hMasterF;
         }
 
         // Initialize SimpleClans Vars
@@ -195,6 +198,7 @@ public class mChatAPI {
                 vI+"Csuffix,"+vI+"Cs",
                 vI+"Ctype,"+vI+"Ct",
                 vI+"Groupname,"+vI+"Gname,"+vI+"G",
+                vI+"HProfClass,"+vI+"HSC",
                 vI+"HClass,"+vI+"HC",
                 vI+"HExp,"+vI+"HEx",
                 vI+"HEBar,"+vI+"HEb",
@@ -235,6 +239,7 @@ public class mChatAPI {
                 mCSuf,
                 mCType,
                 getGroupName(group),
+                hProfClass,
                 hClass,
                 hExp,
                 hEBar,
