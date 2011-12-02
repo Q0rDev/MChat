@@ -57,11 +57,19 @@ public class MConfigListener {
         plugin.hMasterT = config.getString("message.heroesMasterT", plugin.hMasterT);
         plugin.hMasterF = config.getString("message.heroesMasterF", plugin.hMasterF);
         plugin.mAPIOnly = config.getBoolean("mchat.apiOnly", plugin.mAPIOnly);
-        plugin.formatEvents = config.getBoolean("mchat.formatEvents", plugin.formatEvents);
+        plugin.alterEvents = config.getBoolean("mchat.alterEvents", plugin.alterEvents);
         plugin.chatDistance = config.getDouble("mchat.chatDistance", plugin.chatDistance);
         plugin.varIndicator = config.getString("mchat.varIndicator", plugin.varIndicator);
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
-        plugin.suppressMessages = config.getBoolean("mchat.suppressMessages", plugin.suppressMessages);
+
+        plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.spoutEnabled);
+        plugin.sJoinB = config.getBoolean("suppress.useJoin", plugin.spoutEnabled);
+        plugin.sKickB = config.getBoolean("suppress.useKick", plugin.spoutEnabled);
+        plugin.sQuitB = config.getBoolean("suppress.useQuit", plugin.spoutEnabled);
+        plugin.sDeathI = config.getInt("suppress.maxDeath", plugin.AFKTimer);
+        plugin.sJoinI = config.getInt("suppress.maxJoin", plugin.AFKTimer);
+        plugin.sKickI = config.getInt("suppress.maxKick", plugin.AFKTimer);
+        plugin.sQuitI = config.getInt("suppress.maxQuit", plugin.AFKTimer);
         plugin.useNewInfo = config.getBoolean("info.useNewInfo", plugin.useNewInfo);
         plugin.useLeveledNodes = config.getBoolean("info.useLeveledNodes", plugin.useLeveledNodes);
         plugin.useOldNodes = config.getBoolean("info.useOldNodes", plugin.useOldNodes);
@@ -125,11 +133,18 @@ public class MConfigListener {
         config.set("message.heroesMasterT", plugin.hMasterT);
         config.set("message.heroesMasterF", plugin.hMasterF);
         config.set("mchat.apiOnly", plugin.mAPIOnly);
-        config.set("mchat.formatEvents", plugin.formatEvents);
+        config.set("mchat.alterEvents", plugin.alterEvents);
         config.set("mchat.chatDistance", plugin.chatDistance);
         config.set("mchat.varIndicator", plugin.varIndicator);
         config.set("mchat.spout", plugin.spoutEnabled);
-        config.set("mchat.suppressMessages", plugin.suppressMessages);
+        config.set("suppress.useDeath", plugin.sDeathB);
+        config.set("suppress.useJoin", plugin.sJoinB);
+        config.set("suppress.useKick", plugin.sKickB);
+        config.set("suppress.useQuit", plugin.sQuitB);
+        config.set("suppress.maxDeath", plugin.sQuitI);
+        config.set("suppress.maxJoin", plugin.sJoinI);
+        config.set("suppress.maxKick", plugin.sKickI);
+        config.set("suppress.maxQuit", plugin.sQuitI);
         config.set("info.useNewInfo", plugin.useNewInfo);
         config.set("info.useLeveledNodes", plugin.useLeveledNodes);
         config.set("info.useOldNodes", plugin.useOldNodes);
@@ -160,6 +175,7 @@ public class MConfigListener {
         }
 
         removeOption(config, "auto-Changed");
+        removeOption(config, "mchat.suppressMessages");
 
         editOption(config, "mchat-date-format", "format.date");
         editOption(config, "mchat-message-format", "format.chat");
@@ -176,6 +192,7 @@ public class MConfigListener {
         editOption(config, "mchat-oldNodes-only", "info.useOldNodes");
         editOption(config, "mchat-add-info-players", "info.addNewPlayers");
         editOption(config, "format.list", "format.tabbedList");
+        editOption(config, "mchat.formatEvents", "mchat.alterEvents");
 
         checkOption(config, "format.date", plugin.dateFormat);
         checkOption(config, "format.chat", plugin.chatFormat);
@@ -206,11 +223,18 @@ public class MConfigListener {
         checkOption(config, "message.heroesMasterT", plugin.hMasterT);
         checkOption(config, "message.heroesMasterF", plugin.hMasterF);
         checkOption(config, "mchat.apiOnly", plugin.mAPIOnly);
-        checkOption(config, "mchat.formatEvents", plugin.formatEvents);
+        checkOption(config, "mchat.alterEvents", plugin.alterEvents);
         checkOption(config, "mchat.chatDistance", plugin.chatDistance);
         checkOption(config, "mchat.varIndicator", plugin.varIndicator);
         checkOption(config, "mchat.spout", plugin.spoutEnabled);
-        checkOption(config, "mchat.suppressMessages", plugin.suppressMessages);
+        checkOption(config, "suppress.useDeath", plugin.sDeathB);
+        checkOption(config, "suppress.useJoin", plugin.sJoinB);
+        checkOption(config, "suppress.useKick", plugin.sKickB);
+        checkOption(config, "suppress.useQuit", plugin.sQuitB);
+        checkOption(config, "suppress.maxDeath", plugin.sQuitI);
+        checkOption(config, "suppress.maxJoin", plugin.sJoinI);
+        checkOption(config, "suppress.maxKick", plugin.sKickI);
+        checkOption(config, "suppress.maxQuit", plugin.sQuitI);
         checkOption(config, "info.useNewInfo", plugin.useNewInfo);
         checkOption(config, "info.useLeveledNodes", plugin.useLeveledNodes);
         checkOption(config, "info.useOldNodes", plugin.useOldNodes);

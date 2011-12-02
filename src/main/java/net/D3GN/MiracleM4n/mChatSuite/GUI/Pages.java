@@ -95,21 +95,21 @@ public class Pages {
 
     void OptionsPage(Player player, PopupScreen popup) {
         createGenericLabel(player, "bAPIOnly", "API Only:", 2, 84, 200, 8);
-        createGenericLabel(player, "bFormatEvents", "Format Events:", 2, 114, 200, 8);
+        createGenericLabel(player, "bAlterEvents", "Alter Events:", 2, 114, 200, 8);
         createGenericLabel(player, "bUseSpout", "Use Spout:", 2, 142, 200, 8);
         createGenericLabel(player, "iChatDistance", "Chat Distance (Negative to Disable):", 216, 84, 200, 8);
         createGenericLabel(player, "vIndicator", "Variable Indicator:", 216, 114, 200, 8);
         createGenericLabel(player, "sEMessages", "Suppress Event Messages:", 216, 142, 200, 8);
 
         createGenericTextField(player, "bAPIOnly", plugin.mConfig.getBoolean("mchat.apiOnly"), "API Only", 2, 96, 150, 16);
-        createGenericTextField(player, "bFormatEvents", plugin.mConfig.getBoolean("mchat.formatEvents"), "Format Events", 2, 124, 150, 16);
+        createGenericTextField(player, "bAlterEvents", plugin.mConfig.getBoolean("mchat.alterEvents"), "Alter Events", 2, 124, 150, 16);
         createGenericTextField(player, "bUseSpout", plugin.mConfig.getBoolean("mchat.spout"), "Use Spout", 2, 152, 150, 16);
         createGenericTextField(player, "iChatDistance", plugin.mConfig.getDouble("mchat.chatDistance"), "Chat Distance", 216, 96, 150, 16);
         createGenericTextField(player, "vIndicator", plugin.mConfig.getString("mchat.varIndicator"), "Variable Indicator", 216, 124, 150, 16);
         createGenericTextField(player, "sEMessages", plugin.mConfig.getBoolean("mchat.suppressMessages"), "Suppress Event Messages", 216, 152, 150, 16);
 
         createGenericSubmitButton(player, "bAPIOnly", 154, 94);
-        createGenericSubmitButton(player, "bFormatEvents", 154, 122);
+        createGenericSubmitButton(player, "bAlterEvents", 154, 122);
         createGenericSubmitButton(player, "bUseSpout", 154, 150);
         createGenericSubmitButton(player, "iChatDistance", 368, 94);
         createGenericSubmitButton(player, "vIndicator", 368, 122);
@@ -119,7 +119,7 @@ public class Pages {
         createGenericButton(player, "pmChatOP", "pmChat Options", 215, 172, 213, 20);
 
         popup.attachWidget(plugin, getLabel(player, "bAPIOnly"));
-        popup.attachWidget(plugin, getLabel(player, "bFormatEvents"));
+        popup.attachWidget(plugin, getLabel(player, "bAlterEvents"));
         popup.attachWidget(plugin, getLabel(player, "bUseSpout"));
         popup.attachWidget(plugin, getLabel(player, "iChatDistance"));
         popup.attachWidget(plugin, getLabel(player, "vIndicator"));

@@ -41,8 +41,8 @@ public class MEntityListener extends EntityListener {
                     pCause =  "a" + parseEntityName(dEEvent.getDamager()) + ".";
         }
 
-        if (plugin.suppressMessages) {
-            suppressDeathMessage(pName, pCause, subEvent);
+        if (plugin.sDeathB) {
+            suppressDeathMessage(pName, pCause, subEvent, plugin.sDeathI);
             subEvent.setDeathMessage("");
         } else
             subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, subEvent));
@@ -297,10 +297,11 @@ public class MEntityListener extends EntityListener {
         return out.toString().replaceAll("(&([A-Fa-f0-9]))", "\u00A7$2");
     }
 
-    void suppressDeathMessage(String pName, String pCause, PlayerDeathEvent event) {
-        for (Player player : plugin.getServer().getOnlinePlayers())
-            if (!plugin.mAPI.checkPermissions(player, "mchat.suppress.death"))
-                player.sendMessage(handlePlayerDeath(pName, pCause, event));
+    void suppressDeathMessage(String pName, String pCause, PlayerDeathEvent event, Integer max) {
+        if (!(plugin.getServer().getOnlinePlayers().length > max))
+            for (Player player : plugin.getServer().getOnlinePlayers())
+                if (!plugin.mAPI.checkPermissions(player, "mchat.suppress.death"))
+                    player.sendMessage(handlePlayerDeath(pName, pCause, event));
 
         plugin.mAPI.log(handlePlayerDeath(pName, pCause, event));
     }

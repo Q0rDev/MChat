@@ -128,8 +128,8 @@ public class mChatSuite extends JavaPlugin {
     // API Only Boolean
     Boolean mAPIOnly = false;
 
-    // Fomatting Event Messages Boolean
-    Boolean formatEvents = true;
+    // Alter Event Messages Boolean
+    Boolean alterEvents = true;
 
     // Add New Players Boolean
     Boolean useAddDefault = false;
@@ -180,11 +180,18 @@ public class mChatSuite extends JavaPlugin {
     Boolean useAFKList = false;
     Boolean mChatPB = false;
     Boolean spoutPM = false;
-    Boolean suppressMessages = false;
+    Boolean sJoinB = false;
+    Boolean sDeathB = false;
+    Boolean sQuitB = false;
+    Boolean sKickB = false;
 
     // Numbers
     Integer AFKTimer = 30;
     Integer AFKKickTimer = 120;
+    Integer sJoinI = 30;
+    Integer sDeathI = 30;
+    Integer sQuitI = 30;
+    Integer sKickI = 30;
 
     // Other Config Stuff
     Double chatDistance = -1.0;
@@ -357,7 +364,7 @@ public class mChatSuite extends JavaPlugin {
                 pm.registerEvent(Event.Type.CUSTOM_EVENT, mGUIEvent, Event.Priority.Normal, this);
             }
 
-            if (formatEvents) {
+            if (alterEvents) {
                 pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
                 pm.registerEvent(Event.Type.PLAYER_KICK, pListener, Priority.Normal, this);
                 pm.registerEvent(Event.Type.PLAYER_QUIT, pListener, Priority.Normal, this);
