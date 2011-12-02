@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.herocraftonline.dev.heroes.classes.HeroClass;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -96,6 +97,7 @@ public class mChatAPI {
         String money = "";
 
         // Heroes Vars
+        String hSClass = "";
         String hClass = "";
         String hHealth = "";
         String hHBar = "";
@@ -125,6 +127,7 @@ public class mChatAPI {
         // Initialize Heroes Vars
         if (plugin.heroesB) {
             Hero hero = plugin.heroes.getHeroManager().getHero(player);
+            HeroClass heroclass = hero.getHeroClass();
 
             int hL = Properties.getLevel(hero.getExperience());
             double hE = Properties.getExperience(hL);
@@ -140,11 +143,15 @@ public class mChatAPI {
 
             if (hero.getParty() != null)
                 hParty = hero.getParty().toString();
-
-            if (hero.isMaster())
-                hMastered = plugin.hMasterT;
-            else
-                hMastered = plugin.hMasterF;
+            
+            if (hero.getSecondClass() != null)
+                hSClass = hero.getSecondClass().getName();
+            
+            if (hero.isMaster(hero.getHeroClass()))
+                if (hero.getSecondClass() == null || hero.isMaster(hero.getSecondClass()))
+                    hMastered = plugin.hMasterT;
+                else
+                    hMastered = plugin.hMasterF;
         }
 
         // Initialize SimpleClans Vars
@@ -194,6 +201,7 @@ public class mChatAPI {
                 vI+"Csuffix,"+vI+"Cs",
                 vI+"Ctype,"+vI+"Ct",
                 vI+"Groupname,"+vI+"Gname,"+vI+"G",
+                vI+"HSecClass,"+vI+"HSC",
                 vI+"HClass,"+vI+"HC",
                 vI+"HExp,"+vI+"HEx",
                 vI+"HEBar,"+vI+"HEb",
@@ -234,6 +242,7 @@ public class mChatAPI {
                 mCSuf,
                 mCType,
                 getGroupName(group),
+                hSClass,
                 hClass,
                 hExp,
                 hEBar,

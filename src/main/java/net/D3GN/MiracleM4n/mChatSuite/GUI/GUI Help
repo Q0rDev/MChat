@@ -1,9 +1,17 @@
+Main Page:
+>General Options
+>Format Options
+>Message Options
+>Info Options
+
+
 General Options Page:
 API Only
 Format Events
 Use Spout
 Chat Distance
 Variable Indicator
+Suppress Event Messages
 >mChatEssentials Options
 >pmChat Options
 
@@ -21,12 +29,23 @@ pmChat Options:
 Enable pmChat Features
 Use Spout For PM’s
 
+
+Format Page:
+Chat Format
+Name Format
+Me Format
+Event Format
+Date Format
+Tabbed List Format
+List Command Format
+
+
 Message Page:
 >Event
 >Death
 >Other Plugins
 
-Event Message Page:
+Event Message Page:   
 Join
 Leave
 Kick
@@ -65,7 +84,7 @@ Edit Info Page (Old Info):
 Add Variable
     Variable
     Value
-
+   
 Edit Info Page (Leveled Info):
 Add Variable
     Variable
