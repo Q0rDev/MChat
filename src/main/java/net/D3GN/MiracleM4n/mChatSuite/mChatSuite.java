@@ -21,8 +21,6 @@ import com.massivecraft.factions.Conf;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-import com.randomappdev.pluginstats.Ping;
-
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
@@ -195,6 +193,7 @@ public class mChatSuite extends JavaPlugin {
 
     // Other Config Stuff
     Double chatDistance = -1.0;
+    String cLVars = "default,Default";
     String listVar = "group";
 
     // Timers
@@ -310,7 +309,7 @@ public class mChatSuite extends JavaPlugin {
         }
 
         // Ping Stats                                       `
-        Ping.init(this);
+        Stats.init(this);
 
         // Add All Players To Info.yml
         if (useAddDefault)

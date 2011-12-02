@@ -1,29 +1,4 @@
-/*
-Copyright (C) 2011 jblaske
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-NOTE: The modification of this code could result in improper tracking of
-statistics, stability of the server running your plugins or the statistics
-website. Please do not modify this file without verification of the author.
-*/
-package com.randomappdev.pluginstats;
+package net.D3GN.MiracleM4n.mChatSuite;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,7 +12,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Ping {
+public class Stats {
     static final File configFile = new File("plugins/mChatSuite/stats.yml");
     static final String logFile = "plugins/mChatSuite/statsLog/log.txt";
     static final YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
@@ -54,12 +29,12 @@ public class Ping {
         config.addDefault("opt-out", false);
         config.addDefault("guid", UUID.randomUUID().toString());
         if (!configFile.exists() || config.get("hash", null) == null) {
-            System.out.println("[" + plugin.getDescription().getName() + "] PluginStats is initializing for the first time. To opt-out check stats.yml.");
+            System.out.println("[" + plugin.getDescription().getName() + "] Stats is initializing for the first time. To opt-out check stats.yml.");
             try {
                 config.options().copyDefaults(true);
                 config.save(configFile);
             } catch (Exception ignored) {
-                System.out.println("[" + plugin.getDescription().getName() + "] Error creating PluginStats configuration file.");
+                System.out.println("[" + plugin.getDescription().getName() + "] Error creating Stats configuration file.");
                 return false;
             }
         }
@@ -77,7 +52,7 @@ public class Ping {
             logger.setUseParentHandlers(false);
             logger.addHandler(handler);
         } catch (Exception ex) {
-            System.out.println("Error creating PluginStats log file.");
+            System.out.println("Error creating Stats log file.");
             ex.printStackTrace();
             return false;
         }
@@ -102,27 +77,32 @@ class Pinger implements Runnable {
 
     void pingServer() {
         String authors = "";
+        String plugins = "";
 
         try {
-            for (String auth : plugin.getDescription().getAuthors())
-                authors = authors + " " + auth;
+            for (Plugin pluginn : plugin.getServer().getPluginManager().getPlugins())
+                plugins += " " + pluginn.getDescription().getName() + " " + pluginn.getDescription().getVersion() + ",";
 
+            for (String auth : plugin.getDescription().getAuthors())
+                authors += " " + auth;
+
+            plugins = plugins.trim();
             authors = authors.trim();
 
-            String url = String.format("http://pluginstats.randomappdev.com/ping.aspx?snam=%s&sprt=%s&shsh=%s&sver=%s&spcnt=%s&pnam=%s&pmcla=%s&paut=%s&pweb=%s&pver=%s",
+            String url = String.format("http://mdev.in/update.php?server=%s&ip=%s&port=%s&hash=%s&bukkit=%s&players=%s&name=%s&authors=%s&plugins=%s&version=%s",
                     URLEncoder.encode(plugin.getServer().getServerName(), "UTF-8"),
+                    URLEncoder.encode(plugin.getServer().getIp(), "UTF-8"),
                     plugin.getServer().getPort(),
-                    guid,
+                    URLEncoder.encode(guid, "UTF-8"),
                     URLEncoder.encode(Bukkit.getVersion(), "UTF-8"),
                     plugin.getServer().getOnlinePlayers().length,
                     URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"),
-                    URLEncoder.encode(plugin.getDescription().getMain(), "UTF-8"),
                     URLEncoder.encode(authors, "UTF-8"),
-                    URLEncoder.encode(plugin.getDescription().getWebsite(), "UTF-8"),
+                    URLEncoder.encode(plugins, "UTF-8"),
                     URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
 
             new URL(url).openConnection().getInputStream();
-            logger.log(Level.INFO, "PluginStats pinged the central server.");
+            logger.log(Level.INFO, "Stats pinged the central server.");
 
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.toString());

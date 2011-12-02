@@ -35,6 +35,7 @@ public class MConfigListener {
         plugin.tabbedListFormat = config.getString("format.tabbedList", plugin.tabbedListFormat);
         plugin.listCmdFormat = config.getString("format.listCmd", plugin.listCmdFormat);
         plugin.meFormat = config.getString("format.me", plugin.meFormat);
+
         plugin.joinMessage = config.getString("message.join", plugin.joinMessage);
         plugin.leaveMessage = config.getString("message.leave", plugin.leaveMessage);
         plugin.kickMessage = config.getString("message.kick", plugin.kickMessage);
@@ -56,6 +57,7 @@ public class MConfigListener {
         plugin.deathThrown = config.getString("message.deathThrown", plugin.deathThrown);
         plugin.hMasterT = config.getString("message.heroesMasterT", plugin.hMasterT);
         plugin.hMasterF = config.getString("message.heroesMasterF", plugin.hMasterF);
+
         plugin.mAPIOnly = config.getBoolean("mchat.apiOnly", plugin.mAPIOnly);
         plugin.alterEvents = config.getBoolean("mchat.alterEvents", plugin.alterEvents);
         plugin.chatDistance = config.getDouble("mchat.chatDistance", plugin.chatDistance);
@@ -70,6 +72,7 @@ public class MConfigListener {
         plugin.sJoinI = config.getInt("suppress.maxJoin", plugin.AFKTimer);
         plugin.sKickI = config.getInt("suppress.maxKick", plugin.AFKTimer);
         plugin.sQuitI = config.getInt("suppress.maxQuit", plugin.AFKTimer);
+
         plugin.useNewInfo = config.getBoolean("info.useNewInfo", plugin.useNewInfo);
         plugin.useLeveledNodes = config.getBoolean("info.useLeveledNodes", plugin.useLeveledNodes);
         plugin.useOldNodes = config.getBoolean("info.useOldNodes", plugin.useOldNodes);
@@ -82,6 +85,7 @@ public class MConfigListener {
         plugin.healthAchievement = config.getBoolean("mchate.eHealthAchievement", plugin.healthAchievement);
         plugin.mAFKHQ = config.getBoolean("mchate.eHQAFK", plugin.mAFKHQ);
         plugin.listVar = config.getString("mchate.listVar", plugin.listVar);
+        plugin.cLVars = config.getString("mchate.collapsedListVars", plugin.cLVars);
         plugin.AFKTimer = config.getInt("mchate.AFKTimer", plugin.AFKTimer);
         plugin.AFKKickTimer = config.getInt("mchate.AFKKickTimer", plugin.AFKKickTimer);
 
@@ -111,6 +115,7 @@ public class MConfigListener {
         config.set("format.tabbedList", plugin.tabbedListFormat);
         config.set("format.listCmd", plugin.listCmdFormat);
         config.set("format.me", plugin.meFormat);
+
         config.set("message.join", plugin.joinMessage);
         config.set("message.leave", plugin.leaveMessage);
         config.set("message.kick", plugin.kickMessage);
@@ -132,11 +137,13 @@ public class MConfigListener {
         config.set("message.deathThrown", plugin.deathThrown);
         config.set("message.heroesMasterT", plugin.hMasterT);
         config.set("message.heroesMasterF", plugin.hMasterF);
+
         config.set("mchat.apiOnly", plugin.mAPIOnly);
         config.set("mchat.alterEvents", plugin.alterEvents);
         config.set("mchat.chatDistance", plugin.chatDistance);
         config.set("mchat.varIndicator", plugin.varIndicator);
         config.set("mchat.spout", plugin.spoutEnabled);
+
         config.set("suppress.useDeath", plugin.sDeathB);
         config.set("suppress.useJoin", plugin.sJoinB);
         config.set("suppress.useKick", plugin.sKickB);
@@ -145,17 +152,19 @@ public class MConfigListener {
         config.set("suppress.maxJoin", plugin.sJoinI);
         config.set("suppress.maxKick", plugin.sKickI);
         config.set("suppress.maxQuit", plugin.sQuitI);
+
         config.set("info.useNewInfo", plugin.useNewInfo);
         config.set("info.useLeveledNodes", plugin.useLeveledNodes);
         config.set("info.useOldNodes", plugin.useOldNodes);
         config.set("info.addNewPlayers", plugin.useAddDefault);
         config.set("info.defaultGroup", plugin.mIDefaultGroup);
+
         config.set("mchate.enable", plugin.mChatEB);
-        config.set("mchat.spout", plugin.spoutEnabled);
         config.set("mchate.eHealthNotify", plugin.healthNotify);
         config.set("mchate.eHealthAchievement", plugin.healthAchievement);
         config.set("mchate.eHQAFK", plugin.mAFKHQ);
         config.set("mchate.listVar", plugin.listVar);
+        config.set("mchate.collapsedListVars", plugin.cLVars);
         config.set("mchate.AFKTimer", plugin.AFKTimer);
         config.set("mchate.AFKKickTimer", plugin.AFKKickTimer);
         config.set("mchate.useAFKList", plugin.useAFKList);
@@ -177,6 +186,7 @@ public class MConfigListener {
         removeOption(config, "auto-Changed");
         removeOption(config, "mchat.suppressMessages");
 
+
         editOption(config, "mchat-date-format", "format.date");
         editOption(config, "mchat-message-format", "format.chat");
         editOption(config, "mchat-name-format", "format.name");
@@ -191,8 +201,11 @@ public class MConfigListener {
         editOption(config, "mchat-info-only", "info.useNewInfo");
         editOption(config, "mchat-oldNodes-only", "info.useOldNodes");
         editOption(config, "mchat-add-info-players", "info.addNewPlayers");
+
         editOption(config, "format.list", "format.tabbedList");
+
         editOption(config, "mchat.formatEvents", "mchat.alterEvents");
+
 
         checkOption(config, "format.date", plugin.dateFormat);
         checkOption(config, "format.chat", plugin.chatFormat);
@@ -201,6 +214,7 @@ public class MConfigListener {
         checkOption(config, "format.tabbedList", plugin.tabbedListFormat);
         checkOption(config, "format.listCmd", plugin.listCmdFormat);
         checkOption(config, "format.me", plugin.meFormat);
+
         checkOption(config, "message.join", plugin.joinMessage);
         checkOption(config, "message.leave", plugin.leaveMessage);
         checkOption(config, "message.kick", plugin.kickMessage);
@@ -222,11 +236,13 @@ public class MConfigListener {
         checkOption(config, "message.deathThrown", plugin.deathThrown);
         checkOption(config, "message.heroesMasterT", plugin.hMasterT);
         checkOption(config, "message.heroesMasterF", plugin.hMasterF);
+
         checkOption(config, "mchat.apiOnly", plugin.mAPIOnly);
         checkOption(config, "mchat.alterEvents", plugin.alterEvents);
         checkOption(config, "mchat.chatDistance", plugin.chatDistance);
         checkOption(config, "mchat.varIndicator", plugin.varIndicator);
         checkOption(config, "mchat.spout", plugin.spoutEnabled);
+
         checkOption(config, "suppress.useDeath", plugin.sDeathB);
         checkOption(config, "suppress.useJoin", plugin.sJoinB);
         checkOption(config, "suppress.useKick", plugin.sKickB);
@@ -235,6 +251,7 @@ public class MConfigListener {
         checkOption(config, "suppress.maxJoin", plugin.sJoinI);
         checkOption(config, "suppress.maxKick", plugin.sKickI);
         checkOption(config, "suppress.maxQuit", plugin.sQuitI);
+
         checkOption(config, "info.useNewInfo", plugin.useNewInfo);
         checkOption(config, "info.useLeveledNodes", plugin.useLeveledNodes);
         checkOption(config, "info.useOldNodes", plugin.useOldNodes);
@@ -247,6 +264,7 @@ public class MConfigListener {
         checkOption(config, "mchate.eHealthAchievement", plugin.healthAchievement);
         checkOption(config, "mchate.eHQAFK", plugin.mAFKHQ);
         checkOption(config, "mchate.listVar", plugin.listVar);
+        checkOption(config, "mchate.collapsedListVars", plugin.cLVars);
         checkOption(config, "mchate.AFKTimer", plugin.AFKTimer);
         checkOption(config, "mchate.AFKKickTimer", plugin.AFKKickTimer);
         checkOption(config, "mchate.useAFKList", plugin.useAFKList);

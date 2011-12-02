@@ -198,9 +198,27 @@ public class MECommandSender implements CommandExecutor {
             String iVar = plugin.mAPI.getInfo(players, plugin.listVar);
             String mName = plugin.mAPI.ParseListCmd(players.getName());
 
+            Boolean varB = false;
+
             if (iVar.isEmpty())
                 continue;
 
+            for (String var : plugin.cLVars.split(","))
+                if (var.equals(iVar)){
+                    varB = true;
+                    System.out.println(plugin.mAPI.getInfo(players, var));
+                    System.out.println(iVar);
+                    System.out.println(plugin.cLVars);
+                }
+            /*
+            if (varB) {
+                if (msg.contains(iVar + ": &f ")) {
+                    msg = msg.replaceAll(iVar + ": &f .", iVar + ": &f " + new Integer('$' + iVar.length() + 4));
+                } else {
+                    msg += (iVar + ": &f " + 1 + " Member" + '\n');
+                }
+            } else
+            */
             if (plugin.isAFK.get(players.getName())) {
                 if (msg.contains(iVar + ": &f")) {
                     msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + plugin.lListener.AFK + "]" + mName + "&f, &f");
@@ -248,7 +266,7 @@ public class MECommandSender implements CommandExecutor {
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s World: " + world));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Health: " + plugin.mAPI.healthBar(recipient) + " " + recipient.getHealth() + "/20"));
         sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
-        sender.sendMessage(plugin.mAPI.addColour("Current Item: " + recipient.getItemInHand().toString().replace("ItemStack", "")));
+        sender.sendMessage(plugin.mAPI.addColour("Current Item: " + recipient.getItemInHand().getType().name()));
         sender.sendMessage(plugin.mAPI.addColour("Entity ID: #" + recipient.getEntityId()));
     }
 
