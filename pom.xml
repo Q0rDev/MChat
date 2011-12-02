@@ -143,13 +143,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.sacredlabyrinth</groupId>
-            <artifactId>SimpleClans</artifactId>
-            <version>1.7.3</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.getspout</groupId>
             <artifactId>spoutapi</artifactId>
             <version>dev-SNAPSHOT</version>

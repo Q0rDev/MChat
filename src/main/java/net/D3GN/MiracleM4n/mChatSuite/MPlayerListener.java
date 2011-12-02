@@ -219,10 +219,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     public void run() {}
 
     void suppressEventMessage(String format, String permNode) {
-        for (Player player : plugin.getServer().getOnlinePlayers()) {
+        for (Player player : plugin.getServer().getOnlinePlayers())
             if (!plugin.mAPI.checkPermissions(player, permNode))
                 player.sendMessage(format);
-        }
 
         plugin.mAPI.log(format);
     }

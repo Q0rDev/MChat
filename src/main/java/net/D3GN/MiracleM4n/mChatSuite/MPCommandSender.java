@@ -34,6 +34,9 @@ public class MPCommandSender implements CommandExecutor {
                 return true;
             }
 
+            if (args.length < 2)
+                return false;
+
             message = "";
             for (int i = 1; i < args.length; ++i)
                 message += " " + args[i];

@@ -23,8 +23,6 @@ import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 
 import net.D3GN.MiracleM4n.mChannel.mChannel;
 
-import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
-
 @SuppressWarnings("unused")
 public class mChatAPI {
     mChatSuite plugin;
@@ -109,9 +107,6 @@ public class mChatAPI {
         String hExp = "";
         String hEBar = "";
 
-        // SimpleClans Vars
-
-
         // Initialize mChannel Vars
         if (plugin.mChanB) {
             mCName = mChannel.API.getPlayersChannel(player);
@@ -152,11 +147,6 @@ public class mChatAPI {
                     hMastered = plugin.hMasterT;
                 else
                     hMastered = plugin.hMasterF;
-        }
-
-        // Initialize SimpleClans Vars
-        if (plugin.sClanB) {
-            ClanPlayer cPlayer = plugin.sClan.getClanManager().getClanPlayer(player);
         }
 
         String format = parseVars(formatAll, player);

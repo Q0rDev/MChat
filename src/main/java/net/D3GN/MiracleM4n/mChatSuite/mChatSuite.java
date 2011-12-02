@@ -33,8 +33,6 @@ import org.getspout.spoutapi.SpoutManager;
 
 import net.D3GN.MiracleM4n.mChatSuite.GUI.*;
 
-import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
-
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
@@ -105,10 +103,6 @@ public class mChatSuite extends JavaPlugin {
     // Heroes
     Heroes heroes;
     Boolean heroesB = false;
-
-    // SimpleClans
-    SimpleClans sClan;
-    Boolean sClanB = false;
 
     // Configuration
     public YamlConfiguration mConfig = null;
@@ -447,12 +441,6 @@ public class mChatSuite extends JavaPlugin {
 
         if(heroesB)
             heroes = (Heroes) pm.getPlugin("Heroes");
-
-        // Setup SimpleClans
-        sClanB = setupPlugin("SimpleClans");
-
-        if (sClanB)
-            sClan = (SimpleClans) pm.getPlugin("SimpleClans");
 
         spoutB = setupPlugin("Spout");
 
