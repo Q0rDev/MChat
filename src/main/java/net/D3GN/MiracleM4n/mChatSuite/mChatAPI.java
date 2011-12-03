@@ -122,7 +122,8 @@ public class mChatAPI {
         // Initialize Heroes Vars
         if (plugin.heroesB) {
             Hero hero = plugin.heroes.getHeroManager().getHero(player);
-            HeroClass heroclass = hero.getHeroClass();
+            HeroClass heroClass = hero.getHeroClass();
+            HeroClass heroSClass = hero.getSecondClass();
 
             int hL = Properties.getLevel(hero.getExperience());
             double hE = Properties.getExperience(hL);
@@ -134,16 +135,16 @@ public class mChatAPI {
             hMBar = Messaging.createManaBar(hero.getMana());
             hLevel = String.valueOf(hL);
             hExp = String.valueOf(hE);
-            hEBar = Messaging.createExperienceBar(hero, hero.getHeroClass());
+            hEBar = Messaging.createExperienceBar(hero, heroClass);
 
             if (hero.getParty() != null)
                 hParty = hero.getParty().toString();
-            
-            if (hero.getSecondClass() != null)
-                hSClass = hero.getSecondClass().getName();
-            
-            if (hero.isMaster(hero.getHeroClass()))
-                if (hero.getSecondClass() == null || hero.isMaster(hero.getSecondClass()))
+
+            if (heroSClass != null)
+                hSClass = heroSClass.getName();
+
+            if (hero.isMaster(heroClass))
+                if (heroSClass == null || hero.isMaster(heroSClass))
                     hMastered = plugin.hMasterT;
                 else
                     hMastered = plugin.hMasterF;
