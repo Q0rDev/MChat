@@ -109,7 +109,7 @@ public class mChatAPI {
 
         // Initialize mChannel Vars
         if (plugin.mChanB) {
-            mCName = mChannel.API.getPlayersChannel(player);
+            mCName = mChannel.API.getPlayersChannels(player)[0];
             mCPref = mChannel.API.getChannelPrefix(mCName);
             mCSuf = mChannel.API.getChannelSuffix(mCName);
             mCType = mChannel.API.getChannelType(mCName);

@@ -342,6 +342,8 @@ public class mChatSuite extends JavaPlugin {
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
 
+        Stats.unload();
+
         mAPI.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is disabled!");
     }
 

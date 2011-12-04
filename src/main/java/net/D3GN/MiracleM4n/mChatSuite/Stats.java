@@ -5,24 +5,31 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class Stats {
     static final File configFile = new File("plugins/mChatSuite/stats.yml");
-    static final String logFile = "plugins/mChatSuite/statsLog/log.txt";
+    static final String logFile = "plugins/mChatSuite/statsLog/stats.log";
     static final YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    static Logger logger = null;
+    static Logger logger = Logger.getLogger("net.D3GN");
+    static FileHandler logFileHandler;
 
     public static void init(Plugin plugin) {
         if (configExists(plugin) && logExists() && !config.getBoolean("opt-out")) {
             plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 10L, 20L * 60L * 60 * 24);
             System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept for this plugin. To opt-out check stats.yml.");
         }
+    }
+
+    public static void unload() {
+        if (logFileHandler != null)
+            logFileHandler.close();
     }
 
     static Boolean configExists(Plugin plugin) {
@@ -47,15 +54,43 @@ public class Stats {
             File log = new File("plugins/mChatSuite/statsLog/");
             log.mkdir();
 
-            FileHandler handler = new FileHandler(logFile, true);
-            logger = Logger.getLogger("com.randomappdev");
+            logFileHandler = new FileHandler(logFile, true);
+
+            logFileHandler.setFormatter(new Formatter() {
+                @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+                public String format(LogRecord record) {
+                    StringBuilder builder = new StringBuilder();
+                    Throwable ex = record.getThrown();
+
+                    builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(record.getMillis()));
+                    builder.append(" [");
+                    builder.append(record.getLevel().getLocalizedName().toUpperCase());
+                    builder.append("] ");
+                    builder.append(record.getMessage());
+                    builder.append('\n');
+
+                    if (ex != null) {
+                        StringWriter writer = new StringWriter();
+                        ex.printStackTrace(new PrintWriter(writer));
+                        builder.append(writer);
+                    }
+
+                    return builder.toString();
+                }
+            });
+
+            for (Handler gHandler: logger.getHandlers())
+                logger.removeHandler(gHandler);
+
             logger.setUseParentHandlers(false);
-            logger.addHandler(handler);
+            logger.addHandler(logFileHandler);
         } catch (Exception ex) {
             System.out.println("Error creating Stats log file.");
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+
             return false;
         }
+
         return true;
     }
 }
@@ -105,7 +140,7 @@ class Pinger implements Runnable {
             logger.log(Level.INFO, "Stats pinged the central server.");
 
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, ex.toString());
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 }
