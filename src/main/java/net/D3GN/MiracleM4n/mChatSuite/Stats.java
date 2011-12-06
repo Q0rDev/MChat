@@ -115,14 +115,17 @@ class Pinger implements Runnable {
         String plugins = "";
 
         try {
-            for (Plugin pluginn : plugin.getServer().getPluginManager().getPlugins())
-                plugins += " " + pluginn.getDescription().getName() + " " + pluginn.getDescription().getVersion() + ",";
+            for (Plugin pluginZ : plugin.getServer().getPluginManager().getPlugins())
+                plugins += " " + pluginZ.getDescription().getName() + " " + pluginZ.getDescription().getVersion() + ",";
 
             for (String auth : plugin.getDescription().getAuthors())
-                authors += " " + auth;
+                authors += " " + auth + ",";
 
             plugins = plugins.trim();
+            plugins = plugins.substring(0, (plugins.length() - 1)) + ".";
+
             authors = authors.trim();
+            authors = authors.substring(0, (authors.length() - 1)) + ".";
 
             String url = String.format("http://mdev.in/update.php?server=%s&ip=%s&port=%s&hash=%s&bukkit=%s&players=%s&name=%s&authors=%s&plugins=%s&version=%s",
                     URLEncoder.encode(plugin.getServer().getServerName(), "UTF-8"),
