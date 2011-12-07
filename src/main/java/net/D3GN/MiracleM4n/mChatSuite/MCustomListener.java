@@ -2,7 +2,6 @@ package net.D3GN.MiracleM4n.mChatSuite;
 
 import org.bukkit.ChatColor;
 
-import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.event.input.InputListener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
@@ -30,7 +29,7 @@ public class MCustomListener extends InputListener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + plugin.mAPI.addColour(plugin.lListener.typingMessage) + '\n' + plugin.mAPI.ParsePlayerName(player));
+            player.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + plugin.mAPI.addColour(plugin.lListener.typingMessage) + '\n' + plugin.mAPI.ParsePlayerName(player));
             plugin.chatt.put(player.getName(), true);
         }
 
@@ -39,7 +38,7 @@ public class MCustomListener extends InputListener {
                     (key.equals(backwardKey)) ||
                             (key.equals(leftKey)) ||
                                     (key.equals(rightKey))) {
-                SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+                player.setTitle(plugin.mAPI.ParsePlayerName(player));
                 plugin.chatt.put(player.getName(), false);
             }
         }

@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class MECommandSender implements CommandExecutor {
@@ -123,7 +122,9 @@ public class MECommandSender implements CommandExecutor {
                         }
                     }
 
-                    SpoutManager.getAppearanceManager().setGlobalTitle(afkTarget, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
+                    SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
+
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
                 } else
                     plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.nAFK);
 
@@ -151,7 +152,9 @@ public class MECommandSender implements CommandExecutor {
                         }
                     }
 
-                    SpoutManager.getAppearanceManager().setGlobalTitle(afkTarget, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
+                    SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
+
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
                 } else
                     plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.iAFK + " [" + message + " ]");
 

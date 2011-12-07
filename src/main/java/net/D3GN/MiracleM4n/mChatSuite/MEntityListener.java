@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 
-import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class MEntityListener extends EntityListener {
@@ -95,7 +94,8 @@ public class MEntityListener extends EntityListener {
 
                 Runnable runnable = new Runnable() {
                     public void run() {
-                        SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+                        SpoutPlayer sPlayer = (SpoutPlayer) player;
+                        sPlayer.setTitle(plugin.mAPI.ParsePlayerName(player));
                     }
                 };
 
@@ -146,8 +146,12 @@ public class MEntityListener extends EntityListener {
                 }
 
                 if (plugin.spoutB) {
+                    SpoutPlayer sPlayer = (SpoutPlayer) player;
+
                     plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4*20);
-                    SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+
                     plugin.chatt.put(player.getName(), false);
                 }
             }

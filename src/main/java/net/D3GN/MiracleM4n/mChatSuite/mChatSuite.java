@@ -27,7 +27,7 @@ import de.bananaco.permissions.worlds.WorldPermissionsManager;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 
-import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import net.D3GN.MiracleM4n.mChatSuite.GUI.*;
 
@@ -223,10 +223,17 @@ public class mChatSuite extends JavaPlugin {
         killEss();
 
         // Initialize Configs
-        mConfigF = new File(getDataFolder(), "config.yml");
-        mIConfigF = new File(getDataFolder(), "info.yml");
-        mCConfigF = new File(getDataFolder(), "censor.yml");
-        mELocaleF = new File(getDataFolder(), "locale.yml");
+        if (new File("plugins/mChat/").isDirectory()) {
+            mConfigF = new File("/plugins/mChat/", "config.yml");
+            mIConfigF = new File("/plugins/mChat/", "info.yml");
+            mCConfigF = new File("/plugins/mChat/", "censor.yml");
+            mELocaleF = new File("/plugins/mChat/", "locale.yml");
+        } else {
+            mConfigF = new File(getDataFolder(), "config.yml");
+            mIConfigF = new File(getDataFolder(), "info.yml");
+            mCConfigF = new File(getDataFolder(), "censor.yml");
+            mELocaleF = new File(getDataFolder(), "locale.yml");
+        }
 
         mConfig = YamlConfiguration.loadConfiguration(mConfigF);
         mIConfig = YamlConfiguration.loadConfiguration(mIConfigF);
@@ -319,12 +326,13 @@ public class mChatSuite extends JavaPlugin {
 
         if (mChatEB) {
             for (Player players : getServer().getOnlinePlayers()) {
+                SpoutPlayer sPlayers = (SpoutPlayer) players;
                 isAFK.put(players.getName(), false);
                 chatt.put(players.getName(), false);
                 lastMove.put(players.getName(), new Date().getTime());
 
                 if (spoutB)
-                    SpoutManager.getAppearanceManager().setGlobalTitle(players, mAPI.ParsePlayerName(players));
+                    sPlayers.setTitle(mAPI.ParsePlayerName(players));
             }
         }
         // Check for Automatic Factions Support

@@ -9,7 +9,7 @@ import org.bukkit.event.player.*;
 
 import me.desmin88.mobdisguise.MobDisguise;
 
-import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.Date;
 
@@ -89,13 +89,15 @@ public class MPlayerListener extends PlayerListener implements Runnable {
                 player.performCommand("mafk");
 
         if (plugin.spoutB) {
-            SpoutManager.getAppearanceManager().setGlobalTitle(player, ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.mAPI.addColour(msg) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+            final SpoutPlayer sPlayer = (SpoutPlayer) player;
+
+            sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.mAPI.addColour(msg) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
 
             plugin.chatt.put(player.getName(), false);
 
             Runnable runnable = new Runnable() {
                 public void run() {
-                    SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+                    sPlayer.setTitle(plugin.mAPI.ParsePlayerName(player));
                 }
             };
 
@@ -136,8 +138,10 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             }
         }, 20L);
 
-        if (plugin.spoutB)
-            SpoutManager.getAppearanceManager().setGlobalTitle(player, plugin.mAPI.ParsePlayerName(player));
+        if (plugin.spoutB) {
+            SpoutPlayer sPlayer = (SpoutPlayer) player;
+            sPlayer.setTitle(plugin.mAPI.ParsePlayerName(player));
+        }
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
