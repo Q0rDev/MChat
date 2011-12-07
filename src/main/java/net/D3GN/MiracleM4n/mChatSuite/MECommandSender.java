@@ -198,10 +198,11 @@ public class MECommandSender implements CommandExecutor {
             String iVar = plugin.mAPI.getInfo(players, plugin.listVar);
             String mName = plugin.mAPI.ParseListCmd(players.getName());
 
-            Boolean varB = false;
-
             if (iVar.isEmpty())
                 continue;
+
+            /*
+            Boolean varB = false;
 
             for (String var : plugin.cLVars.split(","))
                 if (var.equals(iVar)){
@@ -210,7 +211,6 @@ public class MECommandSender implements CommandExecutor {
                     System.out.println(iVar);
                     System.out.println(plugin.cLVars);
                 }
-            /*
             if (varB) {
                 if (msg.contains(iVar + ": &f ")) {
                     msg = msg.replaceAll(iVar + ": &f .", iVar + ": &f " + new Integer('$' + iVar.length() + 4));
@@ -219,6 +219,7 @@ public class MECommandSender implements CommandExecutor {
                 }
             } else
             */
+
             if (plugin.isAFK.get(players.getName())) {
                 if (msg.contains(iVar + ": &f")) {
                     msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + plugin.lListener.AFK + "]" + mName + "&f, &f");

@@ -35,9 +35,8 @@ commands:
     mchatlist:
         description:
         usage: |
-            /<command> *PLAYER*
-            Example: /<command> - See this info.
-            Example: /<command> *PLAYER* - Displays info about player.
+            /<command>
+            Example: /<command> - See A list of online players.
         aliases: [list, mlist, online, monline, playerlist]
     mchatafk:
         description:

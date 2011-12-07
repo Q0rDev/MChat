@@ -1,8 +1,10 @@
 package net.D3GN.MiracleM4n.mChatSuite;
 
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class MInfoReader {
     mChatSuite plugin;
@@ -60,7 +62,13 @@ public class MInfoReader {
 
         if (config.isSet("users." + player)) {
             if (!config.isSet("users." + newName)) {
-                config.set("users." + newName, config.get("users." + player));
+                for (Map.Entry entry : config.getConfigurationSection("users." + player).getValues(true).entrySet()) {
+                    if (entry.getValue() instanceof MemorySection)
+                        continue;
+
+                    config.set("users." + newName + "." + entry.getKey(), entry.getValue());
+                }
+
                 config.set("users." + player, null);
 
                 try {
@@ -98,7 +106,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("users." + player + ".info." + oldVar)) {
-            config.set("users." + player + ".info." + newVar, config.get("users." + player + ".info." + oldVar));
+            for (Map.Entry entry : config.getConfigurationSection("users." + player + ".info." + oldVar).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("users." + newVar + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("users." + player + ".info." + oldVar, null);
 
             try {
@@ -150,7 +164,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("users." + player + ".worlds." + oldWorld)) {
-            config.set("users." + player + ".worlds." + newWorld, config.get("users." + player + ".worlds." + oldWorld));
+            for (Map.Entry entry : config.getConfigurationSection("users." + player + ".worlds." + oldWorld).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("users." + player + ".worlds." + newWorld + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("users." + player + ".worlds." + oldWorld, null);
 
             try {
@@ -189,7 +209,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("users." + player + ".worlds." + world + "." + oldVar)) {
-            config.set("users." + player + ".worlds." + world + "." + newVar, config.get("users." + player + ".worlds." + world + "." + oldVar));
+            for (Map.Entry entry : config.getConfigurationSection("users." + player + ".worlds." + world + "." + oldVar).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("users." + player + ".worlds." + world + "." + newVar + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("users." + player + ".worlds." + world + "." + oldVar, null);
 
             try {
@@ -240,7 +266,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("groups." + oldGroup)) {
-            config.set("groups." + newGroup, config.get("groups." + oldGroup));
+            for (Map.Entry entry : config.getConfigurationSection("groups." + oldGroup).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("groups." + newGroup + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("groups." + oldGroup, null);
 
             try {
@@ -277,7 +309,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("groups." + group + ".info." + oldVar)) {
-            config.set("groups." + group + ".info." + newVar, config.get("groups." + group + ".info." + oldVar));
+            for (Map.Entry entry : config.getConfigurationSection("groups." + group + ".info." + oldVar).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("groups." + group + ".info." + newVar + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("groups." + group + ".info." + oldVar, null);
 
             try {
@@ -328,7 +366,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("groups." + group + ".worlds." + oldWorld)) {
-            config.set("groups." + group + ".worlds." + newWorld, config.get("groups." + group + ".worlds." + oldWorld));
+            for (Map.Entry entry : config.getConfigurationSection("groups." + group + ".worlds." + oldWorld).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("groups." + group + ".worlds." + newWorld + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("groups." + group + ".worlds." + oldWorld, null);
 
             try {
@@ -367,7 +411,13 @@ public class MInfoReader {
         YamlConfiguration config = plugin.mIConfig;
 
         if (config.isSet("groups." + group + ".worlds." + world + "." + oldVar)) {
-            config.set("groups." + group + ".worlds." + world + "." + newVar, config.get("groups." + group + ".worlds." + world + "." + oldVar));
+            for (Map.Entry entry : config.getConfigurationSection("groups." + group + ".worlds." + world + "." + oldVar).getValues(true).entrySet()) {
+                if (entry.getValue() instanceof MemorySection)
+                    continue;
+
+                config.set("groups." + group + ".worlds." + world + "." + newVar + "." + entry.getKey(), entry.getValue());
+            }
+
             config.set("groups." + group + ".worlds." + world + "." + oldVar, null);
 
             try {
