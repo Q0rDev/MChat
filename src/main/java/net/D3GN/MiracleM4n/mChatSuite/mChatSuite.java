@@ -224,10 +224,10 @@ public class mChatSuite extends JavaPlugin {
 
         // Initialize Configs
         if (new File("plugins/mChat/").isDirectory()) {
-            mConfigF = new File("/plugins/mChat/", "config.yml");
-            mIConfigF = new File("/plugins/mChat/", "info.yml");
-            mCConfigF = new File("/plugins/mChat/", "censor.yml");
-            mELocaleF = new File("/plugins/mChat/", "locale.yml");
+            mConfigF = new File("plugins/mChat/", "config.yml");
+            mIConfigF = new File("plugins/mChat/", "info.yml");
+            mCConfigF = new File("plugins/mChat/", "censor.yml");
+            mELocaleF = new File("plugins/mChat/", "locale.yml");
         } else {
             mConfigF = new File(getDataFolder(), "config.yml");
             mIConfigF = new File(getDataFolder(), "info.yml");
