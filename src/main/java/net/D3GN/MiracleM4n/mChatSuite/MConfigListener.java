@@ -60,18 +60,19 @@ public class MConfigListener {
 
         plugin.mAPIOnly = config.getBoolean("mchat.apiOnly", plugin.mAPIOnly);
         plugin.alterEvents = config.getBoolean("mchat.alterEvents", plugin.alterEvents);
+        plugin.alterEvents = config.getBoolean("mchat.alterDeathEvents", plugin.alterDMessages);
         plugin.chatDistance = config.getDouble("mchat.chatDistance", plugin.chatDistance);
         plugin.varIndicator = config.getString("mchat.varIndicator", plugin.varIndicator);
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
 
-        plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.spoutEnabled);
-        plugin.sJoinB = config.getBoolean("suppress.useJoin", plugin.spoutEnabled);
-        plugin.sKickB = config.getBoolean("suppress.useKick", plugin.spoutEnabled);
-        plugin.sQuitB = config.getBoolean("suppress.useQuit", plugin.spoutEnabled);
-        plugin.sDeathI = config.getInt("suppress.maxDeath", plugin.AFKTimer);
-        plugin.sJoinI = config.getInt("suppress.maxJoin", plugin.AFKTimer);
-        plugin.sKickI = config.getInt("suppress.maxKick", plugin.AFKTimer);
-        plugin.sQuitI = config.getInt("suppress.maxQuit", plugin.AFKTimer);
+        plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.sDeathB);
+        plugin.sJoinB = config.getBoolean("suppress.useJoin", plugin.sJoinB);
+        plugin.sKickB = config.getBoolean("suppress.useKick", plugin.sKickB);
+        plugin.sQuitB = config.getBoolean("suppress.useQuit", plugin.sQuitB);
+        plugin.sDeathI = config.getInt("suppress.maxDeath", plugin.sDeathI);
+        plugin.sJoinI = config.getInt("suppress.maxJoin", plugin.sJoinI);
+        plugin.sKickI = config.getInt("suppress.maxKick", plugin.sKickI);
+        plugin.sQuitI = config.getInt("suppress.maxQuit", plugin.sQuitI);
 
         plugin.useNewInfo = config.getBoolean("info.useNewInfo", plugin.useNewInfo);
         plugin.useLeveledNodes = config.getBoolean("info.useLeveledNodes", plugin.useLeveledNodes);
@@ -140,6 +141,7 @@ public class MConfigListener {
 
         config.set("mchat.apiOnly", plugin.mAPIOnly);
         config.set("mchat.alterEvents", plugin.alterEvents);
+        config.set("mchat.alterDeathEvents", plugin.alterDMessages);
         config.set("mchat.chatDistance", plugin.chatDistance);
         config.set("mchat.varIndicator", plugin.varIndicator);
         config.set("mchat.spout", plugin.spoutEnabled);
@@ -239,6 +241,7 @@ public class MConfigListener {
 
         checkOption(config, "mchat.apiOnly", plugin.mAPIOnly);
         checkOption(config, "mchat.alterEvents", plugin.alterEvents);
+        checkOption(config, "mchat.alterDeathMessages", plugin.alterDMessages);
         checkOption(config, "mchat.chatDistance", plugin.chatDistance);
         checkOption(config, "mchat.varIndicator", plugin.varIndicator);
         checkOption(config, "mchat.spout", plugin.spoutEnabled);

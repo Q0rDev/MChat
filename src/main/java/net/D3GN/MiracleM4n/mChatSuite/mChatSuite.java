@@ -128,6 +128,7 @@ public class mChatSuite extends JavaPlugin {
 
     // Alter Event Messages Boolean
     Boolean alterEvents = true;
+    Boolean alterDMessages = true;
 
     // Add New Players Boolean
     Boolean useAddDefault = false;
@@ -374,10 +375,12 @@ public class mChatSuite extends JavaPlugin {
             }
 
             if (alterEvents) {
-                pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
                 pm.registerEvent(Event.Type.PLAYER_KICK, pListener, Priority.Normal, this);
                 pm.registerEvent(Event.Type.PLAYER_QUIT, pListener, Priority.Normal, this);
             }
+
+            if (alterDMessages)
+                pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
         }
     }
 
