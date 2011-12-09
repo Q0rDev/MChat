@@ -31,8 +31,8 @@
             </snapshots>
         </repository>
         <repository>
-            <id>cward-repo</id>
-            <url>http://repo.chrisgward.com/repository</url>
+            <id>mdev-repo</id>
+            <url>http://repo.mdev.in</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
