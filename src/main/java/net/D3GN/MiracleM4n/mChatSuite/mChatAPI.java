@@ -352,9 +352,6 @@ public class mChatAPI {
         if (plugin.useNewInfo)
             return getmChatInfo(player, info);
 
-        if (plugin.permissionsB)
-            return getPermissionsInfo(player, info);
-
         if (plugin.gmPermissionsB)
             return getGroupManagerInfo(player, info);
 
@@ -525,67 +522,6 @@ public class mChatAPI {
     }
 
     /*
-     * Permissions Stuff
-     */
-    @SuppressWarnings("deprecation")
-    String getPermissionsInfo(Player player, String info) {
-        if (info.equals("group"))
-            return getPermissionsGroup(player);
-
-        String pName = player.getName();
-        String world = player.getWorld().getName();
-
-        if (plugin.permissions3) {
-            String userString = plugin.permissions.getInfoString(world, pName, info, false);
-            String group = plugin.permissions.getPrimaryGroup(world, pName);
-
-            if (userString != null && !userString.isEmpty())
-                return userString;
-
-            if (group == null)
-                return "";
-
-            String groupString = plugin.permissions.getInfoString(world, group, info, true);
-            if (groupString == null)
-                return "";
-
-            return groupString;
-        } else {
-            String group = plugin.permissions.getGroup(world, pName);
-            String userString = plugin.permissions.getUserPermissionString(world, pName, info);
-            if (userString != null && !userString.isEmpty())
-                return userString;
-
-            if (group == null)
-                return "";
-
-            return plugin.permissions.getGroupPermissionString(world, group, info);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    String getPermissionsGroup(Player player) {
-        String pName = player.getName();
-        String world = player.getWorld().getName();
-
-        if (plugin.permissions3) {
-            String group = plugin.permissions.getPrimaryGroup(world, pName);
-
-            if (group == null)
-                return "";
-
-            return group;
-        } else {
-            String group = plugin.permissions.getGroup(world, pName);
-
-            if (group == null)
-                return "";
-
-            return group;
-        }
-    }
-
-    /*
      * GroupManager Stuff
      */
     String getGroupManagerInfo(Player player, String info) {
@@ -741,10 +677,6 @@ public class mChatAPI {
     }
 
     public Boolean checkPermissions(Player player, String node) {
-        if (plugin.permissionsB)
-            if (plugin.permissions.has(player, node))
-                return true;
-
         if (plugin.gmPermissionsB)
             if (plugin.gmPermissionsWH.getWorldPermissions(player).has(player, node))
                 return true;
@@ -758,10 +690,6 @@ public class mChatAPI {
     }
 
     public Boolean checkPermissions(Player player, String node, Boolean useOp) {
-        if (plugin.permissionsB)
-            if (plugin.permissions.has(player, node))
-                return true;
-
         if (plugin.gmPermissionsB)
             if (plugin.gmPermissionsWH.getWorldPermissions(player).has(player, node))
                 return true;

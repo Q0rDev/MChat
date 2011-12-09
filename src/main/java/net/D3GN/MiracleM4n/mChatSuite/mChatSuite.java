@@ -18,9 +18,6 @@ import com.herocraftonline.dev.heroes.Heroes;
 
 import com.massivecraft.factions.Conf;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
@@ -64,11 +61,6 @@ public class mChatSuite extends JavaPlugin {
     // Info API
     public static MInfoReader IReader;
     MInfoReader mIReader;
-
-    // Permissions
-    PermissionHandler permissions;
-    Boolean permissions3;
-    Boolean permissionsB = false;
 
     // GroupManager
     WorldsHolder gmPermissionsWH;
@@ -408,15 +400,6 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             pexPermissions = PermissionsEx.getPermissionManager();
             PEXB = true;
-            mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
-            return;
-        }
-
-        permTest = pm.getPlugin("Permissions");
-        if (permTest != null) {
-            permissions = ((Permissions) permTest).getHandler();
-            permissionsB = true;
-            permissions3 = permTest.getDescription().getVersion().startsWith("3");
             mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
