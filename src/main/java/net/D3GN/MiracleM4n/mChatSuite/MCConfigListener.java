@@ -25,9 +25,9 @@ public class MCConfigListener {
     }
 
     void loadConfig() {
-        if (!(new File(plugin.getDataFolder(), "censor.yml")).exists()) {
+        if (!(new File(plugin.getDataFolder(), "censor.yml").exists())
+         && !(new File("plugins/mChat/censor.yml").exists()))
             defaultConfig();
-        }
     }
 
     void defaultConfig() {

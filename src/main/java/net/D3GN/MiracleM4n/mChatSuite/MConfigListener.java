@@ -181,9 +181,9 @@ public class MConfigListener {
         YamlConfiguration config = plugin.mConfig;
         YamlConfigurationOptions configO = config.options();
 
-        if (!(new File(plugin.getDataFolder(), "config.yml")).exists()) {
+        if (!(new File(plugin.getDataFolder(), "config.yml").exists())
+         && !(new File("plugins/mChat/config.yml").exists()))
             defaultConfig();
-        }
 
         removeOption(config, "auto-Changed");
         removeOption(config, "mchat.suppressMessages");

@@ -18,27 +18,29 @@ public class MECommandSender implements CommandExecutor {
 
     public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
         String commandName = command.getName();
+
         if (commandName.equalsIgnoreCase("mchatme")) {
             if (args.length > 0) {
                 String message = "";
 
-                for (String arg : args) {
+                for (String arg : args)
                     message += " " + arg;
-                }
+
+                message = message.trim();
 
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
                     if (plugin.mAPI.checkPermissions(player, "mchat.me"))
-                        plugin.getServer().broadcastMessage(plugin.mAPI.ParseMe(player, message.substring(1)));
+                        plugin.getServer().broadcastMessage(plugin.mAPI.ParseMe(player, message));
                     else
                         sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
 
                     return true;
                 } else {
                     String senderName = "Console";
-                    plugin.getServer().broadcastMessage("*" + " " + senderName + message);
-                    plugin.mAPI.log("*" + " " + senderName + message);
+                    plugin.getServer().broadcastMessage("* " + senderName + " " + message);
+                    plugin.mAPI.log("* " + senderName + " " + message);
                     return true;
                 }
             }

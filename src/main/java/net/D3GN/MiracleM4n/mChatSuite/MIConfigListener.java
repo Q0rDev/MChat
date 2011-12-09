@@ -61,9 +61,9 @@ public class MIConfigListener {
     }
 
     void checkConfig() {
-        if (!(new File(plugin.getDataFolder(), "info.yml")).exists()) {
+        if (!(new File(plugin.getDataFolder(), "info.yml").exists())
+         && !(new File("plugins/mChat/info.yml").exists()))
             defaultConfig();
-        }
 
         YamlConfiguration config = plugin.mIConfig;
         YamlConfigurationOptions configO = config.options();

@@ -143,7 +143,7 @@ public class mChatSuite extends JavaPlugin {
     String chatFormat = "+p+dn+s&f: +m";
     String nameFormat = "+p+dn+s&e";
     String eventFormat = "+p+dn+s&e";
-    String meFormat = "** +p+dn+s&e +m";
+    String meFormat = "* +p+dn+s&e +m";
     String dateFormat = "HH:mm:ss";
 
     // Messages
@@ -336,6 +336,7 @@ public class mChatSuite extends JavaPlugin {
                     sPlayers.setTitle(mAPI.ParsePlayerName(players));
             }
         }
+
         // Check for Automatic Factions Support
         setupFactions();
 
