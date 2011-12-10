@@ -119,35 +119,53 @@ public class mChatAPI {
         if (plugin.regB)
             money = "$" + Methods.getMethod().getAccount(pName).balance();
 
-        // Initialize Heroes Vars
+         // Initialize Heroes Vars
         if (plugin.heroesB) {
             Hero hero = plugin.heroes.getHeroManager().getHero(player);
             HeroClass heroClass = hero.getHeroClass();
             HeroClass heroSClass = hero.getSecondClass();
 
-            int hL = Properties.getLevel(hero.getExperience());
-            double hE = Properties.getExperience(hL);
+            int hL = hero.getLevel(heroClass);
+            int hsecL = hero.getLevel(heroSClass);
+            double hE = hero.getExperience(heroClass);
+            double hsecE = hero.getExperience(heroSClass);
 
             hClass = hero.getHeroClass().getName();
             hHealth = String.valueOf(hero.getHealth());
             hHBar = Messaging.createHealthBar((float) hero.getHealth(), (float) hero.getMaxHealth());
             hMana = String.valueOf(hero.getMana());
             hMBar = Messaging.createManaBar(hero.getMana());
-            hLevel = String.valueOf(hL);
-            hExp = String.valueOf(hE);
-            hEBar = Messaging.createExperienceBar(hero, heroClass);
 
+
+            //Level,Exp and Bar
+            if (heroSClass == null){
+                hLevel = String.valueOf(hL);
+                hExp = String.valueOf(hE);
+            	hEBar = Messaging.createExperienceBar(hero, heroClass);
+            }
+            else{
+            	hLevel = String.valueOf(hsecL);
+            	hExp = String.valueOf(hsecE);
+            	hEBar = Messaging.createExperienceBar(hero, heroSClass);
+            }
+            
+            //Party
             if (hero.getParty() != null)
                 hParty = hero.getParty().toString();
-
+            
+            //Secondary Class
             if (heroSClass != null)
                 hSClass = heroSClass.getName();
-
-            if (hero.isMaster(heroClass))
-                if (heroSClass == null || hero.isMaster(heroSClass))
-                    hMastered = plugin.hMasterT;
-                else
-                    hMastered = plugin.hMasterF;
+                
+            //If Mastered or not
+            if (hero.isMaster(hero.getHeroClass()) 
+                    && ( hero.getSecondClass() == null 
+                   		|| hero.isMaster(hero.getSecondClass()))){
+                hMastered = plugin.hMasterT;
+            		}
+            else{
+                hMastered = plugin.hMasterF;
+            		}
         }
 
         String format = parseVars(formatAll, player);
