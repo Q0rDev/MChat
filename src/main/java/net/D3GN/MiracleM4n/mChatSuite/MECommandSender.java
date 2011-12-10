@@ -19,6 +19,9 @@ public class MECommandSender implements CommandExecutor {
     public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
         String commandName = command.getName();
 
+        if (!plugin.mChatEB)
+            return true;
+
         if (commandName.equalsIgnoreCase("mchatme")) {
             if (args.length > 0) {
                 String message = "";

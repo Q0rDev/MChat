@@ -23,6 +23,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
+        if (!plugin.mChatEB)
+            return;
+
         if (event.getMessage().contains("/mafk"))
             return;
 
@@ -152,6 +155,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     }
 
     public void onPlayerKick(PlayerKickEvent event) {
+        if (!plugin.alterEvents)
+            return;
+
         if (event.isCancelled())
             return;
 
@@ -177,6 +183,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     public void onPlayerQuit(PlayerQuitEvent event) {
         String pName = event.getPlayer().getName();
         String msg = event.getQuitMessage();
+
+        if (!plugin.alterEvents)
+            return;
 
         if (msg == null)
             return;
@@ -207,6 +216,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+
+        if (!plugin.mChatEB)
+            return;
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
 

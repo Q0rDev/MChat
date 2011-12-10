@@ -17,6 +17,9 @@ public class MEntityListener extends EntityListener {
     Boolean messageTimeout = true;
 
     public void onEntityDeath(EntityDeathEvent event) {
+        if (!plugin.alterDMessages)
+            return;
+
         if (!(event.getEntity() instanceof Player))
             return;
 
@@ -49,13 +52,13 @@ public class MEntityListener extends EntityListener {
     }
 
     public void onEntityDamage(EntityDamageEvent event) {
+        if (!plugin.mChatEB)
+            return;
+
         if (event.isCancelled())
             return;
 
         if (event instanceof EntityDamageByEntityEvent) {
-            if (plugin.isAFK == null)
-                return;
-
             EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
             Entity attacker = subEvent.getDamager();
             Entity damaged = subEvent.getEntity();
@@ -76,14 +79,11 @@ public class MEntityListener extends EntityListener {
         if (event.getEntity() instanceof Player) {
             final Player player = (Player) event.getEntity();
 
-            if (plugin.isAFK != null) {
-                if (plugin.isAFK.get(player.getName()) != null) {
-                    if (plugin.isAFK.get(player.getName())) {
-                        event.setCancelled(true);
-                        return;
-                    }
+            if (plugin.isAFK.get(player.getName()) != null)
+                if (plugin.isAFK.get(player.getName())) {
+                    event.setCancelled(true);
+                    return;
                 }
-            }
 
             if (plugin.healthNotify) {
                 Runnable timeRunnable = new Runnable() {

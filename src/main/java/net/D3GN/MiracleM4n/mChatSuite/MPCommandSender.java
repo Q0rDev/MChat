@@ -20,6 +20,9 @@ public class MPCommandSender implements CommandExecutor {
     public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
         String commandName = command.getName();
 
+        if (!plugin.mChatPB)
+            return true;
+
         if (!(sender instanceof Player)) {
              sender.sendMessage(formatPMessage(plugin.mAPI.addColour("Console's can't send PM's.")));
              return true;

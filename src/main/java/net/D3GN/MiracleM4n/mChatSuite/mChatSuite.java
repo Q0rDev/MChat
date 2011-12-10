@@ -258,12 +258,8 @@ public class mChatSuite extends JavaPlugin {
 
         // Initialize Delayed Listeners
         mCSender = new MCommandSender(this);
-
-        if (mChatEB)
-            mECSender = new MECommandSender(this);
-
-        if (mChatPB)
-            mPCSender = new MPCommandSender(this);
+        mECSender = new MECommandSender(this);
+        mPCSender = new MPCommandSender(this);
 
         if (!mAPIOnly) {
             if (spoutB) {
@@ -291,22 +287,18 @@ public class mChatSuite extends JavaPlugin {
         // Register Commands
         getCommand("mchat").setExecutor(mCSender);
 
-        if (mChatEB) {
-            getCommand("mchatme").setExecutor(mECSender);
-            getCommand("mchatwho").setExecutor(mECSender);
-            getCommand("mchatlist").setExecutor(mECSender);
-            getCommand("mchatafk").setExecutor(mECSender);
-            getCommand("mchatafkother").setExecutor(mECSender);
-        }
+        getCommand("mchatme").setExecutor(mECSender);
+        getCommand("mchatwho").setExecutor(mECSender);
+        getCommand("mchatlist").setExecutor(mECSender);
+        getCommand("mchatafk").setExecutor(mECSender);
+        getCommand("mchatafkother").setExecutor(mECSender);
 
-        if (mChatPB) {
-            getCommand("pmchat").setExecutor(mPCSender);
-            getCommand("pmchatreply").setExecutor(mPCSender);
-            getCommand("pmchatinvite").setExecutor(mPCSender);
-            getCommand("pmchataccept").setExecutor(mPCSender);
-            getCommand("pmchatdeny").setExecutor(mPCSender);
-            getCommand("pmchatleave").setExecutor(mPCSender);
-        }
+        getCommand("pmchat").setExecutor(mPCSender);
+        getCommand("pmchatreply").setExecutor(mPCSender);
+        getCommand("pmchatinvite").setExecutor(mPCSender);
+        getCommand("pmchataccept").setExecutor(mPCSender);
+        getCommand("pmchatdeny").setExecutor(mPCSender);
+        getCommand("pmchatleave").setExecutor(mPCSender);
 
         // Ping Stats                                       `
         Stats.init(this);
@@ -356,24 +348,19 @@ public class mChatSuite extends JavaPlugin {
             pm.registerEvent(Event.Type.SIGN_CHANGE, bListener, Priority.Normal, this);
             pm.registerEvent(Event.Type.PLAYER_JOIN, pListener, Priority.Normal, this);
 
-            if (mChatEB) {
-                pm.registerEvent(Event.Type.PLAYER_MOVE, pListener, Priority.Normal, this);
-                pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, pListener, Priority.Normal, this);
-                pm.registerEvent(Event.Type.ENTITY_DAMAGE, eListener, Priority.Normal, this);
-            }
+            pm.registerEvent(Event.Type.PLAYER_MOVE, pListener, Priority.Normal, this);
+            pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, pListener, Priority.Normal, this);
+            pm.registerEvent(Event.Type.ENTITY_DAMAGE, eListener, Priority.Normal, this);
+
+            pm.registerEvent(Event.Type.PLAYER_KICK, pListener, Priority.Normal, this);
+            pm.registerEvent(Event.Type.PLAYER_QUIT, pListener, Priority.Normal, this);
+
+            pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
 
             if (spoutB) {
                 pm.registerEvent(Event.Type.CUSTOM_EVENT, cusListener, Event.Priority.Normal, this);
                 pm.registerEvent(Event.Type.CUSTOM_EVENT, mGUIEvent, Event.Priority.Normal, this);
             }
-
-            if (alterEvents) {
-                pm.registerEvent(Event.Type.PLAYER_KICK, pListener, Priority.Normal, this);
-                pm.registerEvent(Event.Type.PLAYER_QUIT, pListener, Priority.Normal, this);
-            }
-
-            if (alterDMessages)
-                pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
         }
     }
 
