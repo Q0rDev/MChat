@@ -143,11 +143,11 @@ public class mChatAPI {
             if (heroSClass != null)
                 hSClass = heroSClass.getName();
 
-            if (hero.isMaster(heroClass))
-                if (heroSClass == null || hero.isMaster(heroSClass))
-                    hMastered = plugin.hMasterT;
-                else
-                    hMastered = plugin.hMasterF;
+            if ((hero.isMaster(heroClass))
+                && (heroSClass == null || hero.isMaster(heroSClass)))
+                hMastered = plugin.hMasterT;
+            else
+                hMastered = plugin.hMasterF;
         }
 
         String format = parseVars(formatAll, player);

@@ -83,6 +83,12 @@ permissions:
             mchat.group: true
             mchat.coloredchat: true
             mchat.censorbypass: true
+            mchat.gui: true
+            mchat.me: true
+            mchat.afk: true
+            mchat.afkother: true
+            mchat.list: true
+            mchat.who: true
     mchat.reload:
         description: Allow usage of /mchat reload '[config/info/censor/all]'
         children:
@@ -90,6 +96,24 @@ permissions:
             mchat.reload.info: true
             mchat.reload.censor: true
             mchat.reload.all: true
+    mchat.suppress.*:
+        description: Allow usage suppression of all messages.
+        children:
+            mchat.suppress.join: true
+            mchat.suppress.qui: true
+            mchat.suppress.kick: true
+            mchat.suppress.death: true
+    mchat.pm.*:
+        description: Allow usage of all PM functions
+        children:
+            mchat.pm.pm: true
+            mchat.pm.reply: true
+            mchat.pm.invite: true
+    mchat.bypass.*:
+        description: Allow usage bypass of all Automatic functions.
+        children:
+            mchat.bypass.afk: true
+            mchat.bypass.afkkick: true
     mchat.user:
         description: Allows full use of all user info related mChat commands.
         children:
@@ -161,6 +185,36 @@ permissions:
         description: Allow colour in chat messages.
     mchat.censorbypass:
         description: Allow bypass of msg censoring.
+    mchat.gui:
+        description: Allow use of the /mchat gui command.
+    mchat.me:
+        description: Allow use of the /mchatme command.
+    mchat.afk:
+        description: Allow use of the /mchatafk command.
+    mchat.afkother:
+        description: Allow use of the /mchatafkother command.
+    mchat.list:
+        description: Allow use of the /mchatlist command.
+    mchat.who:
+        description: Allow use of the /mchatwho command.
+    mchat.suppress.join:
+        description: Allow suppression of the mChat Join Messages.
+    mchat.suppress.quit:
+        description: Allow suppression of the mChat Quit Messages.
+    mchat.suppress.kick:
+        description: Allow suppression of the mChat Kick Messages.
+    mchat.suppress.death:
+        description: Allow suppression of the mChat Death Messages.
+    mchat.pm.pm:
+        description: Allow use of the /pmchat command.
+    mchat.pm.reply:
+        description: Allow use of the /pmchatreply command.
+    mchat.pm.invite:
+        description: Allow use of the /pmchatinvite command.
+    mchat.bypass.afk:
+        description: Allow bypassing of AutoAFK.
+    mchat.bypass.afkkick:
+        description: Allow bypassing of AutoAFK Kick.
     mchat.user.add.player:
         description: Allow usage of /mchat user add player Player
     mchat.user.add.ivar:

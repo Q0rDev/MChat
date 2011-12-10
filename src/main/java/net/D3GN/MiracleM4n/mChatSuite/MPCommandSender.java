@@ -32,7 +32,7 @@ public class MPCommandSender implements CommandExecutor {
         String pName = player.getName();
 
         if (commandName.equalsIgnoreCase("pmchat")) {
-            if (!plugin.mAPI.checkPermissions(player, "pmchat.pm")) {
+            if (!plugin.mAPI.checkPermissions(player, "mchat.pm.pm")) {
                 player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not allowed to use PM functions.")));
                 return true;
             }
@@ -131,7 +131,7 @@ public class MPCommandSender implements CommandExecutor {
 
             return true;
         } else if (commandName.equalsIgnoreCase("pmchatinvite")) {
-            if (!plugin.mAPI.checkPermissions(player, "pmchat.invite")) {
+            if (!plugin.mAPI.checkPermissions(player, "mchat.pm.invite")) {
                 player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not allowed to use Invite functions.")));
                 return true;
             }
@@ -162,7 +162,7 @@ public class MPCommandSender implements CommandExecutor {
                 String rName = plugin.lastPMd.get(pName);
                 Player recipient = plugin.getServer().getPlayer(rName);
 
-                if (!plugin.mAPI.checkPermissions(player, "pmchat.reply")) {
+                if (!plugin.mAPI.checkPermissions(player, "mchat.pm.reply")) {
                     player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not allowed to use PM reply functions.")));
                     return true;
                 }

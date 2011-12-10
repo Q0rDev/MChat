@@ -485,7 +485,7 @@ public class mChatSuite extends JavaPlugin {
                 cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (mAPI.checkPermissions(player, "mchat.afk.bypass"))
+                    if (mAPI.checkPermissions(player, "mchat.bypass.afk"))
                         continue;
 
                     if (isAFK.get(player.getName()))
@@ -510,7 +510,7 @@ public class mChatSuite extends JavaPlugin {
                 cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (mAPI.checkPermissions(player, "mchat.afkkick.bypass"))
+                    if (mAPI.checkPermissions(player, "mchat.bypass.afkkick"))
                         continue;
 
                     if (!isAFK.get(player.getName()))
