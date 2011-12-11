@@ -1,4 +1,4 @@
-package net.D3GN.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -577,7 +577,7 @@ public class mChatAPI {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        String group = plugin.pexPermissions.getUser(pName).getGroupsNames(world)[0];
+        String group = plugin.pexPermissions.getUser(player).getGroupsNames()[0];
 
         if (group == null)
             return "";

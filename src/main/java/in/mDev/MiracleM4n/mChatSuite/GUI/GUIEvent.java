@@ -1,6 +1,6 @@
-package net.D3GN.MiracleM4n.mChatSuite.GUI;
+package in.mDev.MiracleM4n.mChatSuite.GUI;
 
-import net.D3GN.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.entity.Player;
 

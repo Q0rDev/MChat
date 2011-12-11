@@ -1,4 +1,4 @@
-package net.D3GN.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite;
 
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.SignChangeEvent;
