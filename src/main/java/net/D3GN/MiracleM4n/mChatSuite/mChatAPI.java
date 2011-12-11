@@ -565,7 +565,8 @@ public class mChatAPI {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        String userString = plugin.pexPermissions.getUser(pName).getOption(info, world);
+        String userString = plugin.pexPermissions.getUser(player).getOwnOption(info);
+
         if (userString != null && !userString.isEmpty())
             return userString;
 

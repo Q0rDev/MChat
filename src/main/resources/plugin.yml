@@ -21,34 +21,27 @@ commands:
     mchatme:
         description:
         usage: |
-            /<command> *Message*
-            Example: /<command> - See this info.
-            Example: /<command> *Message* - Displays message.
+            /<command> *Message* - Displays message.
         aliases: [me]
     mchatwho:
         description:
         usage: |
-            /<command> *PLAYER*
-            Example: /<command> - See this info.
-            Example: /<command> *PLAYER* - Displays info about player.
+            /<command> *PLAYER* - Displays info about player.
         aliases: [who, mwho]
     mchatlist:
         description:
         usage: |
-            /<command>
-            Example: /<command> - See A list of online players.
+            /<command> - See A list of online players.
         aliases: [list, mlist, online, monline, playerlist]
     mchatafk:
         description:
         usage: |
-            /<command>
-            Example: /<command> [REASON] - Displays you as AFK (REASON is optional).
+            /<command> [REASON] - Displays you as AFK (REASON is optional).
         aliases: [afk, mafk, maway, away]
     mchatafkother:
         description:
         usage: |
-            /<command>
-            Example: /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
+            /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
         aliases: [afko, mafkother, mafko, mawayother, mawayo, awayother, awayo]
     pmchat:
         usage: |
