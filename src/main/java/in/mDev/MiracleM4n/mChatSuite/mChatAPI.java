@@ -21,7 +21,7 @@ import com.platymuus.bukkit.permissions.PermissionsPlugin;
 
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 
-import net.D3GN.MiracleM4n.mChannel.mChannel;
+import in.mDev.MiracleM4n.mChannel.mChannel;
 
 @SuppressWarnings("unused")
 public class mChatAPI {

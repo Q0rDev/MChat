@@ -4,7 +4,7 @@
     <artifactId>mChatSuite</artifactId>
     <version>DEV</version>
     <name>mChatSuite</name>
-    <url>http://d3gn.net/</url>
+    <url>http://mDev.in/</url>
     <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <api.version>unknown</api.version>
@@ -101,7 +101,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.D3GN</groupId>
+            <groupId>in.mDev</groupId>
             <artifactId>mChannel</artifactId>
             <version>DEV</version>
             <type>jar</type>
