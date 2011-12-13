@@ -33,6 +33,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             if (event.getMessage().contains("/" + aliases))
                 return;
 
+        if (plugin.isAFK.get(player.getName()) == null)
+            return;
+
         if (plugin.isAFK.get(player.getName()))
             player.performCommand("mafk");
     }
@@ -87,7 +90,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         }
 
         // MChatEssentials
-        if (plugin.mChatEB)
+        if (plugin.mChatEB && plugin.isAFK.get(player.getName()) != null)
             if (plugin.isAFK.get(player.getName()))
                 player.performCommand("mafk");
 
@@ -222,7 +225,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
 
-        if (plugin.isAFK.get(player.getName()))
+        if (plugin.isAFK.get(player.getName()) && plugin.isAFK.get(player.getName()) != null)
             if(plugin.mAFKHQ) {
                 if(plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
