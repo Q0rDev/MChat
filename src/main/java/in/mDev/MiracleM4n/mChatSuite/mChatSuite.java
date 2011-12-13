@@ -332,13 +332,14 @@ public class mChatSuite extends JavaPlugin {
 
         if (mChatEB) {
             for (Player players : getServer().getOnlinePlayers()) {
-                SpoutPlayer sPlayers = (SpoutPlayer) players;
                 isAFK.put(players.getName(), false);
                 chatt.put(players.getName(), false);
                 lastMove.put(players.getName(), new Date().getTime());
 
-                if (spoutB)
+                if (spoutB) {
+                    SpoutPlayer sPlayers = (SpoutPlayer) players;
                     sPlayers.setTitle(getAPI().ParsePlayerName(players));
+                }
             }
         }
 
