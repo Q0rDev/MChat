@@ -1,8 +1,9 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.configListeners;
 
 import java.io.File;
 import java.io.IOException;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -15,7 +16,7 @@ public class MIConfigListener {
         this.plugin = plugin;
     }
 
-    void load() {
+    public void load() {
         plugin.mIConfig = YamlConfiguration.loadConfiguration(plugin.mIConfigF);
         plugin.mIConfig.options().indent(4);
     }
@@ -60,7 +61,7 @@ public class MIConfigListener {
         save();
     }
 
-    void checkConfig() {
+    public void checkConfig() {
         if (!(new File(plugin.getDataFolder(), "info.yml").exists())
          && !(new File("plugins/mChat/info.yml").exists()))
             defaultConfig();

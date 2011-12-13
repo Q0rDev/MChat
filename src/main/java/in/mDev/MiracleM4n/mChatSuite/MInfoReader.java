@@ -1,10 +1,10 @@
 package in.mDev.MiracleM4n.mChatSuite;
 
-import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.IOException;
 import java.util.Map;
+
+import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class MInfoReader {
     mChatSuite plugin;

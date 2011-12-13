@@ -1,5 +1,6 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.commandSenders;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,7 +25,7 @@ public class MPCommandSender implements CommandExecutor {
             return true;
 
         if (!(sender instanceof Player)) {
-             sender.sendMessage(formatPMessage(plugin.mAPI.addColour("Console's can't send PM's.")));
+             sender.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("Console's can't send PM's.")));
              return true;
         }
 
@@ -32,8 +33,8 @@ public class MPCommandSender implements CommandExecutor {
         String pName = player.getName();
 
         if (commandName.equalsIgnoreCase("pmchat")) {
-            if (!plugin.mAPI.checkPermissions(player, "mchat.pm.pm")) {
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not allowed to use PM functions.")));
+            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.pm.pm")) {
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You are not allowed to use PM functions.")));
                 return true;
             }
 
@@ -51,7 +52,7 @@ public class MPCommandSender implements CommandExecutor {
 
             Player recipient = plugin.getServer().getPlayer(args[0]);
             String rName = recipient.getName();
-            String senderName = plugin.mAPI.ParsePlayerName(pName);
+            String senderName = mChatSuite.getAPI().ParsePlayerName(pName);
 
             player.sendMessage(formatPMSend(rName, message));
 
@@ -88,16 +89,16 @@ public class MPCommandSender implements CommandExecutor {
             Player recipient = plugin.getServer().getPlayer(rName);
 
             if (plugin.isConv.get(pName) == null)
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not currently in a Convo.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You are not currently in a Convo.")));
             else if (plugin.isConv.get(pName)) {
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You have left the convo.")));
-                recipient.sendMessage(formatPMessage(plugin.mAPI.addColour("Conversation has been ended.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have left the convo.")));
+                recipient.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("Conversation has been ended.")));
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
                 plugin.chatPartner.remove(rName);
                 plugin.chatPartner.remove(pName);
             } else
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not currently in a Convo.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You are not currently in a Convo.")));
 
             return true;
         } else if (commandName.equalsIgnoreCase("pmchataccept")) {
@@ -110,10 +111,10 @@ public class MPCommandSender implements CommandExecutor {
                 plugin.isConv.put(rName, true);
                 plugin.chatPartner.put(rName, pName);
                 plugin.chatPartner.put(pName, rName);
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You have started a Convo with &5'&4" + plugin.mAPI.ParsePlayerName(rName) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(plugin.mAPI.addColour("Convo request with &5'&4" + plugin.mAPI.ParsePlayerName(pName) + "&5'&4 has been accepted.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have started a Convo with &5'&4" + mChatSuite.getAPI().ParsePlayerName(rName) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("Convo request with &5'&4" + mChatSuite.getAPI().ParsePlayerName(pName) + "&5'&4 has been accepted.")));
             } else
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("No pending Convo request.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("No pending Convo request.")));
 
             return true;
         } else if (commandName.equalsIgnoreCase("pmchatdeny")) {
@@ -124,15 +125,15 @@ public class MPCommandSender implements CommandExecutor {
                 plugin.getInvite.remove(pName);
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You have denied a Convo request from &5'&4" + plugin.mAPI.ParsePlayerName(rName) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(plugin.mAPI.addColour("Convo request with &5'&4" + plugin.mAPI.ParsePlayerName(pName) + "&5'&4 has been denied.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have denied a Convo request from &5'&4" + mChatSuite.getAPI().ParsePlayerName(rName) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("Convo request with &5'&4" + mChatSuite.getAPI().ParsePlayerName(pName) + "&5'&4 has been denied.")));
             } else
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("No pending Convo request.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("No pending Convo request.")));
 
             return true;
         } else if (commandName.equalsIgnoreCase("pmchatinvite")) {
-            if (!plugin.mAPI.checkPermissions(player, "mchat.pm.invite")) {
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not allowed to use Invite functions.")));
+            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.pm.invite")) {
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You are not allowed to use Invite functions.")));
                 return true;
             }
 
@@ -145,12 +146,12 @@ public class MPCommandSender implements CommandExecutor {
             }
 
             if (plugin.getInvite.get(rName) != null) {
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("&5'&4" + plugin.mAPI.ParsePlayerName(rName) + "&5'&4 Already has a Convo request.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("&5'&4" + mChatSuite.getAPI().ParsePlayerName(rName) + "&5'&4 Already has a Convo request.")));
                 return true;
             } else {
                 plugin.getInvite.put(rName, pName);
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("You have invited &5'&4" + plugin.mAPI.ParsePlayerName(rName) + "&5'&4 to have a Convo.")));
-                recipient.sendMessage(formatPMessage(plugin.mAPI.addColour("You have been invited to a Convo by &5'&4" + plugin.mAPI.ParsePlayerName(pName) + "&5'&4 use /pmchat accept to accept.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have invited &5'&4" + mChatSuite.getAPI().ParsePlayerName(rName) + "&5'&4 to have a Convo.")));
+                recipient.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have been invited to a Convo by &5'&4" + mChatSuite.getAPI().ParsePlayerName(pName) + "&5'&4 use /pmchat accept to accept.")));
                 return true;
             }
         } else if (commandName.equalsIgnoreCase("pmchatreply")) {
@@ -162,12 +163,12 @@ public class MPCommandSender implements CommandExecutor {
                 String rName = plugin.lastPMd.get(pName);
                 Player recipient = plugin.getServer().getPlayer(rName);
 
-                if (!plugin.mAPI.checkPermissions(player, "mchat.pm.reply")) {
-                    player.sendMessage(formatPMessage(plugin.mAPI.addColour("You are not allowed to use PM reply functions.")));
+                if (!mChatSuite.getAPI().checkPermissions(player, "mchat.pm.reply")) {
+                    player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You are not allowed to use PM reply functions.")));
                     return true;
                 }
 
-                final String senderName = plugin.mAPI.ParsePlayerName(pName);
+                final String senderName = mChatSuite.getAPI().ParsePlayerName(pName);
                 player.sendMessage(formatPMSend(rName, message));
 
                 if (plugin.lastPMd != null)
@@ -197,7 +198,7 @@ public class MPCommandSender implements CommandExecutor {
                 recipient.sendMessage(formatPMRecieve(senderName, message));
                 return true;
             } else {
-                player.sendMessage(formatPMessage(plugin.mAPI.addColour("No one has yet PM'd you.")));
+                player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("No one has yet PM'd you.")));
                 return true;
             }
         }
@@ -220,18 +221,18 @@ public class MPCommandSender implements CommandExecutor {
     }
 
     private String formatPMessage(String message) {
-        return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return(mChatSuite.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
     private String formatPNF(String playerNotFound) {
-        return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
+        return(mChatSuite.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
     }
 
     private String formatPMSend(String recipient, String message) {
-        return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "] &fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
+        return(mChatSuite.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] &fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
     }
 
     private String formatPMRecieve(String sender, String message) {
-        return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "] &f" + sender + "&f: " + message));
+        return(mChatSuite.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] &f" + sender + "&f: " + message));
     }
 }

@@ -1,5 +1,6 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.commandSenders;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -34,16 +35,16 @@ public class MECommandSender implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
-                    if (plugin.mAPI.checkPermissions(player, "mchat.me"))
-                        plugin.getServer().broadcastMessage(plugin.mAPI.ParseMe(player, message));
+                    if (mChatSuite.getAPI().checkPermissions(player, "mchat.me"))
+                        plugin.getServer().broadcastMessage(mChatSuite.getAPI().ParseMe(player, message));
                     else
-                        sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                        sender.sendMessage(formatMessage(mChatSuite.getLocale().getOption("noPermissions") + " " + commandName + "."));
 
                     return true;
                 } else {
                     String senderName = "Console";
                     plugin.getServer().broadcastMessage("* " + senderName + " " + message);
-                    plugin.mAPI.log("* " + senderName + " " + message);
+                    mChatSuite.getAPI().log("* " + senderName + " " + message);
                     return true;
                 }
             }
@@ -51,8 +52,8 @@ public class MECommandSender implements CommandExecutor {
             if (args.length > 0) {
                 if (sender instanceof Player) {
                      Player player = (Player) sender;
-                     if (!plugin.mAPI.checkPermissions(player, "mchat.who")) {
-                        sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                     if (!mChatSuite.getAPI().checkPermissions(player, "mchat.who")) {
+                        sender.sendMessage(formatMessage(mChatSuite.getLocale().getOption("noPermissions") + " " + commandName + "."));
                         return true;
                     }
                 }
@@ -78,15 +79,15 @@ public class MECommandSender implements CommandExecutor {
 
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!plugin.mAPI.checkPermissions(player, "mchat.afk")) {
-                    player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                if (!mChatSuite.getAPI().checkPermissions(player, "mchat.afk")) {
+                    player.sendMessage(formatMessage(mChatSuite.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
 
                 plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender.getName() + message);
                 return true;
             } else {
-                plugin.mAPI.log(formatMessage("Console's can't be AFK."));
+                mChatSuite.getAPI().log(formatMessage("Console's can't be AFK."));
                 return true;
             }
         } else if(commandName.equalsIgnoreCase("mchatafkother")) {
@@ -101,8 +102,8 @@ public class MECommandSender implements CommandExecutor {
 
             if (sender instanceof Player) {
                  Player player = (Player) sender;
-                 if (!plugin.mAPI.checkPermissions(player, "mchat.afkother")) {
-                    sender.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                 if (!mChatSuite.getAPI().checkPermissions(player, "mchat.afkother")) {
+                    sender.sendMessage(formatMessage(mChatSuite.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
             }
@@ -121,28 +122,28 @@ public class MECommandSender implements CommandExecutor {
                             SpoutPlayer sPlayers = (SpoutPlayer) players;
 
                             if (sPlayers.isSpoutCraftEnabled())
-                                sPlayers.sendNotification(afkTarget.getName(), plugin.lListener.nAFK, Material.PAPER);
+                                sPlayers.sendNotification(afkTarget.getName(), mChatSuite.getLocale().getOption("noLongerAFK"), Material.PAPER);
                             else
-                                players.sendMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.nAFK);
+                                players.sendMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("noLongerAFK"));
                         }
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
+                    sPlayer.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + mChatSuite.getLocale().getOption("AFK") + " -" + '\n' + mChatSuite.getAPI().ParsePlayerName(afkTarget));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.nAFK);
+                    plugin.getServer().broadcastMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("noLongerAFK"));
 
                 afkTarget.setSleepingIgnored(false);
                 plugin.isAFK.put(afkTarget.getName(), false);
 
                 if (plugin.useAFKList)
-                    if (plugin.mAPI.ParseTabbedList(afkTarget).length() > 15) {
-                            String pLName = plugin.mAPI.ParseTabbedList(afkTarget);
+                    if (mChatSuite.getAPI().ParseTabbedList(afkTarget).length() > 15) {
+                            String pLName = mChatSuite.getAPI().ParseTabbedList(afkTarget);
                             pLName = pLName.substring(0, 16);
                             afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.mAPI.ParseTabbedList(afkTarget));
+                        afkTarget.setPlayerListName(mChatSuite.getAPI().ParseTabbedList(afkTarget));
 
                 return true;
             } else {
@@ -151,46 +152,46 @@ public class MECommandSender implements CommandExecutor {
                         for (Player players : plugin.getServer().getOnlinePlayers()) {
                             SpoutPlayer sPlayers = (SpoutPlayer) players;
                             if (sPlayers.isSpoutCraftEnabled())
-                                sPlayers.sendNotification(afkTarget.getName(), plugin.lListener.iAFK, Material.PAPER);
+                                sPlayers.sendNotification(afkTarget.getName(), mChatSuite.getLocale().getOption("isAFK"), Material.PAPER);
                             else
-                                players.sendMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.iAFK + " [" + message + " ]");
+                                players.sendMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("isAFK") + " [" + message + " ]");
                         }
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + plugin.lListener.AFK + " -" + '\n' + plugin.mAPI.ParsePlayerName(afkTarget));
+                    sPlayer.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + mChatSuite.getLocale().getOption("AFK") + " -" + '\n' + mChatSuite.getAPI().ParsePlayerName(afkTarget));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.mAPI.ParsePlayerName(afkTarget) + " " + plugin.lListener.iAFK + " [" + message + " ]");
+                    plugin.getServer().broadcastMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("isAFK") + " [" + message + " ]");
 
                 afkTarget.setSleepingIgnored(true);
                 plugin.isAFK.put(afkTarget.getName(), true);
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if (("[" + plugin.lListener.AFK + "] " + plugin.mAPI.ParseTabbedList(afkTarget)).length() > 15) {
-                            String pLName = plugin.mAPI.addColour("[<gold>" + plugin.lListener.AFK + "] " + afkTarget);
+                    if (("[" + mChatSuite.getLocale().getOption("AFK") + "] " + mChatSuite.getAPI().ParseTabbedList(afkTarget)).length() > 15) {
+                            String pLName = mChatSuite.getAPI().addColour("[<gold>" + mChatSuite.getLocale().getOption("AFK") + "] " + afkTarget);
                             pLName = pLName.substring(0, 16);
                             afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.mAPI.addColour("<gold>[" + plugin.lListener.AFK + "] " + afkTarget));
+                        afkTarget.setPlayerListName(mChatSuite.getAPI().addColour("<gold>[" + mChatSuite.getLocale().getOption("AFK") + "] " + afkTarget));
 
                 return true;
             }
         } else if(commandName.equalsIgnoreCase("mchatlist")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!plugin.mAPI.checkPermissions(player, "mchat.list")) {
-                    player.sendMessage(formatMessage(plugin.lListener.noPerm + " " + commandName + "."));
+                if (!mChatSuite.getAPI().checkPermissions(player, "mchat.list")) {
+                    player.sendMessage(formatMessage(mChatSuite.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
             }
 
             // My Way
-            // sender.sendMessage(plugin.mAPI.addColour("&4" + plugin.lListener.pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
+            // sender.sendMessage(mChatSuite.getAPI().addColour("&4" + mChatSuite.getLocale().pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
 
             // Waxdt's Way
-            sender.sendMessage(plugin.mAPI.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
+            sender.sendMessage(mChatSuite.getAPI().addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
             formatList(sender);
             return true;
         }
@@ -203,36 +204,17 @@ public class MECommandSender implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
-            String iVar = plugin.mAPI.getInfo(players, plugin.listVar);
-            String mName = plugin.mAPI.ParseListCmd(players.getName());
+            String iVar = mChatSuite.getAPI().getInfo(players, plugin.listVar);
+            String mName = mChatSuite.getAPI().ParseListCmd(players.getName());
 
             if (iVar.isEmpty())
                 continue;
 
-            /*
-            Boolean varB = false;
-
-            for (String var : plugin.cLVars.split(","))
-                if (var.equals(iVar)){
-                    varB = true;
-                    System.out.println(plugin.mAPI.getInfo(players, var));
-                    System.out.println(iVar);
-                    System.out.println(plugin.cLVars);
-                }
-            if (varB) {
-                if (msg.contains(iVar + ": &f ")) {
-                    msg = msg.replaceAll(iVar + ": &f .", iVar + ": &f " + new Integer('$' + iVar.length() + 4));
-                } else {
-                    msg += (iVar + ": &f " + 1 + " Member" + '\n');
-                }
-            } else
-            */
-
             if (plugin.isAFK.get(players.getName())) {
                 if (msg.contains(iVar + ": &f")) {
-                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + plugin.lListener.AFK + "]" + mName + "&f, &f");
+                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + mChatSuite.getLocale().getOption("AFK") + "]" + mName + "&f, &f");
                 } else {
-                    msg += (iVar + ": &f&4[" + plugin.lListener.AFK + "]" + mName + "&f, &f" + '\n');
+                    msg += (iVar + ": &f&4[" + mChatSuite.getLocale().getOption("AFK") + "]" + mName + "&f, &f" + '\n');
                 }
             } else {
                 if (msg.contains(iVar + ": &f")) {
@@ -250,41 +232,41 @@ public class MECommandSender implements CommandExecutor {
             msgS = msg.split("" + '\n');
 
             for (String arg : msgS) {
-                sender.sendMessage(plugin.mAPI.addColour(arg));
+                sender.sendMessage(mChatSuite.getAPI().addColour(arg));
             }
 
-            sender.sendMessage(plugin.mAPI.addColour("&6-------------------------"));
+            sender.sendMessage(mChatSuite.getAPI().addColour("&6-------------------------"));
             return;
         }
 
-        sender.sendMessage(plugin.mAPI.addColour(msg));
+        sender.sendMessage(mChatSuite.getAPI().addColour(msg));
     }
 
     void formatWho(CommandSender sender, Player recipient) {
-        String recipientName = plugin.mAPI.ParsePlayerName(recipient);
+        String recipientName = mChatSuite.getAPI().ParsePlayerName(recipient);
         Integer locX = (int) recipient.getLocation().getX();
         Integer locY = (int) recipient.getLocation().getY();
         Integer locZ = (int) recipient.getLocation().getZ();
         String loc = ("X: " + locX + ", " + "Y: " + locY + ", " +"Z: " + locZ);
         String world = recipient.getWorld().getName();
 
-        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + " Name: " + recipient.getName()));
-        sender.sendMessage(plugin.mAPI.addColour("Display Name: " + recipient.getDisplayName()));
-        sender.sendMessage(plugin.mAPI.addColour("Formatted Name: " + recipientName));
-        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Location: [ " + loc + " ]"));
-        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s World: " + world));
-        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s Health: " + plugin.mAPI.healthBar(recipient) + " " + recipient.getHealth() + "/20"));
-        sender.sendMessage(plugin.mAPI.addColour(plugin.lListener.player + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
-        sender.sendMessage(plugin.mAPI.addColour("Current Item: " + recipient.getItemInHand().getType().name()));
-        sender.sendMessage(plugin.mAPI.addColour("Entity ID: #" + recipient.getEntityId()));
+        sender.sendMessage(mChatSuite.getAPI().addColour(mChatSuite.getLocale().getOption("player") + " Name: " + recipient.getName()));
+        sender.sendMessage(mChatSuite.getAPI().addColour("Display Name: " + recipient.getDisplayName()));
+        sender.sendMessage(mChatSuite.getAPI().addColour("Formatted Name: " + recipientName));
+        sender.sendMessage(mChatSuite.getAPI().addColour(mChatSuite.getLocale().getOption("player") + "'s Location: [ " + loc + " ]"));
+        sender.sendMessage(mChatSuite.getAPI().addColour(mChatSuite.getLocale().getOption("player") + "'s World: " + world));
+        sender.sendMessage(mChatSuite.getAPI().addColour(mChatSuite.getLocale().getOption("player") + "'s Health: " + mChatSuite.getAPI().healthBar(recipient) + " " + recipient.getHealth() + "/20"));
+        sender.sendMessage(mChatSuite.getAPI().addColour(mChatSuite.getLocale().getOption("player") + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
+        sender.sendMessage(mChatSuite.getAPI().addColour("Current Item: " + recipient.getItemInHand().getType().name()));
+        sender.sendMessage(mChatSuite.getAPI().addColour("Entity ID: #" + recipient.getEntityId()));
     }
 
     String formatMessage(String message) {
-        return(plugin.mAPI.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return(mChatSuite.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
     String formatPNF(String playerNotFound) {
-        return(plugin.mAPI.addColour(formatMessage("") + " " + plugin.lListener.player + " &e" + playerNotFound + " &4" + plugin.lListener.nFound));
+        return(mChatSuite.getAPI().addColour(formatMessage("") + " " + mChatSuite.getLocale().getOption("player") + " &e" + playerNotFound + " &4" + mChatSuite.getLocale().getOption("notFound")));
     }
 }
 

@@ -4,6 +4,20 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
+import in.mDev.MiracleM4n.mChatSuite.commandSenders.MCommandSender;
+import in.mDev.MiracleM4n.mChatSuite.commandSenders.MECommandSender;
+import in.mDev.MiracleM4n.mChatSuite.commandSenders.MPCommandSender;
+
+import in.mDev.MiracleM4n.mChatSuite.configListeners.MCConfigListener;
+import in.mDev.MiracleM4n.mChatSuite.configListeners.MConfigListener;
+import in.mDev.MiracleM4n.mChatSuite.configListeners.MIConfigListener;
+import in.mDev.MiracleM4n.mChatSuite.configListeners.MLanguageListener;
+
+import in.mDev.MiracleM4n.mChatSuite.eventListeners.MBlockListener;
+import in.mDev.MiracleM4n.mChatSuite.eventListeners.MCustomListener;
+import in.mDev.MiracleM4n.mChatSuite.eventListeners.MEntityListener;
+import in.mDev.MiracleM4n.mChatSuite.eventListeners.MPlayerListener;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -32,22 +46,24 @@ import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class mChatSuite extends JavaPlugin {
+    // For External Use
+    static mChatSuite mSuite;
+
     // Default Plugin Data
-    PluginManager pm;
-    PluginDescriptionFile pdfFile;
+    public PluginManager pm;
+    public PluginDescriptionFile pdfFile;
 
     // Listeners
-    MPlayerListener pListener;
-    MEntityListener eListener;
-    MBlockListener bListener;
-    MCommandSender mCSender;
-    MECommandSender mECSender;
-    MPCommandSender mPCSender;
-    MConfigListener cListener;
-    MIConfigListener mIListener;
-    MCConfigListener mCListener;
-    MLanguageListener lListener;
-    MCustomListener cusListener;
+    public static MPlayerListener pListener;
+    public static MEntityListener eListener;
+    public static MBlockListener bListener;
+    public static MCommandSender mCSender;
+    public static MECommandSender mECSender;
+    public static MPCommandSender mPCSender;
+    public static MConfigListener cListener;
+    public static MIConfigListener mIListener;
+    public static MCConfigListener mCListener;
+    public static MCustomListener cusListener;
 
     // GUI
     public static Main mGUI;
@@ -55,7 +71,9 @@ public class mChatSuite extends JavaPlugin {
     public static Pages mPages;
 
     // API
+    @Deprecated
     public static mChatAPI API;
+    @Deprecated
     mChatAPI mAPI;
 
     // Info API
@@ -79,10 +97,10 @@ public class mChatSuite extends JavaPlugin {
     Boolean bPermB = false;
 
     // mChannel
-    Boolean mChanB = false;
+    public Boolean mChanB = false;
 
     // MobDisguise
-    Boolean mobD = false;
+    public Boolean mobD = false;
 
     // Register
     Boolean regB = false;
@@ -107,87 +125,87 @@ public class mChatSuite extends JavaPlugin {
     public File mELocaleF = null;
 
     // Optional mChatSuite only Info Support
-    Boolean useNewInfo = false;
+    public Boolean useNewInfo = false;
 
     // Optional Old Nodular Style Formatting
-    Boolean useOldNodes = false;
+    public Boolean useOldNodes = false;
 
     // Optional Leveled Nodes
-    Boolean useLeveledNodes = false;
+    public Boolean useLeveledNodes = false;
 
     // API Only Boolean
-    Boolean mAPIOnly = false;
+    public Boolean mAPIOnly = false;
 
     // Alter Event Messages Boolean
-    Boolean alterEvents = true;
-    Boolean alterDMessages = true;
+    public Boolean alterEvents = true;
+    public Boolean alterDMessages = true;
 
     // Add New Players Boolean
-    Boolean useAddDefault = false;
+    public Boolean useAddDefault = false;
 
     // Info Related Variables
-    String mIDefaultGroup = "default";
+    public String mIDefaultGroup = "default";
 
     // Formatting
-    String varIndicator = "+";
-    String tabbedListFormat = "+p+dn+s";
-    String listCmdFormat = "+p+dn+s";
-    String chatFormat = "+p+dn+s&f: +m";
-    String nameFormat = "+p+dn+s&e";
-    String eventFormat = "+p+dn+s&e";
-    String meFormat = "* +p+dn+s&e +m";
-    String dateFormat = "HH:mm:ss";
+    public String varIndicator = "+";
+    public String tabbedListFormat = "+p+dn+s";
+    public String listCmdFormat = "+p+dn+s";
+    public String chatFormat = "+p+dn+s&f: +m";
+    public String nameFormat = "+p+dn+s&e";
+    public String eventFormat = "+p+dn+s&e";
+    public String meFormat = "* +p+dn+s&e +m";
+    public String dateFormat = "HH:mm:ss";
 
     // Messages
-    String joinMessage = "has joined the game.";
-    String leaveMessage = "has left the game.";
-    String kickMessage = "has been kicked from the game +r.";
-    String deathInFire = "went up in flames.";
-    String deathOnFire = "burned to death.";
-    String deathLava = "tried to swim in lava.";
-    String deathInWall = "suffocated in a wall.";
-    String deathDrown = "drowned.";
-    String deathStarve = "starved to death.";
-    String deathCactus = "was pricked to death.";
-    String deathFall = "hit the ground too hard.";
-    String deathOutOfWorld = "fell out of the world.";
-    String deathGeneric = "died.";
-    String deathExplosion = "blew up.";
-    String deathMagic = "was killed by magic.";
-    String deathEntity = "was slain by +CName.";
-    String deathArrow = "was shot by +CName.";
-    String deathFireball = "was fireballed by +CName.";
-    String deathThrown = "was pummeled by +CName.";
-    String hMasterT = "The Great";
-    String hMasterF = "The Squire";
+    public String joinMessage = "has joined the game.";
+    public String leaveMessage = "has left the game.";
+    public String kickMessage = "has been kicked from the game +r.";
+    public String deathInFire = "went up in flames.";
+    public String deathOnFire = "burned to death.";
+    public String deathLava = "tried to swim in lava.";
+    public String deathInWall = "suffocated in a wall.";
+    public String deathDrown = "drowned.";
+    public String deathStarve = "starved to death.";
+    public String deathCactus = "was pricked to death.";
+    public String deathFall = "hit the ground too hard.";
+    public String deathOutOfWorld = "fell out of the world.";
+    public String deathGeneric = "died.";
+    public String deathExplosion = "blew up.";
+    public String deathMagic = "was killed by magic.";
+    public String deathEntity = "was slain by +CName.";
+    public String deathArrow = "was shot by +CName.";
+    public String deathFireball = "was fireballed by +CName.";
+    public String deathThrown = "was pummeled by +CName.";
+    public String hMasterT = "The Great";
+    public String hMasterF = "The Squire";
 
     // Booleans
-    Boolean spoutEnabled = true;
-    Boolean healthNotify = false;
-    Boolean healthAchievement = true;
-    Boolean spoutB = false;
-    Boolean mAFKHQ = true;
-    Boolean mChatEB = false;
-    Boolean useAFKList = false;
-    Boolean mChatPB = false;
-    Boolean spoutPM = false;
-    Boolean sJoinB = false;
-    Boolean sDeathB = false;
-    Boolean sQuitB = false;
-    Boolean sKickB = false;
+    public Boolean spoutEnabled = true;
+    public Boolean healthNotify = false;
+    public Boolean healthAchievement = true;
+    public Boolean spoutB = false;
+    public Boolean mAFKHQ = true;
+    public Boolean mChatEB = false;
+    public Boolean useAFKList = false;
+    public Boolean mChatPB = false;
+    public Boolean spoutPM = false;
+    public Boolean sJoinB = false;
+    public Boolean sDeathB = false;
+    public Boolean sQuitB = false;
+    public Boolean sKickB = false;
 
     // Numbers
-    Integer AFKTimer = 30;
-    Integer AFKKickTimer = 120;
-    Integer sJoinI = 30;
-    Integer sDeathI = 30;
-    Integer sQuitI = 30;
-    Integer sKickI = 30;
+    public Integer AFKTimer = 30;
+    public Integer AFKKickTimer = 120;
+    public Integer sJoinI = 30;
+    public Integer sDeathI = 30;
+    public Integer sQuitI = 30;
+    public Integer sKickI = 30;
 
     // Other Config Stuff
-    Double chatDistance = -1.0;
-    String cLVars = "default,Default";
-    String listVar = "group";
+    public Double chatDistance = -1.0;
+    public String cLVars = "default,Default";
+    public String listVar = "group";
 
     // Timers
     long sTime1;
@@ -195,15 +213,16 @@ public class mChatSuite extends JavaPlugin {
     float sDiff;
 
     // Maps
-    HashMap<String, Long> lastMove = new HashMap<String, Long>();
-    HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
-    HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
-    HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
-    HashMap<String, String> lastPMd = new HashMap<String, String>();
-    HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
-    HashMap<String, String> getInvite = new HashMap<String, String>();
-    HashMap<String, String> chatPartner = new HashMap<String, String>();
+    public HashMap<String, Long> lastMove = new HashMap<String, Long>();
+    public HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
+    public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
+    public HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
+    public HashMap<String, String> lastPMd = new HashMap<String, String>();
+    public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
+    public HashMap<String, String> getInvite = new HashMap<String, String>();
+    public HashMap<String, String> chatPartner = new HashMap<String, String>();
 
+    @SuppressWarnings({"deprecation"})
     public void onEnable() {
         // 1st Startup Timer
         sTime1 = new Date().getTime();
@@ -211,6 +230,7 @@ public class mChatSuite extends JavaPlugin {
         // Initialize Plugin Data
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
+        mSuite = this;
 
         // First we kill Essentials Chat
         killEss();
@@ -248,7 +268,6 @@ public class mChatSuite extends JavaPlugin {
         cListener = new MConfigListener(this);
         mIListener = new MIConfigListener(this);
         mCListener = new MCConfigListener(this);
-        lListener = new MLanguageListener(this);
 
         // Setup Configs
         setupConfigs();
@@ -317,7 +336,7 @@ public class mChatSuite extends JavaPlugin {
                 lastMove.put(players.getName(), new Date().getTime());
 
                 if (spoutB)
-                    sPlayers.setTitle(mAPI.ParsePlayerName(players));
+                    sPlayers.setTitle(getAPI().ParsePlayerName(players));
             }
         }
 
@@ -330,7 +349,7 @@ public class mChatSuite extends JavaPlugin {
         // Calculate Startup Timer
         sDiff = new Float (sTime2 - sTime1) / 1000;
 
-        mAPI.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled! Took " + sDiff + " seconds.");
+        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled! Took " + sDiff + " seconds.");
     }
 
     public void onDisable() {
@@ -338,7 +357,7 @@ public class mChatSuite extends JavaPlugin {
 
         Stats.unload();
 
-        mAPI.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is disabled!");
+        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is disabled!");
     }
 
     void registerEvents() {
@@ -370,7 +389,7 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("PermissionsBukkit");
         if (permTest != null) {
             PermissionBuB = true;
-            mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -379,7 +398,7 @@ public class mChatSuite extends JavaPlugin {
             bPermB = true;
             bInfoR = de.bananaco.permissions.Permissions.getInfoReader();
             bPermS = de.bananaco.permissions.Permissions.getWorldPermissionsManager();
-            mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -387,7 +406,7 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             pexPermissions = PermissionsEx.getPermissionManager();
             PEXB = true;
-            mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -395,18 +414,18 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             gmPermissionsB = true;
             gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
-            mAPI.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
-        mAPI.log("[" + pdfFile.getName() + "] No Permissions plugins were found defaulting to permissions.yml/info.yml.");
+        getAPI().log("[" + pdfFile.getName() + "] No Permissions plugins were found defaulting to permissions.yml/info.yml.");
     }
 
-    Boolean setupPlugin(String pluginName) {
+    public Boolean setupPlugin(String pluginName) {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {
-            mAPI.log("[" + pdfFile.getName() + "] " +  plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " +  plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
             return true;
         }
 
@@ -459,8 +478,7 @@ public class mChatSuite extends JavaPlugin {
 
         mCListener.loadConfig();
 
-        lListener.checkLocale();
-        lListener.loadLocale();
+        getLocale().checkLocale();
     }
 
     public void loadConfigs() {
@@ -470,7 +488,7 @@ public class mChatSuite extends JavaPlugin {
 
         mIListener.load();
 
-        lListener.load();
+        getLocale().load();
     }
 
     void setupTasks() {
@@ -485,7 +503,7 @@ public class mChatSuite extends JavaPlugin {
                 cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (mAPI.checkPermissions(player, "mchat.bypass.afk"))
+                    if (getAPI().checkPermissions(player, "mchat.bypass.afk"))
                         continue;
 
                     if (isAFK.get(player.getName()))
@@ -510,7 +528,7 @@ public class mChatSuite extends JavaPlugin {
                 cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (mAPI.checkPermissions(player, "mchat.bypass.afkkick"))
+                    if (getAPI().checkPermissions(player, "mchat.bypass.afkkick"))
                         continue;
 
                     if (!isAFK.get(player.getName()))
@@ -521,5 +539,14 @@ public class mChatSuite extends JavaPlugin {
                 }
             }
         }, 20L * 10, 20L * 10);
+    }
+
+    public static MLanguageListener getLocale() {
+        return new MLanguageListener(mSuite, mSuite.mELocale);
+    }
+
+    // API
+    public static mChatAPI getAPI() {
+        return new mChatAPI(mSuite);
     }
 }

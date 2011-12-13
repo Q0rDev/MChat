@@ -1,5 +1,6 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.eventListeners;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -38,7 +39,7 @@ public class MEntityListener extends EntityListener {
         if (dEvent instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
                 if (dEEvent.getDamager() instanceof Player)
-                    pCause = plugin.mAPI.ParsePlayerName(((Player) dEEvent.getDamager()).getName()) + ".";
+                    pCause = mChatSuite.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName()) + ".";
                 else
                     pCause =  "a" + parseEntityName(dEEvent.getDamager()) + ".";
         }
@@ -95,7 +96,7 @@ public class MEntityListener extends EntityListener {
                 Runnable runnable = new Runnable() {
                     public void run() {
                         SpoutPlayer sPlayer = (SpoutPlayer) player;
-                        sPlayer.setTitle(plugin.mAPI.ParsePlayerName(player));
+                        sPlayer.setTitle(mChatSuite.getAPI().ParsePlayerName(player));
                     }
                 };
 
@@ -117,27 +118,27 @@ public class MEntityListener extends EntityListener {
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.pDied);
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getAPI().ParsePlayerName(player) + " " + mChatSuite.getLocale().getOption("playerDied"));
                             else
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.mAPI.ParsePlayerName(player) + " " + plugin.lListener.pDamaged + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft);
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getAPI().ParsePlayerName(player) + " " + mChatSuite.getLocale().getOption("playerDamaged") + " " + (player.getHealth() - event.getDamage()) + " " + mChatSuite.getLocale().getOption("healthLeft"));
                         } else {
                             if (plugin.spoutB) {
                                 SpoutPlayer sPlayer = (SpoutPlayer) player;
                                 if (plugin.healthAchievement) {
                                     if (sPlayer.isSpoutCraftEnabled()) {
                                         if ((player.getHealth() - event.getDamage()) < 1) {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.lListener.yDied, Material.LAVA);
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), mChatSuite.getLocale().getOption("youDied"), Material.LAVA);
                                         } else {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.lListener.yHas + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft, Material.LAVA);
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), mChatSuite.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + mChatSuite.getLocale().getOption("healthLeft"), Material.LAVA);
                                         }
                                     }
                                 }
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.lListener.yDied);
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getLocale().getOption("youDied"));
                             else
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.lListener.yDamaged + " " + plugin.lListener.yHas + " " + (player.getHealth() - event.getDamage()) + " " + plugin.lListener.pHLeft);
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getLocale().getOption("youDamaged") + " " + mChatSuite.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + mChatSuite.getLocale().getOption("healthLeft"));
                         }
                     }
 
@@ -150,7 +151,7 @@ public class MEntityListener extends EntityListener {
 
                     plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4*20);
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.lListener.spoutChatColour.toUpperCase()) + " -" + '\n' + plugin.mAPI.ParsePlayerName(player));
+                    sPlayer.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + mChatSuite.getAPI().ParsePlayerName(player));
 
                     plugin.chatt.put(player.getName(), false);
                 }
@@ -274,8 +275,8 @@ public class MEntityListener extends EntityListener {
     }
 
     String deathMessage(String pName, String pCause, String msg) {
-        return plugin.mAPI.ParseEventName(pName) + " " + plugin.mAPI.ParseChatMessage(pName, "", msg)
-                    .replaceAll("\\+CName", plugin.mAPI.ParseEventName(pCause));
+        return mChatSuite.getAPI().ParseEventName(pName) + " " + mChatSuite.getAPI().ParseMessage(pName, "", msg)
+                    .replaceAll("\\+CName", mChatSuite.getAPI().ParseEventName(pCause));
     }
 
     String healthBarDamage(Player player, Integer damage) {
@@ -304,9 +305,9 @@ public class MEntityListener extends EntityListener {
     void suppressDeathMessage(String pName, String pCause, PlayerDeathEvent event, Integer max) {
         if (!(plugin.getServer().getOnlinePlayers().length > max))
             for (Player player : plugin.getServer().getOnlinePlayers())
-                if (!plugin.mAPI.checkPermissions(player, "mchat.suppress.death"))
+                if (!mChatSuite.getAPI().checkPermissions(player, "mchat.suppress.death"))
                     player.sendMessage(handlePlayerDeath(pName, pCause, event));
 
-        plugin.mAPI.log(handlePlayerDeath(pName, pCause, event));
+        mChatSuite.getAPI().log(handlePlayerDeath(pName, pCause, event));
     }
 }

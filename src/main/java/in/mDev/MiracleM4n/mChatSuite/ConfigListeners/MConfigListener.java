@@ -1,8 +1,9 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.configListeners;
 
 import java.io.File;
 import java.io.IOException;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -14,7 +15,7 @@ public class MConfigListener {
         this.plugin = plugin;
     }
 
-    void load() {
+    public void load() {
         plugin.mConfig = YamlConfiguration.loadConfiguration(plugin.mConfigF);
         plugin.mConfig.options().indent(4);
     }
@@ -25,7 +26,7 @@ public class MConfigListener {
         } catch (IOException ignored) {}
     }
 
-    void loadConfig() {
+    public void loadConfig() {
         YamlConfiguration config = plugin.mConfig;
 
         plugin.dateFormat = config.getString("format.date", plugin.dateFormat);
@@ -177,7 +178,7 @@ public class MConfigListener {
         save();
     }
 
-    void checkConfig() {
+    public void checkConfig() {
         YamlConfiguration config = plugin.mConfig;
         YamlConfigurationOptions configO = config.options();
 

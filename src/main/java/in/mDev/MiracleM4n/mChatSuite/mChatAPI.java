@@ -25,20 +25,20 @@ import in.mDev.MiracleM4n.mChannel.mChannel;
 
 @SuppressWarnings("unused")
 public class mChatAPI {
-    mChatSuite plugin;
+    static mChatSuite plugin;
 
     public mChatAPI(mChatSuite plugin) {
-        this.plugin = plugin;
+        mChatAPI.plugin = plugin;
     }
 
     /*
      * Format Stuff
      */
-    public String ParseChatMessage(String pName, String msg, String formatAll) {
+    public String ParseMessage(String pName, String msg, String format) {
         Player player = plugin.getServer().getPlayer(pName);
 
         if (player == null)
-            return addColour(formatAll);
+            return addColour(format);
 
         String prefix = getRawPrefix(player);
         String suffix = getRawSuffix(player);
@@ -72,8 +72,8 @@ public class mChatAPI {
         String hungerLevel = String.valueOf(player.getFoodLevel());
         String hungerBar = basicBar(player.getFoodLevel(), 20, 10);
         String level = String.valueOf(player.getLevel());
-        String exp = String.valueOf(player.getExperience()) + "/" + ((player.getLevel() + 1) * 10);
-        String expBar = basicBar(player.getExperience(), ((player.getLevel() + 1) * 10), 10);
+        String exp = String.valueOf(player.getExp()) + "/" + ((player.getLevel() + 1) * 10);
+        String expBar = basicBar(player.getExp(), ((player.getLevel() + 1) * 10), 10);
         String tExp = String.valueOf(player.getTotalExperience());
         String gMode = "";
 
@@ -152,14 +152,14 @@ public class mChatAPI {
                 hMastered = plugin.hMasterF;
         }
 
-        String format = parseVars(formatAll, player);
+        String formatAll = parseVars(format, player);
         String[] search;
         String[] replace;
 
         msg = msg.replaceAll("%", "%%");
-        format = format.replaceAll("%", "%%");
+        formatAll = formatAll.replaceAll("%", "%%");
 
-        if (format == null)
+        if (formatAll == null)
             return msg;
 
         if (!checkPermissions(player, "mchat.coloredchat", false))
@@ -250,60 +250,59 @@ public class mChatAPI {
                 msg
             };
 
-        return replaceVars(format, search, replace);
+        return replaceVars(formatAll, search, replace);
     }
 
     public String ParseChatMessage(Player player, String msg) {
-        return ParseChatMessage(player.getName(), msg, plugin.chatFormat);
+        return ParseMessage(player.getName(), msg, plugin.chatFormat);
     }
 
     public String ParsePlayerName(Player player) {
-        return ParseChatMessage(player.getName(), "", plugin.nameFormat);
+        return ParseMessage(player.getName(), "", plugin.nameFormat);
     }
 
     public String ParseEventName(Player player) {
-        return ParseChatMessage(player.getName(), "", plugin.eventFormat);
+        return ParseMessage(player.getName(), "", plugin.eventFormat);
     }
 
     public String ParseTabbedList(Player player) {
-        return ParseChatMessage(player.getName(), "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
+        return ParseMessage(player.getName(), "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
     }
 
     public String ParseListCmd(Player player) {
-        return ParseChatMessage(player.getName(), "", plugin.listCmdFormat);
+        return ParseMessage(player.getName(), "", plugin.listCmdFormat);
     }
 
     public String ParseMe(Player player, String msg) {
-        return ParseChatMessage(player.getName(), msg, plugin.meFormat);
+        return ParseMessage(player.getName(), msg, plugin.meFormat);
     }
 
     public String ParseChatMessage(String pName, String msg) {
-        return ParseChatMessage(pName, msg, plugin.chatFormat);
+        return ParseMessage(pName, msg, plugin.chatFormat);
     }
 
     public String ParsePlayerName(String pName) {
-        return ParseChatMessage(pName, "", plugin.nameFormat);
+        return ParseMessage(pName, "", plugin.nameFormat);
     }
 
     public String ParseEventName(String pName) {
         if (plugin.getServer().getPlayer(pName) == null)
             return pName;
 
-        return ParseChatMessage(pName, "", plugin.eventFormat);
+        return ParseMessage(pName, "", plugin.eventFormat);
     }
 
     public String ParseTabbedList(String pName) {
-        return ParseChatMessage(pName, "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
+        return ParseMessage(pName, "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
     }
 
     public String ParseListCmd(String pName) {
-        return ParseChatMessage(pName, "", plugin.listCmdFormat);
+        return ParseMessage(pName, "", plugin.listCmdFormat);
     }
 
     public String ParseMe(String pName, String msg) {
-        return ParseChatMessage(pName, msg, plugin.meFormat);
+        return ParseMessage(pName, msg, plugin.meFormat);
     }
-
 
     public String getGroupName(String group) {
         if (group.isEmpty())
@@ -376,10 +375,6 @@ public class mChatAPI {
 
     public String getRawGroup(Player player) {
         return getRawInfo(player, "group");
-    }
-
-    public String getRawSubGroup(Player player, Integer groupVal) {
-        return getRawInfo(player, "group" + groupVal);
     }
 
     public String getInfo(Player player, String info) {
@@ -530,7 +525,7 @@ public class mChatAPI {
         AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(player);
 
         if (info.equals("group"))
-            return getGroupManagerGroups(player, info);
+            return getGroupManagerGroups(player);
 
         String pName = player.getName();
         String group = gmPermissions.getGroup(pName);
@@ -545,7 +540,7 @@ public class mChatAPI {
         return gmPermissions.getGroupPermissionString(group, info);
     }
 
-    String getGroupManagerGroups(Player player, String info) {
+    String getGroupManagerGroups(Player player) {
         AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(player);
 
         String pName = player.getName();
@@ -564,9 +559,6 @@ public class mChatAPI {
         if (info.equals("group"))
             return getPEXGroup(player);
 
-        String pName = player.getName();
-        String world = player.getWorld().getName();
-
         String userString = plugin.pexPermissions.getUser(player).getOwnOption(info);
 
         if (userString != null && !userString.isEmpty())
@@ -576,9 +568,6 @@ public class mChatAPI {
     }
 
     String getPEXGroup(Player player) {
-        String pName = player.getName();
-        String world = player.getWorld().getName();
-
         String group = plugin.pexPermissions.getUser(player).getGroupsNames()[0];
 
         if (group == null)
@@ -725,7 +714,7 @@ public class mChatAPI {
         if (eventName.equalsIgnoreCase("leave"))
             eventName = plugin.leaveMessage;
 
-        return plugin.mAPI.addColour(eventName);
+        return addColour(eventName);
     }
 
     String parseVars(String format, Player player) {

@@ -1,5 +1,6 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.configListeners;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -13,7 +14,7 @@ public class MCConfigListener {
         this.plugin = plugin;
     }
 
-    void load() {
+    public void load() {
         plugin.mCConfig = YamlConfiguration.loadConfiguration(plugin.mCConfigF);
         plugin.mCConfig.options().indent(4);
     }
@@ -24,7 +25,7 @@ public class MCConfigListener {
         } catch (IOException ignored) {}
     }
 
-    void loadConfig() {
+    public void loadConfig() {
         if (!(new File(plugin.getDataFolder(), "censor.yml").exists())
          && !(new File("plugins/mChat/censor.yml").exists()))
             defaultConfig();
