@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.configListeners;
+package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import java.io.File;
 import java.io.IOException;

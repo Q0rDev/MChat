@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.eventListeners;
+package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;

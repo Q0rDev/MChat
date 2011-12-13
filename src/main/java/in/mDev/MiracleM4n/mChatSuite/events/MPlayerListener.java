@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.eventListeners;
+package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
@@ -131,7 +131,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         // For Lazy People
         if (plugin.useAddDefault)
             if (plugin.mIConfig.get("users." + pName) == null)
-                mChatSuite.IReader.addPlayer(pName, plugin.mIDefaultGroup);
+                mChatSuite.getInfoReader().addPlayer(pName, plugin.mIDefaultGroup);
 
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {
@@ -236,8 +236,6 @@ public class MPlayerListener extends PlayerListener implements Runnable {
                 player.performCommand("mafk");
     }
 
-    public void run() {}
-
     void suppressEventMessage(String format, String permNode, Integer max) {
         if (!(plugin.getServer().getOnlinePlayers().length > max))
             for (Player player : plugin.getServer().getOnlinePlayers())
@@ -246,5 +244,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         mChatSuite.getAPI().log(format);
     }
+
+    public void run() {}
 }
 

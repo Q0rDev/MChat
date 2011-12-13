@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.commandSenders;
+package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.Material;

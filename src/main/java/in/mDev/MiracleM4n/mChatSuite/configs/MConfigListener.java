@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.configListeners;
+package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,10 +94,10 @@ public class MConfigListener {
         plugin.mChatPB = config.getBoolean("pmchat.enable", plugin.spoutPM);
         plugin.spoutPM = config.getBoolean("pmchat.spoutPM", plugin.spoutPM);
 
-        if (plugin.AFKTimer < 10)
+        if (plugin.AFKTimer < 10 && plugin.AFKTimer > 0)
             plugin.AFKTimer = 10;
 
-        if (plugin.AFKKickTimer < 20)
+        if (plugin.AFKKickTimer < 20 && plugin.AFKKickTimer > 0)
             plugin.AFKKickTimer = 20;
 
     }
@@ -263,7 +263,6 @@ public class MConfigListener {
         checkOption(config, "info.defaultGroup", plugin.mIDefaultGroup);
 
         checkOption(config, "mchate.enable", plugin.mChatEB);
-        checkOption(config, "mchate.eSpout", plugin.spoutEnabled);
         checkOption(config, "mchate.eHealthNotify", plugin.healthNotify);
         checkOption(config, "mchate.eHealthAchievement", plugin.healthAchievement);
         checkOption(config, "mchate.eHQAFK", plugin.mAFKHQ);

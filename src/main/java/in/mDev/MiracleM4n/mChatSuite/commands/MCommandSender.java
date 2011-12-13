@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.commandSenders;
+package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
@@ -111,7 +111,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addPlayer(args[3], args[4]);
+                            mChatSuite.getInfoReader().addPlayer(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -126,7 +126,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addPlayerInfoVar(args[3], args[4], stringArgs(args, 5));
+                            mChatSuite.getInfoReader().addPlayerInfoVar(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -141,7 +141,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addPlayerWorld(args[3], args[4]);
+                            mChatSuite.getInfoReader().addPlayerWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -156,7 +156,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addPlayerWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
+                            mChatSuite.getInfoReader().addPlayerWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -183,7 +183,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editPlayerName(args[3], args[4]);
+                            mChatSuite.getInfoReader().editPlayerName(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException e) {
@@ -198,7 +198,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editPlayerInfoVar(args[3], args[4], args[5]);
+                            mChatSuite.getInfoReader().editPlayerInfoVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -213,7 +213,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editPlayerInfoValue(args[3], args[4], stringArgs(args, 5));
+                            mChatSuite.getInfoReader().editPlayerInfoValue(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -228,7 +228,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.setPlayerGroup(args[3], args[4]);
+                            mChatSuite.getInfoReader().setPlayerGroup(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -243,7 +243,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editPlayerWorldName(args[3], args[4], args[5]);
+                            mChatSuite.getInfoReader().editPlayerWorldName(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -258,7 +258,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editPlayerWorldVar(args[3], args[4], args[5], args[6]);
+                            mChatSuite.getInfoReader().editPlayerWorldVar(args[3], args[4], args[5], args[6]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -273,7 +273,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editPlayerWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
+                            mChatSuite.getInfoReader().editPlayerWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -298,7 +298,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removePlayer(args[3]);
+                            mChatSuite.getInfoReader().removePlayer(args[3]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -313,7 +313,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removePlayerInfoVar(args[3], args[4]);
+                            mChatSuite.getInfoReader().removePlayerInfoVar(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -328,7 +328,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removePlayerWorld(args[3], args[4]);
+                            mChatSuite.getInfoReader().removePlayerWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -343,7 +343,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removePlayerWorldVar(args[3], args[4], args[5]);
+                            mChatSuite.getInfoReader().removePlayerWorldVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -374,7 +374,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addGroup(args[3]);
+                            mChatSuite.getInfoReader().addGroup(args[3]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -389,7 +389,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addGroupInfoVar(args[3], args[4], stringArgs(args, 5));
+                            mChatSuite.getInfoReader().addGroupInfoVar(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -404,7 +404,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addGroupWorld(args[3], args[4]);
+                            mChatSuite.getInfoReader().addGroupWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -419,7 +419,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.addGroupWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
+                            mChatSuite.getInfoReader().addGroupWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -445,7 +445,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editGroupName(args[3], args[4]);
+                            mChatSuite.getInfoReader().editGroupName(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -460,7 +460,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editGroupInfoVar(args[3], args[4], args[5]);
+                            mChatSuite.getInfoReader().editGroupInfoVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -475,7 +475,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editGroupInfoValue(args[3], args[4], stringArgs(args, 5));
+                            mChatSuite.getInfoReader().editGroupInfoValue(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -490,7 +490,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editGroupWorldName(args[3], args[4], args[5]);
+                            mChatSuite.getInfoReader().editGroupWorldName(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -505,7 +505,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editGroupWorldVar(args[3], args[4], args[5], args[6]);
+                            mChatSuite.getInfoReader().editGroupWorldVar(args[3], args[4], args[5], args[6]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -520,7 +520,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.editGroupWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
+                            mChatSuite.getInfoReader().editGroupWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -545,7 +545,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removeGroup(args[3]);
+                            mChatSuite.getInfoReader().removeGroup(args[3]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -560,7 +560,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removeGroupInfoVar(args[3], args[4]);
+                            mChatSuite.getInfoReader().removeGroupInfoVar(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -575,7 +575,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removeGroupWorld(args[3], args[4]);
+                            mChatSuite.getInfoReader().removeGroupWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -590,7 +590,7 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            mChatSuite.IReader.removeGroupWorldVar(args[3], args[4], args[5]);
+                            mChatSuite.getInfoReader().removeGroupWorldVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {

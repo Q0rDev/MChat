@@ -4,19 +4,19 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
-import in.mDev.MiracleM4n.mChatSuite.commandSenders.MCommandSender;
-import in.mDev.MiracleM4n.mChatSuite.commandSenders.MECommandSender;
-import in.mDev.MiracleM4n.mChatSuite.commandSenders.MPCommandSender;
+import in.mDev.MiracleM4n.mChatSuite.commands.MCommandSender;
+import in.mDev.MiracleM4n.mChatSuite.commands.MECommandSender;
+import in.mDev.MiracleM4n.mChatSuite.commands.MPCommandSender;
 
-import in.mDev.MiracleM4n.mChatSuite.configListeners.MCConfigListener;
-import in.mDev.MiracleM4n.mChatSuite.configListeners.MConfigListener;
-import in.mDev.MiracleM4n.mChatSuite.configListeners.MIConfigListener;
-import in.mDev.MiracleM4n.mChatSuite.configListeners.MLanguageListener;
+import in.mDev.MiracleM4n.mChatSuite.configs.MCConfigListener;
+import in.mDev.MiracleM4n.mChatSuite.configs.MConfigListener;
+import in.mDev.MiracleM4n.mChatSuite.configs.MIConfigListener;
+import in.mDev.MiracleM4n.mChatSuite.configs.MLanguageListener;
 
-import in.mDev.MiracleM4n.mChatSuite.eventListeners.MBlockListener;
-import in.mDev.MiracleM4n.mChatSuite.eventListeners.MCustomListener;
-import in.mDev.MiracleM4n.mChatSuite.eventListeners.MEntityListener;
-import in.mDev.MiracleM4n.mChatSuite.eventListeners.MPlayerListener;
+import in.mDev.MiracleM4n.mChatSuite.events.MBlockListener;
+import in.mDev.MiracleM4n.mChatSuite.events.MCustomListener;
+import in.mDev.MiracleM4n.mChatSuite.events.MEntityListener;
+import in.mDev.MiracleM4n.mChatSuite.events.MPlayerListener;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -77,7 +77,9 @@ public class mChatSuite extends JavaPlugin {
     mChatAPI mAPI;
 
     // Info API
+    @Deprecated
     public static MInfoReader IReader;
+    @Deprecated
     MInfoReader mIReader;
 
     // GroupManager
@@ -548,5 +550,10 @@ public class mChatSuite extends JavaPlugin {
     // API
     public static mChatAPI getAPI() {
         return new mChatAPI(mSuite);
+    }
+
+    // InfoReader
+    public static MInfoReader getInfoReader() {
+        return new MInfoReader(mSuite);
     }
 }
