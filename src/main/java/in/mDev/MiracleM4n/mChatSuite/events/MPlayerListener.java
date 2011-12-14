@@ -226,7 +226,10 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
 
-        if (plugin.isAFK.get(player.getName()) && plugin.isAFK.get(player.getName()) != null)
+        if (plugin.isAFK.get(player.getName()) == null)
+            return;
+
+        if (plugin.isAFK.get(player.getName()))
             if(plugin.mAFKHQ) {
                 if(plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));

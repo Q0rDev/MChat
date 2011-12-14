@@ -151,7 +151,7 @@ public class MPCommandSender implements CommandExecutor {
             } else {
                 plugin.getInvite.put(rName, pName);
                 player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have invited &5'&4" + mChatSuite.getAPI().ParsePlayerName(rName) + "&5'&4 to have a Convo.")));
-                recipient.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have been invited to a Convo by &5'&4" + mChatSuite.getAPI().ParsePlayerName(pName) + "&5'&4 use /pmchat accept to accept.")));
+                recipient.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You have been invited to a Convo by &5'&4" + mChatSuite.getAPI().ParsePlayerName(pName) + "&5'&4 use /pmchataccept to accept.")));
                 return true;
             }
         } else if (commandName.equalsIgnoreCase("pmchatreply")) {
