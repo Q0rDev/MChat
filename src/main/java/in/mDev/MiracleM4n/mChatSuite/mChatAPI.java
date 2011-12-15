@@ -77,7 +77,7 @@ public class mChatAPI {
         String tExp = String.valueOf(player.getTotalExperience());
         String gMode = "";
 
-        if (player.getGameMode().name() != null)
+        if (player.getGameMode() != null && player.getGameMode().name() != null)
             gMode = player.getGameMode().name();
 
         // Time Var

@@ -43,6 +43,7 @@ public class Stats {
     static Boolean configExists(Plugin plugin) {
         config.addDefault("opt-out", false);
         config.addDefault("guid", UUID.randomUUID().toString());
+
         if (!configFile.exists() || config.get("guid") == null) {
             System.out.println("[" + plugin.getDescription().getName() + "] Stats is initializing for the first time. To opt-out check stats.yml.");
             try {
