@@ -115,24 +115,23 @@ public class MECommandSender implements CommandExecutor {
 
             Player afkTarget = plugin.getServer().getPlayer(args[0]);
 
-            if (plugin.isAFK.get(afkTarget.getName())) {
+            if (plugin.isAFK.get(afkTarget.getName()) != null &&
+                    plugin.isAFK.get(afkTarget.getName())) {
                 if (plugin.spoutB) {
-                    if (plugin.spoutEnabled) {
-                        for (Player players : plugin.getServer().getOnlinePlayers()) {
-                            SpoutPlayer sPlayers = (SpoutPlayer) players;
+                    for (Player players : plugin.getServer().getOnlinePlayers()) {
+                        SpoutPlayer sPlayers = (SpoutPlayer) players;
 
-                            if (sPlayers.isSpoutCraftEnabled())
-                                sPlayers.sendNotification(afkTarget.getName(), mChatSuite.getLocale().getOption("noLongerAFK"), Material.PAPER);
-                            else
-                                players.sendMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("noLongerAFK"));
-                        }
+                        if (sPlayers.isSpoutCraftEnabled())
+                            sPlayers.sendNotification(afkTarget.getName(), mChatSuite.getLocale().getOption("noLongerAFK"), Material.PAPER);
+                        else
+                            players.sendMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("notAFK"));
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
                     sPlayer.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + mChatSuite.getLocale().getOption("AFK") + " -" + '\n' + mChatSuite.getAPI().ParsePlayerName(afkTarget));
                 } else
-                    plugin.getServer().broadcastMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("noLongerAFK"));
+                    plugin.getServer().broadcastMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("notAFK"));
 
                 afkTarget.setSleepingIgnored(false);
                 plugin.isAFK.put(afkTarget.getName(), false);
@@ -148,14 +147,13 @@ public class MECommandSender implements CommandExecutor {
                 return true;
             } else {
                 if (plugin.spoutB) {
-                    if (plugin.spoutEnabled) {
-                        for (Player players : plugin.getServer().getOnlinePlayers()) {
-                            SpoutPlayer sPlayers = (SpoutPlayer) players;
-                            if (sPlayers.isSpoutCraftEnabled())
-                                sPlayers.sendNotification(afkTarget.getName(), mChatSuite.getLocale().getOption("isAFK"), Material.PAPER);
-                            else
-                                players.sendMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("isAFK") + " [" + message + " ]");
-                        }
+                    for (Player players : plugin.getServer().getOnlinePlayers()) {
+                        SpoutPlayer sPlayers = (SpoutPlayer) players;
+
+                        if (sPlayers.isSpoutCraftEnabled())
+                            sPlayers.sendNotification(afkTarget.getName(), mChatSuite.getLocale().getOption("isAFK"), Material.PAPER);
+                        else
+                            players.sendMessage(mChatSuite.getAPI().ParsePlayerName(afkTarget) + " " + mChatSuite.getLocale().getOption("isAFK") + " [" + message + " ]");
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
