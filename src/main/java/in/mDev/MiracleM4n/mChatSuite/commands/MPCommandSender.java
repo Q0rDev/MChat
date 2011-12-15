@@ -21,8 +21,10 @@ public class MPCommandSender implements CommandExecutor {
     public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
         String commandName = command.getName();
 
-        if (!plugin.mChatPB)
+        if (!plugin.mChatPB) {
+            sender.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("pmChat's functions are currently disabled.")));
             return true;
+        }
 
         if (!(sender instanceof Player)) {
              sender.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("Console's can't send PM's.")));
@@ -132,6 +134,9 @@ public class MPCommandSender implements CommandExecutor {
 
             return true;
         } else if (commandName.equalsIgnoreCase("pmchatinvite")) {
+            if (args.length < 1)
+                return false;
+
             if (!mChatSuite.getAPI().checkPermissions(player, "mchat.pm.invite")) {
                 player.sendMessage(formatPMessage(mChatSuite.getAPI().addColour("You are not allowed to use Invite functions.")));
                 return true;

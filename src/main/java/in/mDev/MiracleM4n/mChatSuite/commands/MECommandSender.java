@@ -20,8 +20,10 @@ public class MECommandSender implements CommandExecutor {
     public boolean onCommand (CommandSender sender, Command command, String label, String[] args) {
         String commandName = command.getName();
 
-        if (!plugin.mChatEB)
+        if (!plugin.mChatEB) {
+            sender.sendMessage(formatMessage(mChatSuite.getAPI().addColour("mChatEssentials' functions are currently disabled.")));
             return true;
+        }
 
         if (commandName.equalsIgnoreCase("mchatme")) {
             if (args.length > 0) {
