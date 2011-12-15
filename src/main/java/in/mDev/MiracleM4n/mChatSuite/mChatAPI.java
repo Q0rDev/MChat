@@ -456,7 +456,7 @@ public class mChatAPI {
             return "";
 
         if (!plugin.mIConfig.isSet("rank." + info))
-            return "";
+            return getBukkitInfo(player, info);
 
         for (Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
@@ -556,12 +556,21 @@ public class mChatAPI {
      * PEX Stuff
      */
     String getPEXInfo(Player player, String info) {
+        String userString;
+
         if (info.equals("group"))
             return getPEXGroup(player);
 
-        String userString = plugin.pexPermissions.getUser(player).getOwnOption(info);
+        else if (info.equals("prefix"))
+            userString = plugin.pexPermissions.getUser(player).getPrefix();
 
-        if (userString != null && !userString.isEmpty())
+        else if (info.equals("suffix"))
+            userString = plugin.pexPermissions.getUser(player).getSuffix();
+
+        else
+            userString = plugin.pexPermissions.getUser(player).getOption(info);
+
+        if (userString != null)
             return userString;
 
         return "";
