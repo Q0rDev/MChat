@@ -17,6 +17,6 @@ public class MBlockListener extends BlockListener {
         if (event.getLine(0).equals("[mChat]"))
             if (plugin.getServer().getPlayer(event.getLine(2)) != null)
                 if (event.getLine(3) != null)
-                    event.setLine(1, mChatSuite.getAPI().addColour("&f" + (mChatSuite.getAPI().ParseMessage(event.getLine(2), "", event.getLine(3)))));
+                    event.setLine(1, plugin.getAPI().addColour("&f" + (plugin.getAPI().ParseMessage(event.getLine(2), "", event.getLine(3)))));
     }
 }

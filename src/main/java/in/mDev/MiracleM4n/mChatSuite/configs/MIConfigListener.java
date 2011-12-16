@@ -1,11 +1,12 @@
 package in.mDev.MiracleM4n.mChatSuite.configs;
 
-import java.io.File;
-import java.io.IOException;
-
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MIConfigListener {
     mChatSuite plugin;
@@ -24,7 +25,8 @@ public class MIConfigListener {
     void save() {
         try {
             plugin.mIConfig.save(plugin.mIConfigF);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     void defaultConfig() {
@@ -32,14 +34,14 @@ public class MIConfigListener {
         YamlConfigurationOptions configO = config.options();
 
         configO.header(
-            "mChat Info Config"
+                "mChat Info Config"
         );
 
         config.set("groupnames.admin", "[a]");
         config.set("groupnames.sadmin", "[sa]");
         config.set("groupnames.jadmin", "[ja]");
         config.set("groupnames.member", "[m]");
-        
+
         config.set("worldnames.D3GN", "[D]");
         config.set("worldnames.DtK", "[DtK]");
         config.set("worldnames.Nether", "[N]");
@@ -63,7 +65,7 @@ public class MIConfigListener {
 
     public void checkConfig() {
         if (!(new File(plugin.getDataFolder(), "info.yml").exists())
-         && !(new File("plugins/mChat/info.yml").exists()))
+                && !(new File("plugins/mChat/info.yml").exists()))
             defaultConfig();
 
         YamlConfiguration config = plugin.mIConfig;
@@ -115,7 +117,7 @@ public class MIConfigListener {
 
         if (hasChanged) {
             configO.header(
-                "mChat Info Config"
+                    "mChat Info Config"
             );
 
             save();

@@ -96,7 +96,7 @@ public class Stats {
                 }
             });
 
-            for (Handler gHandler: logger.getHandlers())
+            for (Handler gHandler : logger.getHandlers())
                 logger.removeHandler(gHandler);
 
             logger.setUseParentHandlers(false);

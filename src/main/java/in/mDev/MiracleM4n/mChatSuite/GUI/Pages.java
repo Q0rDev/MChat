@@ -1,13 +1,11 @@
 package in.mDev.MiracleM4n.mChatSuite.GUI;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
 import org.bukkit.entity.Player;
-
 import org.getspout.spoutapi.gui.*;
 
 import java.util.HashMap;
-
+@SuppressWarnings("unused")
 public class Pages {
     mChatSuite plugin;
 
@@ -286,8 +284,8 @@ public class Pages {
 
         button.setHeight(20);
         button.setWidth(60);
-        button.setY(button.getMaxHeight()-22);
-        button.setX(button.getMaxWidth()-62);
+        button.setY(button.getMaxHeight() - 22);
+        button.setX(button.getMaxWidth() - 62);
         button.setText("Close");
         button.setTooltip("Close");
 
@@ -299,8 +297,8 @@ public class Pages {
 
         button.setHeight(20);
         button.setWidth(60);
-        button.setY(button.getMaxHeight()-22);
-        button.setX(button.getMinWidth()+2);
+        button.setY(button.getMaxHeight() - 22);
+        button.setX(button.getMinWidth() + 2);
         button.setText("Back");
         button.setTooltip("Back");
 

@@ -1,10 +1,9 @@
 package in.mDev.MiracleM4n.mChatSuite.GUI;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
 import org.bukkit.entity.Player;
-
-import org.getspout.spoutapi.gui.*;
+import org.getspout.spoutapi.gui.GenericPopup;
+import org.getspout.spoutapi.gui.PopupScreen;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ public class Main {
     HashMap<String, PopupScreen> popupMap = new HashMap<String, PopupScreen>();
 
     public void closePopup(Player player) {
-        SpoutPlayer sPlayer = (SpoutPlayer) player; 
+        SpoutPlayer sPlayer = (SpoutPlayer) player;
 
         if (sPlayer.getMainScreen().getActivePopup() != null)
             sPlayer.getMainScreen().getActivePopup().close();
@@ -30,7 +29,7 @@ public class Main {
     }
 
     public void openPopup(Player player, String name) {
-        SpoutPlayer sPlayer = (SpoutPlayer) player; 
+        SpoutPlayer sPlayer = (SpoutPlayer) player;
 
         closePopup(player);
 
@@ -40,6 +39,6 @@ public class Main {
 
         popupMap.put(player.getName(), popup);
 
-       sPlayer.getMainScreen().attachPopupScreen(popup);
+        sPlayer.getMainScreen().attachPopupScreen(popup);
     }
 }

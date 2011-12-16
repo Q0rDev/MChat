@@ -1,11 +1,12 @@
 package in.mDev.MiracleM4n.mChatSuite.configs;
 
-import java.io.File;
-import java.io.IOException;
-
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MConfigListener {
     mChatSuite plugin;
@@ -23,7 +24,8 @@ public class MConfigListener {
     void save() {
         try {
             plugin.mConfig.save(plugin.mConfigF);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     public void loadConfig() {
@@ -64,6 +66,7 @@ public class MConfigListener {
         plugin.alterEvents = config.getBoolean("mchat.alterDeathEvents", plugin.alterDMessages);
         plugin.chatDistance = config.getDouble("mchat.chatDistance", plugin.chatDistance);
         plugin.varIndicator = config.getString("mchat.varIndicator", plugin.varIndicator);
+        plugin.cusVarIndicator = config.getString("mchat.cusVarIndicator", plugin.cusVarIndicator);
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
 
         plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.sDeathB);
@@ -107,7 +110,7 @@ public class MConfigListener {
         YamlConfigurationOptions configO = config.options();
 
         configO.header(
-            " mChat Configuration File"
+                " mChat Configuration File"
         );
 
         config.set("format.date", plugin.dateFormat);
@@ -145,6 +148,7 @@ public class MConfigListener {
         config.set("mchat.alterDeathEvents", plugin.alterDMessages);
         config.set("mchat.chatDistance", plugin.chatDistance);
         config.set("mchat.varIndicator", plugin.varIndicator);
+        config.set("mchat.cusVarIndicator", plugin.cusVarIndicator);
         config.set("mchat.spout", plugin.spoutEnabled);
 
         config.set("suppress.useDeath", plugin.sDeathB);
@@ -183,7 +187,7 @@ public class MConfigListener {
         YamlConfigurationOptions configO = config.options();
 
         if (!(new File(plugin.getDataFolder(), "config.yml").exists())
-         && !(new File("plugins/mChat/config.yml").exists()))
+                && !(new File("plugins/mChat/config.yml").exists()))
             defaultConfig();
 
         removeOption(config, "auto-Changed");
@@ -245,6 +249,7 @@ public class MConfigListener {
         checkOption(config, "mchat.alterDeathMessages", plugin.alterDMessages);
         checkOption(config, "mchat.chatDistance", plugin.chatDistance);
         checkOption(config, "mchat.varIndicator", plugin.varIndicator);
+        checkOption(config, "mchat.cusVarIndicator", plugin.cusVarIndicator);
         checkOption(config, "mchat.spout", plugin.spoutEnabled);
 
         checkOption(config, "suppress.useDeath", plugin.sDeathB);
@@ -277,7 +282,7 @@ public class MConfigListener {
 
         if (hasChanged) {
             configO.header(
-                " mChat Configuration File"
+                    " mChat Configuration File"
             );
 
             save();

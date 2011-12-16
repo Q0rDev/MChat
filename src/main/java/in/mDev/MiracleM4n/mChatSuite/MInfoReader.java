@@ -1,10 +1,16 @@
 package in.mDev.MiracleM4n.mChatSuite;
 
-import java.io.IOException;
-import java.util.Map;
+import com.platymuus.bukkit.permissions.Group;
+import com.platymuus.bukkit.permissions.PermissionsPlugin;
 
-import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
+
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MInfoReader {
     mChatSuite plugin;
@@ -13,440 +19,323 @@ public class MInfoReader {
         this.plugin = plugin;
     }
 
-    // Player Info
-    public void addPlayer(String player, String defaultGroup) {
-        YamlConfiguration config = plugin.mIConfig;
+    public String getGroupName(String group) {
+        if (group.isEmpty())
+            return "";
 
-        if (config.isSet("users")) {
-            if (!config.isSet("users." + player)) {
-                config.set("users." + player + ".group", defaultGroup);
-                config.set("users." + player + ".info.prefix", "");
-                config.set("users." + player + ".info.suffix", "");
+        if (plugin.mIConfig.isSet("groupnames." + group))
+            return plugin.mIConfig.get("groupnames." + group).toString();
 
-                try {
-                    config.save(plugin.mIConfigF);
-                } catch (IOException ignored) {}
-
-                addDefaultGroup(defaultGroup);
-            }
-        }
+        return group;
     }
 
-    protected void addDefaultGroup(String groupName) {
-        YamlConfiguration config = plugin.mIConfig;
+    public String getWorldName(String world) {
+        if (world.isEmpty())
+            return "";
 
-        if (!config.isSet("groups." + groupName)) {
-            config.set("groups." + groupName + ".info.prefix", "");
-            config.set("groups." + groupName + ".info.suffix", "");
+        if (plugin.mIConfig.isSet("worldnames." + world))
+            return plugin.mIConfig.get("worldnames." + world).toString();
 
-            try {
-                config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        return world;
     }
 
-    public void setPlayerGroup(String player, String group) {
-        YamlConfiguration config = plugin.mIConfig;
+    public String getmName(Player player) {
+        if (plugin.mIConfig.isSet("mname." + player.getName()))
+            if (!(plugin.mIConfig.getString("mname." + player.getName()).isEmpty()))
+                return plugin.mIConfig.getString("mname." + player.getName());
 
-        if (config.isSet("users." + player)) {
-            config.set("users." + player + ".group", group);
-
-            try {
-                config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        return player.getName();
     }
 
-    public void editPlayerName(String player, String newName) {
-        YamlConfiguration config = plugin.mIConfig;
+    /*
+     * Info Stuff
+     */
+    public String getRawInfo(Player player, String info) {
+        if (plugin.useLeveledNodes)
+            return getLeveledInfo(player, info);
 
-        if (config.isSet("users." + player)) {
-            if (!config.isSet("users." + newName)) {
-                for (Map.Entry entry : config.getConfigurationSection("users." + player).getValues(true).entrySet()) {
-                    if (entry.getValue() instanceof MemorySection)
+        if (plugin.useOldNodes)
+            return getBukkitInfo(player, info);
+
+        if (plugin.useNewInfo)
+            return getmChatInfo(player, info);
+
+        if (plugin.gmPermissionsB)
+            return getGroupManagerInfo(player, info);
+
+        if (plugin.PEXB)
+            return getPEXInfo(player, info);
+
+        if (plugin.bPermB)
+            return getbPermInfo(player, info);
+
+        return getmChatInfo(player, info);
+    }
+
+    public String getRawPrefix(Player player) {
+        return getRawInfo(player, "prefix");
+    }
+
+    public String getRawSuffix(Player player) {
+        return getRawInfo(player, "suffix");
+    }
+
+    public String getRawGroup(Player player) {
+        return getRawInfo(player, "group");
+    }
+
+    public String getInfo(Player player, String info) {
+        return plugin.getAPI().addColour(getRawInfo(player, info));
+    }
+
+    public String getPrefix(Player player) {
+        return getInfo(player, "prefix");
+    }
+
+    public String getSuffix(Player player) {
+        return getInfo(player, "suffix");
+    }
+
+    public String getGroup(Player player) {
+        return getInfo(player, "group");
+    }
+
+    /*
+     * mChatSuite Stuff
+     */
+    String getmChatInfo(Player player, String info) {
+        if (info.equals("group"))
+            if (getmChatGroup(player) != null)
+                return getmChatGroup(player);
+
+        if (getmChatPlayerInfo(player, info).isEmpty())
+            return getmChatGroupInfo(player, info);
+
+        return getmChatPlayerInfo(player, info);
+    }
+
+    String getmChatPlayerInfo(Player player, String info) {
+        String pName = player.getName();
+        String world = player.getWorld().getName();
+
+        if (plugin.mIConfig.isSet("users." + pName + ".info." + info))
+            return plugin.mIConfig.getString("users." + pName + ".info." + info);
+
+        else if (plugin.mIConfig.isSet("users." + pName + ".worlds." + world + "." + info))
+            return plugin.mIConfig.getString("users." + pName + ".worlds." + world + "." + info);
+
+        return "";
+    }
+
+
+    String getmChatGroupInfo(Player player, String info) {
+        String world = player.getWorld().getName();
+        String group = getmChatGroup(player);
+
+        if (plugin.mIConfig.isSet("groups." + group + ".info." + info))
+            return plugin.mIConfig.getString("groups." + group + ".info." + info);
+
+        else if (plugin.mIConfig.isSet("groups." + group + ".worlds." + world + "." + info))
+            return plugin.mIConfig.getString("groups." + group + ".worlds." + world + "." + info);
+
+        return "";
+    }
+
+    String getmChatGroup(Player player) {
+        String pName = player.getName();
+        if (plugin.mIConfig.isSet("users." + pName + ".group"))
+            return plugin.mIConfig.getString("users." + pName + ".group");
+
+        return "";
+    }
+
+    /*
+     * Leveled Nodes Stuff
+     */
+    String getLeveledInfo(Player player, String info) {
+        HashMap<Integer, String> iMap = new HashMap<Integer, String>();
+
+        if (plugin.PermissionBuB)
+            if (info.equals("group"))
+                return getPermBukkitGroup(player);
+
+        if (!plugin.mIConfig.isSet("mchat." + info))
+            return "";
+
+        if (!plugin.mIConfig.isSet("rank." + info))
+            return getBukkitInfo(player, info);
+
+        for (Map.Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
+            if (entry.getKey().contains("mchat." + info + "."))
+                if (plugin.getAPI().checkPermissions(player, entry.getKey(), false)) {
+                    String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
+
+                    if (!plugin.mIConfig.isSet(rVal))
                         continue;
 
-                    config.set("users." + newName + "." + entry.getKey(), entry.getValue());
+                    try {
+                        iMap.put(plugin.mIConfig.getInt(rVal), entry.getValue().toString());
+                    } catch (NumberFormatException ignored) {
+                    }
                 }
+        }
 
-                config.set("users." + player, null);
+        for (int i = 0; i < 101; ++i) {
+            if (iMap.get(i) != null && !iMap.get(i).isEmpty())
+                return iMap.get(i);
+        }
 
-                try {
-                    config.save(plugin.mIConfigF);
-                } catch (IOException ignored) {}
-            }
+        return getBukkitInfo(player, info);
+    }
+
+    /*
+     * Old Nodes Stuff
+     */
+    String getBukkitInfo(Player player, String info) {
+        if (plugin.PermissionBuB)
+            if (info.equals("group"))
+                return getPermBukkitGroup(player);
+
+        if (!plugin.mIConfig.isSet("mchat." + info))
+            return "";
+
+        for (Map.Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
+            if (entry.getKey().contains("mchat." + info + "."))
+                if (plugin.getAPI().checkPermissions(player, entry.getKey(), false)) {
+                    String infoResolve = entry.getValue().toString();
+
+                    if (infoResolve != null && !info.isEmpty())
+                        return infoResolve;
+
+                    break;
+                }
+        }
+
+        return "";
+    }
+
+    String getPermBukkitGroup(Player player) {
+        Plugin pPlugin = plugin.pm.getPlugin("PermissionsBukkit");
+        PermissionsPlugin pBukkit = (PermissionsPlugin) pPlugin;
+        List<Group> pGroups = pBukkit.getGroups(player.getName());
+
+        try {
+            return pGroups.get(0).getName();
+        } catch (Exception ignored) {
+            return "";
         }
     }
 
-    public void removePlayer(String player) {
-        YamlConfiguration config = plugin.mIConfig;
+    /*
+     * GroupManager Stuff
+     */
+    String getGroupManagerInfo(Player player, String info) {
+        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(player);
 
-        if (config.isSet("users." + player)) {
-            config.set("users." + player, null);
+        if (info.equals("group"))
+            return getGroupManagerGroups(player);
 
-            try {
-                config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        String pName = player.getName();
+        String group = gmPermissions.getGroup(pName);
+        String userString = gmPermissions.getUserPermissionString(pName, info);
+
+        if (userString != null && !userString.isEmpty())
+            return userString;
+
+        if (group == null)
+            return "";
+
+        return gmPermissions.getGroupPermissionString(group, info);
     }
 
-    public void addPlayerInfoVar(String player, String var, String value) {
-        YamlConfiguration config = plugin.mIConfig;
+    String getGroupManagerGroups(Player player) {
+        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(player);
 
-        if (config.isSet("users." + player + ".info")) {
-            config.set("users." + player + ".info." + var, value);
+        String pName = player.getName();
+        String group = gmPermissions.getGroup(pName);
 
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        if (group == null)
+            return "";
+
+        return group;
     }
 
-    public void editPlayerInfoVar(String player, String oldVar, String newVar) {
-        YamlConfiguration config = plugin.mIConfig;
+    /*
+     * PEX Stuff
+     */
+    String getPEXInfo(Player player, String info) {
+        String userString;
 
-        if (config.isSet("users." + player + ".info." + oldVar)) {
-            for (Map.Entry entry : config.getConfigurationSection("users." + player + ".info." + oldVar).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
+        if (info.equals("group"))
+            return getPEXGroup(player);
 
-                config.set("users." + newVar + "." + entry.getKey(), entry.getValue());
-            }
+        else if (info.equals("prefix"))
+            userString = plugin.pexPermissions.getUser(player).getPrefix();
 
-            config.set("users." + player + ".info." + oldVar, null);
+        else if (info.equals("suffix"))
+            userString = plugin.pexPermissions.getUser(player).getSuffix();
 
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        else
+            userString = plugin.pexPermissions.getUser(player).getOption(info);
+
+        if (userString != null)
+            return userString;
+
+        return "";
     }
 
-    public void editPlayerInfoValue(String player, String var, String newValue) {
-        YamlConfiguration config = plugin.mIConfig;
+    String getPEXGroup(Player player) {
+        String group = plugin.pexPermissions.getUser(player).getGroupsNames()[0];
 
-        if (config.isSet("users." + player + ".info." + var)) {
-            config.set("users." + player + ".info." + var, newValue);
+        if (group == null)
+            return "";
 
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        return group;
     }
 
-    public void removePlayerInfoVar(String player, String var) {
-        YamlConfiguration config = plugin.mIConfig;
+    /*
+     * bPermissions Stuff
+     */
+    String getbPermInfo(Player player, String info) {
+        if (info.equals("group"))
+            return getbPermGroup(player);
 
-        if (config.isSet("users." + player + ".info." + var)) {
-            config.set("users." + player + ".info." + var, null);
+        String userString = plugin.bInfoR.getValue(player, info);
+        if (userString != null && !userString.isEmpty())
+            return userString;
 
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        return "";
     }
 
-    public void addPlayerWorld(String player, String world) {
-        YamlConfiguration config = plugin.mIConfig;
+    String getbPermGroup(Player player) {
+        String group = plugin.bPermS.getPermissionSet(player.getWorld()).getGroups(player).get(0);
 
-        if (config.isSet("users." + player)) {
-            if (!config.isSet("users." + player + ".worlds." + world)) {
-                config.set("users." + player + ".worlds." + world + "prefix", "");
-                config.set("users." + player + ".worlds." + world + "suffix", "");
+        if (group == null)
+            return "";
 
-                try {
-                    config.save(plugin.mIConfigF);
-                } catch (IOException ignored) {}
-            }
-        }
+        return group;
     }
 
-    public void editPlayerWorldName(String player, String oldWorld, String newWorld) {
-        YamlConfiguration config = plugin.mIConfig;
+    /*
+    * Misc
+    */
+    public String getEventMessage(String eventName) {
+        if (eventName.equalsIgnoreCase("join"))
+            eventName = plugin.joinMessage;
 
-        if (config.isSet("users." + player + ".worlds." + oldWorld)) {
-            for (Map.Entry entry : config.getConfigurationSection("users." + player + ".worlds." + oldWorld).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
+        if (eventName.equalsIgnoreCase("enter"))
+            eventName = plugin.joinMessage;
 
-                config.set("users." + player + ".worlds." + newWorld + "." + entry.getKey(), entry.getValue());
-            }
+        if (eventName.equalsIgnoreCase("kick"))
+            eventName = plugin.kickMessage;
 
-            config.set("users." + player + ".worlds." + oldWorld, null);
+        if (eventName.equalsIgnoreCase("quit"))
+            eventName = plugin.leaveMessage;
 
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
+        if (eventName.equalsIgnoreCase("leave"))
+            eventName = plugin.leaveMessage;
+
+        return plugin.getAPI().addColour(eventName);
     }
 
-    public void removePlayerWorld(String player, String world) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("users." + player)) {
-            if (config.isSet("users." + player + ".worlds." + world)) {
-                config.set("users." + player + ".worlds." + world, null);
-
-                try {
-                    config.save(plugin.mIConfigF);
-                } catch (IOException ignored) {}
-            }
-        }
-    }
-
-    public void addPlayerWorldVar(String player, String world, String var, String value) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("users." + player + ".worlds." + world)) {
-            config.set("users." + player + ".worlds." + world + "." + var, value);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editPlayerWorldVar(String player, String world, String oldVar, String newVar) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("users." + player + ".worlds." + world + "." + oldVar)) {
-            for (Map.Entry entry : config.getConfigurationSection("users." + player + ".worlds." + world + "." + oldVar).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
-
-                config.set("users." + player + ".worlds." + world + "." + newVar + "." + entry.getKey(), entry.getValue());
-            }
-
-            config.set("users." + player + ".worlds." + world + "." + oldVar, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editPlayerWorldValue(String player, String world, String var, String newValue) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("users." + player + ".worlds." + world + "." + var)) {
-            config.set("users." + player + ".worlds." + world + "." + var, newValue);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void removePlayerWorldVar(String player, String world, String var) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("users." + player + ".worlds." + world + "." + var)) {
-            config.set("users." + player + ".worlds." + world + "." + var, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    // Group Info
-    public void addGroup(String group) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (!config.isSet("groups." + group)) {
-            config.set("groups." + group + ".info.prefix", "");
-            config.set("groups." + group + ".info.suffix", "");
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editGroupName(String oldGroup, String newGroup) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + oldGroup)) {
-            for (Map.Entry entry : config.getConfigurationSection("groups." + oldGroup).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
-
-                config.set("groups." + newGroup + "." + entry.getKey(), entry.getValue());
-            }
-
-            config.set("groups." + oldGroup, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void removeGroup(String group) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group)) {
-            config.set("groups." + group, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void addGroupInfoVar(String group, String var, String value) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group)) {
-            config.set("groups." + group + ".info." + var, value);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editGroupInfoVar(String group, String oldVar, String newVar) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".info." + oldVar)) {
-            for (Map.Entry entry : config.getConfigurationSection("groups." + group + ".info." + oldVar).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
-
-                config.set("groups." + group + ".info." + newVar + "." + entry.getKey(), entry.getValue());
-            }
-
-            config.set("groups." + group + ".info." + oldVar, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editGroupInfoValue(String group, String var, String newValue) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".info." + var)) {
-            config.set("groups." + group + ".info." + var, newValue);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void removeGroupInfoVar(String group, String var) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".info." + var)) {
-            config.set("groups." + group + ".info." + var, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void addGroupWorld(String group, String world) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group)) {
-            if (!config.isSet("groups." + group + ".worlds." + world)) {
-                config.set("groups." + group + ".worlds." + world, "");
-
-                try {
-                    config.save(plugin.mIConfigF);
-                } catch (IOException ignored) {}
-            }
-        }
-    }
-
-    public void editGroupWorldName(String group, String oldWorld, String newWorld) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".worlds." + oldWorld)) {
-            for (Map.Entry entry : config.getConfigurationSection("groups." + group + ".worlds." + oldWorld).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
-
-                config.set("groups." + group + ".worlds." + newWorld + "." + entry.getKey(), entry.getValue());
-            }
-
-            config.set("groups." + group + ".worlds." + oldWorld, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void removeGroupWorld(String group, String world) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group)) {
-            if (config.isSet("groups." + group + ".worlds." + world)) {
-                config.set("groups." + group + ".worlds." + world, null);
-
-                try {
-                    config.save(plugin.mIConfigF);
-                } catch (IOException ignored) {}
-            }
-        }
-    }
-
-    public void addGroupWorldVar(String group, String world, String var, String value) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".worlds." + world)) {
-            config.set("groups." + group + ".worlds." + world + "." + var, value);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editGroupWorldVar(String group, String world, String oldVar, String newVar) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".worlds." + world + "." + oldVar)) {
-            for (Map.Entry entry : config.getConfigurationSection("groups." + group + ".worlds." + world + "." + oldVar).getValues(true).entrySet()) {
-                if (entry.getValue() instanceof MemorySection)
-                    continue;
-
-                config.set("groups." + group + ".worlds." + world + "." + newVar + "." + entry.getKey(), entry.getValue());
-            }
-
-            config.set("groups." + group + ".worlds." + world + "." + oldVar, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void editGroupWorldValue(String group, String world, String var, String newValue) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".worlds." + world + "." + var)) {
-            config.set("groups." + group + ".worlds." + world + "." + var, newValue);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
-
-    public void removeGroupWorldVar(String group, String world, String var) {
-        YamlConfiguration config = plugin.mIConfig;
-
-        if (config.isSet("groups." + group + ".worlds." + world + "." + var)) {
-            config.set("groups." + group + ".worlds." + world + "." + var, null);
-
-            try {
-                 config.save(plugin.mIConfigF);
-            } catch (IOException ignored) {}
-        }
-    }
 }

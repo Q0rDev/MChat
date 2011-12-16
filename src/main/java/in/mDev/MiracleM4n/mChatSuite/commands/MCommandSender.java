@@ -17,7 +17,7 @@ public class MCommandSender implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = null;
 
-        if (sender instanceof  Player)
+        if (sender instanceof Player)
             player = (Player) sender;
 
         String cmd = command.getName();
@@ -28,7 +28,7 @@ public class MCommandSender implements CommandExecutor {
         if (cmd.equalsIgnoreCase("mchat")) {
             if (args[0].equalsIgnoreCase("gui")) {
                 if (sender instanceof Player) {
-                    if (!mChatSuite.getAPI().checkPermissions(player, "mchat.gui")) {
+                    if (!plugin.getAPI().checkPermissions(player, "mchat.gui")) {
                         sender.sendMessage(formatMessage("You are not to look at my fail GUI."));
                         return true;
                     }
@@ -37,12 +37,12 @@ public class MCommandSender implements CommandExecutor {
                     return true;
                 }
             } else if (args[0].equalsIgnoreCase("reload")
-             || args[0].equalsIgnoreCase("r")) {
+                    || args[0].equalsIgnoreCase("r")) {
                 if (args.length > 1)
                     if (args[1].equalsIgnoreCase("config")
-                     || args[1].equalsIgnoreCase("co")) {
+                            || args[1].equalsIgnoreCase("co")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.reload.config")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.reload.config")) {
                                 sender.sendMessage(formatMessage("You are not allowed to reload mChat."));
                                 return true;
                             }
@@ -55,7 +55,7 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[1].equalsIgnoreCase("info")
                             || args[1].equalsIgnoreCase("i")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.reload.info")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.reload.info")) {
                                 sender.sendMessage(formatMessage("You are not allowed to reload mChat."));
                                 return true;
                             }
@@ -65,9 +65,9 @@ public class MCommandSender implements CommandExecutor {
                         sender.sendMessage(formatMessage("Info Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("censor")
-                        || args[1].equalsIgnoreCase("ce")) {
+                            || args[1].equalsIgnoreCase("ce")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.reload.censor")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.reload.censor")) {
                                 sender.sendMessage(formatMessage("You are not allowed to reload mChat."));
                                 return true;
                             }
@@ -79,7 +79,7 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[1].equalsIgnoreCase("all")
                             || args[1].equalsIgnoreCase("a")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.reload.all")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.reload.all")) {
                                 sender.sendMessage(formatMessage("You are not allowed to reload mChat."));
                                 return true;
                             }
@@ -106,12 +106,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("p")
                             || args[2].equalsIgnoreCase("player")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.add.player")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.add.player")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addPlayer(args[3], args[4]);
+                            plugin.getInfoWriter().addPlayer(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -121,12 +121,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.add.ivar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.add.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addPlayerInfoVar(args[3], args[4], stringArgs(args, 5));
+                            plugin.getInfoWriter().addPlayerInfoVar(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -136,12 +136,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.add.world")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.add.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addPlayerWorld(args[3], args[4]);
+                            plugin.getInfoWriter().addPlayerWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -151,12 +151,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.add.wvar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.add.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addPlayerWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
+                            plugin.getInfoWriter().addPlayerWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -178,12 +178,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("n")
                             || args[2].equalsIgnoreCase("name")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.name")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.name")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editPlayerName(args[3], args[4]);
+                            plugin.getInfoWriter().editPlayerName(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException e) {
@@ -193,12 +193,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.ivar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editPlayerInfoVar(args[3], args[4], args[5]);
+                            plugin.getInfoWriter().editPlayerInfoVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -208,12 +208,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVal")
                             || args[2].equalsIgnoreCase("infoValue")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.ival")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.ival")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editPlayerInfoValue(args[3], args[4], stringArgs(args, 5));
+                            plugin.getInfoWriter().editPlayerInfoValue(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -223,12 +223,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("group")
                             || args[2].equalsIgnoreCase("g")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.group")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.group")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().setPlayerGroup(args[3], args[4]);
+                            plugin.getInfoWriter().setPlayerGroup(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -238,12 +238,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.world")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editPlayerWorldName(args[3], args[4], args[5]);
+                            plugin.getInfoWriter().editPlayerWorldName(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -253,12 +253,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.wvar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editPlayerWorldVar(args[3], args[4], args[5], args[6]);
+                            plugin.getInfoWriter().editPlayerWorldVar(args[3], args[4], args[5], args[6]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -268,12 +268,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVal")
                             || args[2].equalsIgnoreCase("worldValue")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.edit.wval")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.edit.wval")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editPlayerWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
+                            plugin.getInfoWriter().editPlayerWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -293,12 +293,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("p")
                             || args[2].equalsIgnoreCase("player")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.remove.player")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.remove.player")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removePlayer(args[3]);
+                            plugin.getInfoWriter().removePlayer(args[3]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -308,12 +308,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.remove.ivar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.remove.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removePlayerInfoVar(args[3], args[4]);
+                            plugin.getInfoWriter().removePlayerInfoVar(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -323,12 +323,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.remove.world")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.remove.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removePlayerWorld(args[3], args[4]);
+                            plugin.getInfoWriter().removePlayerWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -338,12 +338,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.user.remove.wvar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.user.remove.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removePlayerWorldVar(args[3], args[4], args[5]);
+                            plugin.getInfoWriter().removePlayerWorldVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -369,12 +369,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("g")
                             || args[2].equalsIgnoreCase("group")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.add.group")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.add.group")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addGroup(args[3]);
+                            plugin.getInfoWriter().addGroup(args[3]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -384,12 +384,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.add.ivar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.add.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addGroupInfoVar(args[3], args[4], stringArgs(args, 5));
+                            plugin.getInfoWriter().addGroupInfoVar(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -399,12 +399,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.add.world")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.add.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addGroupWorld(args[3], args[4]);
+                            plugin.getInfoWriter().addGroupWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -414,12 +414,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.add.wvar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.add.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().addGroupWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
+                            plugin.getInfoWriter().addGroupWorldVar(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -440,12 +440,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("n")
                             || args[2].equalsIgnoreCase("name")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.edit.name")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.edit.name")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editGroupName(args[3], args[4]);
+                            plugin.getInfoWriter().editGroupName(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -455,12 +455,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.edit.ivar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.edit.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editGroupInfoVar(args[3], args[4], args[5]);
+                            plugin.getInfoWriter().editGroupInfoVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -470,12 +470,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVal")
                             || args[2].equalsIgnoreCase("infoValue")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.edit.ival")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.edit.ival")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editGroupInfoValue(args[3], args[4], stringArgs(args, 5));
+                            plugin.getInfoWriter().editGroupInfoValue(args[3], args[4], stringArgs(args, 5));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -485,12 +485,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.edit.world")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.edit.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editGroupWorldName(args[3], args[4], args[5]);
+                            plugin.getInfoWriter().editGroupWorldName(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -500,12 +500,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.edit.wvar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.edit.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editGroupWorldVar(args[3], args[4], args[5], args[6]);
+                            plugin.getInfoWriter().editGroupWorldVar(args[3], args[4], args[5], args[6]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -515,12 +515,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVal")
                             || args[2].equalsIgnoreCase("worldValue")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.edit.wval")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.edit.wval")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().editGroupWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
+                            plugin.getInfoWriter().editGroupWorldValue(args[3], args[4], args[5], stringArgs(args, 6));
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -540,12 +540,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("g")
                             || args[2].equalsIgnoreCase("group")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.remove.group")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.remove.group")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removeGroup(args[3]);
+                            plugin.getInfoWriter().removeGroup(args[3]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -555,12 +555,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("iVar")
                             || args[2].equalsIgnoreCase("infoVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.remove.ivar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.remove.ivar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removeGroupInfoVar(args[3], args[4]);
+                            plugin.getInfoWriter().removeGroupInfoVar(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -570,12 +570,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("w")
                             || args[2].equalsIgnoreCase("world")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.remove.world")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.remove.world")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removeGroupWorld(args[3], args[4]);
+                            plugin.getInfoWriter().removeGroupWorld(args[3], args[4]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -585,12 +585,12 @@ public class MCommandSender implements CommandExecutor {
                     } else if (args[2].equalsIgnoreCase("wVar")
                             || args[2].equalsIgnoreCase("worldVariable")) {
                         if (sender instanceof Player)
-                            if (!mChatSuite.getAPI().checkPermissions(player, "mchat.group.remove.wvar")) {
+                            if (!plugin.getAPI().checkPermissions(player, "mchat.group.remove.wvar")) {
                                 sender.sendMessage(formatMessage("You don't have Permission to do that."));
                                 return true;
                             }
                         try {
-                            mChatSuite.getInfoReader().removeGroupWorldVar(args[3], args[4], args[5]);
+                            plugin.getInfoWriter().removeGroupWorldVar(args[3], args[4], args[5]);
                             sender.sendMessage(formatMessage("Info Addition Successful."));
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -601,15 +601,15 @@ public class MCommandSender implements CommandExecutor {
                 }
             }
         }
-        
+
         return false;
     }
 
     public String formatMessage(String message) {
-        return (mChatSuite.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
-    String stringArgs (String[] args, Integer startingPoint)  {
+    String stringArgs(String[] args, Integer startingPoint) {
         String argString = "";
 
         for (int i = startingPoint; i < args.length; ++i) {

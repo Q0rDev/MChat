@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.bukkit.ChatColor;
 
 import org.getspout.spoutapi.event.input.InputListener;
@@ -30,16 +31,16 @@ public class MCustomListener extends InputListener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + mChatSuite.getAPI().addColour(mChatSuite.getLocale().getOption("typingMessage")) + '\n' + mChatSuite.getAPI().ParsePlayerName(player));
+            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + plugin.getAPI().addColour(plugin.getLocale().getOption("typingMessage")) + '\n' + plugin.getAPI().ParsePlayerName(player));
             plugin.chatt.put(player.getName(), true);
         }
 
         if (plugin.chatt.get(player.getName())) {
             if ((key.equals(forwardKey)) ||
                     (key.equals(backwardKey)) ||
-                            (key.equals(leftKey)) ||
-                                    (key.equals(rightKey))) {
-                player.setTitle(mChatSuite.getAPI().ParsePlayerName(player));
+                    (key.equals(leftKey)) ||
+                    (key.equals(rightKey))) {
+                player.setTitle(plugin.getAPI().ParsePlayerName(player));
                 plugin.chatt.put(player.getName(), false);
             }
         }

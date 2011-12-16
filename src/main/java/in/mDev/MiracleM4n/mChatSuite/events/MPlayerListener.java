@@ -1,14 +1,15 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
+import me.desmin88.mobdisguise.MobDisguise;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
-
-import me.desmin88.mobdisguise.MobDisguise;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
@@ -43,7 +44,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (event.isCancelled())
             return;
 
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         String pName = player.getName();
         String msg = event.getMessage();
 
@@ -63,16 +64,16 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null) {
                 String pMDName = MobDisguise.p2p.get(pName);
-                event.setFormat(mChatSuite.getAPI().ParseChatMessage(pMDName, msg));
+                event.setFormat(plugin.getAPI().ParseChatMessage(pMDName, msg));
             }
 
         // For Cruxsky
-        if (mChatSuite.getAPI().ParseTabbedList(player).length() > 15) {
-                String pLName = mChatSuite.getAPI().ParseTabbedList(player);
-                pLName = pLName.substring(0, 16);
-                player.setPlayerListName(pLName);
+        if (plugin.getAPI().ParseTabbedList(player).length() > 15) {
+            String pLName = plugin.getAPI().ParseTabbedList(player);
+            pLName = pLName.substring(0, 16);
+            player.setPlayerListName(pLName);
         } else
-            player.setPlayerListName(mChatSuite.getAPI().ParseTabbedList(player));
+            player.setPlayerListName(plugin.getAPI().ParseTabbedList(player));
 
         // PMChat
         if (plugin.mChatPB) {
@@ -81,9 +82,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                recipient.sendMessage(mChatSuite.getAPI().addColour("&4[Convo] " + mChatSuite.getAPI().ParseChatMessage(pName, msg)));
-                player.sendMessage(mChatSuite.getAPI().addColour("&4[Convo] " + mChatSuite.getAPI().ParseChatMessage(pName, msg)));
-                mChatSuite.getAPI().log(mChatSuite.getAPI().addColour("&4[Convo] " + mChatSuite.getAPI().ParseChatMessage(pName, msg)));
+                recipient.sendMessage(plugin.getAPI().addColour("&4[Convo] " + plugin.getAPI().ParseChatMessage(pName, msg)));
+                player.sendMessage(plugin.getAPI().addColour("&4[Convo] " + plugin.getAPI().ParseChatMessage(pName, msg)));
+                plugin.getAPI().log(plugin.getAPI().addColour("&4[Convo] " + plugin.getAPI().ParseChatMessage(pName, msg)));
                 event.setCancelled(true);
             }
         }
@@ -94,22 +95,24 @@ public class MPlayerListener extends PlayerListener implements Runnable {
                 player.performCommand("mafk");
 
         if (plugin.spoutB) {
-            final SpoutPlayer sPlayer = (SpoutPlayer) player;
+            SpoutPlayer sPlayer = (SpoutPlayer) player;
+            final String sPName = sPlayer.getName();
 
-            sPlayer.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + mChatSuite.getAPI().addColour(msg) + ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + mChatSuite.getAPI().ParsePlayerName(player));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getAPI().addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player));
 
             plugin.chatt.put(player.getName(), false);
 
             Runnable runnable = new Runnable() {
                 public void run() {
-                    sPlayer.setTitle(mChatSuite.getAPI().ParsePlayerName(player));
+                    SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
+                    sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer));
                 }
             };
 
-            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 7*20);
+            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 7 * 20);
         }
 
-        event.setFormat(mChatSuite.getAPI().ParseChatMessage(pName, msg));
+        event.setFormat(plugin.getAPI().ParseChatMessage(pName, msg));
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -129,31 +132,31 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         // For Lazy People
         if (plugin.useAddDefault)
             if (plugin.mIConfig.get("users." + pName) == null)
-                mChatSuite.getInfoReader().addPlayer(pName, plugin.mIDefaultGroup);
+                plugin.getInfoWriter().addPlayer(pName, plugin.mIDefaultGroup);
 
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 // For Cruxsky
-                if (mChatSuite.getAPI().ParseTabbedList(player).length() > 15) {
-                        String pLName = mChatSuite.getAPI().ParseTabbedList(player);
-                        pLName = pLName.substring(0, 16);
-                        player.setPlayerListName(pLName);
+                if (plugin.getAPI().ParseTabbedList(player).length() > 15) {
+                    String pLName = plugin.getAPI().ParseTabbedList(player);
+                    pLName = pLName.substring(0, 16);
+                    player.setPlayerListName(pLName);
                 } else
-                    player.setPlayerListName(mChatSuite.getAPI().ParseTabbedList(player));
+                    player.setPlayerListName(plugin.getAPI().ParseTabbedList(player));
             }
         }, 20L);
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
-            sPlayer.setTitle(mChatSuite.getAPI().ParsePlayerName(player));
+            sPlayer.setTitle(plugin.getAPI().ParsePlayerName(player));
         }
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(mChatSuite.getAPI().ParseEventName(pName) + " " + mChatSuite.getAPI().getEventMessage("Join"), "mchat.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
-                event.setJoinMessage(mChatSuite.getAPI().ParseEventName(pName) + " " + mChatSuite.getAPI().getEventMessage("Join"));
+                event.setJoinMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"));
     }
 
     public void onPlayerKick(PlayerKickEvent event) {
@@ -168,18 +171,18 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         String reason = event.getReason();
 
-        String kickMsg = mChatSuite.getAPI().getEventMessage("Kick");
+        String kickMsg = plugin.getInfoReader().getEventMessage("Kick");
 
-        kickMsg = mChatSuite.getAPI().addColour(kickMsg.replace("+reason", reason).replace("+r", reason));
+        kickMsg = plugin.getAPI().addColour(kickMsg.replace("+reason", reason).replace("+r", reason));
 
         if (msg == null)
             return;
 
         if (plugin.sKickB) {
-            suppressEventMessage(mChatSuite.getAPI().ParseEventName(pName) + " " + kickMsg, "mchat.suppress.kick", plugin.sKickI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg, "mchat.suppress.kick", plugin.sKickI);
             event.setLeaveMessage("");
         } else
-            event.setLeaveMessage(mChatSuite.getAPI().ParseEventName(pName) + " " + kickMsg);
+            event.setLeaveMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg);
     }
 
     public void onPlayerQuit(PlayerQuitEvent event) {
@@ -193,10 +196,10 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         if (plugin.sQuitB) {
-            suppressEventMessage(mChatSuite.getAPI().ParseEventName(pName) + " " + mChatSuite.getAPI().getEventMessage("Quit"), "mchat.suppress.quit", plugin.sQuitI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"), "mchat.suppress.quit", plugin.sQuitI);
             event.setQuitMessage("");
         } else
-            event.setQuitMessage(mChatSuite.getAPI().ParseEventName(pName) + " " + mChatSuite.getAPI().getEventMessage("Quit"));
+            event.setQuitMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"));
     }
 
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -206,11 +209,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         BlockState block = event.getClickedBlock().getState();
 
         if (block.getTypeId() == 63) {
-            Sign sign = (Sign)block;
+            Sign sign = (Sign) block;
             if (sign.getLine(0).equals("[mChat]"))
                 if (plugin.getServer().getPlayer(sign.getLine(2)) != null)
                     if (sign.getLine(3) != null) {
-                        sign.setLine(1, mChatSuite.getAPI().addColour("&f" + (mChatSuite.getAPI().ParseMessage(sign.getLine(2), "", sign.getLine(3)))));
+                        sign.setLine(1, plugin.getAPI().addColour("&f" + (plugin.getAPI().ParseMessage(sign.getLine(2), "", sign.getLine(3)))));
                         sign.update(true);
                     }
         }
@@ -228,11 +231,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         if (plugin.isAFK.get(player.getName()))
-            if(plugin.mAFKHQ) {
-                if(plugin.AFKLoc.get(player.getName()) != null)
+            if (plugin.mAFKHQ) {
+                if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                player.sendMessage(mChatSuite.mCSender.formatMessage(mChatSuite.getLocale().getOption("stillAFK")));
+                player.sendMessage(mChatSuite.mCSender.formatMessage(plugin.getLocale().getOption("stillAFK")));
             } else
                 player.performCommand("mafk");
     }
@@ -240,12 +243,13 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     void suppressEventMessage(String format, String permNode, Integer max) {
         if (!(plugin.getServer().getOnlinePlayers().length > max))
             for (Player player : plugin.getServer().getOnlinePlayers())
-                if (!mChatSuite.getAPI().checkPermissions(player, permNode))
+                if (!plugin.getAPI().checkPermissions(player, permNode))
                     player.sendMessage(format);
 
-        mChatSuite.getAPI().log(format);
+        plugin.getAPI().log(format);
     }
 
-    public void run() {}
+    public void run() {
+    }
 }
 

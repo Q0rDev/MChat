@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -53,7 +54,7 @@ public class MLanguageListener {
         YamlConfigurationOptions configO = config.options();
 
         configO.header(
-            "mChatSuite Locale file."
+                "mChatSuite Locale file."
         );
 
         config.set("spoutChatColour", spoutChatColour);
@@ -77,7 +78,8 @@ public class MLanguageListener {
 
         try {
             config.save(plugin.mELocaleF);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     public void checkLocale() {
@@ -107,12 +109,13 @@ public class MLanguageListener {
 
         if (hasChanged) {
             configO.header(
-                "mChatSuite Locale file."
+                    "mChatSuite Locale file."
             );
 
             try {
                 config.save(plugin.mELocaleF);
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
 
             System.out.println("[" + plugin.pdfFile.getName() + "] locale.yml " + configUpdated);
         }

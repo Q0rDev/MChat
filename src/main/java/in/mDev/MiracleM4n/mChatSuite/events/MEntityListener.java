@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -37,11 +38,11 @@ public class MEntityListener extends EntityListener {
         EntityDamageEvent dEvent = player.getLastDamageCause();
 
         if (dEvent instanceof EntityDamageByEntityEvent) {
-                EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
-                if (dEEvent.getDamager() instanceof Player)
-                    pCause = mChatSuite.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName()) + ".";
-                else
-                    pCause =  "a" + parseEntityName(dEEvent.getDamager()) + ".";
+            EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
+            if (dEEvent.getDamager() instanceof Player)
+                pCause = plugin.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName()) + ".";
+            else
+                pCause = "a" + parseEntityName(dEEvent.getDamager()) + ".";
         }
 
         if (plugin.sDeathB) {
@@ -96,7 +97,7 @@ public class MEntityListener extends EntityListener {
                 Runnable runnable = new Runnable() {
                     public void run() {
                         SpoutPlayer sPlayer = (SpoutPlayer) player;
-                        sPlayer.setTitle(mChatSuite.getAPI().ParsePlayerName(player));
+                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(player));
                     }
                 };
 
@@ -107,7 +108,7 @@ public class MEntityListener extends EntityListener {
                                 SpoutPlayer sPlayers = (SpoutPlayer) players;
                                 if (plugin.healthAchievement) {
                                     if (sPlayers.isSpoutCraftEnabled()) {
-                                        if(player.getName().length() >= 25)
+                                        if (player.getName().length() >= 25)
                                             sPlayers.sendNotification(healthBarDamage(player, event.getDamage()), player.getName().substring(0, 24), Material.LAVA);
                                         else
                                             sPlayers.sendNotification(healthBarDamage(player, event.getDamage()), player.getName(), Material.LAVA);
@@ -118,27 +119,27 @@ public class MEntityListener extends EntityListener {
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getAPI().ParsePlayerName(player) + " " + mChatSuite.getLocale().getOption("playerDied"));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player) + " " + plugin.getLocale().getOption("playerDied"));
                             else
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getAPI().ParsePlayerName(player) + " " + mChatSuite.getLocale().getOption("playerDamaged") + " " + (player.getHealth() - event.getDamage()) + " " + mChatSuite.getLocale().getOption("healthLeft"));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player) + " " + plugin.getLocale().getOption("playerDamaged") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"));
                         } else {
                             if (plugin.spoutB) {
                                 SpoutPlayer sPlayer = (SpoutPlayer) player;
                                 if (plugin.healthAchievement) {
                                     if (sPlayer.isSpoutCraftEnabled()) {
                                         if ((player.getHealth() - event.getDamage()) < 1) {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), mChatSuite.getLocale().getOption("youDied"), Material.LAVA);
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption("youDied"), Material.LAVA);
                                         } else {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), mChatSuite.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + mChatSuite.getLocale().getOption("healthLeft"), Material.LAVA);
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"), Material.LAVA);
                                         }
                                     }
                                 }
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getLocale().getOption("youDied"));
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption("youDied"));
                             else
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + mChatSuite.getLocale().getOption("youDamaged") + " " + mChatSuite.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + mChatSuite.getLocale().getOption("healthLeft"));
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption("youDamaged") + " " + plugin.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"));
                         }
                     }
 
@@ -149,9 +150,9 @@ public class MEntityListener extends EntityListener {
                 if (plugin.spoutB) {
                     SpoutPlayer sPlayer = (SpoutPlayer) player;
 
-                    plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4*20);
+                    plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4 * 20);
 
-                    sPlayer.setTitle(ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(mChatSuite.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + mChatSuite.getAPI().ParsePlayerName(player));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player));
 
                     plugin.chatt.put(player.getName(), false);
                 }
@@ -165,52 +166,52 @@ public class MEntityListener extends EntityListener {
         if (dMsg == null)
             return dMsg;
 
-        if (dMsg.contains("went up in flames")) 
+        if (dMsg.contains("went up in flames"))
             return deathMessage(pName, pCause, plugin.deathInFire);
 
-        else if (dMsg.contains("burned to death")) 
+        else if (dMsg.contains("burned to death"))
             return deathMessage(pName, pCause, plugin.deathOnFire);
 
-        else if (dMsg.contains("tried to swim in lava")) 
+        else if (dMsg.contains("tried to swim in lava"))
             return deathMessage(pName, pCause, plugin.deathLava);
 
-        else if (dMsg.contains("suffocated in a wall")) 
+        else if (dMsg.contains("suffocated in a wall"))
             return deathMessage(pName, pCause, plugin.deathInWall);
 
-        else if (dMsg.contains("drowned")) 
+        else if (dMsg.contains("drowned"))
             return deathMessage(pName, pCause, plugin.deathDrown);
 
-        else if (dMsg.contains("starved to death")) 
+        else if (dMsg.contains("starved to death"))
             return deathMessage(pName, pCause, plugin.deathStarve);
 
-        else if (dMsg.contains("was pricked to death")) 
+        else if (dMsg.contains("was pricked to death"))
             return deathMessage(pName, pCause, plugin.deathCactus);
 
-        else if (dMsg.contains("hit the ground too hard")) 
+        else if (dMsg.contains("hit the ground too hard"))
             return deathMessage(pName, pCause, plugin.deathFall);
 
-        else if (dMsg.contains("fell out of the world")) 
+        else if (dMsg.contains("fell out of the world"))
             return deathMessage(pName, pCause, plugin.deathOutOfWorld);
 
-        else if (dMsg.contains("died")) 
+        else if (dMsg.contains("died"))
             return deathMessage(pName, pCause, plugin.deathGeneric);
 
-        else if (dMsg.contains("blew up")) 
+        else if (dMsg.contains("blew up"))
             return deathMessage(pName, pCause, plugin.deathExplosion);
 
         else if (dMsg.contains("was killed by"))
             return deathMessage(pName, pCause, plugin.deathMagic);
 
-        else if (dMsg.contains("was slain by")) 
+        else if (dMsg.contains("was slain by"))
             return deathMessage(pName, pCause, plugin.deathEntity);
 
-        else if (dMsg.contains("was shot by")) 
+        else if (dMsg.contains("was shot by"))
             return deathMessage(pName, pCause, plugin.deathArrow);
 
-        else if (dMsg.contains("was fireballed by")) 
+        else if (dMsg.contains("was fireballed by"))
             return deathMessage(pName, pCause, plugin.deathFireball);
 
-        else if (dMsg.contains("was pummeled by")) 
+        else if (dMsg.contains("was pummeled by"))
             return deathMessage(pName, pCause, plugin.deathThrown);
 
         return dMsg;
@@ -275,8 +276,8 @@ public class MEntityListener extends EntityListener {
     }
 
     String deathMessage(String pName, String pCause, String msg) {
-        return mChatSuite.getAPI().ParseEventName(pName) + " " + mChatSuite.getAPI().ParseMessage(pName, "", msg)
-                    .replaceAll("\\+CName", mChatSuite.getAPI().ParseEventName(pCause));
+        return plugin.getAPI().ParseEventName(pName) + " " + plugin.getAPI().ParseMessage(pName, "", msg)
+                .replaceAll("\\+CName", plugin.getAPI().ParseEventName(pCause));
     }
 
     String healthBarDamage(Player player, Integer damage) {
@@ -285,7 +286,7 @@ public class MEntityListener extends EntityListener {
         float health = player.getHealth();
         int fill = Math.round(((health - damage) / maxHealth) * barLength);
 
-        String barColor = (fill <= (barLength/4)) ? "&4" : (fill <= (barLength/7)) ? "&e" : "&2";
+        String barColor = (fill <= (barLength / 4)) ? "&4" : (fill <= (barLength / 7)) ? "&e" : "&2";
 
         StringBuilder out = new StringBuilder();
         out.append(barColor);
@@ -305,9 +306,9 @@ public class MEntityListener extends EntityListener {
     void suppressDeathMessage(String pName, String pCause, PlayerDeathEvent event, Integer max) {
         if (!(plugin.getServer().getOnlinePlayers().length > max))
             for (Player player : plugin.getServer().getOnlinePlayers())
-                if (!mChatSuite.getAPI().checkPermissions(player, "mchat.suppress.death"))
+                if (!plugin.getAPI().checkPermissions(player, "mchat.suppress.death"))
                     player.sendMessage(handlePlayerDeath(pName, pCause, event));
 
-        mChatSuite.getAPI().log(handlePlayerDeath(pName, pCause, event));
+        plugin.getAPI().log(handlePlayerDeath(pName, pCause, event));
     }
 }

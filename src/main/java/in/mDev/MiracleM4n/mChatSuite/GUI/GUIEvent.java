@@ -1,9 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.GUI;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
 import org.bukkit.entity.Player;
-
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.event.screen.ScreenListener;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -85,7 +83,8 @@ public class GUIEvent extends ScreenListener {
 
         try {
             plugin.mConfig.save(plugin.mConfigF);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
         plugin.loadConfigs();
         plugin.setupConfigs();

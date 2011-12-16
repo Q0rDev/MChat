@@ -1,8 +1,15 @@
 package in.mDev.MiracleM4n.mChatSuite;
 
-import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
+import com.herocraftonline.dev.heroes.Heroes;
+
+import com.massivecraft.factions.Conf;
+
+import de.bananaco.permissions.info.InfoReader;
+import de.bananaco.permissions.worlds.WorldPermissionsManager;
+
+import in.mDev.MiracleM4n.mChatSuite.GUI.GUIEvent;
+import in.mDev.MiracleM4n.mChatSuite.GUI.Main;
+import in.mDev.MiracleM4n.mChatSuite.GUI.Pages;
 
 import in.mDev.MiracleM4n.mChatSuite.commands.MCommandSender;
 import in.mDev.MiracleM4n.mChatSuite.commands.MECommandSender;
@@ -18,37 +25,31 @@ import in.mDev.MiracleM4n.mChatSuite.events.MCustomListener;
 import in.mDev.MiracleM4n.mChatSuite.events.MEntityListener;
 import in.mDev.MiracleM4n.mChatSuite.events.MPlayerListener;
 
+import org.anjocaido.groupmanager.GroupManager;
+import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.Plugin;
-
-import com.herocraftonline.dev.heroes.Heroes;
-
-import com.massivecraft.factions.Conf;
-
-import de.bananaco.permissions.info.InfoReader;
-import de.bananaco.permissions.worlds.WorldPermissionsManager;
-
-import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
-
-import in.mDev.MiracleM4n.mChatSuite.GUI.*;
 
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-public class mChatSuite extends JavaPlugin {
-    // For External Use
-    static mChatSuite mSuite;
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
+public class mChatSuite extends JavaPlugin {
     // Default Plugin Data
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
@@ -69,18 +70,6 @@ public class mChatSuite extends JavaPlugin {
     public static Main mGUI;
     public static GUIEvent mGUIEvent;
     public static Pages mPages;
-
-    // API
-    @Deprecated
-    public static mChatAPI API;
-    @Deprecated
-    mChatAPI mAPI;
-
-    // Info API
-    @Deprecated
-    public static MInfoReader IReader;
-    @Deprecated
-    MInfoReader mIReader;
 
     // GroupManager
     WorldsHolder gmPermissionsWH;
@@ -150,6 +139,7 @@ public class mChatSuite extends JavaPlugin {
 
     // Formatting
     public String varIndicator = "+";
+    public String cusVarIndicator = "-";
     public String tabbedListFormat = "+p+dn+s";
     public String listCmdFormat = "+p+dn+s";
     public String chatFormat = "+p+dn+s&f: +m";
@@ -223,6 +213,7 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
+    public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
 
     @SuppressWarnings({"deprecation"})
     public void onEnable() {
@@ -232,7 +223,6 @@ public class mChatSuite extends JavaPlugin {
         // Initialize Plugin Data
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
-        mSuite = this;
 
         // First we kill Essentials Chat
         killEss();
@@ -259,12 +249,6 @@ public class mChatSuite extends JavaPlugin {
         mConfig.options().indent(4);
         mIConfig.options().indent(4);
         mCConfig.options().indent(4);
-
-        // Initialize the API's
-        API = new mChatAPI(this);
-        mAPI = new mChatAPI(this);
-        IReader = new MInfoReader(this);
-        mIReader = new MInfoReader(this);
 
         // Initialize Listeners
         cListener = new MConfigListener(this);
@@ -328,7 +312,7 @@ public class mChatSuite extends JavaPlugin {
         if (useAddDefault)
             for (Player players : getServer().getOnlinePlayers())
                 if (mIConfig.get("users." + players.getName()) == null)
-                    mIReader.addPlayer(players.getName(), mIDefaultGroup);
+                    getInfoWriter().addPlayer(players.getName(), mIDefaultGroup);
 
         if (mChatEB) {
             for (Player players : getServer().getOnlinePlayers()) {
@@ -350,7 +334,7 @@ public class mChatSuite extends JavaPlugin {
         sTime2 = new Date().getTime();
 
         // Calculate Startup Timer
-        sDiff = new Float (sTime2 - sTime1) / 1000;
+        sDiff = new Float(sTime2 - sTime1) / 1000;
 
         getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled! Took " + sDiff + " seconds.");
     }
@@ -392,7 +376,7 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("PermissionsBukkit");
         if (permTest != null) {
             PermissionBuB = true;
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -401,7 +385,7 @@ public class mChatSuite extends JavaPlugin {
             bPermB = true;
             bInfoR = de.bananaco.permissions.Permissions.getInfoReader();
             bPermS = de.bananaco.permissions.Permissions.getWorldPermissionsManager();
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -409,7 +393,7 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             pexPermissions = PermissionsEx.getPermissionManager();
             PEXB = true;
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -417,7 +401,7 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             gmPermissionsB = true;
             gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" +  (permTest.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -428,7 +412,7 @@ public class mChatSuite extends JavaPlugin {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {
-            getAPI().log("[" + pdfFile.getName() + "] " +  plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
+            getAPI().log("[" + pdfFile.getName() + "] " + plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
             return true;
         }
 
@@ -451,7 +435,7 @@ public class mChatSuite extends JavaPlugin {
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
 
-        if(heroesB)
+        if (heroesB)
             heroes = (Heroes) pm.getPlugin("Heroes");
 
         spoutB = setupPlugin("Spout");
@@ -544,17 +528,22 @@ public class mChatSuite extends JavaPlugin {
         }, 20L * 10, 20L * 10);
     }
 
-    public static MLanguageListener getLocale() {
-        return new MLanguageListener(mSuite, mSuite.mELocale);
+    public MLanguageListener getLocale() {
+        return new MLanguageListener(this, mELocale);
     }
 
     // API
-    public static mChatAPI getAPI() {
-        return new mChatAPI(mSuite);
+    public mChatAPI getAPI() {
+        return new mChatAPI(this);
     }
 
     // InfoReader
-    public static MInfoReader getInfoReader() {
-        return new MInfoReader(mSuite);
+    public MInfoReader getInfoReader() {
+        return new MInfoReader(this);
+    }
+
+    // InfoWriter
+    public MInfoWriter getInfoWriter() {
+        return new MInfoWriter(this);
     }
 }

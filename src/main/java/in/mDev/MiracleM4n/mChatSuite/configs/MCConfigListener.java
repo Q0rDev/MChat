@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -22,12 +23,13 @@ public class MCConfigListener {
     void save() {
         try {
             plugin.mCConfig.save(plugin.mCConfigF);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     public void loadConfig() {
         if (!(new File(plugin.getDataFolder(), "censor.yml").exists())
-         && !(new File("plugins/mChat/censor.yml").exists()))
+                && !(new File("plugins/mChat/censor.yml").exists()))
             defaultConfig();
     }
 
@@ -36,7 +38,7 @@ public class MCConfigListener {
         YamlConfigurationOptions configO = config.options();
 
         configO.header(
-            " mChat Censor File"
+                " mChat Censor File"
         );
 
         config.set("fuck", "fawg");
