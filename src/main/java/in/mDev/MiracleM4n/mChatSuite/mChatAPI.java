@@ -244,7 +244,7 @@ public class mChatAPI {
                 msg
         };
 
-        formatAll = replaceCustVars(format);
+        formatAll = replaceCustVars(formatAll);
 
         return replaceVars(formatAll, search, replace);
     }
