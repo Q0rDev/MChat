@@ -264,19 +264,20 @@ public class MInfoReader {
      * PEX Stuff
      */
     String getPEXInfo(Player player, String info) {
+        String world = player.getWorld().getName();
         String userString;
 
         if (info.equals("group"))
             return getPEXGroup(player);
 
         else if (info.equals("prefix"))
-            userString = plugin.pexPermissions.getUser(player).getPrefix();
+            userString = plugin.pexPermissions.getUser(player).getPrefix(world);
 
         else if (info.equals("suffix"))
-            userString = plugin.pexPermissions.getUser(player).getSuffix();
+            userString = plugin.pexPermissions.getUser(player).getSuffix(world);
 
         else
-            userString = plugin.pexPermissions.getUser(player).getOption(info);
+            userString = plugin.pexPermissions.getUser(player).getOption(info, world);
 
         if (userString != null)
             return userString;
