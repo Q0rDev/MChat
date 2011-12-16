@@ -1,6 +1,5 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
-import in.mDev.MiracleM4n.mChatSuite.MInfoReader;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.ChatColor;
@@ -14,11 +13,9 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class MECommandSender implements CommandExecutor {
     mChatSuite plugin;
-    MInfoReader IReader;
 
     public MECommandSender(mChatSuite plugin) {
         this.plugin = plugin;
-        IReader = plugin.getInfoReader();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

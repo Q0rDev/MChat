@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class MIConfigListener {
     mChatSuite plugin;
-
     Boolean hasChanged = false;
 
     public MIConfigListener(mChatSuite plugin) {
