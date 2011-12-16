@@ -21,14 +21,6 @@ public class Stats {
     static FileHandler logFileHandler;
 
     public static void init(Plugin plugin) {
-        if (new File("plugins/mChat/").isDirectory()) {
-            configFile = new File("plugins/mChat/stats.yml");
-            logFile = "plugins/mChat/statsLog/stats.log";
-        } else {
-            configFile = new File("plugins/mChatSuite/stats.yml");
-            logFile = "plugins/mChatSuite/statsLog/stats.log";
-        }
-
         if (configExists(plugin) && logExists() && !config.getBoolean("opt-out")) {
             plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 10L, 20L * 60L * 60 * 24);
             System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept for this plugin. To opt-out check stats.yml.");
@@ -61,13 +53,7 @@ public class Stats {
     @SuppressWarnings({"ResultOfMethodCallIgnored"})
     static Boolean logExists() {
         try {
-            File log;
-
-            if (new File("plugins/mChat/").isDirectory())
-                log = new File("plugins/mChat/statsLog/");
-            else
-                log = new File("plugins/mChatSuite/statsLog/");
-
+            File log = new File("plugins/mChatSuite/statsLog/");
 
             log.mkdir();
 

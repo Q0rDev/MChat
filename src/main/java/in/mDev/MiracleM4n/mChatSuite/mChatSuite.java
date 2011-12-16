@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
 public class mChatSuite extends JavaPlugin {
     // Default Plugin Data
@@ -229,16 +230,14 @@ public class mChatSuite extends JavaPlugin {
 
         // Initialize Configs
         if (new File("plugins/mChat/").isDirectory()) {
-            mConfigF = new File("plugins/mChat/", "config.yml");
-            mIConfigF = new File("plugins/mChat/", "info.yml");
-            mCConfigF = new File("plugins/mChat/", "censor.yml");
-            mELocaleF = new File("plugins/mChat/", "locale.yml");
-        } else {
-            mConfigF = new File(getDataFolder(), "config.yml");
-            mIConfigF = new File(getDataFolder(), "info.yml");
-            mCConfigF = new File(getDataFolder(), "censor.yml");
-            mELocaleF = new File(getDataFolder(), "locale.yml");
+           getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] Please move the files in the mChat directory to");
+           getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's than delete the mChat directory!");
         }
+
+        mConfigF = new File(getDataFolder(), "config.yml");
+        mIConfigF = new File(getDataFolder(), "info.yml");
+        mCConfigF = new File(getDataFolder(), "censor.yml");
+        mELocaleF = new File(getDataFolder(), "locale.yml");
 
         mConfig = YamlConfiguration.loadConfiguration(mConfigF);
         mIConfig = YamlConfiguration.loadConfiguration(mIConfigF);
