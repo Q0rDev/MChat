@@ -304,7 +304,7 @@ public class mChatAPI {
      * Misc Stuff
      */
     public void addGlobalVar(String var, String value) {
-        if (var == null)
+        if (var == null || var.isEmpty())
             return;
 
         if (value == null)
@@ -314,7 +314,7 @@ public class mChatAPI {
     }
 
     public void addPlayerVar(Player player, String var, String value) {
-        if (var == null)
+        if (var == null || var.isEmpty())
             return;
 
         if (value == null)
