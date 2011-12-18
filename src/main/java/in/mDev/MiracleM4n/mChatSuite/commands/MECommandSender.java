@@ -175,7 +175,7 @@ public class MECommandSender implements CommandExecutor {
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if (("[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget)).length() > 15) {
+                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget)).length() > 15) {
                         String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + afkTarget);
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
