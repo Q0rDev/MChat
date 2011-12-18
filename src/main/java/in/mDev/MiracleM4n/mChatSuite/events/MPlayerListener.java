@@ -28,17 +28,6 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (!plugin.mChatEB)
             return;
 
-        for (String aliases : plugin.getCommand("mchatafk").getAliases())
-            if (event.getMessage().contains("/" + aliases) ||
-                    event.getMessage().contains("/mchatafk"))
-                return;
-
-        if (plugin.isAFK.get(player.getName()) == null)
-            return;
-
-        if (plugin.isAFK.get(player.getName()))
-            player.performCommand("mafk");
-
         plugin.lastMove.put(player.getName(), new Date().getTime());
     }
 
