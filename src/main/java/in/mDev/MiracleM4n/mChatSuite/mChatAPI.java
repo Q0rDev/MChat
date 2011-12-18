@@ -262,7 +262,7 @@ public class mChatAPI {
     }
 
     public String ParseTabbedList(Player player) {
-        return ParseMessage(player.getName(), "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
+        return ParseMessage(player.getName(), "", plugin.tabbedListFormat);
     }
 
     public String ParseListCmd(Player player) {
@@ -289,7 +289,7 @@ public class mChatAPI {
     }
 
     public String ParseTabbedList(String pName) {
-        return ParseMessage(pName, "", plugin.tabbedListFormat).replaceAll("(§([a-z0-9]))", "");
+        return ParseMessage(pName, "", plugin.tabbedListFormat);
     }
 
     public String ParseListCmd(String pName) {
