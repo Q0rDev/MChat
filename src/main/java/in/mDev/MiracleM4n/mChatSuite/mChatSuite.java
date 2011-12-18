@@ -216,7 +216,6 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
 
-    @SuppressWarnings({"deprecation"})
     public void onEnable() {
         // 1st Startup Timer
         sTime1 = new Date().getTime();

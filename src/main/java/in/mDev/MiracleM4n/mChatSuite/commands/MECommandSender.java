@@ -82,6 +82,11 @@ public class MECommandSender implements CommandExecutor {
 
             if (sender instanceof Player) {
                 Player player = (Player) sender;
+                
+                if (plugin.isAFK.get(player.getName()) != null)
+                    if (plugin.isAFK.get(player.getName()))
+                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + player.getName());
+
                 if (!plugin.getAPI().checkPermissions(player, "mchat.afk")) {
                     player.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
