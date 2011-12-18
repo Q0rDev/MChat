@@ -244,7 +244,7 @@ public class mChatAPI {
                 msg
         };
 
-        formatAll = replaceCustVars(formatAll);
+        formatAll = replaceCustVars(player, formatAll);
 
         return replaceVars(formatAll, search, replace);
     }
@@ -303,14 +303,24 @@ public class mChatAPI {
     /*
      * Misc Stuff
      */
-    public void addVar(String var, String value) {
+    public void addGlobalVar(String var, String value) {
         if (var == null)
             return;
 
         if (value == null)
             value = "";
 
-        plugin.cVarMap.put(var, value);
+        plugin.cVarMap.put("%^global^%|" + var, value);
+    }
+
+    public void addPlayerVar(Player player, String var, String value) {
+        if (var == null)
+            return;
+
+        if (value == null)
+            value = "";
+
+        plugin.cVarMap.put(player.getName() + "|" +var, value);
     }
 
     public String healthBar(Player player) {
@@ -444,11 +454,13 @@ public class mChatAPI {
         return addColour(format);
     }
 
-    String replaceCustVars(String format) {
+    String replaceCustVars(Player player, String format) {
         for (Entry<String, String> entry : plugin.cVarMap.entrySet())
-            if (format.contains(plugin.cusVarIndicator + entry.getKey()))
-                format = format.replace(plugin.cusVarIndicator + entry.getKey(), entry.getValue());
-
+            if (format.contains(plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "")))
+                format = format.replace(plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", ""), entry.getValue());
+            else if (format.contains(plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "")))
+                format = format.replace(plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", ""), entry.getValue());
+        
         return format;
     }
 
