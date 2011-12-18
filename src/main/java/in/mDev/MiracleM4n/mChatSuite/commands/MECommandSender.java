@@ -84,8 +84,10 @@ public class MECommandSender implements CommandExecutor {
                 Player player = (Player) sender;
                 
                 if (plugin.isAFK.get(player.getName()) != null)
-                    if (plugin.isAFK.get(player.getName()))
+                    if (plugin.isAFK.get(player.getName())) {
                         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + player.getName());
+                        return true;
+                }
 
                 if (!plugin.getAPI().checkPermissions(player, "mchat.afk")) {
                     player.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
@@ -132,25 +134,25 @@ public class MECommandSender implements CommandExecutor {
                         if (sPlayers.isSpoutCraftEnabled())
                             sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption("noLongerAFK"), Material.PAPER);
                         else
-                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget) + " " + plugin.getLocale().getOption("notAFK"));
+                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName()) + " " + plugin.getLocale().getOption("notAFK"));
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget.getName()));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget) + " " + plugin.getLocale().getOption("notAFK"));
+                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName()) + " " + plugin.getLocale().getOption("notAFK"));
 
                 afkTarget.setSleepingIgnored(false);
                 plugin.isAFK.put(afkTarget.getName(), false);
 
                 if (plugin.useAFKList)
-                    if (plugin.getAPI().ParseTabbedList(afkTarget).length() > 15) {
-                        String pLName = plugin.getAPI().ParseTabbedList(afkTarget);
+                    if (plugin.getAPI().ParseTabbedList(afkTarget.getName()).length() > 15) {
+                        String pLName = plugin.getAPI().ParseTabbedList(afkTarget.getName());
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.getAPI().ParseTabbedList(afkTarget));
+                        afkTarget.setPlayerListName(plugin.getAPI().ParseTabbedList(afkTarget.getName()));
 
                 return true;
             } else {
@@ -161,26 +163,26 @@ public class MECommandSender implements CommandExecutor {
                         if (sPlayers.isSpoutCraftEnabled())
                             sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption("isAFK"), Material.PAPER);
                         else
-                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
+                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName()) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget.getName()));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
+                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName()) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
 
                 afkTarget.setSleepingIgnored(true);
                 plugin.isAFK.put(afkTarget.getName(), true);
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget)).length() > 15) {
-                        String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + afkTarget);
+                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget.getName())).length() > 15) {
+                        String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + afkTarget.getName());
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget));
+                        afkTarget.setPlayerListName(plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget.getName()));
 
                 return true;
             }
