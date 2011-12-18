@@ -98,8 +98,11 @@ public class mChatAPI {
         String hParty = "";
         String hMastered = "";
         String hLevel = "";
+        String hSLevel = "";
         String hExp = "";
+        String hSExp = "";
         String hEBar = "";
+        String hSEBar = "";
 
         // Initialize mChannel Vars
         if (plugin.mChanB) {
@@ -122,7 +125,9 @@ public class mChatAPI {
             HeroClass heroSClass = hero.getSecondClass();
 
             int hL = Properties.getLevel(hero.getExperience());
+            int hSL = hero.getLevel(heroSClass);
             double hE = Properties.getExperience(hL);
+            double hSE = hero.getExperience(heroSClass);
 
             hClass = hero.getHeroClass().getName();
             hHealth = String.valueOf(hero.getHealth());
@@ -136,8 +141,12 @@ public class mChatAPI {
             if (hero.getParty() != null)
                 hParty = hero.getParty().toString();
 
-            if (heroSClass != null)
+            if (heroSClass != null) {
                 hSClass = heroSClass.getName();
+                hSLevel = String.valueOf(hSE);
+                hSExp = String.valueOf(hSE);
+                hSEBar = Messaging.createExperienceBar(hero, heroSClass);
+            }
 
             if ((hero.isMaster(heroClass))
                     && (heroSClass == null || hero.isMaster(heroSClass)))
@@ -188,7 +197,6 @@ public class mChatAPI {
                 vI + "Csuffix," + vI + "Cs",
                 vI + "Ctype," + vI + "Ct",
                 vI + "Groupname," + vI + "Gname," + vI + "G",
-                vI + "HSecClass," + vI + "HSC",
                 vI + "HClass," + vI + "HC",
                 vI + "HExp," + vI + "HEx",
                 vI + "HEBar," + vI + "HEb",
@@ -199,6 +207,10 @@ public class mChatAPI {
                 vI + "HMana," + vI + "HMn",
                 vI + "HMBar," + vI + "HMb",
                 vI + "HParty," + vI + "HPa",
+                vI + "HSecClass," + vI + "HSC",
+                vI + "HSecExp," + vI + "HSEx",
+                vI + "HSecEBar," + vI + "HSEb",
+                vI + "HSecLevel," + vI + "HSL",
                 vI + "Worldname," + vI + "Wname," + vI + "W",
                 vI + "message," + vI + "msg," + vI + "m"
         };
@@ -229,7 +241,6 @@ public class mChatAPI {
                 mCSuf,
                 mCType,
                 plugin.getInfoReader().getGroupName(group),
-                hSClass,
                 hClass,
                 hExp,
                 hEBar,
@@ -240,6 +251,10 @@ public class mChatAPI {
                 hMana,
                 hMBar,
                 hParty,
+                hSClass,
+                hSExp,
+                hSEBar,
+                hSLevel,
                 plugin.getInfoReader().getWorldName(world),
                 msg
         };
