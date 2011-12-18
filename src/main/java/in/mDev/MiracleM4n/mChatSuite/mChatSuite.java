@@ -152,7 +152,7 @@ public class mChatSuite extends JavaPlugin {
     // Messages
     public String joinMessage = "has joined the game.";
     public String leaveMessage = "has left the game.";
-    public String kickMessage = "has been kicked from the game +r.";
+    public String kickMessage = "has been kicked from the game. [ +r ]";
     public String deathInFire = "went up in flames.";
     public String deathOnFire = "burned to death.";
     public String deathLava = "tried to swim in lava.";

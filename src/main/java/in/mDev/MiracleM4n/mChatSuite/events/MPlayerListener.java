@@ -38,6 +38,8 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         if (plugin.isAFK.get(player.getName()))
             player.performCommand("mafk");
+
+        plugin.lastMove.put(player.getName(), new Date().getTime());
     }
 
     public void onPlayerChat(PlayerChatEvent event) {
@@ -90,9 +92,13 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         }
 
         // MChatEssentials
-        if (plugin.mChatEB && plugin.isAFK.get(player.getName()) != null)
-            if (plugin.isAFK.get(player.getName()))
-                player.performCommand("mafk");
+        if (plugin.mChatEB) {
+            if (plugin.isAFK.get(player.getName()) != null)
+                if (plugin.isAFK.get(player.getName()))
+                    player.performCommand("mafk");
+
+            plugin.lastMove.put(player.getName(), new Date().getTime());
+        }
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
@@ -102,14 +108,14 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
             plugin.chatt.put(player.getName(), false);
 
-            Runnable runnable = new Runnable() {
+            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
-                    sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer));
-                }
-            };
 
-            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 7 * 20);
+                    if (sPlayer != null)
+                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer));
+                }
+            }, 7 * 20);
         }
 
         event.setFormat(plugin.getAPI().ParseChatMessage(pName, msg));
