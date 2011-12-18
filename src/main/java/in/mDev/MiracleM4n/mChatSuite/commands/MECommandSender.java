@@ -132,7 +132,7 @@ public class MECommandSender implements CommandExecutor {
                         SpoutPlayer sPlayers = (SpoutPlayer) players;
 
                         if (sPlayers.isSpoutCraftEnabled())
-                            sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption("noLongerAFK"), Material.PAPER);
+                            sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption("notAFK"), Material.PAPER);
                         else
                             players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName()) + " " + plugin.getLocale().getOption("notAFK"));
                     }
