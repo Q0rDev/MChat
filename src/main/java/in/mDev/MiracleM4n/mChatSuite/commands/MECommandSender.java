@@ -177,12 +177,12 @@ public class MECommandSender implements CommandExecutor {
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget.getName())).length() > 15) {
-                        String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + afkTarget.getName());
+                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget.getName()))).length() > 15) {
+                        String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget.getName()));
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + afkTarget.getName()));
+                        afkTarget.setPlayerListName(plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget.getName())));
 
                 return true;
             }
@@ -209,6 +209,7 @@ public class MECommandSender implements CommandExecutor {
 
     void formatList(CommandSender sender) {
         String msg = "";
+        String line = "";
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
@@ -239,15 +240,15 @@ public class MECommandSender implements CommandExecutor {
         if (msg.contains("" + '\n')) {
             msgS = msg.split("" + '\n');
 
-            for (String arg : msgS) {
+            for (String arg : msgS)
                 sender.sendMessage(plugin.getAPI().addColour(arg));
-            }
+        } else
+             sender.sendMessage(plugin.getAPI().addColour(msg));
 
-            sender.sendMessage(plugin.getAPI().addColour("&6-------------------------"));
-            return;
-        }
+        for (int i = 20; i < plugin.getAPI().addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --").length(); i++)
+            line += "-";
 
-        sender.sendMessage(plugin.getAPI().addColour(msg));
+        sender.sendMessage(plugin.getAPI().addColour("&6" + line));
     }
 
     void formatWho(CommandSender sender, Player recipient) {
