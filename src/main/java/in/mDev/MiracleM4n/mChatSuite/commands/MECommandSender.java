@@ -11,6 +11,9 @@ import org.bukkit.entity.Player;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MECommandSender implements CommandExecutor {
     mChatSuite plugin;
 
@@ -208,6 +211,10 @@ public class MECommandSender implements CommandExecutor {
     }
 
     void formatList(CommandSender sender) {
+        HashMap<String, Integer> cLMap = new HashMap<String, Integer>();
+
+        Boolean collapsed = false;
+
         String msg = "";
         String line = "";
         String[] msgS;
@@ -217,25 +224,42 @@ public class MECommandSender implements CommandExecutor {
             String mName = plugin.getAPI().ParseListCmd(players.getName());
 
             if (iVar.isEmpty())
+                    iVar = "Default";
+
+            for (String string : plugin.cLVars.split(",")) {
+                if (!iVar.equals(string))
+                    continue;
+
+                collapsed = true;
+                
+                if (cLMap.get(string) != null) {
+                    Integer sVal = cLMap.get(string);
+
+                    cLMap.put(string, sVal+1);
+                } else
+                    cLMap.put(string, 1);
+            }
+
+            if (collapsed)
                 continue;
 
-            if (plugin.isAFK.get(players.getName())) {
-                if (msg.contains(iVar + ": &f")) {
+            if (plugin.isAFK.get(players.getName()))
+                if (msg.contains(iVar + ": &f"))
                     msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + plugin.getLocale().getOption("AFK") + "]" + mName + "&f, &f");
-                } else {
+                else
                     msg += (iVar + ": &f&4[" + plugin.getLocale().getOption("AFK") + "]" + mName + "&f, &f" + '\n');
-                }
-            } else {
-                if (msg.contains(iVar + ": &f")) {
+            else
+                if (msg.contains(iVar + ": &f"))
                     msg = msg.replace(iVar + ": &f", iVar + ": &f" + mName + "&f, &f");
-                } else {
+                else
                     msg += (iVar + ": &f" + mName + "&f, &f" + '\n');
-                }
-            }
 
             if (!msg.contains("" + '\n'))
                 msg += '\n';
         }
+        
+        for (Map.Entry entry : cLMap.entrySet())
+            msg += (entry.getKey() + ": &f" + entry.getValue() + '\n');
 
         if (msg.contains("" + '\n')) {
             msgS = msg.split("" + '\n');
