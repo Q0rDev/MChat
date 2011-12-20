@@ -159,7 +159,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
                 event.setJoinMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"));
@@ -185,7 +185,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         if (plugin.sKickB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg, "mchat.suppress.kick", plugin.sKickI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick",plugin.sKickI);
             event.setLeaveMessage("");
         } else
             event.setLeaveMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg);
@@ -202,7 +202,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         if (plugin.sQuitB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"), "mchat.suppress.quit", plugin.sQuitI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
             event.setQuitMessage("");
         } else
             event.setQuitMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"));
@@ -246,11 +246,17 @@ public class MPlayerListener extends PlayerListener implements Runnable {
                 player.performCommand("mafk");
     }
 
-    void suppressEventMessage(String format, String permNode, Integer max) {
-        if (!(plugin.getServer().getOnlinePlayers().length > max))
-            for (Player player : plugin.getServer().getOnlinePlayers())
+    void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
+        for (Player player : plugin.getServer().getOnlinePlayers())  {
+            if (plugin.getAPI().checkPermissions(player, overrideNode)) {
+                player.sendMessage(format);
+                continue;
+            }
+
+            if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player, permNode))
                     player.sendMessage(format);
+        }
 
         plugin.getAPI().log(format);
     }

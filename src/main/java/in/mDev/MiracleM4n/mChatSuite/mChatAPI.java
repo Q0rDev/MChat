@@ -28,8 +28,8 @@ public class mChatAPI {
     /*
      * Format Stuff
      */
-    public String ParseMessage(String pName, String msg, String format) {
-        Player player = plugin.getServer().getPlayer(pName);
+    public String ParseMessage(String name, String msg, String format) {
+        Player player = plugin.getServer().getPlayer(name);
 
         if (player == null)
             return addColour(format);
@@ -116,7 +116,7 @@ public class mChatAPI {
 
         // Initialize Money Var/s
         if (plugin.regB)
-            money = "$" + Methods.getMethod().getAccount(pName).balance();
+            money = "$" + Methods.getMethod().getAccount(name).balance();
 
         // Initialize Heroes Vars
         if (plugin.heroesB) {
@@ -143,7 +143,7 @@ public class mChatAPI {
 
             if (heroSClass != null) {
                 hSClass = heroSClass.getName();
-                hSLevel = String.valueOf(hSE);
+                hSLevel = String.valueOf(hSL);
                 hSExp = String.valueOf(hSE);
                 hSEBar = Messaging.createExperienceBar(hero, heroSClass);
             }

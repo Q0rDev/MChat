@@ -46,7 +46,7 @@ commands:
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
-        aliases: [pm, msg, message, m]
+        aliases: [pm, msg, message, m, tell]
     pmchatreply:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
@@ -82,7 +82,7 @@ permissions:
             mchat.afkother: true
             mchat.list: true
             mchat.who: true
-    mchat.reload:
+    mchat.reload.*:
         description: Allow usage of /mchat reload '[config/info/censor/all]'
         children:
             mchat.reload.config: true
@@ -93,7 +93,7 @@ permissions:
         description: Allow usage suppression of all messages.
         children:
             mchat.suppress.join: true
-            mchat.suppress.qui: true
+            mchat.suppress.quit: true
             mchat.suppress.kick: true
             mchat.suppress.death: true
     mchat.pm.*:
@@ -103,30 +103,38 @@ permissions:
             mchat.pm.reply: true
             mchat.pm.invite: true
     mchat.bypass.*:
-        description: Allow usage bypass of all Automatic functions.
+        description: Allow bypass of all Automatic functions.
         children:
             mchat.bypass.afk: true
             mchat.bypass.afkkick: true
-    mchat.user:
+            mchat.bypass.override.*: true
+    mchat.bypass.suppress.*:
+        description: Allow bypass of all Override functions.
+        children:
+            mchat.bypass.suppress.join: true
+            mchat.bypass.suppress.quit: true
+            mchat.bypass.suppress.kick: true
+            mchat.bypass.suppress.death: true
+    mchat.user.*:
         description: Allows full use of all user info related mChat commands.
         children:
-            mchat.user.add: true
-            mchat.user.edit: true
-            mchat.user.remove: true
-    mchat.group:
+            mchat.user.add.*: true
+            mchat.user.edit.*: true
+            mchat.user.remove.*: true
+    mchat.group.*:
         description: Allows full use of all group info related mChat commands.
         children:
-            mchat.group.add: true
-            mchat.group.edit: true
-            mchat.group.remove: true
-    mchat.user.add:
+            mchat.group.add.*: true
+            mchat.group.edit.*: true
+            mchat.group.remove.*: true
+    mchat.user.add.*:
         description: Allows full use of all user info add mChat commands.
         children:
             mchat.user.add.player: true
             mchat.user.add.ivar: true
             mchat.user.add.world: true
             mchat.user.add.wvar: true
-    mchat.user.edit:
+    mchat.user.edit.*:
         description: Allows full use of all user info edit mChat commands.
         children:
             mchat.user.edit.name: true
@@ -136,21 +144,21 @@ permissions:
             mchat.user.edit.world: true
             mchat.user.edit.wvar: true
             mchat.user.edit.wval: true
-    mchat.user.remove:
+    mchat.user.remove.*:
         description: Allows full use of all user info remove mChat commands.
         children:
             mchat.user.remove.player: true
             mchat.user.remove.ivar: true
             mchat.user.remove.world: true
             mchat.user.remove.wvar: true
-    mchat.group.add:
+    mchat.group.add.*:
         description: Allows full use of all group info add mChat commands.
         children:
             mchat.group.add.group: true
             mchat.group.add.ivar: true
             mchat.group.add.world: true
             mchat.group.add.wvar: true
-    mchat.group.edit:
+    mchat.group.edit.*:
         description: Allows full use of all group info edit mChat commands.
         children:
             mchat.group.edit.name: true
@@ -159,7 +167,7 @@ permissions:
             mchat.group.edit.world: true
             mchat.group.edit.wvar: true
             mchat.group.edit.wval: true
-    mchat.group.remove:
+    mchat.group.remove.*:
         description: Allows full use of all group info remove mChat commands.
         children:
             mchat.group.remove.group: true
@@ -208,6 +216,14 @@ permissions:
         description: Allow bypassing of AutoAFK.
     mchat.bypass.afkkick:
         description: Allow bypassing of AutoAFK Kick.
+    mchat.bypass.suppress.join:
+        description: Allow bypassing of Join Suppression.
+    mchat.bypass.suppress.quit:
+        description: Allow bypassing of Quit Suppression.
+    mchat.bypass.suppress.kick:
+        description: Allow bypassing of Kick Suppression.
+    mchat.bypass.suppress.death:
+        description: Allow bypassing of Death Suppression.
     mchat.user.add.player:
         description: Allow usage of /mchat user add player Player
     mchat.user.add.ivar:

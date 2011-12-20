@@ -304,10 +304,16 @@ public class MEntityListener extends EntityListener {
     }
 
     void suppressDeathMessage(String pName, String pCause, PlayerDeathEvent event, Integer max) {
-        if (!(plugin.getServer().getOnlinePlayers().length > max))
-            for (Player player : plugin.getServer().getOnlinePlayers())
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            if (plugin.getAPI().checkPermissions(player, "mchat.bypass.suppress.death")) {
+                player.sendMessage(handlePlayerDeath(pName, pCause, event));
+                continue;
+            }
+
+            if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player, "mchat.suppress.death"))
                     player.sendMessage(handlePlayerDeath(pName, pCause, event));
+        }
 
         plugin.getAPI().log(handlePlayerDeath(pName, pCause, event));
     }

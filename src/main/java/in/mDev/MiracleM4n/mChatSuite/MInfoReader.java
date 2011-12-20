@@ -19,34 +19,6 @@ public class MInfoReader {
         this.plugin = plugin;
     }
 
-    public String getGroupName(String group) {
-        if (group.isEmpty())
-            return "";
-
-        if (plugin.mIConfig.isSet("groupnames." + group))
-            return plugin.mIConfig.get("groupnames." + group).toString();
-
-        return group;
-    }
-
-    public String getWorldName(String world) {
-        if (world.isEmpty())
-            return "";
-
-        if (plugin.mIConfig.isSet("worldnames." + world))
-            return plugin.mIConfig.get("worldnames." + world).toString();
-
-        return world;
-    }
-
-    public String getmName(Player player) {
-        if (plugin.mIConfig.isSet("mname." + player.getName()))
-            if (!(plugin.mIConfig.getString("mname." + player.getName()).isEmpty()))
-                return plugin.mIConfig.getString("mname." + player.getName());
-
-        return player.getName();
-    }
-
     /*
      * Info Stuff
      */
@@ -320,6 +292,34 @@ public class MInfoReader {
     /*
     * Misc
     */
+    public String getGroupName(String group) {
+        if (group.isEmpty())
+            return "";
+
+        if (plugin.mIConfig.isSet("groupnames." + group))
+            return plugin.mIConfig.get("groupnames." + group).toString();
+
+        return group;
+    }
+
+    public String getWorldName(String world) {
+        if (world.isEmpty())
+            return "";
+
+        if (plugin.mIConfig.isSet("worldnames." + world))
+            return plugin.mIConfig.get("worldnames." + world).toString();
+
+        return world;
+    }
+
+    public String getmName(Player player) {
+        if (plugin.mIConfig.isSet("mname." + player.getName()))
+            if (!(plugin.mIConfig.getString("mname." + player.getName()).isEmpty()))
+                return plugin.mIConfig.getString("mname." + player.getName());
+
+        return player.getName();
+    }
+
     public String getEventMessage(String eventName) {
         if (eventName.equalsIgnoreCase("join"))
             eventName = plugin.joinMessage;
