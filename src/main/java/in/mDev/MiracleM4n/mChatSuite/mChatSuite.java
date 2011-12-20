@@ -436,7 +436,7 @@ public class mChatSuite extends JavaPlugin {
         if (heroesB)
             heroes = (Heroes) pm.getPlugin("Heroes");
 
-        spoutB = setupPlugin("Spout");
+        spoutB = setupPlugin("SpoutPlugin");
 
         if (!spoutEnabled)
             spoutB = false;
