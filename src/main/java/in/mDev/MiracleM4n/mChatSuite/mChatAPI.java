@@ -315,6 +315,7 @@ public class mChatAPI {
         return ParseMessage(pName, msg, plugin.meFormat);
     }
 
+
     /*
      * Misc Stuff
      */
@@ -470,11 +471,16 @@ public class mChatAPI {
     }
 
     String replaceCustVars(Player player, String format) {
-        for (Entry<String, String> entry : plugin.cVarMap.entrySet())
-            if (format.contains(plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "")))
-                format = format.replace(plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", ""), entry.getValue());
-            else if (format.contains(plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "")))
-                format = format.replace(plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", ""), entry.getValue());
+        for (Entry<String, String> entry : plugin.cVarMap.entrySet()) {
+            String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
+            String pKey = plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "");
+            String value = entry.getValue();
+            
+            if (format.contains(gKey))
+                format = format.replace(gKey, value);
+            else if (format.contains(pKey))
+                format = format.replace(pKey, value);
+        }
         
         return format;
     }
