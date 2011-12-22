@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -315,7 +316,6 @@ public class mChatAPI {
         return ParseMessage(pName, msg, plugin.meFormat);
     }
 
-
     /*
      * Misc Stuff
      */
@@ -471,17 +471,19 @@ public class mChatAPI {
     }
 
     String replaceCustVars(Player player, String format) {
-        for (Entry<String, String> entry : plugin.cVarMap.entrySet()) {
+        SortedMap<String, String> cVarMap = plugin.cVarMap;
+
+        for (Entry<String, String> entry : cVarMap.entrySet()) {
             String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
             String pKey = plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "");
             String value = entry.getValue();
-            
+
             if (format.contains(gKey))
                 format = format.replace(gKey, value);
             else if (format.contains(pKey))
                 format = format.replace(pKey, value);
         }
-        
+
         return format;
     }
 
