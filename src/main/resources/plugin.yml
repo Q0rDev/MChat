@@ -1,6 +1,6 @@
 name: mChatSuite
 main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
-version: 1.0.1-R1_7
+version: 1.0.1-R1_8
 author: MiracleM4n
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
@@ -46,7 +46,7 @@ commands:
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
-        aliases: [pm, msg, message, m, tell]
+        aliases: [pm, msg, message, m, mchattell, mtell, tell]
     pmchatreply:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
