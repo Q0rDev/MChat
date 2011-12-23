@@ -18,52 +18,52 @@ commands:
             - /<command> reload all = Reload All Configs.
             - /<command> user = Show Info User Help.
             - /<command> group = Show Info Group Help.
-        *permissions: mchat.reload.*, mchat.user.*, mchat.group.*
+        ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*
     mchatme:
         description:
         usage: |
             /<command> *Message* - Displays message.
         aliases: [me]
-        *permissions: mchat.me
+        ~permissions: mchat.me
     mchatwho:
         description:
         usage: |
             /<command> *PLAYER* - Displays info about player.
         aliases: [who, mwho]
-        *permissions: mchat.who
+        ~permissions: mchat.who
     mchatlist:
         description:
         usage: |
             /<command> - See A list of online players.
         aliases: [list, mlist, online, monline, playerlist]
-        *permissions: mchat.list
+        ~permissions: mchat.list
     mchatafk:
         description:
         usage: |
             /<command> [REASON] - Displays you as AFK (REASON is optional).
         aliases: [afk, mafk, maway, away]
-        *permissions: mchat.afk.self
+        ~permissions: mchat.afk.self
     mchatafkother:
         description:
         usage: |
             /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
         aliases: [afko, mafkother, mafko, mawayother, mawayo, awayother, awayo]
-        *permissions: mchat.afk.other
+        ~permissions: mchat.afk.other
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
         aliases: [pm, msg, message, m, mchattell, mtell, tell]
-        *permissions: mchat.pm.pm
+        ~permissions: mchat.pm.pm
     pmchatreply:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
         aliases: [pmchatr, pmreply, pmr, preply, reply, r]
-        *permissions: mchat.pm.reply
+        ~permissions: mchat.pm.reply
     pmchatinvite:
         usage: |
             /<command> {player} - Sends a private Convo invitation to player.
         aliases: [pmchati, pminvite, pmi, pinvite, invite]
-        *permissions: mchat.pm.invite
+        ~permissions: mchat.pm.invite
     pmchataccept:
         usage: |
             /<command> - Accept pending Convo.
