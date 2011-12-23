@@ -44,10 +44,7 @@ import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.logging.Level;
 
 public class mChatSuite extends JavaPlugin {
@@ -214,6 +211,7 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
+
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
 
     public void onEnable() {

@@ -71,9 +71,12 @@ permissions:
     mchat.*:
         description: Allows full use of mChat.
         children:
-            mchat.reload: true
-            mchat.user: true
-            mchat.group: true
+            mchat.reload.*: true
+            mchat.suppress.*: true
+            mchat.pm.*: true
+            mchat.bypass.*: true
+            mchat.user.*: true
+            mchat.group.*: true
             mchat.coloredchat: true
             mchat.censorbypass: true
             mchat.gui: true
