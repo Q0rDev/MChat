@@ -107,7 +107,7 @@ permissions:
         children:
             mchat.bypass.afk: true
             mchat.bypass.afkkick: true
-            mchat.bypass.override.*: true
+            mchat.bypass.suppress.*: true
     mchat.bypass.suppress.*:
         description: Allow bypass of all Override functions.
         children:
