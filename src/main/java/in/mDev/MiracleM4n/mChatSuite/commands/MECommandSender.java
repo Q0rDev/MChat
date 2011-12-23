@@ -92,7 +92,7 @@ public class MECommandSender implements CommandExecutor {
                         return true;
                 }
 
-                if (!plugin.getAPI().checkPermissions(player, "mchat.afk")) {
+                if (!plugin.getAPI().checkPermissions(player, "mchat.afk.self")) {
                     player.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
@@ -115,7 +115,7 @@ public class MECommandSender implements CommandExecutor {
 
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!plugin.getAPI().checkPermissions(player, "mchat.afkother")) {
+                if (!plugin.getAPI().checkPermissions(player, "mchat.afk.other")) {
                     sender.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }

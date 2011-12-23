@@ -1,6 +1,6 @@
 name: mChatSuite
 main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
-version: 1.0.1-R1_9
+version: 1.0.1-R1_10
 author: MiracleM4n
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
@@ -18,43 +18,52 @@ commands:
             - /<command> reload all = Reload All Configs.
             - /<command> user = Show Info User Help.
             - /<command> group = Show Info Group Help.
+        *permissions: mchat.reload.*, mchat.user.*, mchat.group.*
     mchatme:
         description:
         usage: |
             /<command> *Message* - Displays message.
         aliases: [me]
+        *permissions: mchat.me
     mchatwho:
         description:
         usage: |
             /<command> *PLAYER* - Displays info about player.
         aliases: [who, mwho]
+        *permissions: mchat.who
     mchatlist:
         description:
         usage: |
             /<command> - See A list of online players.
         aliases: [list, mlist, online, monline, playerlist]
+        *permissions: mchat.list
     mchatafk:
         description:
         usage: |
             /<command> [REASON] - Displays you as AFK (REASON is optional).
         aliases: [afk, mafk, maway, away]
+        *permissions: mchat.afk.self
     mchatafkother:
         description:
         usage: |
             /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
         aliases: [afko, mafkother, mafko, mawayother, mawayo, awayother, awayo]
+        *permissions: mchat.afk.other
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
         aliases: [pm, msg, message, m, mchattell, mtell, tell]
+        *permissions: mchat.pm.pm
     pmchatreply:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
         aliases: [pmchatr, pmreply, pmr, preply, reply, r]
+        *permissions: mchat.pm.reply
     pmchatinvite:
         usage: |
             /<command> {player} - Sends a private Convo invitation to player.
         aliases: [pmchati, pminvite, pmi, pinvite, invite]
+        *permissions: mchat.pm.invite
     pmchataccept:
         usage: |
             /<command> - Accept pending Convo.
@@ -74,6 +83,7 @@ permissions:
             mchat.reload.*: true
             mchat.suppress.*: true
             mchat.pm.*: true
+            mchat.afk.*: true
             mchat.bypass.*: true
             mchat.user.*: true
             mchat.group.*: true
@@ -81,8 +91,6 @@ permissions:
             mchat.censorbypass: true
             mchat.gui: true
             mchat.me: true
-            mchat.afk: true
-            mchat.afkother: true
             mchat.list: true
             mchat.who: true
     mchat.reload.*:
@@ -105,6 +113,11 @@ permissions:
             mchat.pm.pm: true
             mchat.pm.reply: true
             mchat.pm.invite: true
+    mchat.afk.*:
+        description: Allow usage of all PM functions
+        children:
+            mchat.afk.self: true
+            mchat.afk.other: true
     mchat.bypass.*:
         description: Allow bypass of all Automatic functions.
         children:
