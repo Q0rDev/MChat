@@ -48,7 +48,10 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         Player player = event.getPlayer();
         String pName = player.getName();
+        String mPName = player.getName();
+        String pLName = plugin.getAPI().ParseTabbedList(player);
         String msg = event.getMessage();
+        String eventFormat = plugin.getAPI().ParseChatMessage(pName, msg);
 
         if (msg == null)
             return;
@@ -65,17 +68,17 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         // For Obama?
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null) {
-                String pMDName = MobDisguise.p2p.get(pName);
-                event.setFormat(plugin.getAPI().ParseChatMessage(pMDName, msg));
+                mPName = MobDisguise.p2p.get(pName);
+                pLName = plugin.getAPI().ParseTabbedList(mPName);
+                eventFormat = plugin.getAPI().ParseChatMessage(mPName, msg);
             }
 
         // For Cruxsky
-        if (plugin.getAPI().ParseTabbedList(player).length() > 15) {
-            String pLName = plugin.getAPI().ParseTabbedList(player);
+        if (pLName.length() > 15) {
             pLName = pLName.substring(0, 16);
             player.setPlayerListName(pLName);
         } else
-            player.setPlayerListName(plugin.getAPI().ParseTabbedList(player));
+            player.setPlayerListName(pLName);
 
         // PMChat
         if (plugin.mChatPB) {
@@ -84,9 +87,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                recipient.sendMessage(plugin.getAPI().addColour("&4[Convo] " + plugin.getAPI().ParseChatMessage(pName, msg)));
-                player.sendMessage(plugin.getAPI().addColour("&4[Convo] " + plugin.getAPI().ParseChatMessage(pName, msg)));
-                plugin.getAPI().log(plugin.getAPI().addColour("&4[Convo] " + plugin.getAPI().ParseChatMessage(pName, msg)));
+                recipient.sendMessage(plugin.getAPI().addColour("&4[Convo] " + eventFormat));
+                player.sendMessage(plugin.getAPI().addColour("&4[Convo] " + eventFormat));
+                plugin.getAPI().log(plugin.getAPI().addColour("&4[Convo] " + eventFormat));
                 event.setCancelled(true);
             }
         }
@@ -102,9 +105,9 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
-            final String sPName = sPlayer.getName();
+            final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getAPI().addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getAPI().addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName));
 
             plugin.chatt.put(player.getName(), false);
 
@@ -118,7 +121,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             }, 7 * 20);
         }
 
-        event.setFormat(plugin.getAPI().ParseChatMessage(pName, msg));
+        event.setFormat(eventFormat);
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {
