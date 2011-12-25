@@ -1,6 +1,6 @@
 name: mChatSuite
 main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
-version: 1.0.1-R1_10
+version: 1.0.1-R1_11
 author: MiracleM4n
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
@@ -37,6 +37,12 @@ commands:
             /<command> - See A list of online players.
         aliases: [list, mlist, online, monline, playerlist]
         ~permissions: mchat.list
+    mchatsay:
+        description:
+        usage: |
+            /<command> *Message* - Broadcast a message.
+        aliases: [msay, say]
+        ~permissions: mchat.say
     mchatafk:
         description:
         usage: |

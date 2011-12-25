@@ -36,10 +36,11 @@ public class MLanguageListener {
     String playerOnline = "Players Online";
     String player = "Player";
     String notFound = "not found.";
+    String sayName = "&6[Server]&e";
 
     public String getOption(String option) {
-        if (this.config.isSet(option))
-            return this.config.getString(option);
+        if (config.isSet(option))
+            return plugin.getAPI().addColour(config.getString(option));
 
         return "";
     }
@@ -75,6 +76,7 @@ public class MLanguageListener {
         config.set("playerOnline", playerOnline);
         config.set("player", player);
         config.set("notFound", notFound);
+        config.set("sayName", sayName);
 
         try {
             config.save(plugin.mELocaleF);
@@ -106,6 +108,7 @@ public class MLanguageListener {
         checkOption("playerOnline", playerOnline);
         checkOption("player", player);
         checkOption("notFound", notFound);
+        checkOption("sayName", sayName);
 
         if (hasChanged) {
             configO.header(

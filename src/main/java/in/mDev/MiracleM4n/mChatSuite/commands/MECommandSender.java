@@ -2,17 +2,15 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MECommandSender implements CommandExecutor {
     mChatSuite plugin;
@@ -72,6 +70,27 @@ public class MECommandSender implements CommandExecutor {
                     formatWho(sender, receiver);
                     return true;
                 }
+            }
+        } else if (commandName.equalsIgnoreCase("mchatsay")) {
+            if (args.length > 0) {
+                String message = "";
+
+                for (String arg : args)
+                    message += " " + arg;
+
+                message = message.trim();
+
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+
+                    if (!plugin.getAPI().checkPermissions(player, "mchat.say")) {
+                        sender.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                        return true;
+                    }
+                }
+
+                plugin.getServer().broadcastMessage(plugin.getLocale().getOption("sayName") + " " +  message);
+                return true;
             }
         } else if (commandName.equalsIgnoreCase("mchatafk")) {
             String message = " Away From Keyboard";

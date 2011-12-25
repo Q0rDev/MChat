@@ -127,7 +127,14 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         String pName = player.getName();
+        String mPName = player.getName();
         String msg = event.getJoinMessage();
+
+        if (plugin.mobD)
+            if (MobDisguise.p2p.get(pName) != null)
+                mPName = MobDisguise.p2p.get(pName);
+        
+        final String rPName = mPName;
 
         if (msg == null)
             return;
@@ -146,26 +153,26 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 // For Cruxsky
-                if (plugin.getAPI().ParseTabbedList(player).length() > 15) {
-                    String pLName = plugin.getAPI().ParseTabbedList(player);
+                if (plugin.getAPI().ParseTabbedList(rPName).length() > 15) {
+                    String pLName = plugin.getAPI().ParseTabbedList(rPName);
                     pLName = pLName.substring(0, 16);
                     player.setPlayerListName(pLName);
                 } else
-                    player.setPlayerListName(plugin.getAPI().ParseTabbedList(player));
+                    player.setPlayerListName(plugin.getAPI().ParseTabbedList(rPName));
             }
         }, 20L);
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
-            sPlayer.setTitle(plugin.getAPI().ParsePlayerName(player));
+            sPlayer.setTitle(plugin.getAPI().ParsePlayerName(mPName));
         }
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getAPI().ParseEventName(mPName) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
-                event.setJoinMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Join"));
+                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName) + " " + plugin.getInfoReader().getEventMessage("Join"));
     }
 
     public void onPlayerKick(PlayerKickEvent event) {

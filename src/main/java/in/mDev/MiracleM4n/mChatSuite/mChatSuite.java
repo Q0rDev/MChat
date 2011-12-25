@@ -291,6 +291,7 @@ public class mChatSuite extends JavaPlugin {
         getCommand("mchatme").setExecutor(mECSender);
         getCommand("mchatwho").setExecutor(mECSender);
         getCommand("mchatlist").setExecutor(mECSender);
+        getCommand("mchatsay").setExecutor(mECSender);
         getCommand("mchatafk").setExecutor(mECSender);
         getCommand("mchatafkother").setExecutor(mECSender);
 

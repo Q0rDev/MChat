@@ -51,9 +51,10 @@ public class mChatAPI {
             group = "";
 
         // Location
-        Integer locX = (int) player.getLocation().getX();
-        Integer locY = (int) player.getLocation().getY();
-        Integer locZ = (int) player.getLocation().getZ();
+        Double locX = player.getLocation().getX();
+        Double locY = player.getLocation().getY();
+        Double locZ = player.getLocation().getZ();
+
         String loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
 
         // Health
