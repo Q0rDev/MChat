@@ -17,12 +17,12 @@ public class Stats {
     static File configFile = new File("plugins/mChatSuite/stats.yml");
     static String logFile = "plugins/mChatSuite/statsLog/stats.log";
     static YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    static Logger logger = Logger.getLogger("net.D3GN");
+    static Logger logger = Logger.getLogger("in.mDev");
     static FileHandler logFileHandler;
 
     public static void init(Plugin plugin) {
         if (configExists(plugin) && logExists() && !config.getBoolean("opt-out")) {
-            plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 10L, 20L * 60L * 60 * 24);
+            plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 600L, 20L * 60L * 60 * 24);
             System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept for this plugin. To opt-out check stats.yml.");
         }
     }
@@ -50,43 +50,42 @@ public class Stats {
         return true;
     }
 
-    @SuppressWarnings({"ResultOfMethodCallIgnored"})
     static Boolean logExists() {
         try {
             File log = new File("plugins/mChatSuite/statsLog/");
 
-            log.mkdir();
+            if (log.mkdir()) {
+                logFileHandler = new FileHandler(logFile, true);
 
-            logFileHandler = new FileHandler(logFile, true);
+                logFileHandler.setFormatter(new Formatter() {
+                    @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+                    public String format(LogRecord record) {
+                        StringBuilder builder = new StringBuilder();
+                        Throwable ex = record.getThrown();
 
-            logFileHandler.setFormatter(new Formatter() {
-                @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
-                public String format(LogRecord record) {
-                    StringBuilder builder = new StringBuilder();
-                    Throwable ex = record.getThrown();
+                        builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(record.getMillis()));
+                        builder.append(" [");
+                        builder.append(record.getLevel().getLocalizedName().toUpperCase());
+                        builder.append("] ");
+                        builder.append(record.getMessage());
+                        builder.append('\n');
 
-                    builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(record.getMillis()));
-                    builder.append(" [");
-                    builder.append(record.getLevel().getLocalizedName().toUpperCase());
-                    builder.append("] ");
-                    builder.append(record.getMessage());
-                    builder.append('\n');
+                        if (ex != null) {
+                            StringWriter writer = new StringWriter();
+                            ex.printStackTrace(new PrintWriter(writer));
+                            builder.append(writer);
+                        }
 
-                    if (ex != null) {
-                        StringWriter writer = new StringWriter();
-                        ex.printStackTrace(new PrintWriter(writer));
-                        builder.append(writer);
+                        return builder.toString();
                     }
+                });
 
-                    return builder.toString();
-                }
-            });
+                for (Handler gHandler : logger.getHandlers())
+                    logger.removeHandler(gHandler);
 
-            for (Handler gHandler : logger.getHandlers())
-                logger.removeHandler(gHandler);
-
-            logger.setUseParentHandlers(false);
-            logger.addHandler(logFileHandler);
+                logger.setUseParentHandlers(false);
+                logger.addHandler(logFileHandler);
+            }
         } catch (Exception ex) {
             System.out.println("Error creating Stats log file.");
             logger.log(Level.SEVERE, ex.getMessage(), ex);
