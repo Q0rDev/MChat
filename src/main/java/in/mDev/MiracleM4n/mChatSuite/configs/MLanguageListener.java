@@ -14,6 +14,8 @@ public class MLanguageListener {
     public MLanguageListener(mChatSuite plugin, YamlConfiguration config) {
         this.plugin = plugin;
         this.config = config;
+
+        load();
     }
 
     Boolean hasChanged = false;

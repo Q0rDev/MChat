@@ -7,23 +7,10 @@ import com.massivecraft.factions.Conf;
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
-import in.mDev.MiracleM4n.mChatSuite.GUI.GUIEvent;
-import in.mDev.MiracleM4n.mChatSuite.GUI.Main;
-import in.mDev.MiracleM4n.mChatSuite.GUI.Pages;
-
-import in.mDev.MiracleM4n.mChatSuite.commands.MCommandSender;
-import in.mDev.MiracleM4n.mChatSuite.commands.MECommandSender;
-import in.mDev.MiracleM4n.mChatSuite.commands.MPCommandSender;
-
-import in.mDev.MiracleM4n.mChatSuite.configs.MCConfigListener;
-import in.mDev.MiracleM4n.mChatSuite.configs.MConfigListener;
-import in.mDev.MiracleM4n.mChatSuite.configs.MIConfigListener;
-import in.mDev.MiracleM4n.mChatSuite.configs.MLanguageListener;
-
-import in.mDev.MiracleM4n.mChatSuite.events.MBlockListener;
-import in.mDev.MiracleM4n.mChatSuite.events.MCustomListener;
-import in.mDev.MiracleM4n.mChatSuite.events.MEntityListener;
-import in.mDev.MiracleM4n.mChatSuite.events.MPlayerListener;
+import in.mDev.MiracleM4n.mChatSuite.GUI.*;
+import in.mDev.MiracleM4n.mChatSuite.commands.*;
+import in.mDev.MiracleM4n.mChatSuite.configs.*;
+import in.mDev.MiracleM4n.mChatSuite.events.*;
 
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
@@ -203,14 +190,14 @@ public class mChatSuite extends JavaPlugin {
     float sDiff;
 
     // Maps
-    public HashMap<String, Long> lastMove = new HashMap<String, Long>();
+    public HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
     public HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
-    public HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
-    public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
+    public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
+    public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
 
@@ -471,8 +458,6 @@ public class mChatSuite extends JavaPlugin {
         mCListener.load();
 
         mIListener.load();
-
-        getLocale().load();
     }
 
     void setupTasks() {
