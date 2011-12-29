@@ -479,10 +479,10 @@ public class mChatAPI {
             String pKey = plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "");
             String value = entry.getValue();
 
-            if (format.contains(gKey))
-                format = format.replace(gKey, value);
-            else if (format.contains(pKey))
+            if (format.contains(pKey))
                 format = format.replace(pKey, value);
+            else if (format.contains(gKey))
+                format = format.replace(gKey, value);
         }
 
         return format;
