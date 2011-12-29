@@ -23,7 +23,7 @@ public class Stats {
     public static void init(Plugin plugin) {
         if (configExists(plugin) && logExists() && !config.getBoolean("opt-out")) {
             plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 600L, 20L * 60L * 60 * 24);
-            System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept for this plugin. To opt-out check stats.yml.");
+            System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept. To opt-out check stats.yml.");
         }
     }
 
@@ -37,12 +37,12 @@ public class Stats {
         config.addDefault("guid", UUID.randomUUID().toString());
 
         if (!configFile.exists() || config.get("guid") == null) {
-            System.out.println("[" + plugin.getDescription().getName() + "] Stats is initializing for the first time. To opt-out check stats.yml.");
+            System.out.println("[" + plugin.getDescription().getName() + "] Pinging for the first time. To opt-out check stats.yml.");
             try {
                 config.options().copyDefaults(true);
                 config.save(configFile);
             } catch (Exception ignored) {
-                System.out.println("[" + plugin.getDescription().getName() + "] Error creating Stats configuration file.");
+                System.out.println("[" + plugin.getDescription().getName() + "] Error creating stats.yml file.");
                 return false;
             }
         }
@@ -52,9 +52,9 @@ public class Stats {
 
     static Boolean logExists() {
         try {
-            File log = new File("plugins/mChatSuite/statsLog/");
+            File logDir = new File("plugins/mChatSuite/statsLog/");
 
-            if (log.mkdir()) {
+            if (logDir.mkdir()) {
                 logFileHandler = new FileHandler(logFile, true);
 
                 logFileHandler.setFormatter(new Formatter() {
@@ -141,9 +141,22 @@ class Pinger implements Runnable {
                     URLEncoder.encode(plugins, "UTF-8"),
                     URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
 
-            new URL(url).openConnection().getInputStream();
-            logger.log(Level.INFO, "Stats pinged the central server.");
+            String url2 = String.format("http://pluginstats.randomappdev.com/ping.aspx?snam=%s&sprt=%s&shsh=%s&sver=%s&spcnt=%s&pnam=%s&pmcla=%s&paut=%s&pweb=%s&pver=%s",
+                    URLEncoder.encode(plugin.getServer().getServerName(), "UTF-8"),
+                    plugin.getServer().getPort(),
+                    URLEncoder.encode(guid, "UTF-8"),
+                    URLEncoder.encode(Bukkit.getVersion(), "UTF-8"),
+                    plugin.getServer().getOnlinePlayers().length,
+                    URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"),
+                    URLEncoder.encode(plugin.getDescription().getMain(), "UTF-8"),
+                    URLEncoder.encode(authors, "UTF-8"),
+                    URLEncoder.encode(plugin.getDescription().getWebsite(), "UTF-8"),
+                    URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
 
+            new URL(url).openConnection().getInputStream();
+            new URL(url2).openConnection().getInputStream();
+
+            logger.log(Level.INFO, "Stats pinged the central server.");
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
         }

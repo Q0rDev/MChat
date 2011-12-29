@@ -495,8 +495,8 @@ public class mChatAPI {
             StringBuffer sb = new StringBuffer();
 
             while (matcher.find()) {
-                String var = entry.getValue().toString();
-                matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
+                String val = entry.getValue().toString();
+                matcher.appendReplacement(sb, Matcher.quoteReplacement(val));
             }
 
             matcher.appendTail(sb);
