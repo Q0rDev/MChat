@@ -320,7 +320,7 @@ public class mChatSuite extends JavaPlugin {
         // Calculate Startup Timer
         sDiff = new Float(sTime2 - sTime1) / 1000;
 
-        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled! Took " + sDiff + " seconds.");
+        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "s]");
     }
 
     public void onDisable() {
@@ -328,7 +328,7 @@ public class mChatSuite extends JavaPlugin {
 
         Stats.unload();
 
-        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " version " + pdfFile.getVersion() + " is disabled!");
+        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
     }
 
     void registerEvents() {

@@ -4,11 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.*;
+import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 import java.util.logging.*;
@@ -21,8 +18,8 @@ public class Stats {
     static FileHandler logFileHandler;
 
     public static void init(Plugin plugin) {
-        if (configExists(plugin) && logExists() && !config.getBoolean("opt-out")) {
-            plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 600L, 20L * 60L * 60 * 24);
+        if (configExists(plugin) && logExists(plugin) && !config.getBoolean("opt-out")) {
+            plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 300L, 20L * 60L * 60 * 24);
             System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept. To opt-out check stats.yml.");
         }
     }
@@ -50,44 +47,44 @@ public class Stats {
         return true;
     }
 
-    static Boolean logExists() {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    static Boolean logExists(Plugin plugin) {
         try {
-            File logDir = new File("plugins/mChatSuite/statsLog/");
+            if(!logger.getUseParentHandlers())
+                return true;
 
-            if (logDir.mkdir()) {
-                logFileHandler = new FileHandler(logFile, true);
+            new File("plugins/mChatSuite/statsLog/").mkdir();
 
-                logFileHandler.setFormatter(new Formatter() {
-                    @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
-                    public String format(LogRecord record) {
-                        StringBuilder builder = new StringBuilder();
-                        Throwable ex = record.getThrown();
+            logFileHandler = new FileHandler(logFile, true);
 
-                        builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(record.getMillis()));
-                        builder.append(" [");
-                        builder.append(record.getLevel().getLocalizedName().toUpperCase());
-                        builder.append("] ");
-                        builder.append(record.getMessage());
-                        builder.append('\n');
+            logFileHandler.setFormatter(new Formatter() {
+                @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
+                public String format(LogRecord record) {
+                    StringBuilder builder = new StringBuilder();
+                    Throwable ex = record.getThrown();
 
-                        if (ex != null) {
-                            StringWriter writer = new StringWriter();
-                            ex.printStackTrace(new PrintWriter(writer));
-                            builder.append(writer);
-                        }
+                    builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(record.getMillis()));
+                    builder.append(" [");
+                    builder.append(record.getLevel().getLocalizedName().toUpperCase());
+                    builder.append("] ");
+                    builder.append(record.getMessage());
+                    builder.append('\n');
 
-                        return builder.toString();
+                    if (ex != null) {
+                        StringWriter writer = new StringWriter();
+                        ex.printStackTrace(new PrintWriter(writer));
+                        builder.append(writer);
                     }
-                });
 
-                for (Handler gHandler : logger.getHandlers())
-                    logger.removeHandler(gHandler);
+                    return builder.toString();
+                }
+            });
 
-                logger.setUseParentHandlers(false);
-                logger.addHandler(logFileHandler);
-            }
+            logger.setUseParentHandlers(false);
+            logger.addHandler(logFileHandler);
+
         } catch (Exception ex) {
-            System.out.println("Error creating Stats log file.");
+            System.out.println("[" + plugin.getDescription().getName() + "] Error creating Stats log file.");
             logger.log(Level.SEVERE, ex.getMessage(), ex);
 
             return false;
@@ -156,9 +153,9 @@ class Pinger implements Runnable {
             new URL(url).openConnection().getInputStream();
             new URL(url2).openConnection().getInputStream();
 
-            logger.log(Level.INFO, "Stats pinged the central server.");
+            logger.log(Level.INFO, "[" + plugin.getDescription().getName() + "] Stats pinged the central server.");
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            logger.log(Level.SEVERE, "[" + plugin.getDescription().getName() + "] " + ex.getMessage(), ex);
         }
     }
 }
