@@ -170,6 +170,7 @@ public class mChatSuite extends JavaPlugin {
     public Boolean sDeathB = false;
     public Boolean sQuitB = false;
     public Boolean sKickB = false;
+    public Boolean useIPRestrict = true;
 
     // Numbers
     public Integer AFKTimer = 30;

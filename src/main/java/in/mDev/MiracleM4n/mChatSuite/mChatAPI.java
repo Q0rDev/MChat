@@ -475,13 +475,18 @@ public class mChatAPI {
         SortedMap<String, String> cVarMap = plugin.cVarMap;
 
         for (Entry<String, String> entry : cVarMap.entrySet()) {
-            String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
             String pKey = plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "");
             String value = entry.getValue();
 
             if (format.contains(pKey))
                 format = format.replace(pKey, value);
-            else if (format.contains(gKey))
+        }
+
+        for (Entry<String, String> entry : cVarMap.entrySet()) {
+            String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
+            String value = entry.getValue();
+
+            if (format.contains(gKey))
                 format = format.replace(gKey, value);
         }
 
@@ -490,19 +495,28 @@ public class mChatAPI {
 
     String replaceCensoredWords(String msg) {
         for (Entry<String, Object> entry : plugin.mCConfig.getValues(false).entrySet()) {
-            Pattern pattern = Pattern.compile("(?i)" + entry.getKey());
-            Matcher matcher = pattern.matcher(msg);
-            StringBuffer sb = new StringBuffer();
+            String val = entry.getValue().toString();
 
-            while (matcher.find()) {
-                String val = entry.getValue().toString();
-                matcher.appendReplacement(sb, Matcher.quoteReplacement(val));
-            }
-
-            matcher.appendTail(sb);
-
-            msg = sb.toString();
+            msg = replacer(msg, "(?i)" + entry.getKey(), val);
         }
+
+        if (plugin.useIPRestrict)
+            msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
+
+        return msg;
+    }
+    
+    String replacer(String msg, String regex, String replacement) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(msg);
+        StringBuffer sb = new StringBuffer();
+
+        while (matcher.find())
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+
+        matcher.appendTail(sb);
+
+        msg = sb.toString();
 
         return msg;
     }

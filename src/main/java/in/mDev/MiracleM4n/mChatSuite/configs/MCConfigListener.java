@@ -13,6 +13,8 @@ public class MCConfigListener {
 
     public MCConfigListener(mChatSuite plugin) {
         this.plugin = plugin;
+
+        load();
     }
 
     public void load() {
