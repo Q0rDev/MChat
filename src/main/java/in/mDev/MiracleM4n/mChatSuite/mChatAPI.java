@@ -483,14 +483,14 @@ public class mChatAPI {
     }
 
     String replaceCensoredWords(String msg) {
+        if (plugin.useIPRestrict)
+            msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
+
         for (Entry<String, Object> entry : plugin.mCConfig.getValues(false).entrySet()) {
             String val = entry.getValue().toString();
 
             msg = replacer(msg, "(?i)" + entry.getKey(), val);
         }
-
-        if (plugin.useIPRestrict)
-            msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
 
         return msg;
     }
