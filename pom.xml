@@ -74,13 +74,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.nijiko</groupId>
-            <artifactId>Permissions</artifactId>
-            <version>3.1.6</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.anjocaido</groupId>
             <artifactId>GroupManager</artifactId>
             <version>1.0.alpha-5</version>
@@ -112,13 +105,6 @@
             <groupId>de.bananaco</groupId>
             <artifactId>bPermissions</artifactId>
             <version>1337-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.nijiko</groupId>
-            <artifactId>Register</artifactId>
-            <version>1.5-FIX</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

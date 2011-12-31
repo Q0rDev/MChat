@@ -78,9 +78,6 @@ public class mChatSuite extends JavaPlugin {
     // MobDisguise
     public Boolean mobD = false;
 
-    // Register
-    Boolean regB = false;
-
     // Factions
     Boolean factionsB = false;
 
@@ -410,9 +407,6 @@ public class mChatSuite extends JavaPlugin {
 
         // Setup MobDisguise
         mobD = setupPlugin("MobDisguise");
-
-        // Setup Register
-        regB = setupPlugin("Register");
 
         // Setup Factions
         factionsB = setupPlugin("Factions");

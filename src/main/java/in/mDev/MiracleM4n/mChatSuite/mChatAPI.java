@@ -5,8 +5,6 @@ import com.herocraftonline.dev.heroes.hero.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-import com.nijikokun.register.payment.Methods;
-
 import in.mDev.MiracleM4n.mChannel.mChannel;
 
 import org.bukkit.entity.Player;
@@ -87,9 +85,6 @@ public class mChatAPI {
         String mCSuf = "";
         String mCType = "";
 
-        // Money Var/s
-        String money = "";
-
         // Heroes Vars
         String hSClass = "";
         String hClass = "";
@@ -115,10 +110,6 @@ public class mChatAPI {
             mCSuf = mChannel.API.getChannelSuffix(mCName);
             mCType = mChannel.API.getChannelType(mCName);
         }
-
-        // Initialize Money Var/s
-        if (plugin.regB)
-            money = "$" + Methods.getMethod().getAccount(name).balance();
 
         // Initialize Heroes Vars
         if (plugin.heroesB) {
@@ -186,7 +177,6 @@ public class mChatAPI {
                 vI + "health," + vI + "h",
                 vI + "location," + vI + "loc",
                 vI + "level," + vI + "l",
-                vI + "money," + vI + "mon",
                 vI + "mname," + vI + "mn",
                 vI + "name," + vI + "n",
                 vI + "prefix," + vI + "p",
@@ -230,7 +220,6 @@ public class mChatAPI {
                 health,
                 loc,
                 level,
-                money,
                 plugin.getInfoReader().getmName(player),
                 player.getName(),
                 prefix,
