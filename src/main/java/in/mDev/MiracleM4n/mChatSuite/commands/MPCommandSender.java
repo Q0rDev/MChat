@@ -194,7 +194,7 @@ public class MPCommandSender implements CommandExecutor {
                                 }
                             };
 
-                            sRecipient.sendNotification("[pmChat] From:", player.getName(), Material.PAPER);
+                            sRecipient.sendNotification("[PM] From:", player.getName(), Material.PAPER);
                             plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 2 * 20);
                             return true;
                         }
@@ -212,7 +212,7 @@ public class MPCommandSender implements CommandExecutor {
         return false;
     }
 
-    private static void waiting(int n) {
+    static void waiting(int n) {
         long t0, t1;
         t0 = System.currentTimeMillis();
         do {
@@ -221,24 +221,24 @@ public class MPCommandSender implements CommandExecutor {
         while ((t1 - t0) < n * 1000);
     }
 
-    private String formatPM(String message, Integer start, Integer finish) {
+    String formatPM(String message, Integer start, Integer finish) {
         while (message.length() < finish) message += " ";
         return message.substring(start, finish);
     }
 
-    private String formatPMessage(String message) {
+    String formatPMessage(String message) {
         return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
-    private String formatPNF(String playerNotFound) {
+    String formatPNF(String playerNotFound) {
         return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
     }
 
-    private String formatPMSend(String recipient, String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] &fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
+    String formatPMSend(String recipient, String message) {
+        return (plugin.getAPI().addColour("&fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
     }
 
-    private String formatPMRecieve(String sender, String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] &f" + sender + "&f: " + message));
+    String formatPMRecieve(String sender, String message) {
+        return (plugin.getAPI().addColour(sender + "&1-&2-&3-&4> &fMe: " + message));
     }
 }

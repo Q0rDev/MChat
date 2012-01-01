@@ -58,7 +58,7 @@ commands:
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
-        aliases: [pm, msg, message, m, mchattell, mtell, tell]
+        aliases: [pm, msg, message, m, mchattell, mtell, tell, t]
         ~permissions: mchat.pm.pm
     pmchatreply:
         usage: |
