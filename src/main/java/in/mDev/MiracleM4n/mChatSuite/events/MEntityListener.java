@@ -40,9 +40,9 @@ public class MEntityListener extends EntityListener {
         if (dEvent instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
             if (dEEvent.getDamager() instanceof Player)
-                pCause = plugin.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName()) + ".";
+                pCause = plugin.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName());
             else
-                pCause = "a" + parseEntityName(dEEvent.getDamager()) + ".";
+                pCause = "a" + parseEntityName(dEEvent.getDamager());
         }
 
         if (plugin.sDeathB) {
@@ -277,7 +277,7 @@ public class MEntityListener extends EntityListener {
 
     String deathMessage(String pName, String pCause, String msg) {
         return plugin.getAPI().ParseEventName(pName) + " " + plugin.getAPI().ParseMessage(pName, "", msg)
-                .replaceAll("\\+CName", plugin.getAPI().ParseEventName(pCause));
+                .replace("+CName", plugin.getAPI().ParseEventName(pCause));
     }
 
     String healthBarDamage(Player player, Integer damage) {

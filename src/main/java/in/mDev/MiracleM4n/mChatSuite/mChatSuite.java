@@ -168,6 +168,7 @@ public class mChatSuite extends JavaPlugin {
     public Boolean sQuitB = false;
     public Boolean sKickB = false;
     public Boolean useIPRestrict = true;
+    public Boolean useGroupedList = true;
 
     // Numbers
     public Integer AFKTimer = 30;
@@ -467,6 +468,9 @@ public class mChatSuite extends JavaPlugin {
                 cListener.load();
 
                 for (Player player : getServer().getOnlinePlayers()) {
+                    if (isAFK.get(player.getName()) == null)
+                            isAFK.put(player.getName(), false);
+
                     if (isAFK.get(player.getName()) ||
                             lastMove.get(player.getName()) == null ||
                             getAPI().checkPermissions(player, "mchat.bypass.afk"))

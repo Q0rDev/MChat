@@ -90,6 +90,7 @@ public class MConfigListener {
         plugin.healthNotify = config.getBoolean("mchate.eHealthNotify", plugin.healthNotify);
         plugin.healthAchievement = config.getBoolean("mchate.eHealthAchievement", plugin.healthAchievement);
         plugin.mAFKHQ = config.getBoolean("mchate.eHQAFK", plugin.mAFKHQ);
+        plugin.useGroupedList = config.getBoolean("mchate.useGroupedList", plugin.useGroupedList);
         plugin.listVar = config.getString("mchate.listVar", plugin.listVar);
         plugin.cLVars = config.getString("mchate.collapsedListVars", plugin.cLVars);
         plugin.AFKTimer = config.getInt("mchate.AFKTimer", plugin.AFKTimer);
@@ -172,6 +173,7 @@ public class MConfigListener {
         config.set("mchate.eHealthNotify", plugin.healthNotify);
         config.set("mchate.eHealthAchievement", plugin.healthAchievement);
         config.set("mchate.eHQAFK", plugin.mAFKHQ);
+        config.set("mchate.useGroupedList", plugin.useGroupedList);
         config.set("mchate.listVar", plugin.listVar);
         config.set("mchate.collapsedListVars", plugin.cLVars);
         config.set("mchate.AFKTimer", plugin.AFKTimer);
@@ -274,6 +276,7 @@ public class MConfigListener {
         checkOption(config, "mchate.eHealthNotify", plugin.healthNotify);
         checkOption(config, "mchate.eHealthAchievement", plugin.healthAchievement);
         checkOption(config, "mchate.eHQAFK", plugin.mAFKHQ);
+        checkOption(config, "mchate.useGroupedList", plugin.useGroupedList);
         checkOption(config, "mchate.listVar", plugin.listVar);
         checkOption(config, "mchate.collapsedListVars", plugin.cLVars);
         checkOption(config, "mchate.AFKTimer", plugin.AFKTimer);

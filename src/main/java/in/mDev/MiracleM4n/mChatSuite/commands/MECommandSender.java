@@ -23,7 +23,7 @@ public class MECommandSender implements CommandExecutor {
         String commandName = command.getName();
 
         if (!plugin.mChatEB) {
-            sender.sendMessage(formatMessage(plugin.getAPI().addColour("mChatEssentials' functions are currently disabled.")));
+            sender.sendMessage(formatMessage("This feature is currently disabled."));
             return true;
         }
 
@@ -232,8 +232,6 @@ public class MECommandSender implements CommandExecutor {
     void formatList(CommandSender sender) {
         HashMap<String, Integer> cLMap = new HashMap<String, Integer>();
 
-        Boolean collapsed = false;
-
         String msg = "";
         String line = "";
         String[] msgS;
@@ -241,6 +239,8 @@ public class MECommandSender implements CommandExecutor {
         for (Player players : plugin.getServer().getOnlinePlayers()) {
             String iVar = plugin.getInfoReader().getInfo(players, plugin.listVar);
             String mName = plugin.getAPI().ParseListCmd(players.getName());
+
+            Boolean collapsed = false;
 
             if (iVar.isEmpty())
                     iVar = "Default";
@@ -281,10 +281,17 @@ public class MECommandSender implements CommandExecutor {
             msg += (entry.getKey() + ": &f" + entry.getValue() + '\n');
 
         if (msg.contains("" + '\n')) {
-            msgS = msg.split("" + '\n');
+            if (plugin.useGroupedList) {
+                msgS = msg.split("" + '\n');
 
-            for (String arg : msgS)
-                sender.sendMessage(plugin.getAPI().addColour(arg));
+
+                for (String arg : msgS)
+                    sender.sendMessage(plugin.getAPI().addColour(arg));
+            } else {
+                msg = plugin.getAPI().addColour(msg.replace("" + '\n', "&5 | &f"));
+
+                sender.sendMessage(msg);
+            }
         } else
              sender.sendMessage(plugin.getAPI().addColour(msg));
 

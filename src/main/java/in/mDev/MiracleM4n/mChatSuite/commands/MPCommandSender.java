@@ -23,7 +23,7 @@ public class MPCommandSender implements CommandExecutor {
         String commandName = command.getName();
 
         if (!plugin.mChatPB) {
-            sender.sendMessage(formatPMessage(plugin.getAPI().addColour("pmChat's functions are currently disabled.")));
+            sender.sendMessage(formatPMessage("This feature is currently disabled."));
             return true;
         }
 
