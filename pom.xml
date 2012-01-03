@@ -37,9 +37,6 @@
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
         </repository>
     </repositories>
     <build>
@@ -136,7 +133,6 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        <!--Forgot about this-->
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
