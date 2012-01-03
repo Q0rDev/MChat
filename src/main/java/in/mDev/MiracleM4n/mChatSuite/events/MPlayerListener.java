@@ -48,10 +48,11 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
         Player player = event.getPlayer();
         String pName = player.getName();
+        String world = player.getWorld().getName();
         String mPName = player.getName();
-        String pLName = plugin.getAPI().ParseTabbedList(player);
+        String pLName = plugin.getAPI().ParseTabbedList(pName, world);
         String msg = event.getMessage();
-        String eventFormat = plugin.getAPI().ParseChatMessage(pName, msg);
+        String eventFormat = plugin.getAPI().ParseChatMessage(pName, world, msg);
 
         if (msg == null)
             return;
@@ -69,8 +70,8 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null) {
                 mPName = MobDisguise.p2p.get(pName);
-                pLName = plugin.getAPI().ParseTabbedList(mPName);
-                eventFormat = plugin.getAPI().ParseChatMessage(mPName, msg);
+                pLName = plugin.getAPI().ParseTabbedList(mPName, world);
+                eventFormat = plugin.getAPI().ParseChatMessage(mPName, world, msg);
             }
 
         // For Cruxsky
@@ -107,7 +108,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getAPI().addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getAPI().addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName, world));
 
             plugin.chatt.put(player.getName(), false);
 
@@ -116,7 +117,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
                     SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
 
                     if (sPlayer != null)
-                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer));
+                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer, sPlayer.getWorld()));
                 }
             }, 7 * 20);
         }
@@ -126,6 +127,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
 
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
+        final String world = player.getWorld().getName();
         String pName = player.getName();
         String mPName = player.getName();
         String msg = event.getJoinMessage();
@@ -153,26 +155,26 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 // For Cruxsky
-                if (plugin.getAPI().ParseTabbedList(rPName).length() > 15) {
-                    String pLName = plugin.getAPI().ParseTabbedList(rPName);
+                if (plugin.getAPI().ParseTabbedList(rPName, world).length() > 15) {
+                    String pLName = plugin.getAPI().ParseTabbedList(rPName, world);
                     pLName = pLName.substring(0, 16);
                     player.setPlayerListName(pLName);
                 } else
-                    player.setPlayerListName(plugin.getAPI().ParseTabbedList(rPName));
+                    player.setPlayerListName(plugin.getAPI().ParseTabbedList(rPName, world));
             }
         }, 20L);
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
-            sPlayer.setTitle(plugin.getAPI().ParsePlayerName(mPName));
+            sPlayer.setTitle(plugin.getAPI().ParsePlayerName(mPName, world));
         }
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(plugin.getAPI().ParseEventName(mPName) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
-                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName) + " " + plugin.getInfoReader().getEventMessage("Join"));
+                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"));
     }
 
     public void onPlayerKick(PlayerKickEvent event) {
@@ -183,6 +185,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         String pName = event.getPlayer().getName();
+        String world = event.getPlayer().getWorld().getName();
         String msg = event.getLeaveMessage();
 
         String reason = event.getReason();
@@ -195,14 +198,15 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         if (plugin.sKickB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick",plugin.sKickI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick",plugin.sKickI);
             event.setLeaveMessage("");
         } else
-            event.setLeaveMessage(plugin.getAPI().ParseEventName(pName) + " " + kickMsg);
+            event.setLeaveMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg);
     }
 
     public void onPlayerQuit(PlayerQuitEvent event) {
         String pName = event.getPlayer().getName();
+        String world = event.getPlayer().getWorld().getName();
         String msg = event.getQuitMessage();
 
         if (!plugin.alterEvents)
@@ -212,10 +216,10 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             return;
 
         if (plugin.sQuitB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage("Quit"), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
             event.setQuitMessage("");
         } else
-            event.setQuitMessage(plugin.getAPI().ParseEventName(pName) + " " + plugin.getInfoReader().getEventMessage("Quit"));
+            event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage("Quit"));
     }
 
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -229,7 +233,7 @@ public class MPlayerListener extends PlayerListener implements Runnable {
             if (sign.getLine(0).equals("[mChat]"))
                 if (plugin.getServer().getPlayer(sign.getLine(2)) != null)
                     if (sign.getLine(3) != null) {
-                        sign.setLine(1, plugin.getAPI().addColour("&f" + (plugin.getAPI().ParseMessage(sign.getLine(2), "", sign.getLine(3)))));
+                        sign.setLine(1, plugin.getAPI().addColour("&f" + (plugin.getAPI().ParseMessage(sign.getLine(2), block.getWorld().getName(),"", sign.getLine(3)))));
                         sign.update(true);
                     }
         }

@@ -7,11 +7,13 @@ import com.herocraftonline.dev.heroes.util.Properties;
 
 import in.mDev.MiracleM4n.mChannel.mChannel;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.SortedMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,15 +29,10 @@ public class mChatAPI {
     /*
      * Format Stuff
      */
-    public String ParseMessage(String name, String msg, String format) {
-        Player player = plugin.getServer().getPlayer(name);
-
-        if (player == null)
-            return addColour(format);
-
-        String prefix = plugin.getInfoReader().getRawPrefix(player);
-        String suffix = plugin.getInfoReader().getRawSuffix(player);
-        String group = plugin.getInfoReader().getRawGroup(player);
+    public String ParseMessage(String pName, String world, String msg, String format) {
+        String prefix = plugin.getInfoReader().getRawPrefix(pName, world);
+        String suffix = plugin.getInfoReader().getRawSuffix(pName, world);
+        String group = plugin.getInfoReader().getRawGroup(pName, world);
 
         String vI = plugin.varIndicator;
 
@@ -47,37 +44,6 @@ public class mChatAPI {
 
         if (group == null)
             group = "";
-
-        // Location
-        Double locX = player.getLocation().getX();
-        Double locY = player.getLocation().getY();
-        Double locZ = player.getLocation().getZ();
-
-        String loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
-
-        // Health
-        String healthbar = healthBar(player);
-        String health = String.valueOf(player.getHealth());
-
-        // World
-        String world = player.getWorld().getName();
-
-        // 1.8 Vars
-        String hungerLevel = String.valueOf(player.getFoodLevel());
-        String hungerBar = basicBar(player.getFoodLevel(), 20, 10);
-        String level = String.valueOf(player.getLevel());
-        String exp = String.valueOf(player.getExp()) + "/" + ((player.getLevel() + 1) * 10);
-        String expBar = basicBar(player.getExp(), ((player.getLevel() + 1) * 10), 10);
-        String tExp = String.valueOf(player.getTotalExperience());
-        String gMode = "";
-
-        if (player.getGameMode() != null && player.getGameMode().name() != null)
-            gMode = player.getGameMode().name();
-
-        // Time Var
-        Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(plugin.dateFormat);
-        String time = dateFormat.format(now);
 
         // mChannel Vars
         String mCName = "";
@@ -101,54 +67,119 @@ public class mChatAPI {
         String hEBar = "";
         String hSEBar = "";
 
-        // Initialize mChannel Vars
-        if (plugin.mChanB) {
-            if (mChannel.API.getPlayersChannels(player)[0] != null)
-                mCName = mChannel.API.getPlayersChannels(player)[0];
+        // Location
+        Double locX = (double) randomNumber(-100, 100);
+        Double locY = (double) randomNumber(-100, 100);
+        Double locZ = (double) randomNumber(-100, 100);
 
-            mCPref = mChannel.API.getChannelPrefix(mCName);
-            mCSuf = mChannel.API.getChannelSuffix(mCName);
-            mCType = mChannel.API.getChannelType(mCName);
-        }
+        String loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
 
-        // Initialize Heroes Vars
-        if (plugin.heroesB) {
-            Hero hero = plugin.heroes.getHeroManager().getHero(player);
-            HeroClass heroClass = hero.getHeroClass();
-            HeroClass heroSClass = hero.getSecondClass();
+        // Health
+        String healthbar = "";
+        String health = String.valueOf(randomNumber(1, 20));
 
-            int hL = Properties.getLevel(hero.getExperience());
-            int hSL = hero.getLevel(heroSClass);
-            double hE = Properties.getExperience(hL);
-            double hSE = hero.getExperience(heroSClass);
+        // World
+        String pWorld = "";
 
-            hClass = hero.getHeroClass().getName();
-            hHealth = String.valueOf(hero.getHealth());
-            hHBar = Messaging.createHealthBar((float) hero.getHealth(), (float) hero.getMaxHealth());
-            hMana = String.valueOf(hero.getMana());
-            hMBar = Messaging.createManaBar(hero.getMana());
-            hLevel = String.valueOf(hL);
-            hExp = String.valueOf(hE);
-            hEBar = Messaging.createExperienceBar(hero, heroClass);
+        // 1.8 Vars
+        String hungerLevel = String.valueOf(randomNumber(0, 20));
+        String hungerBar = basicBar(randomNumber(0, 20), 20, 10);
+        String level = String.valueOf(randomNumber(1, 2));
+        String exp = String.valueOf(randomNumber(0, 200))+ "/" + ((randomNumber(1, 2) + 1) * 10);
+        String expBar = basicBar(randomNumber(0, 200), ((randomNumber(1, 2) + 1) * 10), 10);
+        String tExp = String.valueOf(randomNumber(0, 300));
+        String gMode = String.valueOf(randomNumber(0, 1));
 
-            if (hero.getParty() != null)
-                hParty = hero.getParty().toString();
+        // Time Var
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(plugin.dateFormat);
+        String time = dateFormat.format(now);
 
-            if (heroSClass != null) {
-                hSClass = heroSClass.getName();
-                hSLevel = String.valueOf(hSL);
-                hSExp = String.valueOf(hSE);
-                hSEBar = Messaging.createExperienceBar(hero, heroSClass);
+        // Display Name
+        String dName = pName;
+
+        // Player Object Stuff
+        if (plugin.getServer().getPlayer(pName) != null)  {
+            Player player = plugin.getServer().getPlayer(pName);
+
+            // Location
+            locX = player.getLocation().getX();
+            locY = player.getLocation().getY();
+            locZ = player.getLocation().getZ();
+
+            loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
+
+            // Health
+            healthbar = healthBar(player);
+            health = String.valueOf(player.getHealth());
+
+            // World
+            pWorld = player.getWorld().getName();
+
+            // 1.8 Vars
+            hungerLevel = String.valueOf(player.getFoodLevel());
+            hungerBar = basicBar(player.getFoodLevel(), 20, 10);
+            level = String.valueOf(player.getLevel());
+            exp = String.valueOf(player.getExp()) + "/" + ((player.getLevel() + 1) * 10);
+            expBar = basicBar(player.getExp(), ((player.getLevel() + 1) * 10), 10);
+            tExp = String.valueOf(player.getTotalExperience());
+            gMode = "";
+
+            if (player.getGameMode() != null && player.getGameMode().name() != null)
+                gMode = player.getGameMode().name();
+
+            // Display Name
+            dName = player.getDisplayName();
+
+            // Initialize mChannel Vars
+            if (plugin.mChanB) {
+                if (mChannel.API.getPlayersChannels(player)[0] != null)
+                    mCName = mChannel.API.getPlayersChannels(player)[0];
+
+                mCPref = mChannel.API.getChannelPrefix(mCName);
+                mCSuf = mChannel.API.getChannelSuffix(mCName);
+                mCType = mChannel.API.getChannelType(mCName);
             }
 
-            if ((hero.isMaster(heroClass))
-                    && (heroSClass == null || hero.isMaster(heroSClass)))
-                hMastered = plugin.hMasterT;
-            else
-                hMastered = plugin.hMasterF;
+            // Initialize Heroes Vars
+            if (plugin.heroesB) {
+                Hero hero = plugin.heroes.getHeroManager().getHero(player);
+                HeroClass heroClass = hero.getHeroClass();
+                HeroClass heroSClass = hero.getSecondClass();
+
+                int hL = Properties.getLevel(hero.getExperience());
+                int hSL = hero.getLevel(heroSClass);
+                double hE = Properties.getExperience(hL);
+                double hSE = hero.getExperience(heroSClass);
+
+                hClass = hero.getHeroClass().getName();
+                hHealth = String.valueOf(hero.getHealth());
+                hHBar = Messaging.createHealthBar((float) hero.getHealth(), (float) hero.getMaxHealth());
+                hMana = String.valueOf(hero.getMana());
+                hMBar = Messaging.createManaBar(hero.getMana());
+                hLevel = String.valueOf(hL);
+                hExp = String.valueOf(hE);
+                hEBar = Messaging.createExperienceBar(hero, heroClass);
+
+                if (hero.getParty() != null)
+                    hParty = hero.getParty().toString();
+
+                if (heroSClass != null) {
+                    hSClass = heroSClass.getName();
+                    hSLevel = String.valueOf(hSL);
+                    hSExp = String.valueOf(hSE);
+                    hSEBar = Messaging.createExperienceBar(hero, heroSClass);
+                }
+
+                if ((hero.isMaster(heroClass))
+                        && (heroSClass == null || hero.isMaster(heroSClass)))
+                    hMastered = plugin.hMasterT;
+                else
+                    hMastered = plugin.hMasterF;
+            }
         }
 
-        String formatAll = parseVars(format, player);
+        String formatAll = parseVars(format, pName, world);
         String[] search;
         String[] replace;
 
@@ -158,10 +189,10 @@ public class mChatAPI {
         if (formatAll == null)
             return msg;
 
-        if (!checkPermissions(player, "mchat.coloredchat", false))
+        if (!checkPermissions(pName, world, "mchat.coloredchat"))
             msg = removeColour(msg);
 
-        if (!checkPermissions(player, "mchat.censorbypass", false))
+        if (!checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
 
         search = new String[]{
@@ -178,7 +209,7 @@ public class mChatAPI {
                 vI + "location," + vI + "loc",
                 vI + "level," + vI + "l",
                 vI + "mname," + vI + "mn",
-                vI + "name," + vI + "n",
+                vI + "pName," + vI + "n",
                 vI + "prefix," + vI + "p",
                 vI + "suffix," + vI + "s",
                 vI + "totalexp," + vI + "texp," + vI + "te",
@@ -209,7 +240,7 @@ public class mChatAPI {
 
         replace = new String[]{
                 plugin.nameFormat,
-                player.getDisplayName(),
+                dName,
                 expBar,
                 exp,
                 gMode,
@@ -220,13 +251,13 @@ public class mChatAPI {
                 health,
                 loc,
                 level,
-                plugin.getInfoReader().getmName(player),
-                player.getName(),
+                plugin.getInfoReader().getmName(pName),
+                pName,
                 prefix,
                 suffix,
                 tExp,
                 time,
-                world,
+                pWorld,
                 mCName,
                 mCPref,
                 mCSuf,
@@ -250,60 +281,57 @@ public class mChatAPI {
                 msg
         };
 
-        formatAll = replaceCustVars(player, formatAll);
+        formatAll = replaceCustVars(pName, formatAll);
 
         return replaceVars(formatAll, search, replace);
     }
 
-    public String ParseChatMessage(Player player, String msg) {
-        return ParseMessage(player.getName(), msg, plugin.chatFormat);
+    public String ParseChatMessage(Player player, World world, String msg) {
+        return ParseMessage(player.getName(), world.getName(), msg, plugin.chatFormat);
     }
 
-    public String ParsePlayerName(Player player) {
-        return ParseMessage(player.getName(), "", plugin.nameFormat);
+    public String ParsePlayerName(Player player, World world) {
+        return ParseMessage(player.getName(), world.getName(), "", plugin.nameFormat);
     }
 
-    public String ParseEventName(Player player) {
-        return ParseMessage(player.getName(), "", plugin.eventFormat);
+    public String ParseEventName(Player player, World world) {
+        return ParseMessage(player.getName(), world.getName(), "", plugin.eventFormat);
     }
 
-    public String ParseTabbedList(Player player) {
-        return ParseMessage(player.getName(), "", plugin.tabbedListFormat);
+    public String ParseTabbedList(Player player, World world) {
+        return ParseMessage(player.getName(), world.getName(), "", plugin.tabbedListFormat);
     }
 
-    public String ParseListCmd(Player player) {
-        return ParseMessage(player.getName(), "", plugin.listCmdFormat);
+    public String ParseListCmd(Player player, World world) {
+        return ParseMessage(player.getName(), world.getName(), "", plugin.listCmdFormat);
     }
 
-    public String ParseMe(Player player, String msg) {
-        return ParseMessage(player.getName(), msg, plugin.meFormat);
+    public String ParseMe(Player player, World world, String msg) {
+        return ParseMessage(player.getName(), world.getName(), msg, plugin.meFormat);
     }
 
-    public String ParseChatMessage(String pName, String msg) {
-        return ParseMessage(pName, msg, plugin.chatFormat);
+    public String ParseChatMessage(String pName, String world, String msg) {
+        return ParseMessage(pName, world, msg, plugin.chatFormat);
     }
 
-    public String ParsePlayerName(String pName) {
-        return ParseMessage(pName, "", plugin.nameFormat);
+    public String ParsePlayerName(String pName, String world) {
+        return ParseMessage(pName, world, "", plugin.nameFormat);
     }
 
-    public String ParseEventName(String pName) {
-        if (plugin.getServer().getPlayer(pName) == null)
-            return pName;
-
-        return ParseMessage(pName, "", plugin.eventFormat);
+    public String ParseEventName(String pName, String world) {
+        return ParseMessage(pName, world, "", plugin.eventFormat);
     }
 
-    public String ParseTabbedList(String pName) {
-        return ParseMessage(pName, "", plugin.tabbedListFormat);
+    public String ParseTabbedList(String pName, String world) {
+        return ParseMessage(pName, world, "", plugin.tabbedListFormat);
     }
 
-    public String ParseListCmd(String pName) {
-        return ParseMessage(pName, "", plugin.listCmdFormat);
+    public String ParseListCmd(String pName, String world) {
+        return ParseMessage(pName, world, "", plugin.listCmdFormat);
     }
 
-    public String ParseMe(String pName, String msg) {
-        return ParseMessage(pName, msg, plugin.meFormat);
+    public String ParseMe(String pName, String world, String msg) {
+        return ParseMessage(pName, world, msg, plugin.meFormat);
     }
 
     /*
@@ -319,14 +347,14 @@ public class mChatAPI {
         plugin.cVarMap.put("%^global^%|" + var, value);
     }
 
-    public void addPlayerVar(Player player, String var, String value) {
+    public void addPlayerVar(String pName, String var, String value) {
         if (var == null || var.isEmpty())
             return;
 
         if (value == null)
             value = "";
 
-        plugin.cVarMap.put(player.getName() + "|" +var, value);
+        plugin.cVarMap.put(pName + "|" +var, value);
     }
 
     public String healthBar(Player player) {
@@ -396,25 +424,20 @@ public class mChatAPI {
     }
 
     public Boolean checkPermissions(Player player, String node) {
-        if (plugin.gmPermissionsB)
-            if (plugin.gmPermissionsWH.getWorldPermissions(player).has(player, node))
-                return true;
-
-        if (plugin.PEXB)
-            if (plugin.pexPermissions.has(player, node))
-                return true;
-
-        return player.hasPermission(node) || player.isOp();
+        return checkPermissions(player.getName(), player.getWorld().getName(), node)
+                || player.hasPermission(node)
+                || player.isOp();
 
     }
 
-    public Boolean checkPermissions(Player player, String node, Boolean useOp) {
-        if (plugin.gmPermissionsB)
-            if (plugin.gmPermissionsWH.getWorldPermissions(player).has(player, node))
-                return true;
+    public Boolean checkPermissions(Player player, World world, String node) {
+        return checkPermissions(player.getName(), world.getName(), node)
+                || player.hasPermission(node)
+                || player.isOp();
+    }
 
-        if (plugin.PEXB)
-            if (plugin.pexPermissions.has(player, node))
+    public Boolean checkPermissions(Player player, String node, Boolean useOp) {
+        if (checkPermissions(player.getName(), player.getWorld().getName(), node))
                 return true;
 
         if (useOp)
@@ -422,17 +445,43 @@ public class mChatAPI {
                 return true;
 
         return player.hasPermission(node);
-
     }
 
-    String parseVars(String format, Player player) {
+    public Boolean checkPermissions(Player player, World world, String node, Boolean useOp) {
+        if (checkPermissions(player.getName(), world.getName(), node))
+                return true;
+
+        if (useOp)
+            if (player.isOp())
+                return true;
+
+        return player.hasPermission(node);
+    }
+
+    public Boolean checkPermissions(String pName, String world, String node) {
+        if (plugin.vaultB)
+            if (plugin.vPerm.has(world, pName, node))
+                return true;
+
+        if (plugin.gmPermissionsB)
+            if (plugin.gmPermissionsWH.getWorldPermissions(pName).getPermissionBoolean(pName, node))
+                return true;
+
+        if (plugin.PEXB)
+            if (plugin.pexPermissions.has(pName, world, node))
+                return true;
+
+        return false;
+    }
+
+    String parseVars(String format, String pName, String world) {
         String vI = "\\" + plugin.varIndicator;
         Pattern pattern = Pattern.compile(vI + "<(.*?)>");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String var = plugin.getInfoReader().getRawInfo(player, matcher.group(1));
+            String var = plugin.getInfoReader().getRawInfo(pName, world, matcher.group(1));
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
         }
 
@@ -460,11 +509,11 @@ public class mChatAPI {
         return addColour(format);
     }
 
-    String replaceCustVars(Player player, String format) {
+    String replaceCustVars(String pName, String format) {
         SortedMap<String, String> cVarMap = plugin.cVarMap;
 
         for (Entry<String, String> entry : cVarMap.entrySet()) {
-            String pKey = plugin.cusVarIndicator + entry.getKey().replace(player.getName() + "|", "");
+            String pKey = plugin.cusVarIndicator + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
             if (format.contains(pKey))
@@ -508,6 +557,12 @@ public class mChatAPI {
         msg = sb.toString();
 
         return msg;
+    }
+    
+    Integer randomNumber(Integer minValue, Integer maxValue) {
+        Random random = new Random();
+
+        return random.nextInt(maxValue - minValue + 1) + minValue;
     }
 
     public void log(Object loggedObject) {

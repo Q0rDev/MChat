@@ -34,6 +34,7 @@ public class MPCommandSender implements CommandExecutor {
 
         Player player = (Player) sender;
         String pName = player.getName();
+        String world = player.getWorld().getName();
 
         if (commandName.equalsIgnoreCase("pmchat")) {
             if (!plugin.getAPI().checkPermissions(player, "mchat.pm.pm")) {
@@ -55,7 +56,7 @@ public class MPCommandSender implements CommandExecutor {
 
             Player recipient = plugin.getServer().getPlayer(args[0]);
             String rName = recipient.getName();
-            String senderName = plugin.getAPI().ParsePlayerName(pName);
+            String senderName = plugin.getAPI().ParsePlayerName(pName, world);
 
             player.sendMessage(formatPMSend(rName, message));
 
@@ -107,6 +108,7 @@ public class MPCommandSender implements CommandExecutor {
         } else if (commandName.equalsIgnoreCase("pmchataccept")) {
             String rName = plugin.getInvite.get(pName);
             Player recipient = plugin.getServer().getPlayer(rName);
+            String rWorld = recipient.getWorld().getName();
 
             if (rName != null) {
                 plugin.getInvite.remove(pName);
@@ -114,8 +116,8 @@ public class MPCommandSender implements CommandExecutor {
                 plugin.isConv.put(rName, true);
                 plugin.chatPartner.put(rName, pName);
                 plugin.chatPartner.put(pName, rName);
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have started a Convo with &5'&4" + plugin.getAPI().ParsePlayerName(rName) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName) + "&5'&4 has been accepted.")));
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have started a Convo with &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been accepted.")));
             } else
                 player.sendMessage(formatPMessage(plugin.getAPI().addColour("No pending Convo request.")));
 
@@ -123,13 +125,14 @@ public class MPCommandSender implements CommandExecutor {
         } else if (commandName.equalsIgnoreCase("pmchatdeny")) {
             String rName = plugin.getInvite.get(pName);
             Player recipient = plugin.getServer().getPlayer(rName);
+            String rWorld = recipient.getWorld().getName();
 
             if (rName != null) {
                 plugin.getInvite.remove(pName);
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName) + "&5'&4 has been denied.")));
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been denied.")));
             } else
                 player.sendMessage(formatPMessage(plugin.getAPI().addColour("No pending Convo request.")));
 
@@ -145,6 +148,7 @@ public class MPCommandSender implements CommandExecutor {
 
             Player recipient = plugin.getServer().getPlayer(args[0]);
             String rName = recipient.getName();
+            String rWorld = recipient.getWorld().getName();
 
             if (recipient == null) {
                 player.sendMessage(formatPNF(args[0]));
@@ -152,12 +156,12 @@ public class MPCommandSender implements CommandExecutor {
             }
 
             if (plugin.getInvite.get(rName) != null) {
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("&5'&4" + plugin.getAPI().ParsePlayerName(rName) + "&5'&4 Already has a Convo request.")));
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("&5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.")));
                 return true;
             } else {
                 plugin.getInvite.put(rName, pName);
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have invited &5'&4" + plugin.getAPI().ParsePlayerName(rName) + "&5'&4 to have a Convo.")));
-                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("You have been invited to a Convo by &5'&4" + plugin.getAPI().ParsePlayerName(pName) + "&5'&4 use /pmchataccept to accept.")));
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have invited &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.")));
+                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("You have been invited to a Convo by &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.")));
                 return true;
             }
         } else if (commandName.equalsIgnoreCase("pmchatreply")) {
@@ -174,7 +178,7 @@ public class MPCommandSender implements CommandExecutor {
                     return true;
                 }
 
-                final String senderName = plugin.getAPI().ParsePlayerName(pName);
+                final String senderName = plugin.getAPI().ParsePlayerName(pName, world);
                 player.sendMessage(formatPMSend(rName, message));
 
                 if (plugin.lastPMd != null)

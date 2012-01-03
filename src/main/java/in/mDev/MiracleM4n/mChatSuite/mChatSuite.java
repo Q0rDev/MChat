@@ -12,6 +12,7 @@ import in.mDev.MiracleM4n.mChatSuite.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.events.*;
 
+import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 
@@ -23,6 +24,7 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -84,6 +86,10 @@ public class mChatSuite extends JavaPlugin {
     // Heroes
     Heroes heroes;
     Boolean heroesB = false;
+    
+    // Vault
+    Permission vPerm = null;
+    Boolean vaultB = false;
 
     // Configuration
     public YamlConfiguration mConfig = null;
@@ -305,7 +311,7 @@ public class mChatSuite extends JavaPlugin {
 
                 if (spoutB) {
                     SpoutPlayer sPlayers = (SpoutPlayer) players;
-                    sPlayers.setTitle(getAPI().ParsePlayerName(players));
+                    sPlayers.setTitle(getAPI().ParsePlayerName(players, players.getWorld()));
                 }
             }
         }
@@ -419,6 +425,17 @@ public class mChatSuite extends JavaPlugin {
             heroes = (Heroes) pm.getPlugin("Heroes");
 
         spoutB = setupPlugin("SpoutPlugin");
+
+        vaultB = setupPlugin("Vault");
+
+        if (vaultB) {
+            RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
+
+            if (permissionProvider != null)
+                vPerm = permissionProvider.getProvider();
+
+            vaultB = vPerm != null;
+        }
 
         if (!spoutEnabled)
             spoutB = false;

@@ -22,8 +22,18 @@
             </snapshots>
         </repository>
         <repository>
-            <id>mdev-repo</id>
+            <id>mDev-repo</id>
             <url>http://repo.mdev.in</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>mBowl-repo</id>
+            <url>http://ci.milkbowl.net/plugin/repository/everything</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -123,6 +133,13 @@
             <groupId>org.getspout</groupId>
             <artifactId>spoutpluginapi</artifactId>
             <version>dev-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>Vault</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
