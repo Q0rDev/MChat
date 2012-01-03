@@ -33,7 +33,13 @@
         </repository>
         <repository>
             <id>mBowl-repo</id>
-            <url>http://ci.milkbowl.net/plugin/repository/everything</url>
+            <url>http://ci.milkbowl.net/plugin/repository/project/Vault/LastSuccessful/repository</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
     <build>
