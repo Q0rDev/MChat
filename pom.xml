@@ -34,9 +34,6 @@
         <repository>
             <id>mBowl-repo</id>
             <url>http://ci.milkbowl.net/plugin/repository/everything</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
         </repository>
     </repositories>
     <build>
