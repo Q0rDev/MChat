@@ -136,6 +136,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <!--Forgot about this-->
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
