@@ -12,16 +12,6 @@
     </properties>
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/artifactory/repo</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
             <id>spout-repo</id>
             <url>http://repo.getspout.org</url>
             <releases>
@@ -88,9 +78,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>ru.tehkode</groupId>
-            <artifactId>PermissionsEx</artifactId>
-            <version>1.17</version>
+            <groupId>ru.tehkode.permissions</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.18</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -104,7 +94,7 @@
         <dependency>
             <groupId>de.bananaco</groupId>
             <artifactId>bPermissions</artifactId>
-            <version>1337-SNAPSHOT</version>
+            <version>1337-RELEASE</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
