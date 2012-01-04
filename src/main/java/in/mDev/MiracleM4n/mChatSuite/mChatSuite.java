@@ -196,12 +196,15 @@ public class mChatSuite extends JavaPlugin {
 
     // Maps
     public HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
+
     public HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
+
     public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
+
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
