@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>in.mDev</groupId>
     <artifactId>mChatSuite</artifactId>
     <version>DEV</version>
     <name>mChatSuite</name>
     <url>http://mDev.in/</url>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <api.version>unknown</api.version>
         <build.number>Unknown</build.number>
     </properties>
+
     <repositories>
         <repository>
             <id>spout-repo</id>
@@ -43,6 +44,7 @@
             </snapshots>
         </repository>
     </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -60,6 +62,7 @@
                 <version>2.3.2</version>
             </plugin>
         </plugins>
+
         <resources>
             <resource>
                 <targetPath>.</targetPath>
@@ -71,6 +74,7 @@
             </resource>
         </resources>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
