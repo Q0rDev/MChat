@@ -30,7 +30,6 @@ public class MEntityListener extends EntityListener {
 
         Player player = (Player) event.getEntity();
 
-
         String pName = player.getName();
         String pCause = "";
         String world = player.getWorld().getName();
@@ -40,13 +39,15 @@ public class MEntityListener extends EntityListener {
 
         if (dEvent instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
+
             if (dEEvent.getDamager() instanceof Player)
                 pCause = plugin.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName(), dEEvent.getDamager().getWorld().getName());
             else
-                pCause = "a" + parseEntityName(dEEvent.getDamager());
+                pCause = "a" + dEEvent.getDamager().getClass().getSimpleName().replace("Craft", "");
         }
 
         if (plugin.sDeathB) {
+            System.out.println(true);
             suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI);
             subEvent.setDeathMessage("");
         } else
@@ -216,64 +217,6 @@ public class MEntityListener extends EntityListener {
             return deathMessage(pName, pCause, world, plugin.deathThrown);
 
         return dMsg;
-    }
-
-    String parseEntityName(Entity entity) {
-        if (entity instanceof CaveSpider)
-            return " CaveSpider";
-
-        else if (entity instanceof Chicken)
-            return " Chicken";
-
-        else if (entity instanceof Cow)
-            return " Cow";
-
-        else if (entity instanceof Creeper)
-            return " Creeper";
-
-        else if (entity instanceof Enderman)
-            return "n Enderman";
-
-        else if (entity instanceof Ghast)
-            return " Ghast";
-
-        else if (entity instanceof Giant)
-            return " Giant";
-
-        else if (entity instanceof Pig)
-            return " Pig";
-
-        else if (entity instanceof PigZombie)
-            return " PigZombie";
-
-        else if (entity instanceof Sheep)
-            return " Sheep";
-
-        else if (entity instanceof Silverfish)
-            return " Silverfish";
-
-        else if (entity instanceof Skeleton)
-            return " Skeleton";
-
-        else if (entity instanceof Slime)
-            return " Slime";
-
-        else if (entity instanceof Spider)
-            return " Spider";
-
-        else if (entity instanceof Squid)
-            return " Squid";
-
-        else if (entity instanceof Wolf)
-            return " Wolf";
-
-        else if (entity instanceof Zombie)
-            return " Zombie";
-
-        else if (entity instanceof Monster)
-            return " Monster";
-
-        return entity.toString().replace("Craft", "");
     }
 
     String deathMessage(String pName, String world, String pCause, String msg) {
