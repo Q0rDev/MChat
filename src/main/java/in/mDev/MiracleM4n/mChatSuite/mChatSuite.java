@@ -283,19 +283,23 @@ public class mChatSuite extends JavaPlugin {
         // Register Commands
         getCommand("mchat").setExecutor(mCSender);
 
-        getCommand("mchatme").setExecutor(mECSender);
-        getCommand("mchatwho").setExecutor(mECSender);
-        getCommand("mchatlist").setExecutor(mECSender);
-        getCommand("mchatsay").setExecutor(mECSender);
-        getCommand("mchatafk").setExecutor(mECSender);
-        getCommand("mchatafkother").setExecutor(mECSender);
+        if (mChatEB) {
+            getCommand("mchatme").setExecutor(mECSender);
+            getCommand("mchatwho").setExecutor(mECSender);
+            getCommand("mchatlist").setExecutor(mECSender);
+            getCommand("mchatsay").setExecutor(mECSender);
+            getCommand("mchatafk").setExecutor(mECSender);
+            getCommand("mchatafkother").setExecutor(mECSender);
+        }
 
-        getCommand("pmchat").setExecutor(mPCSender);
-        getCommand("pmchatreply").setExecutor(mPCSender);
-        getCommand("pmchatinvite").setExecutor(mPCSender);
-        getCommand("pmchataccept").setExecutor(mPCSender);
-        getCommand("pmchatdeny").setExecutor(mPCSender);
-        getCommand("pmchatleave").setExecutor(mPCSender);
+        if (mChatPB) {
+            getCommand("pmchat").setExecutor(mPCSender);
+            getCommand("pmchatreply").setExecutor(mPCSender);
+            getCommand("pmchatinvite").setExecutor(mPCSender);
+            getCommand("pmchataccept").setExecutor(mPCSender);
+            getCommand("pmchatdeny").setExecutor(mPCSender);
+            getCommand("pmchatleave").setExecutor(mPCSender);
+        }
 
         // Ping Stats                                       `
         Stats.init(this);
