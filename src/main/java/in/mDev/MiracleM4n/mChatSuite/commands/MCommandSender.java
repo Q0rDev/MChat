@@ -47,9 +47,8 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
 
-                        mChatSuite.cListener.load();
-                        mChatSuite.cListener.checkConfig();
-                        mChatSuite.cListener.loadConfig();
+                        plugin.getMainConfig().reload();
+                        plugin.getMainConfig().load();
                         sender.sendMessage(formatMessage("Config Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("info")
@@ -60,8 +59,8 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
 
-                        mChatSuite.mIListener.load();
-                        mChatSuite.mIListener.checkConfig();
+                        plugin.getInfoConfig().load();
+                        plugin.getInfoConfig().checkConfig();
                         sender.sendMessage(formatMessage("Info Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("censor")
@@ -72,8 +71,8 @@ public class MCommandSender implements CommandExecutor {
                                 return true;
                             }
 
-                        mChatSuite.mCListener.load();
-                        mChatSuite.mCListener.loadConfig();
+                        plugin.getCensorConfig().load();
+                        plugin.getCensorConfig().loadConfig();
                         sender.sendMessage(formatMessage("Censor Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("all")

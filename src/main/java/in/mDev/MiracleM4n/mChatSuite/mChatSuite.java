@@ -48,9 +48,6 @@ public class mChatSuite extends JavaPlugin {
     public static MCommandSender mCSender;
     public static MECommandSender mECSender;
     public static MPCommandSender mPCSender;
-    public static MConfigListener cListener;
-    public static MIConfigListener mIListener;
-    public static MCConfigListener mCListener;
     public static MCustomListener cusListener;
 
     // GUI
@@ -208,6 +205,20 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
+    
+    // Lists
+    public ArrayList<String> meAliases = new ArrayList<String>();
+    public ArrayList<String> whoAliases = new ArrayList<String>();
+    public ArrayList<String> listAliases = new ArrayList<String>();
+    public ArrayList<String> sayAliases = new ArrayList<String>();
+    public ArrayList<String> afkAliases = new ArrayList<String>();
+    public ArrayList<String> afkOtherAliases = new ArrayList<String>();
+    public ArrayList<String> pmAliases = new ArrayList<String>();
+    public ArrayList<String> replyAliases = new ArrayList<String>();
+    public ArrayList<String> inviteAliases = new ArrayList<String>();
+    public ArrayList<String> acceptAliases = new ArrayList<String>();
+    public ArrayList<String> denyAliases = new ArrayList<String>();
+    public ArrayList<String> leaveAliases = new ArrayList<String>();
 
     public void onEnable() {
         // 1st Startup Timer
@@ -240,11 +251,6 @@ public class mChatSuite extends JavaPlugin {
         mConfig.options().indent(4);
         mIConfig.options().indent(4);
         mCConfig.options().indent(4);
-
-        // Initialize Listeners
-        cListener = new MConfigListener(this);
-        mIListener = new MIConfigListener(this);
-        mCListener = new MCConfigListener(this);
 
         // Setup Configs
         setupConfigs();
@@ -458,22 +464,21 @@ public class mChatSuite extends JavaPlugin {
     }
 
     public void setupConfigs() {
-        cListener.checkConfig();
-        cListener.loadConfig();
+        getMainConfig().load();
 
-        mIListener.checkConfig();
+        getInfoConfig().checkConfig();
 
-        mCListener.loadConfig();
+        getCensorConfig().loadConfig();
 
         getLocale().checkLocale();
     }
 
     public void loadConfigs() {
-        cListener.load();
+        getMainConfig().reload();
 
-        mCListener.load();
+        getCensorConfig().load();
 
-        mIListener.load();
+        getInfoConfig().load();
     }
 
     void setupTasks() {
@@ -485,7 +490,7 @@ public class mChatSuite extends JavaPlugin {
                 if (AFKTimer < 0)
                     return;
 
-                cListener.load();
+                getMainConfig().reload();
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (isAFK.get(player.getName()) == null)
@@ -512,7 +517,7 @@ public class mChatSuite extends JavaPlugin {
                 if (AFKKickTimer < 0)
                     return;
 
-                cListener.load();
+                getMainConfig().reload();
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (getAPI().checkPermissions(player, "mchat.bypass.afkkick"))
@@ -528,6 +533,22 @@ public class mChatSuite extends JavaPlugin {
         }, 20L * 10, 20L * 10);
     }
 
+    // Main Config (config.yml)
+    public MConfigListener getMainConfig() {
+        return new MConfigListener(this);
+    }
+
+    // Info Config (info.yml)
+    public MIConfigListener getInfoConfig() {
+        return new MIConfigListener(this);
+    }
+
+    // Censor Config (censor.yml)
+    public MCConfigListener getCensorConfig() {
+        return new MCConfigListener(this);
+    }
+
+    // Language Config
     public MLanguageListener getLocale() {
         return new MLanguageListener(this, mELocale);
     }

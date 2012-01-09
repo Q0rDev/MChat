@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MConfigListener {
     mChatSuite plugin;
@@ -16,7 +17,7 @@ public class MConfigListener {
         this.plugin = plugin;
     }
 
-    public void load() {
+    public void reload() {
         plugin.mConfig = YamlConfiguration.loadConfiguration(plugin.mConfigF);
         plugin.mConfig.options().indent(4);
     }
@@ -24,12 +25,93 @@ public class MConfigListener {
     void save() {
         try {
             plugin.mConfig.save(plugin.mConfigF);
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
-    public void loadConfig() {
+    ArrayList<String> meAliases = new ArrayList<String>();
+    ArrayList<String> whoAliases = new ArrayList<String>();
+    ArrayList<String> listAliases = new ArrayList<String>();
+    ArrayList<String> sayAliases = new ArrayList<String>();
+    ArrayList<String> afkAliases = new ArrayList<String>();
+    ArrayList<String> afkOtherAliases = new ArrayList<String>();
+    ArrayList<String> pmAliases = new ArrayList<String>();
+    ArrayList<String> replyAliases = new ArrayList<String>();
+    ArrayList<String> inviteAliases = new ArrayList<String>();
+    ArrayList<String> acceptAliases = new ArrayList<String>();
+    ArrayList<String> denyAliases = new ArrayList<String>();
+    ArrayList<String> leaveAliases = new ArrayList<String>();
+
+    public void load() {
         YamlConfiguration config = plugin.mConfig;
+
+        meAliases.add("me");
+
+        whoAliases.add("who");
+        whoAliases.add("mwho");
+
+        listAliases.add("list");
+        listAliases.add("mlist");
+        listAliases.add("online");
+        listAliases.add("monline");
+        listAliases.add("playerlist");
+
+        sayAliases.add("msay");
+        sayAliases.add("say");
+
+        afkAliases.add("afk");
+        afkAliases.add("mafk");
+        afkAliases.add("maway");
+        afkAliases.add("away");
+
+        afkOtherAliases.add("afko");
+        afkOtherAliases.add("mafkother");
+        afkOtherAliases.add("mafko");
+        afkOtherAliases.add("mawayother");
+        afkOtherAliases.add("mawayo");
+        afkOtherAliases.add("awayother");
+        afkOtherAliases.add("awayo");
+
+        pmAliases.add("pm");
+        pmAliases.add("msg");
+        pmAliases.add("message");
+        pmAliases.add("m");
+        pmAliases.add("mchattell");
+        pmAliases.add("mtell");
+        pmAliases.add("tell");
+        pmAliases.add("t");
+
+        replyAliases.add("pmchatr");
+        replyAliases.add("pmreply");
+        replyAliases.add("pmr");
+        replyAliases.add("preply");
+        replyAliases.add("reply");
+        replyAliases.add("r");
+
+        inviteAliases.add("pmchati");
+        inviteAliases.add("pminvite");
+        inviteAliases.add("pmi");
+        inviteAliases.add("pinvite");
+        inviteAliases.add("invite");
+
+        acceptAliases.add("pmchata");
+        acceptAliases.add("pmaccept");
+        acceptAliases.add("pma");
+        acceptAliases.add("paccept");
+        acceptAliases.add("accept");
+
+        denyAliases.add("pmchatd");
+        denyAliases.add("pmdeny");
+        denyAliases.add("pmd");
+        denyAliases.add("pdeny");
+        denyAliases.add("deny");
+
+        leaveAliases.add("pmchatl");
+        leaveAliases.add("pmleave");
+        leaveAliases.add("pml");
+        leaveAliases.add("pleave");
+        leaveAliases.add("leave");
+
+        checkConfig();
 
         plugin.dateFormat = config.getString("format.date", plugin.dateFormat);
         plugin.chatFormat = config.getString("format.chat", plugin.chatFormat);
@@ -99,6 +181,19 @@ public class MConfigListener {
         plugin.mChatPB = config.getBoolean("pmchat.enable", plugin.spoutPM);
         plugin.spoutPM = config.getBoolean("pmchat.spoutPM", plugin.spoutPM);
 
+        plugin.meAliases = new ArrayList<String>(config.getStringList("aliases.mchatme"));
+        plugin.whoAliases = new ArrayList<String>(config.getStringList("aliases.mchatwho"));
+        plugin.listAliases = new ArrayList<String>(config.getStringList("aliases.mchatlist"));
+        plugin.sayAliases = new ArrayList<String>(config.getStringList("aliases.mchatsay"));
+        plugin.afkAliases = new ArrayList<String>(config.getStringList("aliases.mchatafk"));
+        plugin.afkOtherAliases = new ArrayList<String>(config.getStringList("aliases.mchatafkother"));
+        plugin.pmAliases = new ArrayList<String>(config.getStringList("aliases.pmchat"));
+        plugin.replyAliases = new ArrayList<String>(config.getStringList("aliases.pmchatreply"));
+        plugin.inviteAliases = new ArrayList<String>(config.getStringList("aliases.pmchatinvite"));
+        plugin.acceptAliases = new ArrayList<String>(config.getStringList("aliases.pmchataccept"));
+        plugin.denyAliases = new ArrayList<String>(config.getStringList("aliases.pmchatdeny"));
+        plugin.leaveAliases = new ArrayList<String>(config.getStringList("aliases.pmchatleave"));
+
         if (plugin.AFKTimer < 10 && plugin.AFKTimer > 0)
             plugin.AFKTimer = 10;
 
@@ -111,9 +206,7 @@ public class MConfigListener {
         YamlConfiguration config = plugin.mConfig;
         YamlConfigurationOptions configO = config.options();
 
-        configO.header(
-                " mChat Configuration File"
-        );
+        configO.header("mChat Configuration File");
 
         config.set("format.date", plugin.dateFormat);
         config.set("format.chat", plugin.chatFormat);
@@ -183,10 +276,23 @@ public class MConfigListener {
         config.set("pmchat.enable", plugin.spoutPM);
         config.set("pmchat.spoutPM", plugin.spoutPM);
 
+        config.set("aliases.mchatme", meAliases);
+        config.set("aliases.mchatwho", whoAliases);
+        config.set("aliases.mchatlist", listAliases);
+        config.set("aliases.mchatsay", sayAliases);
+        config.set("aliases.mchatafk", afkAliases);
+        config.set("aliases.mchatafkother", afkOtherAliases);
+        config.set("aliases.pmchat", pmAliases);
+        config.set("aliases.pmchatreply", replyAliases);
+        config.set("aliases.pmchatinvite", inviteAliases);
+        config.set("aliases.pmchataccept", acceptAliases);
+        config.set("aliases.pmchatdeny", denyAliases);
+        config.set("aliases.pmchatleave", leaveAliases);
+
         save();
     }
 
-    public void checkConfig() {
+    void checkConfig() {
         YamlConfiguration config = plugin.mConfig;
         YamlConfigurationOptions configO = config.options();
 
@@ -286,10 +392,21 @@ public class MConfigListener {
         checkOption(config, "pmchat.enable", plugin.mChatPB);
         checkOption(config, "pmchat.spoutPM", plugin.spoutPM);
 
+        checkOption(config, "aliases.mchatme", meAliases);
+        checkOption(config, "aliases.mchatwho", whoAliases);
+        checkOption(config, "aliases.mchatlist", listAliases);
+        checkOption(config, "aliases.mchatsay", sayAliases);
+        checkOption(config, "aliases.mchatafk", afkAliases);
+        checkOption(config, "aliases.mchatafkother", afkOtherAliases);
+        checkOption(config, "aliases.pmchat", pmAliases);
+        checkOption(config, "aliases.pmchatreply", replyAliases);
+        checkOption(config, "aliases.pmchatinvite", inviteAliases);
+        checkOption(config, "aliases.pmchataccept", acceptAliases);
+        checkOption(config, "aliases.pmchatdeny", denyAliases);
+        checkOption(config, "aliases.pmchatleave", leaveAliases);
+
         if (hasChanged) {
-            configO.header(
-                    " mChat Configuration File"
-            );
+            configO.header("mChat Configuration File");
 
             save();
         }

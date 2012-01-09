@@ -13,7 +13,10 @@ import org.bukkit.event.player.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MPlayerListener extends PlayerListener implements Runnable {
     mChatSuite plugin;
@@ -22,15 +25,37 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("unchecked")
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+        
+        HashMap<String, ArrayList<String>> aString = new HashMap<String, ArrayList<String>>();
+        
+        aString.put("mchatme", plugin.meAliases);
+        aString.put("mchatwho", plugin.whoAliases);
+        aString.put("mchatlist", plugin.listAliases);
+        aString.put("mchatsay", plugin.sayAliases);
+        aString.put("mchatafk", plugin.afkAliases);
+        aString.put("mchatafkother", plugin.afkOtherAliases);
+        aString.put("pmchat", plugin.pmAliases);
+        aString.put("pmchatreply", plugin.replyAliases);
+        aString.put("pmchatinvite", plugin.inviteAliases);
+        aString.put("pmchataccept", plugin.acceptAliases);
+        aString.put("pmchatdeny", plugin.denyAliases);
+        aString.put("pmchatleave", plugin.leaveAliases);
+        
+        
+        for (Map.Entry entry : aString.entrySet())
+            for (String alias : (ArrayList<String>) entry.getValue())
+                if (event.getMessage().contains("/" + alias))
+                    event.setMessage(event.getMessage().replace(alias, entry.getKey().toString()));
 
         if (!plugin.mChatEB)
             return;
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
 
-        for (String aliases : plugin.getCommand("mchatafk").getAliases())
+        for (String aliases : plugin.afkAliases)
             if (event.getMessage().contains("/" + aliases) ||
                     event.getMessage().contains("/mchatafk"))
                 return;
@@ -275,7 +300,6 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         plugin.getAPI().log(format);
     }
 
-    public void run() {
-    }
+    public void run() {}
 }
 

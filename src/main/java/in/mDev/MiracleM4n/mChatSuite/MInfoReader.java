@@ -172,8 +172,7 @@ public class MInfoReader {
 
                     try {
                         iMap.put(plugin.mIConfig.getInt(rVal), entry.getValue().toString());
-                    } catch (NumberFormatException ignored) {
-                    }
+                    } catch (NumberFormatException ignored) {}
                 }
         }
 

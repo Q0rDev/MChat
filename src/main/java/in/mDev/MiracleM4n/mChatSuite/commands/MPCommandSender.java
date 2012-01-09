@@ -90,7 +90,10 @@ public class MPCommandSender implements CommandExecutor {
             return true;
         } else if (commandName.equalsIgnoreCase("pmchatleave")) {
             String rName = plugin.chatPartner.get(pName);
-            Player recipient = plugin.getServer().getPlayer(rName);
+            Player recipient = null;
+
+            if (rName != null)
+                recipient = plugin.getServer().getPlayer(rName);
 
             if (plugin.isConv.get(pName) == null)
                 player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not currently in a Convo.")));
