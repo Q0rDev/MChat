@@ -295,8 +295,10 @@ public class MInfoReader {
             return getbPermGroup(pName, world);
 
         String userString = plugin.bInfoR.getValue(pName, world, info);
-        if (userString != null && !userString.isEmpty())
-            return userString;
+
+        if (userString != null)
+            if (!userString.isEmpty())
+                return userString;
 
         return "";
     }
