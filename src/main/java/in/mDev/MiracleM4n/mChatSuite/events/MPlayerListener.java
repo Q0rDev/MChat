@@ -13,10 +13,7 @@ import org.bukkit.event.player.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MPlayerListener extends PlayerListener implements Runnable {
     mChatSuite plugin;
@@ -28,28 +25,48 @@ public class MPlayerListener extends PlayerListener implements Runnable {
     @SuppressWarnings("unchecked")
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
-        
-        HashMap<String, ArrayList<String>> aString = new HashMap<String, ArrayList<String>>();
-        
-        aString.put("mchatme", plugin.meAliases);
-        aString.put("mchatwho", plugin.whoAliases);
-        aString.put("mchatlist", plugin.listAliases);
-        aString.put("mchatsay", plugin.sayAliases);
-        aString.put("mchatafk", plugin.afkAliases);
-        aString.put("mchatafkother", plugin.afkOtherAliases);
-        aString.put("pmchat", plugin.pmAliases);
-        aString.put("pmchatreply", plugin.replyAliases);
-        aString.put("pmchatinvite", plugin.inviteAliases);
-        aString.put("pmchataccept", plugin.acceptAliases);
-        aString.put("pmchatdeny", plugin.denyAliases);
-        aString.put("pmchatleave", plugin.leaveAliases);
-        
-        
-        for (Map.Entry entry : aString.entrySet())
-            for (String alias : (ArrayList<String>) entry.getValue())
-                if (event.getMessage().contains("/" + alias))
-                    event.setMessage(event.getMessage().replace(alias, entry.getKey().toString()));
+        Integer changed = 0;
 
+        HashMap<String, ArrayList<String>> mList = new HashMap<String, ArrayList<String>>();
+        HashMap<String, String> sString = new HashMap<String, String>();
+
+        mList.put("mchatafk", plugin.afkAliases);
+        mList.put("mchatafkother", plugin.afkOtherAliases);
+        mList.put("mchatme", plugin.meAliases);
+        mList.put("mchatwho", plugin.whoAliases);
+        mList.put("mchatlist", plugin.listAliases);
+        mList.put("mchatsay", plugin.sayAliases);
+        mList.put("mchatafk", plugin.afkAliases);
+        mList.put("mchatafkother", plugin.afkOtherAliases);
+        mList.put("pmchatreply", plugin.replyAliases);
+        mList.put("pmchatinvite", plugin.inviteAliases);
+        mList.put("pmchataccept", plugin.acceptAliases);
+        mList.put("pmchatdeny", plugin.denyAliases);
+        mList.put("pmchatleave", plugin.leaveAliases);
+        mList.put("pmchat", plugin.pmAliases);
+
+        for (Map.Entry entry : mList.entrySet())
+            for (String alias : (ArrayList<String>) entry.getValue())
+                sString.put(alias, entry.getKey().toString());
+
+        sString = sortMap(sString);
+
+        for (Map.Entry entry : sString.entrySet())
+            if (changed == 0) {
+                if (event.getMessage().contains("/" + entry.getKey().toString())) {
+                    event.setCancelled(true);
+
+                    plugin.getCommand(entry.getValue().toString())
+                            .execute(player,
+                                    entry.getValue().toString(),
+                                    event.getMessage()
+                                            .replace("/" + entry.getKey().toString(), "")
+                                            .trim()
+                                            .split(" "));
+                    changed++;
+                }
+            }
+        
         if (!plugin.mChatEB)
             return;
 
@@ -298,6 +315,26 @@ public class MPlayerListener extends PlayerListener implements Runnable {
         }
 
         plugin.getAPI().log(format);
+    }
+    
+    @SuppressWarnings("unchecked")
+    LinkedHashMap<String, String> sortMap(HashMap<String, String> map) {
+        List list = new LinkedList(map.entrySet());
+        LinkedHashMap<String, String> sortedMap = new LinkedHashMap<String, String>();
+
+        Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
+            public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
+                return o2.getKey().length()
+                        - o1.getKey().length();
+            }
+        });
+
+        for (Object aList : list) {
+            Map.Entry<String, String> entry = (Map.Entry) aList;
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
     }
 
     public void run() {}
