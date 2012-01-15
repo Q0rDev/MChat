@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.events;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
@@ -9,10 +9,10 @@ import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MCustomListener extends InputListener {
+public class MBCustomListener extends InputListener {
     mChatSuite plugin;
 
-    public MCustomListener(mChatSuite plugin) {
+    public MBCustomListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

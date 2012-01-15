@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.commands;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MPCommandSender implements CommandExecutor {
+public class MBPCommandSender implements CommandExecutor {
     mChatSuite plugin;
 
-    public MPCommandSender(mChatSuite plugin) {
+    public MBPCommandSender(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

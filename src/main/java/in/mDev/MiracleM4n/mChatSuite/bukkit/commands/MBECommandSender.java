@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.commands;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
@@ -12,10 +12,10 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.*;
 
-public class MECommandSender implements CommandExecutor {
+public class MBECommandSender implements CommandExecutor {
     mChatSuite plugin;
 
-    public MECommandSender(mChatSuite plugin) {
+    public MBECommandSender(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

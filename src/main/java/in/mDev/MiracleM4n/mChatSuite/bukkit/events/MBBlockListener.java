@@ -1,13 +1,13 @@
-package in.mDev.MiracleM4n.mChatSuite.events;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MBlockListener extends BlockListener {
+public class MBBlockListener extends BlockListener {
     mChatSuite plugin;
 
-    public MBlockListener(mChatSuite plugin) {
+    public MBBlockListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

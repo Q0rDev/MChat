@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.GUI;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.GUI;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.entity.Player;

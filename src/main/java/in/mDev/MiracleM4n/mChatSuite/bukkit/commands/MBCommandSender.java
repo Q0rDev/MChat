@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.commands;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
@@ -6,10 +6,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MCommandSender implements CommandExecutor {
+public class MBCommandSender implements CommandExecutor {
     mChatSuite plugin;
 
-    public MCommandSender(mChatSuite plugin) {
+    public MBCommandSender(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

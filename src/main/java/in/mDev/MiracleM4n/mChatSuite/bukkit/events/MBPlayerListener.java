@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.events;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
@@ -15,10 +15,10 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.*;
 
-public class MPlayerListener extends PlayerListener implements Runnable {
+public class MBPlayerListener extends PlayerListener implements Runnable {
     mChatSuite plugin;
 
-    public MPlayerListener(mChatSuite plugin) {
+    public MBPlayerListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

@@ -7,10 +7,10 @@ import com.massivecraft.factions.Conf;
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
-import in.mDev.MiracleM4n.mChatSuite.GUI.*;
-import in.mDev.MiracleM4n.mChatSuite.commands.*;
+import in.mDev.MiracleM4n.mChatSuite.bukkit.GUI.*;
+import in.mDev.MiracleM4n.mChatSuite.bukkit.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
-import in.mDev.MiracleM4n.mChatSuite.events.*;
+import in.mDev.MiracleM4n.mChatSuite.bukkit.events.*;
 
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
@@ -42,13 +42,13 @@ public class mChatSuite extends JavaPlugin {
     public PluginDescriptionFile pdfFile;
 
     // Listeners
-    public static MPlayerListener pListener;
-    public static MEntityListener eListener;
-    public static MBlockListener bListener;
-    public static MCommandSender mCSender;
-    public static MECommandSender mECSender;
-    public static MPCommandSender mPCSender;
-    public static MCustomListener cusListener;
+    public static MBPlayerListener pListener;
+    public static MBEntityListener eListener;
+    public static MBBlockListener bListener;
+    public static MBCommandSender mCSender;
+    public static MBECommandSender mECSender;
+    public static MBPCommandSender mPCSender;
+    public static MBCustomListener cusListener;
 
     // GUI
     public static Main mGUI;
@@ -259,22 +259,22 @@ public class mChatSuite extends JavaPlugin {
         setupPlugins();
 
         // Initialize Delayed Listeners
-        mCSender = new MCommandSender(this);
-        mECSender = new MECommandSender(this);
-        mPCSender = new MPCommandSender(this);
+        mCSender = new MBCommandSender(this);
+        mECSender = new MBECommandSender(this);
+        mPCSender = new MBPCommandSender(this);
 
         if (!mAPIOnly) {
             if (spoutB) {
-                cusListener = new MCustomListener(this);
+                cusListener = new MBCustomListener(this);
 
                 mGUI = new Main(this);
                 mGUIEvent = new GUIEvent(this);
                 mPages = new Pages(this);
             }
 
-            pListener = new MPlayerListener(this);
-            bListener = new MBlockListener(this);
-            eListener = new MEntityListener(this);
+            pListener = new MBPlayerListener(this);
+            bListener = new MBBlockListener(this);
+            eListener = new MBEntityListener(this);
         }
 
         // Setup Permissions

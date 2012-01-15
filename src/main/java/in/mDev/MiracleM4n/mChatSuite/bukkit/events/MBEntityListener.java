@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.events;
+package in.mDev.MiracleM4n.mChatSuite.bukkit.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
@@ -9,10 +9,10 @@ import org.bukkit.event.entity.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MEntityListener extends EntityListener {
+public class MBEntityListener extends EntityListener {
     mChatSuite plugin;
 
-    public MEntityListener(mChatSuite plugin) {
+    public MBEntityListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
