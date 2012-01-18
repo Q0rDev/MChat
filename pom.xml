@@ -1,17 +1,51 @@
+<!--
+	Maven build file for mChatSuite
+
+	Copyright (c) 2011-2012 MiracleM4n <http://www.mdev.in>
+	mChatSuite is licensed under BananaCode Minecraft License v1.1. Please see the `LICENSE.txt` file for details.
+-->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Project information -->
     <groupId>in.mDev</groupId>
     <artifactId>mChatSuite</artifactId>
     <version>DEV</version>
     <name>mChatSuite</name>
     <url>http://mDev.in/</url>
+    <description>Full mChat Suite</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
+        <minecraft.version>1.1</minecraft.version>
+        <mchat.version>R4_2</mchat.version>
     </properties>
 
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>BananaCode Minecraft License v1.1</name>
+            <url>http://www.mdev.in/license/BananaCodeMinecraftLicensev1-1.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Source code -->
+    <scm>
+        <developerConnection>scm:git:git@github.com:MiracleM4n/${project.name}.git</developerConnection>
+        <connection>scm:git:git://github.com/MiracleM4n/${project.name}.git</connection>
+        <url>https://github.com/MiracleM4n/${project.name}</url>
+    </scm>
+
+    <!-- Continuous integration -->
+    <ciManagement>
+        <system>jenkins</system>
+        <url>http://ci.mdev.in</url>
+    </ciManagement>
+
+    <!-- Repository locations -->
     <repositories>
         <repository>
             <id>spout-repo</id>
@@ -46,24 +80,17 @@
     </repositories>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
-            </plugin>
-        </plugins>
-
+        <defaultGoal>clean install</defaultGoal>
+        <!-- Resources -->
         <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>false</filtering>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
@@ -73,8 +100,28 @@
                 </includes>
             </resource>
         </resources>
+        <!-- Plugins -->
+        <plugins>
+            <!-- Compile plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <!-- JAR creation plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+        </plugins>
     </build>
 
+    <!-- Dependencies -->
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>

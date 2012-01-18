@@ -161,6 +161,13 @@ public class MConfigListener {
         plugin.sKickI = config.getInt("suppress.maxKick", plugin.sKickI);
         plugin.sQuitI = config.getInt("suppress.maxQuit", plugin.sQuitI);
 
+        plugin.eBroadcast = config.getBoolean("external.enableBroadcast", plugin.eBroadcast);
+        plugin.eHShakePort = config.getInt("external.handshakePort", plugin.eHShakePort);
+        plugin.eBroadcastPort = config.getInt("external.broadcastPort", plugin.eBroadcastPort);
+        plugin.eBroadcastIP = config.getString("external.broadcastIP", plugin.eBroadcastIP);
+
+        plugin.licenseB = config.getBoolean("mchat.license", plugin.licenseB);
+
         plugin.useNewInfo = config.getBoolean("info.useNewInfo", plugin.useNewInfo);
         plugin.useLeveledNodes = config.getBoolean("info.useLeveledNodes", plugin.useLeveledNodes);
         plugin.useOldNodes = config.getBoolean("info.useOldNodes", plugin.useOldNodes);
@@ -256,6 +263,13 @@ public class MConfigListener {
         config.set("suppress.maxKick", plugin.sKickI);
         config.set("suppress.maxQuit", plugin.sQuitI);
 
+        config.set("external.enableBroadcast", plugin.eBroadcast);
+        config.set("external.handshakePort", plugin.eHShakePort);
+        config.set("external.broadcastPort", plugin.eBroadcastPort);
+        config.set("external.broadcastIP", plugin.eBroadcastIP);
+
+        config.set("mchat.license", plugin.licenseB);
+
         config.set("info.useNewInfo", plugin.useNewInfo);
         config.set("info.useLeveledNodes", plugin.useLeveledNodes);
         config.set("info.useOldNodes", plugin.useOldNodes);
@@ -296,8 +310,7 @@ public class MConfigListener {
         YamlConfiguration config = plugin.mConfig;
         YamlConfigurationOptions configO = config.options();
 
-        if (!(new File(plugin.getDataFolder(), "config.yml").exists())
-                && !(new File("plugins/mChat/config.yml").exists()))
+        if (!(new File(plugin.getDataFolder(), "config.yml").exists()))
             defaultConfig();
 
         removeOption(config, "auto-Changed");
@@ -371,6 +384,13 @@ public class MConfigListener {
         checkOption(config, "suppress.maxJoin", plugin.sJoinI);
         checkOption(config, "suppress.maxKick", plugin.sKickI);
         checkOption(config, "suppress.maxQuit", plugin.sQuitI);
+
+        checkOption(config, "external.enableBroadcast", plugin.eBroadcast);
+        checkOption(config, "external.handshakePort", plugin.eHShakePort);
+        checkOption(config, "external.broadcastPort", plugin.eBroadcastPort);
+        checkOption(config, "external.broadcastIP", plugin.eBroadcastIP);
+
+        checkOption(config, "mchat.license", plugin.licenseB);
 
         checkOption(config, "info.useNewInfo", plugin.useNewInfo);
         checkOption(config, "info.useLeveledNodes", plugin.useLeveledNodes);

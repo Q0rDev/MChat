@@ -12,6 +12,7 @@ import in.mDev.MiracleM4n.mChatSuite.bukkit.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.bukkit.events.*;
 
+import in.mDev.MiracleM4n.mChatSuite.external.Query;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
@@ -156,6 +157,9 @@ public class mChatSuite extends JavaPlugin {
     public String hMasterT = "The Great";
     public String hMasterF = "The Squire";
 
+    // Strings
+    public String eBroadcastIP = "ANY";
+
     // Booleans
     public Boolean spoutEnabled = true;
     public Boolean healthNotify = false;
@@ -172,6 +176,8 @@ public class mChatSuite extends JavaPlugin {
     public Boolean sKickB = false;
     public Boolean useIPRestrict = true;
     public Boolean useGroupedList = true;
+    public Boolean eBroadcast = true;
+    public Boolean licenseB = false;
 
     // Numbers
     public Integer AFKTimer = 30;
@@ -180,6 +186,8 @@ public class mChatSuite extends JavaPlugin {
     public Integer sDeathI = 30;
     public Integer sQuitI = 30;
     public Integer sKickI = 30;
+    public Integer eHShakePort = 1939;
+    public Integer eBroadcastPort = 1940;
 
     // Other Config Stuff
     public Double chatDistance = -1.0;
@@ -220,6 +228,9 @@ public class mChatSuite extends JavaPlugin {
     public ArrayList<String> denyAliases = new ArrayList<String>();
     public ArrayList<String> leaveAliases = new ArrayList<String>();
 
+    // External
+    public Query query = null;
+
     public void onEnable() {
         // 1st Startup Timer
         sTime1 = new Date().getTime();
@@ -254,6 +265,20 @@ public class mChatSuite extends JavaPlugin {
 
         // Setup Configs
         setupConfigs();
+
+        // Check License Boolean
+        if (!licenseB) {
+            getServer().getLogger().log(Level.SEVERE, "-------------------------[" + pdfFile.getName() + "]-----------------------");
+            getServer().getLogger().log(Level.SEVERE, "|    You have not yet agreed to " + pdfFile.getName() + "'s License.      |");
+            getServer().getLogger().log(Level.SEVERE, "|    Please read over the license.yml included in the      |");
+            getServer().getLogger().log(Level.SEVERE, "|  plugins/mChatSuite directory than set \"mchat.license\"   |");
+            getServer().getLogger().log(Level.SEVERE, "|         in the config.yml to true if you agree.          |");
+            getServer().getLogger().log(Level.SEVERE, "|   You will have to re-enable " + pdfFile.getName() + " or reload your   |");
+            getServer().getLogger().log(Level.SEVERE, "|         server for changes to be put into effect.        |");
+            getServer().getLogger().log(Level.SEVERE, "------------------------------------------------------------");
+            pm.disablePlugin(this);
+            return;
+        }
 
         // Setup Plugins
         setupPlugins();
@@ -341,6 +366,9 @@ public class mChatSuite extends JavaPlugin {
         getServer().getScheduler().cancelTasks(this);
 
         Stats.unload();
+
+        if (query != null)
+            query.close();
 
         getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
     }
@@ -471,6 +499,8 @@ public class mChatSuite extends JavaPlugin {
         getCensorConfig().loadConfig();
 
         getLocale().checkLocale();
+
+        getLicense().load();
     }
 
     public void loadConfigs() {
@@ -479,6 +509,8 @@ public class mChatSuite extends JavaPlugin {
         getCensorConfig().load();
 
         getInfoConfig().load();
+
+        getLicense().load();
     }
 
     void setupTasks() {
@@ -551,6 +583,11 @@ public class mChatSuite extends JavaPlugin {
     // Language Config
     public MLanguageListener getLocale() {
         return new MLanguageListener(this, mELocale);
+    }
+
+    // License Config
+    public MLConfigListener getLicense() {
+        return new MLConfigListener(this);
     }
 
     // API
