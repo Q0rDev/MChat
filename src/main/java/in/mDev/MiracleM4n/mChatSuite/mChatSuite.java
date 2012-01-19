@@ -12,7 +12,7 @@ import in.mDev.MiracleM4n.mChatSuite.bukkit.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.bukkit.events.*;
 
-import in.mDev.MiracleM4n.mChatSuite.external.Query;
+import in.mDev.MiracleM4n.mChatSuite.external.BroadcastMessage;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
@@ -34,6 +34,7 @@ import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.io.File;
+import java.net.Socket;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -55,6 +56,9 @@ public class mChatSuite extends JavaPlugin {
     public static Main mGUI;
     public static GUIEvent mGUIEvent;
     public static Pages mPages;
+
+    // External Messaging
+    public BroadcastMessage bMessage;
 
     // GroupManager
     WorldsHolder gmPermissionsWH;
@@ -186,7 +190,6 @@ public class mChatSuite extends JavaPlugin {
     public Integer sDeathI = 30;
     public Integer sQuitI = 30;
     public Integer sKickI = 30;
-    public Integer eHShakePort = 1939;
     public Integer eBroadcastPort = 1940;
 
     // Other Config Stuff
@@ -228,8 +231,7 @@ public class mChatSuite extends JavaPlugin {
     public ArrayList<String> denyAliases = new ArrayList<String>();
     public ArrayList<String> leaveAliases = new ArrayList<String>();
 
-    // External
-    public Query query = null;
+    public ArrayList<Socket> queryList = new ArrayList<Socket>();
 
     public void onEnable() {
         // 1st Startup Timer
@@ -331,6 +333,13 @@ public class mChatSuite extends JavaPlugin {
         // Ping Stats                                       `
         Stats.init(this);
 
+        // External Messaging
+        if (eBroadcast) {
+            bMessage = new BroadcastMessage(this);
+            bMessage.connect();
+            bMessage.startListener();
+        }
+
         // Add All Players To Info.yml
         if (useAddDefault)
             for (Player players : getServer().getOnlinePlayers())
@@ -367,8 +376,8 @@ public class mChatSuite extends JavaPlugin {
 
         Stats.unload();
 
-        if (query != null)
-            query.close();
+        if (eBroadcast)
+            bMessage.disconnect();
 
         getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
     }

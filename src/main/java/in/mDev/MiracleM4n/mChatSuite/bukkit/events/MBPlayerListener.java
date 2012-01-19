@@ -4,7 +4,6 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import me.desmin88.mobdisguise.MobDisguise;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -167,13 +166,10 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
 
         event.setFormat(eventFormat);
 
-        final String cMsg = msg;
-        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
-            public void run() {
-                plugin.query.sendData(cMsg);
-            }
-        }, 10L);
-
+        if (plugin.eBroadcast) {
+            plugin.bMessage.checkState();
+            plugin.bMessage.sendMessage(eventFormat);
+        }
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {

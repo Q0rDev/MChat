@@ -304,7 +304,12 @@ public class MInfoReader {
     }
 
     String getbPermGroup(String pName, String world) {
-        String group = plugin.bPermS.getPermissionSet(world).getGroups(pName).get(0);
+        List<String> groupS = plugin.bPermS.getPermissionSet(world).getGroups(pName);
+
+        if (groupS.isEmpty())
+            return "";
+
+        String group = groupS.get(0);
 
         if (group == null)
             return "";
