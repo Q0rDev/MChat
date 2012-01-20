@@ -17,8 +17,10 @@ public class BroadcastMessage {
         this.host = plugin.eBroadcastIP;
         this.port = plugin.eBroadcastPort;
     }
+    
+    public Boolean isConnected = false;
 
-    public void connect() {
+    public Boolean connect() {
         try {
             if (host.equalsIgnoreCase("ANY") || host.equalsIgnoreCase("0.0.0.0"))
                 address = new InetSocketAddress(port);
@@ -31,22 +33,27 @@ public class BroadcastMessage {
             listener.setReuseAddress(true);
 
             listener.bind(address);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            isConnected = true;
+            return true;
+        } catch (Exception ignored) {
+            return false;
         }
     }
 
     public void disconnect() {
-        try{
-            if (!listener.isClosed())
-                listener.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (isConnected)
+            try{
+                if (!listener.isClosed())
+                    listener.close();
+
+                isConnected = false;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     public void startListener() {
-        /*
         plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public void run() {
                 try {
@@ -68,29 +75,7 @@ public class BroadcastMessage {
                     e.printStackTrace();
                 }
             }
-        }, 20L, 20L);
-        */
-
-        while(!listener.isClosed()) {
-            try {
-                Socket server = null;
-                Boolean isAccepted = false;
-
-                try {
-                    server = listener.accept();
-                    isAccepted = true;
-                } catch (Exception ignored) {}
-
-                if (isAccepted) {
-                    server.setKeepAlive(true);
-                    server.setReuseAddress(true);
-
-                    plugin.queryList.add(server);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        }, 5L, 5L);
     }
 
     public void checkState() {

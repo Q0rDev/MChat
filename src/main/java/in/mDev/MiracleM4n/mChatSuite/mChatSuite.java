@@ -275,11 +275,8 @@ public class mChatSuite extends JavaPlugin {
             getServer().getLogger().log(Level.SEVERE, "|    Please read over the license.yml included in the      |");
             getServer().getLogger().log(Level.SEVERE, "|  plugins/mChatSuite directory than set \"mchat.license\"   |");
             getServer().getLogger().log(Level.SEVERE, "|         in the config.yml to true if you agree.          |");
-            getServer().getLogger().log(Level.SEVERE, "|   You will have to re-enable " + pdfFile.getName() + " or reload your   |");
-            getServer().getLogger().log(Level.SEVERE, "|         server for changes to be put into effect.        |");
+            getServer().getLogger().log(Level.SEVERE, "|   This message will continue to appear until you do so.  |");
             getServer().getLogger().log(Level.SEVERE, "------------------------------------------------------------");
-            pm.disablePlugin(this);
-            return;
         }
 
         // Setup Plugins
@@ -334,11 +331,11 @@ public class mChatSuite extends JavaPlugin {
         Stats.init(this);
 
         // External Messaging
-        if (eBroadcast) {
-            bMessage = new BroadcastMessage(this);
-            bMessage.connect();
-            bMessage.startListener();
-        }
+        bMessage = new BroadcastMessage(this);
+
+        if (eBroadcast)
+            if (bMessage.connect())
+                bMessage.startListener();
 
         // Add All Players To Info.yml
         if (useAddDefault)
