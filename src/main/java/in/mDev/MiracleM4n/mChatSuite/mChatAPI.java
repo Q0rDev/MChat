@@ -471,6 +471,10 @@ public class mChatAPI {
             if (plugin.pexPermissions.has(pName, world, node))
                 return true;
 
+        if (plugin.getServer().getPlayer(pName) != null)
+            if (plugin.getServer().getPlayer(pName).hasPermission(node))
+                return true;
+
         return false;
     }
 
