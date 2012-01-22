@@ -251,7 +251,7 @@ public class mChatSuite extends JavaPlugin {
         // Initialize Configs
         if (new File("plugins/mChat/").isDirectory()) {
            getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] Please move the files in the mChat directory to");
-           getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's than delete the mChat directory!");
+           getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's then delete the mChat directory!");
         }
 
         mConfigF = new File(getDataFolder(), "config.yml");
