@@ -220,6 +220,7 @@ public class mChatSuite extends JavaPlugin {
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
     
     // Lists
+    /*
     public ArrayList<String> meAliases = new ArrayList<String>();
     public ArrayList<String> whoAliases = new ArrayList<String>();
     public ArrayList<String> listAliases = new ArrayList<String>();
@@ -232,6 +233,7 @@ public class mChatSuite extends JavaPlugin {
     public ArrayList<String> acceptAliases = new ArrayList<String>();
     public ArrayList<String> denyAliases = new ArrayList<String>();
     public ArrayList<String> leaveAliases = new ArrayList<String>();
+    */
 
     public ArrayList<Socket> queryList = new ArrayList<Socket>();
 

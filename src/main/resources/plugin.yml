@@ -23,53 +23,65 @@ commands:
         description:
         usage: |
             /<command> *Message* - Displays message.
+        aliases: [me]
         ~permissions: mchat.me
     mchatwho:
         description:
         usage: |
             /<command> *PLAYER* - Displays info about player.
+        aliases: [who, mwho]
         ~permissions: mchat.who
     mchatlist:
         description:
         usage: |
             /<command> - See A list of online players.
+        aliases: [list, mlist, online, monline, playerlist]
         ~permissions: mchat.list
     mchatsay:
         description:
         usage: |
             /<command> *Message* - Broadcast a message.
+        aliases: [msay, say]
         ~permissions: mchat.say
     mchatafk:
         description:
         usage: |
             /<command> [REASON] - Displays you as AFK (REASON is optional).
+        aliases: [afk, mafk, maway, away]
         ~permissions: mchat.afk.self
     mchatafkother:
         description:
         usage: |
             /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
+        aliases: [afko, mafkother, mafko, mawayother, mawayo, awayother, awayo]
         ~permissions: mchat.afk.other
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
+        aliases: [pm, msg, message, m, mchattell, mtell, tell, t]
         ~permissions: mchat.pm.pm
     pmchatreply:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
+        aliases: [pmchatr, pmreply, pmr, preply, reply, r]
         ~permissions: mchat.pm.reply
     pmchatinvite:
         usage: |
             /<command> {player} - Sends a private Convo invitation to player.
+        aliases: [pmchati, pminvite, pmi, pinvite, invite]
         ~permissions: mchat.pm.invite
     pmchataccept:
         usage: |
             /<command> - Accept pending Convo.
+        aliases: [pmchata, pmaccept, pma, paccept, accept]
     pmchatdeny:
         usage: |
             /<command> - Deny pending Convo.
+        aliases: [pmchatd, pmdeny, pmd, pdeny, deny]
     pmchatleave:
         usage: |
             /<command> - Ends convo.
+        aliases: [pmchatl, pmleave, pml, pleave, leave]
 permissions:
     mchat.*:
         description: Allows full use of mChat.

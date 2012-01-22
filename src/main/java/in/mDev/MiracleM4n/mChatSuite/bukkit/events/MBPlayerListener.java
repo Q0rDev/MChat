@@ -25,6 +25,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
     @SuppressWarnings("unchecked")
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+        /*
         Integer changed = 0;
 
         HashMap<String, ArrayList<String>> mList = new HashMap<String, ArrayList<String>>();
@@ -66,13 +67,13 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
                     changed++;
                 }
             }
-        
+        */
         if (!plugin.mChatEB)
             return;
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
 
-        for (String aliases : plugin.afkAliases)
+        for (String aliases : plugin.getCommand("mchatafk").getAliases())
             if (event.getMessage().contains("/" + aliases) ||
                     event.getMessage().contains("/mchatafk"))
                 return;
@@ -321,7 +322,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
 
         plugin.getAPI().log(format);
     }
-    
+    /*
     @SuppressWarnings("unchecked")
     LinkedHashMap<String, String> sortMap(HashMap<String, String> map) {
         List list = new LinkedList(map.entrySet());
@@ -341,7 +342,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
 
         return sortedMap;
     }
-
+    */
     public void run() {}
 }
 
