@@ -34,7 +34,7 @@ public class DevilStats {
 
     private String genURL(String action) {
         StringBuilder sb = new StringBuilder();
-        sb.append("http://stats.smilingdevil.com/api?").append("action=").append(action).append("&name=").append(values.get("name")).append("&version=").append(values.get("version")).append("&author=").append(values.get("author"));
+        sb.append("http://stats.smilingdevil.com/api?").append("action=").append(action).append("&plugin=").append(values.get("name")).append("&version=").append(values.get("version")).append("&author=").append(values.get("author"));
         return sb.toString();
     }
 

@@ -32,17 +32,13 @@ public class DevilThread implements Runnable {
             if ((inputLine = in.readLine()) != null)
                 parseResults(inputLine);
             in.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
     private void parseResults(String result) {
         if (result.equals("SUCCESS")) {
             hook.log("Successfully logged startup for " + hook.getPlugin()
                     + " version " + hook.getVersion());
-        } else {
-            System.out.println(result);
-        }
+        } else {}
     }
 }

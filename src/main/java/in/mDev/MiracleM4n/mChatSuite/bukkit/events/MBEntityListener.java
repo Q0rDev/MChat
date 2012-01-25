@@ -50,7 +50,6 @@ public class MBEntityListener implements Listener {
         }
 
         if (plugin.sDeathB) {
-            System.out.println(true);
             suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI);
             subEvent.setDeathMessage("");
         } else

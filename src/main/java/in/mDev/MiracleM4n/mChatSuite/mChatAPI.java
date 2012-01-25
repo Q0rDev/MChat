@@ -546,8 +546,6 @@ public class mChatAPI {
     public void log(Object loggedObject) {
         try {
             plugin.getServer().getConsoleSender().sendMessage(loggedObject.toString());
-        } catch (IncompatibleClassChangeError ignored) {
-            System.out.println(loggedObject);
-        }
+        } catch (IncompatibleClassChangeError ignored) {}
     }
 }
