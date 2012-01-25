@@ -13,7 +13,7 @@ public class MBBlockListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(event = SignChangeEvent.class)
+    @EventHandler
     public void signChange(SignChangeEvent event) {
         if (event.isCancelled()) return;
 

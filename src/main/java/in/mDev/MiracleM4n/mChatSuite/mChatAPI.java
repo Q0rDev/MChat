@@ -260,26 +260,32 @@ public class mChatAPI {
         return replaceVars(formatAll, search, replace);
     }
 
+    @Deprecated
     public String ParseChatMessage(Player player, World world, String msg) {
         return ParseMessage(player.getName(), world.getName(), msg, plugin.chatFormat);
     }
 
+    @Deprecated
     public String ParsePlayerName(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.nameFormat);
     }
 
+    @Deprecated
     public String ParseEventName(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.eventFormat);
     }
 
+    @Deprecated
     public String ParseTabbedList(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.tabbedListFormat);
     }
 
+    @Deprecated
     public String ParseListCmd(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.listCmdFormat);
     }
 
+    @Deprecated
     public String ParseMe(Player player, World world, String msg) {
         return ParseMessage(player.getName(), world.getName(), msg, plugin.meFormat);
     }
@@ -397,6 +403,7 @@ public class mChatAPI {
         return string.replace("&&", "&");
     }
 
+    @Deprecated
     public Boolean checkPermissions(Player player, String node) {
         return checkPermissions(player.getName(), player.getWorld().getName(), node)
                 || player.hasPermission(node)
@@ -410,6 +417,7 @@ public class mChatAPI {
                 || player.isOp();
     }
 
+    @Deprecated
     public Boolean checkPermissions(Player player, String node, Boolean useOp) {
         if (checkPermissions(player.getName(), player.getWorld().getName(), node))
                 return true;
@@ -421,9 +429,21 @@ public class mChatAPI {
         return player.hasPermission(node);
     }
 
+    @Deprecated
     public Boolean checkPermissions(Player player, World world, String node, Boolean useOp) {
         if (checkPermissions(player.getName(), world.getName(), node))
                 return true;
+
+        if (useOp)
+            if (player.isOp())
+                return true;
+
+        return player.hasPermission(node);
+    }
+
+    public Boolean checkPermissions(Player player, String world, String node, Boolean useOp) {
+        if (checkPermissions(player.getName(), world, node))
+            return true;
 
         if (useOp)
             if (player.isOp())

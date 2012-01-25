@@ -20,7 +20,7 @@ public class MBEntityListener implements Listener {
 
     Boolean messageTimeout = true;
 
-    @EventHandler(event = EntityDeathEvent.class)
+    @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (!plugin.alterDMessages)
             return;
@@ -57,7 +57,7 @@ public class MBEntityListener implements Listener {
 
     }
 
-    @EventHandler(event = EntityDamageEvent.class)
+    @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (!plugin.mChatEB)
             return;
@@ -252,13 +252,13 @@ public class MBEntityListener implements Listener {
 
     void suppressDeathMessage(String pName, String pCause, String world, PlayerDeathEvent event, Integer max) {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            if (plugin.getAPI().checkPermissions(player, "mchat.bypass.suppress.death")) {
+            if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.suppress.death")) {
                 player.sendMessage(handlePlayerDeath(pName, pCause, world, event));
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max))
-                if (!plugin.getAPI().checkPermissions(player, "mchat.suppress.death"))
+                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death"))
                     player.sendMessage(handlePlayerDeath(pName, pCause, world, event));
         }
 

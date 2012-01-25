@@ -16,7 +16,7 @@ public class MBCustomListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(event = KeyPressedEvent.class)
+    @EventHandler
     public void onKeyPressedEvent(KeyPressedEvent event) {
         SpoutPlayer player = event.getPlayer();
         Keyboard key = event.getKey();

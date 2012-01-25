@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
-import org.getspout.spoutapi.event.screen.ScreenListener;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class GUIEvent implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(event = ButtonClickEvent.class)
+    @EventHandler
     public void onButtonClick(ButtonClickEvent event) {
         Player player = event.getPlayer();
         SpoutPlayer sPlayer = (SpoutPlayer) player;

@@ -24,7 +24,7 @@ public class MBPlayerListener implements Runnable, Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(event = PlayerCommandPreprocessEvent.class)
+    @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         /*
@@ -87,7 +87,7 @@ public class MBPlayerListener implements Runnable, Listener {
             player.performCommand("mafk");
     }
 
-    @EventHandler(event = PlayerChatEvent.class)
+    @EventHandler
     public void onPlayerChat(PlayerChatEvent event) {
         if (event.isCancelled())
             return;
@@ -176,7 +176,7 @@ public class MBPlayerListener implements Runnable, Listener {
         }
     }
 
-    @EventHandler(event = PlayerJoinEvent.class)
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final String world = player.getWorld().getName();
@@ -229,7 +229,7 @@ public class MBPlayerListener implements Runnable, Listener {
                 event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"));
     }
 
-    @EventHandler(event = PlayerKickEvent.class)
+    @EventHandler
     public void onPlayerKick(PlayerKickEvent event) {
         if (!plugin.alterEvents)
             return;
@@ -257,7 +257,7 @@ public class MBPlayerListener implements Runnable, Listener {
             event.setLeaveMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg);
     }
 
-    @EventHandler(event = PlayerQuitEvent.class)
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         String pName = event.getPlayer().getName();
         String world = event.getPlayer().getWorld().getName();
@@ -276,7 +276,7 @@ public class MBPlayerListener implements Runnable, Listener {
             event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage("Quit"));
     }
 
-    @EventHandler(event = PlayerInteractEvent.class)
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
@@ -294,7 +294,7 @@ public class MBPlayerListener implements Runnable, Listener {
         }
     }
 
-    @EventHandler(event = PlayerMoveEvent.class)
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
@@ -318,13 +318,13 @@ public class MBPlayerListener implements Runnable, Listener {
 
     void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
         for (Player player : plugin.getServer().getOnlinePlayers())  {
-            if (plugin.getAPI().checkPermissions(player, overrideNode)) {
+            if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), overrideNode)) {
                 player.sendMessage(format);
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max))
-                if (!plugin.getAPI().checkPermissions(player, permNode))
+                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), permNode))
                     player.sendMessage(format);
         }
 

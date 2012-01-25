@@ -40,8 +40,8 @@ public class MBECommandSender implements CommandExecutor {
                     Player player = (Player) sender;
                     World world = player.getWorld();
 
-                    if (plugin.getAPI().checkPermissions(player, "mchat.me"))
-                        plugin.getServer().broadcastMessage(plugin.getAPI().ParseMe(player, world, message));
+                    if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.me"))
+                        plugin.getServer().broadcastMessage(plugin.getAPI().ParseMe(player.getName(), world.getName(), message));
                     else
                         sender.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
 
@@ -57,7 +57,7 @@ public class MBECommandSender implements CommandExecutor {
             if (args.length > 0) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    if (!plugin.getAPI().checkPermissions(player, "mchat.who")) {
+                    if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.who")) {
                         sender.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                         return true;
                     }
@@ -84,7 +84,7 @@ public class MBECommandSender implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
-                    if (!plugin.getAPI().checkPermissions(player, "mchat.say")) {
+                    if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.say")) {
                         sender.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                         return true;
                     }
@@ -112,7 +112,7 @@ public class MBECommandSender implements CommandExecutor {
                         return true;
                 }
 
-                if (!plugin.getAPI().checkPermissions(player, "mchat.afk.self")) {
+                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.self")) {
                     player.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
@@ -135,7 +135,7 @@ public class MBECommandSender implements CommandExecutor {
 
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!plugin.getAPI().checkPermissions(player, "mchat.afk.other")) {
+                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.other")) {
                     sender.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
@@ -157,25 +157,25 @@ public class MBECommandSender implements CommandExecutor {
                         if (sPlayers.isSpoutCraftEnabled())
                             sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption("notAFK"), Material.PAPER);
                         else
-                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget, afkTarget.getWorld()) + " " + plugin.getLocale().getOption("notAFK"));
+                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()) + " " + plugin.getLocale().getOption("notAFK"));
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget, afkTarget.getWorld()));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget, afkTarget.getWorld()) + " " + plugin.getLocale().getOption("notAFK"));
+                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()) + " " + plugin.getLocale().getOption("notAFK"));
 
                 afkTarget.setSleepingIgnored(false);
                 plugin.isAFK.put(afkTarget.getName(), false);
 
                 if (plugin.useAFKList)
-                    if (plugin.getAPI().ParseTabbedList(afkTarget, afkTarget.getWorld()).length() > 15) {
-                        String pLName = plugin.getAPI().ParseTabbedList(afkTarget, afkTarget.getWorld());
+                    if (plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()).length() > 15) {
+                        String pLName = plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName());
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.getAPI().ParseTabbedList(afkTarget, afkTarget.getWorld()));
+                        afkTarget.setPlayerListName(plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
 
                 return true;
             } else {
@@ -186,33 +186,33 @@ public class MBECommandSender implements CommandExecutor {
                         if (sPlayers.isSpoutCraftEnabled())
                             sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption("isAFK"), Material.PAPER);
                         else
-                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget, afkTarget.getWorld()) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
+                            players.sendMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget, afkTarget.getWorld()));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getLocale().getOption("AFK") + " -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget, afkTarget.getWorld()) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
+                    plugin.getServer().broadcastMessage(plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()) + " " + plugin.getLocale().getOption("isAFK") + " [" + message + " ]");
 
                 afkTarget.setSleepingIgnored(true);
                 plugin.isAFK.put(afkTarget.getName(), true);
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget, afkTarget.getWorld()))).length() > 15) {
-                        String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget, afkTarget.getWorld()));
+                    if ((plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()))).length() > 15) {
+                        String pLName = plugin.getAPI().addColour("[<gold>" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget, afkTarget.getWorld())));
+                        afkTarget.setPlayerListName(plugin.getAPI().addColour("<gold>[" + plugin.getLocale().getOption("AFK") + "] " + plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName())));
 
                 return true;
             }
         } else if (commandName.equalsIgnoreCase("mchatlist")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (!plugin.getAPI().checkPermissions(player, "mchat.list")) {
+                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
                     player.sendMessage(formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
@@ -238,8 +238,8 @@ public class MBECommandSender implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
-            String iVar = plugin.getInfoReader().getInfo(players, players.getWorld(), plugin.listVar);
-            String mName = plugin.getAPI().ParseListCmd(players, players.getWorld());
+            String iVar = plugin.getAPI().ParseChatMessage(players.getName(), players.getWorld().getName(), plugin.varIndicator + plugin.listVar);
+            String mName = plugin.getAPI().ParseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;
 
@@ -303,7 +303,7 @@ public class MBECommandSender implements CommandExecutor {
     }
 
     void formatWho(CommandSender sender, Player recipient) {
-        String recipientName = plugin.getAPI().ParsePlayerName(recipient, recipient.getWorld());
+        String recipientName = plugin.getAPI().ParsePlayerName(recipient.getName(), recipient.getWorld().getName());
         Integer locX = (int) recipient.getLocation().getX();
         Integer locY = (int) recipient.getLocation().getY();
         Integer locZ = (int) recipient.getLocation().getZ();

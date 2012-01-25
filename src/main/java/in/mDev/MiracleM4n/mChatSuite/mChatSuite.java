@@ -539,7 +539,7 @@ public class mChatSuite extends JavaPlugin {
 
                     if (isAFK.get(player.getName()) ||
                             lastMove.get(player.getName()) == null ||
-                            getAPI().checkPermissions(player, "mchat.bypass.afk"))
+                            getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
                         continue;
 
                     if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
@@ -561,7 +561,7 @@ public class mChatSuite extends JavaPlugin {
                 getMainConfig().reload();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (getAPI().checkPermissions(player, "mchat.bypass.afkkick"))
+                    if (getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afkkick"))
                         continue;
 
                     if (!isAFK.get(player.getName()))
