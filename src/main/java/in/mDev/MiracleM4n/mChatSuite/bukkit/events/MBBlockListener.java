@@ -1,17 +1,20 @@
 package in.mDev.MiracleM4n.mChatSuite.bukkit.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import org.bukkit.event.block.BlockListener;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MBBlockListener extends BlockListener {
+public class MBBlockListener implements Listener {
     mChatSuite plugin;
 
     public MBBlockListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
-    public void onSignChange(SignChangeEvent event) {
+    @EventHandler(event = SignChangeEvent.class)
+    public void signChange(SignChangeEvent event) {
         if (event.isCancelled()) return;
 
         if (event.getLine(0).equals("[mChat]"))

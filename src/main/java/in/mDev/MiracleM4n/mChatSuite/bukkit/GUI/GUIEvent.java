@@ -2,19 +2,22 @@ package in.mDev.MiracleM4n.mChatSuite.bukkit.GUI;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.event.screen.ScreenListener;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.io.IOException;
 
-public class GUIEvent extends ScreenListener {
+public class GUIEvent implements Listener {
     mChatSuite plugin;
 
     public GUIEvent(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
+    @EventHandler(event = ButtonClickEvent.class)
     public void onButtonClick(ButtonClickEvent event) {
         Player player = event.getPlayer();
         SpoutPlayer sPlayer = (SpoutPlayer) player;

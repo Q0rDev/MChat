@@ -4,6 +4,7 @@ import com.herocraftonline.dev.heroes.Heroes;
 
 import com.massivecraft.factions.Conf;
 
+import com.smilingdevil.devilstats.api.DevilStats;
 import de.bananaco.permissions.info.InfoReader;
 import de.bananaco.permissions.worlds.WorldPermissionsManager;
 
@@ -22,8 +23,6 @@ import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -78,9 +77,6 @@ public class mChatSuite extends JavaPlugin {
     InfoReader bInfoR;
     Boolean bPermB = false;
 
-    // mChannel
-    public Boolean mChanB = false;
-
     // MobDisguise
     public Boolean mobD = false;
 
@@ -94,6 +90,9 @@ public class mChatSuite extends JavaPlugin {
     // Vault
     Permission vPerm = null;
     Boolean vaultB = false;
+
+    // DevilStats
+    DevilStats dStats = null;
 
     // Configuration
     public YamlConfiguration mConfig = null;
@@ -334,6 +333,13 @@ public class mChatSuite extends JavaPlugin {
         // Ping Stats                                       `
         Stats.init(this);
 
+        // Setup DevilStats
+        try {
+            dStats = new DevilStats(this);
+            dStats.startup();
+        } catch (Exception ignored) {}
+
+
         // External Messaging
         bMessage = new BroadcastMessage(this);
 
@@ -377,6 +383,9 @@ public class mChatSuite extends JavaPlugin {
 
         Stats.unload();
 
+        if(dStats != null)
+            dStats.shutdown();
+
         if (eBroadcast)
             bMessage.disconnect();
 
@@ -385,23 +394,15 @@ public class mChatSuite extends JavaPlugin {
 
     void registerEvents() {
         if (!mAPIOnly) {
-            pm.registerEvent(Event.Type.PLAYER_CHAT, pListener, Priority.Normal, this);
-            pm.registerEvent(Event.Type.PLAYER_INTERACT, pListener, Priority.Normal, this);
-            pm.registerEvent(Event.Type.SIGN_CHANGE, bListener, Priority.Normal, this);
-            pm.registerEvent(Event.Type.PLAYER_JOIN, pListener, Priority.Normal, this);
+            pm.registerEvents(pListener, this);
 
-            pm.registerEvent(Event.Type.PLAYER_MOVE, pListener, Priority.Normal, this);
-            pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, pListener, Priority.Normal, this);
-            pm.registerEvent(Event.Type.ENTITY_DAMAGE, eListener, Priority.Normal, this);
+            pm.registerEvents(bListener, this);
 
-            pm.registerEvent(Event.Type.PLAYER_KICK, pListener, Priority.Normal, this);
-            pm.registerEvent(Event.Type.PLAYER_QUIT, pListener, Priority.Normal, this);
-
-            pm.registerEvent(Event.Type.ENTITY_DEATH, eListener, Priority.Normal, this);
+            pm.registerEvents(eListener, this);
 
             if (spoutB) {
-                pm.registerEvent(Event.Type.CUSTOM_EVENT, cusListener, Event.Priority.Normal, this);
-                pm.registerEvent(Event.Type.CUSTOM_EVENT, mGUIEvent, Event.Priority.Normal, this);
+                pm.registerEvents(cusListener, this);
+                pm.registerEvents(mGUIEvent, this);
             }
         }
     }
@@ -456,9 +457,6 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void setupPlugins() {
-        // Setup mChannel
-        mChanB = setupPlugin("mChannel");
-
         // Setup MobDisguise
         mobD = setupPlugin("MobDisguise");
 

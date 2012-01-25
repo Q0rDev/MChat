@@ -3,19 +3,20 @@ package in.mDev.MiracleM4n.mChatSuite.bukkit.events;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.ChatColor;
-
-import org.getspout.spoutapi.event.input.InputListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MBCustomListener extends InputListener {
+public class MBCustomListener implements Listener {
     mChatSuite plugin;
 
     public MBCustomListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
+    @EventHandler(event = KeyPressedEvent.class)
     public void onKeyPressedEvent(KeyPressedEvent event) {
         SpoutPlayer player = event.getPlayer();
         Keyboard key = event.getKey();

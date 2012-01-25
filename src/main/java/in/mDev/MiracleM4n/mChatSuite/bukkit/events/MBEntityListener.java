@@ -5,11 +5,13 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MBEntityListener extends EntityListener {
+public class MBEntityListener implements Listener {
     mChatSuite plugin;
 
     public MBEntityListener(mChatSuite plugin) {
@@ -18,6 +20,7 @@ public class MBEntityListener extends EntityListener {
 
     Boolean messageTimeout = true;
 
+    @EventHandler(event = EntityDeathEvent.class)
     public void onEntityDeath(EntityDeathEvent event) {
         if (!plugin.alterDMessages)
             return;
@@ -55,6 +58,7 @@ public class MBEntityListener extends EntityListener {
 
     }
 
+    @EventHandler(event = EntityDamageEvent.class)
     public void onEntityDamage(EntityDamageEvent event) {
         if (!plugin.mChatEB)
             return;
@@ -257,6 +261,11 @@ public class MBEntityListener extends EntityListener {
             if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player, "mchat.suppress.death"))
                     player.sendMessage(handlePlayerDeath(pName, pCause, world, event));
+        }
+
+        if (plugin.eBroadcast) {
+            plugin.bMessage.checkState();
+            plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, event));
         }
 
         plugin.getAPI().log(handlePlayerDeath(pName, pCause, world, event));

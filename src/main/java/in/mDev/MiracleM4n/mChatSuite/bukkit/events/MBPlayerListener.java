@@ -8,6 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
@@ -15,14 +17,14 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.*;
 
-public class MBPlayerListener extends PlayerListener implements Runnable {
+public class MBPlayerListener implements Runnable, Listener {
     mChatSuite plugin;
 
     public MBPlayerListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("unchecked")
+    @EventHandler(event = PlayerCommandPreprocessEvent.class)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         /*
@@ -85,6 +87,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
             player.performCommand("mafk");
     }
 
+    @EventHandler(event = PlayerChatEvent.class)
     public void onPlayerChat(PlayerChatEvent event) {
         if (event.isCancelled())
             return;
@@ -173,6 +176,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
         }
     }
 
+    @EventHandler(event = PlayerJoinEvent.class)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final String world = player.getWorld().getName();
@@ -225,6 +229,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
                 event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"));
     }
 
+    @EventHandler(event = PlayerKickEvent.class)
     public void onPlayerKick(PlayerKickEvent event) {
         if (!plugin.alterEvents)
             return;
@@ -252,6 +257,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
             event.setLeaveMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg);
     }
 
+    @EventHandler(event = PlayerQuitEvent.class)
     public void onPlayerQuit(PlayerQuitEvent event) {
         String pName = event.getPlayer().getName();
         String world = event.getPlayer().getWorld().getName();
@@ -270,6 +276,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
             event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage("Quit"));
     }
 
+    @EventHandler(event = PlayerInteractEvent.class)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
@@ -287,6 +294,7 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
         }
     }
 
+    @EventHandler(event = PlayerMoveEvent.class)
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
@@ -318,6 +326,11 @@ public class MBPlayerListener extends PlayerListener implements Runnable {
             if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player, permNode))
                     player.sendMessage(format);
+        }
+
+        if (plugin.eBroadcast) {
+            plugin.bMessage.checkState();
+            plugin.bMessage.sendMessage(format);
         }
 
         plugin.getAPI().log(format);

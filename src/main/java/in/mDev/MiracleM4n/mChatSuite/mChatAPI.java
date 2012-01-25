@@ -5,8 +5,6 @@ import com.herocraftonline.dev.heroes.hero.Hero;
 import com.herocraftonline.dev.heroes.util.Messaging;
 import com.herocraftonline.dev.heroes.util.Properties;
 
-import in.mDev.MiracleM4n.mChannel.mChannel;
-
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -44,12 +42,6 @@ public class mChatAPI {
 
         if (group == null)
             group = "";
-
-        // mChannel Vars
-        String mCName = "";
-        String mCPref = "";
-        String mCSuf = "";
-        String mCType = "";
 
         // Heroes Vars
         String hSClass = "";
@@ -131,16 +123,6 @@ public class mChatAPI {
             // Display Name
             dName = player.getDisplayName();
 
-            // Initialize mChannel Vars
-            if (plugin.mChanB) {
-                if (mChannel.API.getPlayersChannels(player)[0] != null)
-                    mCName = mChannel.API.getPlayersChannels(player)[0];
-
-                mCPref = mChannel.API.getChannelPrefix(mCName);
-                mCSuf = mChannel.API.getChannelSuffix(mCName);
-                mCType = mChannel.API.getChannelType(mCName);
-            }
-
             // Initialize Heroes Vars
             if (plugin.heroesB) {
                 Hero hero = plugin.heroes.getHeroManager().getHero(player);
@@ -215,10 +197,6 @@ public class mChatAPI {
                 vI + "totalexp," + vI + "texp," + vI + "te",
                 vI + "time," + vI + "t",
                 vI + "world," + vI + "w",
-                vI + "Cname," + vI + "Cn",
-                vI + "Cprefix," + vI + "Cp",
-                vI + "Csuffix," + vI + "Cs",
-                vI + "Ctype," + vI + "Ct",
                 vI + "Groupname," + vI + "Gname," + vI + "G",
                 vI + "HClass," + vI + "HC",
                 vI + "HExp," + vI + "HEx",
@@ -258,10 +236,6 @@ public class mChatAPI {
                 tExp,
                 time,
                 pWorld,
-                mCName,
-                mCPref,
-                mCSuf,
-                mCType,
                 plugin.getInfoReader().getGroupName(group),
                 hClass,
                 hExp,
