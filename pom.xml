@@ -20,7 +20,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.1</minecraft.version>
-        <mchat.version>R4_10</mchat.version>
+        <mchat.version>R4_11</mchat.version>
+
+        <comm.me>me</comm.me>
+        <comm.who>who, mwho</comm.who>
+        <comm.list>list, mlist, online, monline, playerlist</comm.list>
+        <comm.say>msay, say</comm.say>
+        <comm.afk>afk, mafk, maway, away</comm.afk>
+        <comm.afko>afko, mafkother, mafko, mawayother, mawayo, awayother, awayo</comm.afko>
+        <comm.pm>pm, msg, message, m, mchattell, mtell, tell, t</comm.pm>
+        <comm.reply>pmchatr, pmreply, pmr, preply, reply, r</comm.reply>
+        <comm.invite>pmchati, pminvite, pmi, pinvite, invite</comm.invite>
+        <comm.accept>pmchata, pmaccept, pma, paccept, accept</comm.accept>
+        <comm.deny>pmchatd, pmdeny, pmd, pdeny, deny</comm.deny>
+        <comm.leave>pmchatl, pmleave, pml, pleave, leave</comm.leave>
     </properties>
 
     <!-- License -->

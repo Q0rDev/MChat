@@ -15,7 +15,8 @@ public class BMBlockListener implements Listener {
 
     @EventHandler
     public void signChange(SignChangeEvent event) {
-        if (event.isCancelled()) return;
+        if (event.isCancelled())
+            return;
 
         if (event.getLine(0).equals("[mChat]"))
             if (plugin.getServer().getPlayer(event.getLine(2)) != null)
