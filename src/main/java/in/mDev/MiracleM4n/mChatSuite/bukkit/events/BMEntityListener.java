@@ -11,10 +11,10 @@ import org.bukkit.event.entity.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MBEntityListener implements Listener {
+public class BMEntityListener implements Listener {
     mChatSuite plugin;
 
-    public MBEntityListener(mChatSuite plugin) {
+    public BMEntityListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
@@ -102,7 +102,7 @@ public class MBEntityListener implements Listener {
                 Runnable runnable = new Runnable() {
                     public void run() {
                         SpoutPlayer sPlayer = (SpoutPlayer) player;
-                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(player, player.getWorld()));
+                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
                     }
                 };
 
@@ -124,9 +124,9 @@ public class MBEntityListener implements Listener {
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player, player.getWorld()) + " " + plugin.getLocale().getOption("playerDied"));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()) + " " + plugin.getLocale().getOption("playerDied"));
                             else
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player, player.getWorld()) + " " + plugin.getLocale().getOption("playerDamaged") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()) + " " + plugin.getLocale().getOption("playerDamaged") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"));
                         } else {
                             if (plugin.spoutB) {
                                 SpoutPlayer sPlayer = (SpoutPlayer) player;
@@ -157,7 +157,7 @@ public class MBEntityListener implements Listener {
 
                     plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4 * 20);
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player, player.getWorld()));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
 
                     plugin.chatt.put(player.getName(), false);
                 }

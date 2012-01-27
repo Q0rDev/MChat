@@ -8,10 +8,10 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 import java.io.File;
 import java.io.IOException;
 
-public class MCConfigListener {
+public class CensorConfig {
     mChatSuite plugin;
 
-    public MCConfigListener(mChatSuite plugin) {
+    public CensorConfig(mChatSuite plugin) {
         this.plugin = plugin;
 
         load();

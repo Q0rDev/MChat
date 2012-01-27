@@ -18,10 +18,10 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class mChatAPI {
-    static mChatSuite plugin;
+    mChatSuite plugin;
 
     public mChatAPI(mChatSuite plugin) {
-        mChatAPI.plugin = plugin;
+        this.plugin = plugin;
     }
 
     /*
@@ -561,6 +561,10 @@ public class mChatAPI {
         Random random = new Random();
 
         return random.nextInt(maxValue - minValue + 1) + minValue;
+    }
+
+    public String formatMessage(String message) {
+        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
     public void log(Object loggedObject) {

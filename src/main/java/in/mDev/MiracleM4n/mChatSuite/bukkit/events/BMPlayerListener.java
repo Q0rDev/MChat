@@ -17,59 +17,17 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.*;
 
-public class MBPlayerListener implements Runnable, Listener {
+public class BMPlayerListener implements Runnable, Listener {
     mChatSuite plugin;
 
-    public MBPlayerListener(mChatSuite plugin) {
+    public BMPlayerListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
-        /*
-        Integer changed = 0;
 
-        HashMap<String, ArrayList<String>> mList = new HashMap<String, ArrayList<String>>();
-        HashMap<String, String> sString = new HashMap<String, String>();
-
-        mList.put("mchatafk", plugin.afkAliases);
-        mList.put("mchatafkother", plugin.afkOtherAliases);
-        mList.put("mchatme", plugin.meAliases);
-        mList.put("mchatwho", plugin.whoAliases);
-        mList.put("mchatlist", plugin.listAliases);
-        mList.put("mchatsay", plugin.sayAliases);
-        mList.put("mchatafk", plugin.afkAliases);
-        mList.put("mchatafkother", plugin.afkOtherAliases);
-        mList.put("pmchatreply", plugin.replyAliases);
-        mList.put("pmchatinvite", plugin.inviteAliases);
-        mList.put("pmchataccept", plugin.acceptAliases);
-        mList.put("pmchatdeny", plugin.denyAliases);
-        mList.put("pmchatleave", plugin.leaveAliases);
-        mList.put("pmchat", plugin.pmAliases);
-
-        for (Map.Entry entry : mList.entrySet())
-            for (String alias : (ArrayList<String>) entry.getValue())
-                sString.put(alias, entry.getKey().toString());
-
-        sString = sortMap(sString);
-
-        for (Map.Entry entry : sString.entrySet())
-            if (changed == 0) {
-                if (event.getMessage().contains("/" + entry.getKey().toString())) {
-                    event.setCancelled(true);
-
-                    plugin.getCommand(entry.getValue().toString())
-                            .execute(player,
-                                    entry.getValue().toString(),
-                                    event.getMessage()
-                                            .replace("/" + entry.getKey().toString(), "")
-                                            .trim()
-                                            .split(" "));
-                    changed++;
-                }
-            }
-        */
         if (!plugin.mChatEB)
             return;
 
@@ -163,7 +121,7 @@ public class MBPlayerListener implements Runnable, Listener {
                     SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
 
                     if (sPlayer != null)
-                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer, sPlayer.getWorld()));
+                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer.getName(), sPlayer.getWorld().getName()));
                 }
             }, 7 * 20);
         }
@@ -311,7 +269,7 @@ public class MBPlayerListener implements Runnable, Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                player.sendMessage(mChatSuite.mCSender.formatMessage(plugin.getLocale().getOption("stillAFK")));
+                player.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("stillAFK")));
             } else
                 player.performCommand("mafk");
     }

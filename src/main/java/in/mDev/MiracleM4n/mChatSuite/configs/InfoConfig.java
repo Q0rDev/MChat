@@ -8,11 +8,11 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 import java.io.File;
 import java.io.IOException;
 
-public class MIConfigListener {
+public class InfoConfig {
     mChatSuite plugin;
     Boolean hasChanged = false;
 
-    public MIConfigListener(mChatSuite plugin) {
+    public InfoConfig(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

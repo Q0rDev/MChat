@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.IOException;
 //import java.util.ArrayList;
 
-public class MConfigListener {
+public class MainConfig {
     mChatSuite plugin;
     Boolean hasChanged = false;
 
-    public MConfigListener(mChatSuite plugin) {
+    public MainConfig(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

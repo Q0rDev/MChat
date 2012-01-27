@@ -8,11 +8,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class MLConfigListener {
+public class LicenseConfig {
     mChatSuite plugin;
     YamlConfiguration config;
 
-    public MLConfigListener(mChatSuite plugin) {
+    public LicenseConfig(mChatSuite plugin) {
         this.plugin = plugin;
         this.config = YamlConfiguration.loadConfiguration(new File(this.plugin.getDataFolder(), "license.yml"));
     }
@@ -67,7 +67,7 @@ public class MLConfigListener {
 
         save();
     }
-    
+
     void wipeConfig() {
         for (Map.Entry<String, Object> key : config.getValues(true).entrySet())
             config.set(key.getKey(), null);

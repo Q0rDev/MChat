@@ -7,11 +7,11 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 
 import java.io.IOException;
 
-public class MLanguageListener {
+public class LocaleConfig {
     mChatSuite plugin;
     YamlConfiguration config;
 
-    public MLanguageListener(mChatSuite plugin, YamlConfiguration config) {
+    public LocaleConfig(mChatSuite plugin, YamlConfiguration config) {
         this.plugin = plugin;
         this.config = config;
 

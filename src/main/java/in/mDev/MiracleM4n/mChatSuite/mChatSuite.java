@@ -46,13 +46,10 @@ public class mChatSuite extends JavaPlugin {
     public PluginDescriptionFile pdfFile;
 
     // Listeners
-    public static MBPlayerListener pListener;
-    public static MBEntityListener eListener;
-    public static MBBlockListener bListener;
-    public static MBCommandSender mCSender;
-    public static MBECommandSender mECSender;
-    public static MBPCommandSender mPCSender;
-    public static MBCustomListener cusListener;
+    public static BMPlayerListener pListener;
+    public static BMEntityListener eListener;
+    public static BMBlockListener bListener;
+    public static BMCustomListener cusListener;
 
     // GUI
     public static Main mGUI;
@@ -286,23 +283,18 @@ public class mChatSuite extends JavaPlugin {
         // Setup Plugins
         setupPlugins();
 
-        // Initialize Delayed Listeners
-        mCSender = new MBCommandSender(this);
-        mECSender = new MBECommandSender(this);
-        mPCSender = new MBPCommandSender(this);
-
         if (!mAPIOnly) {
             if (spoutB) {
-                cusListener = new MBCustomListener(this);
+                cusListener = new BMCustomListener(this);
 
                 mGUI = new Main(this);
                 mGUIEvent = new GUIEvent(this);
                 mPages = new Pages(this);
             }
 
-            pListener = new MBPlayerListener(this);
-            bListener = new MBBlockListener(this);
-            eListener = new MBEntityListener(this);
+            pListener = new BMPlayerListener(this);
+            bListener = new BMBlockListener(this);
+            eListener = new BMEntityListener(this);
         }
 
         // Setup Permissions
@@ -314,22 +306,8 @@ public class mChatSuite extends JavaPlugin {
         // Setup Tasks
         setupTasks();
 
-        // Register Commands
-        getCommand("mchat").setExecutor(mCSender);
-
-        getCommand("mchatme").setExecutor(mECSender);
-        getCommand("mchatwho").setExecutor(mECSender);
-        getCommand("mchatlist").setExecutor(mECSender);
-        getCommand("mchatsay").setExecutor(mECSender);
-        getCommand("mchatafk").setExecutor(mECSender);
-        getCommand("mchatafkother").setExecutor(mECSender);
-
-        getCommand("pmchat").setExecutor(mPCSender);
-        getCommand("pmchatreply").setExecutor(mPCSender);
-        getCommand("pmchatinvite").setExecutor(mPCSender);
-        getCommand("pmchataccept").setExecutor(mPCSender);
-        getCommand("pmchatdeny").setExecutor(mPCSender);
-        getCommand("pmchatleave").setExecutor(mPCSender);
+        // Setup Commands
+        setupCommands();
 
         // Ping Stats                                       `
         Stats.init(this);
@@ -362,7 +340,7 @@ public class mChatSuite extends JavaPlugin {
 
                 if (spoutB) {
                     SpoutPlayer sPlayers = (SpoutPlayer) players;
-                    sPlayers.setTitle(getAPI().ParsePlayerName(players, players.getWorld()));
+                    sPlayers.setTitle(getAPI().ParsePlayerName(players.getName(), players.getWorld().getName()));
                 }
             }
         }
@@ -528,7 +506,7 @@ public class mChatSuite extends JavaPlugin {
                 if (!mChatEB)
                     return;
 
-                if (AFKTimer < 0)
+                if (AFKTimer < 1)
                     return;
 
                 getMainConfig().reload();
@@ -555,7 +533,7 @@ public class mChatSuite extends JavaPlugin {
                 if (!mChatEB)
                     return;
 
-                if (AFKKickTimer < 0)
+                if (AFKKickTimer < 1)
                     return;
 
                 getMainConfig().reload();
@@ -574,29 +552,46 @@ public class mChatSuite extends JavaPlugin {
         }, 20L * 10, 20L * 10);
     }
 
+    void setupCommands() {
+        getCommand("mchat").setExecutor(new BMChatCommand(this));
+        getCommand("mchatafk").setExecutor(new BMChatAFKCommand(this));
+        getCommand("mchatafkother").setExecutor(new BMChatAFKOtherCommand(this));
+        getCommand("mchatlist").setExecutor(new BMChatListCommand(this));
+        getCommand("mchatme").setExecutor(new BMChatCommand(this));
+        getCommand("mchatsay").setExecutor(new BMChatSayCommand(this));
+        getCommand("mchatwho").setExecutor(new BMChatWhoCommand(this));
+
+        getCommand("pmchat").setExecutor(new BPMChatCommand(this));
+        getCommand("pmchataccept").setExecutor(new BPMChatAcceptCommand(this));
+        getCommand("pmchatdeny").setExecutor(new BPMChatDenyCommand(this));
+        getCommand("pmchatinvite").setExecutor(new BPMChatInviteCommand(this));
+        getCommand("pmchatleave").setExecutor(new BPMChatLeaveCommand(this));
+        getCommand("pmchatreply").setExecutor(new BPMChatReplyCommand(this));
+    }
+
     // Main Config (config.yml)
-    public MConfigListener getMainConfig() {
-        return new MConfigListener(this);
+    public MainConfig getMainConfig() {
+        return new MainConfig(this);
     }
 
     // Info Config (info.yml)
-    public MIConfigListener getInfoConfig() {
-        return new MIConfigListener(this);
+    public InfoConfig getInfoConfig() {
+        return new InfoConfig(this);
     }
 
     // Censor Config (censor.yml)
-    public MCConfigListener getCensorConfig() {
-        return new MCConfigListener(this);
+    public CensorConfig getCensorConfig() {
+        return new CensorConfig(this);
     }
 
     // Language Config
-    public MLanguageListener getLocale() {
-        return new MLanguageListener(this, mELocale);
+    public LocaleConfig getLocale() {
+        return new LocaleConfig(this, mELocale);
     }
 
     // License Config
-    public MLConfigListener getLicense() {
-        return new MLConfigListener(this);
+    public LicenseConfig getLicense() {
+        return new LicenseConfig(this);
     }
 
     // API

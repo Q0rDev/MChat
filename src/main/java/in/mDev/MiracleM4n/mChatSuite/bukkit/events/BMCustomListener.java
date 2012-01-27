@@ -9,10 +9,10 @@ import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MBCustomListener implements Listener {
+public class BMCustomListener implements Listener {
     mChatSuite plugin;
 
-    public MBCustomListener(mChatSuite plugin) {
+    public BMCustomListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
@@ -32,7 +32,7 @@ public class MBCustomListener implements Listener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + plugin.getAPI().addColour(plugin.getLocale().getOption("typingMessage")) + '\n' + plugin.getAPI().ParsePlayerName(player, player.getWorld()));
+            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + plugin.getAPI().addColour(plugin.getLocale().getOption("typingMessage")) + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
             plugin.chatt.put(player.getName(), true);
         }
 
@@ -41,7 +41,7 @@ public class MBCustomListener implements Listener {
                     (key.equals(backwardKey)) ||
                     (key.equals(leftKey)) ||
                     (key.equals(rightKey))) {
-                player.setTitle(plugin.getAPI().ParsePlayerName(player, player.getWorld()));
+                player.setTitle(plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
                 plugin.chatt.put(player.getName(), false);
             }
         }
