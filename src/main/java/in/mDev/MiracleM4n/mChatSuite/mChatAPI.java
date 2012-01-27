@@ -395,7 +395,15 @@ public class mChatAPI {
 
     public String removeColour(String string) {
         addColour(string);
-
+        string = string.replace("<black>", "").replace("<navy>", "")
+                .replace("<green>", "").replace("<teal>", "")
+                .replace("<red>", "").replace("<purple>", "")
+                .replace("<gold>", "").replace("<silver>", "")
+                .replace("<gray>", "").replace("<blue>", "")
+                .replace("<lime>", "").replace("<aqua>", "")
+                .replace("<rose>", "").replace("<pink>", "")
+                .replace("<yellow>", "").replace("<white>", "");
+        
         string = string.replaceAll("(§([a-fA-F0-9]))", "& $2");
 
         string = string.replaceAll("(&([a-fA-F0-9]))", "& $2");
