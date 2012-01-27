@@ -138,20 +138,7 @@ class Pinger implements Runnable {
                     URLEncoder.encode(plugins, "UTF-8"),
                     URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
 
-            String url2 = String.format("http://pluginstats.randomappdev.com/ping.php?snam=%s&sprt=%s&shsh=%s&sver=%s&spcnt=%s&pnam=%s&pmcla=%s&paut=%s&pweb=%s&pver=%s",
-                    URLEncoder.encode(plugin.getServer().getServerName(), "UTF-8"),
-                    plugin.getServer().getPort(),
-                    URLEncoder.encode(guid, "UTF-8"),
-                    URLEncoder.encode(Bukkit.getVersion(), "UTF-8"),
-                    plugin.getServer().getOnlinePlayers().length,
-                    URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"),
-                    URLEncoder.encode(plugin.getDescription().getMain(), "UTF-8"),
-                    URLEncoder.encode(authors, "UTF-8"),
-                    URLEncoder.encode(plugin.getDescription().getWebsite(), "UTF-8"),
-                    URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
-
             new URL(url).openConnection().getInputStream();
-            new URL(url2).openConnection().getInputStream();
 
             logger.log(Level.INFO, "[" + plugin.getDescription().getName() + "] Stats pinged the central server.");
         } catch (Exception ex) {

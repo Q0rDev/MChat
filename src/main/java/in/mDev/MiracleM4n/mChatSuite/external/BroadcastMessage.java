@@ -53,7 +53,7 @@ public class BroadcastMessage {
             }
     }
 
-    public void startListener() {
+    public void startListeners() {
         plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable() {
             public void run() {
                 try {

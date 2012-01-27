@@ -25,8 +25,7 @@ public class CensorConfig {
     void save() {
         try {
             plugin.mCConfig.save(plugin.mCConfigF);
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
     public void loadConfig() {

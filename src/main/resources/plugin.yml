@@ -11,14 +11,14 @@ commands:
         description:
         usage: |
             [mChat] Help Screen
-            - /<command> = See This Info.
             - /<command> reload config = Reload Config.
             - /<command> reload info = Reload Info.
-            - /<command> reload censor = Reload Info.
+            - /<command> reload censor = Reload Censor.
+            - /<command> reload locale = Reload Locale.
             - /<command> reload all = Reload All Configs.
             - /<command> user = Show Info User Help.
             - /<command> group = Show Info Group Help.
-        ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*
+        ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*, mchat.reload.*
     mchatme:
         description:
         usage: |
@@ -100,11 +100,12 @@ permissions:
             mchat.list: true
             mchat.who: true
     mchat.reload.*:
-        description: Allow usage of /mchat reload '[config/info/censor/all]'
+        description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
         children:
             mchat.reload.config: true
             mchat.reload.info: true
             mchat.reload.censor: true
+            mchat.reload.locale: true
             mchat.reload.all: true
     mchat.suppress.*:
         description: Allow usage suppression of all messages.
@@ -202,6 +203,8 @@ permissions:
         description: Allow usage of /mchat reload info
     mchat.reload.censor:
         description: Allow usage of /mchat reload censor
+    mchat.reload.locale:
+        description: Allow usage of /mchat reload locale
     mchat.reload.all:
         description: Allow usage of /mchat reload all
     mchat.coloredchat:

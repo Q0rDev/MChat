@@ -84,7 +84,7 @@ public class mChatSuite extends JavaPlugin {
     // Heroes
     Heroes heroes;
     Boolean heroesB = false;
-    
+
     // Vault
     Permission vPerm = null;
     Boolean vaultB = false;
@@ -215,23 +215,8 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
     public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
-    
-    // Lists
-    /*
-    public ArrayList<String> meAliases = new ArrayList<String>();
-    public ArrayList<String> whoAliases = new ArrayList<String>();
-    public ArrayList<String> listAliases = new ArrayList<String>();
-    public ArrayList<String> sayAliases = new ArrayList<String>();
-    public ArrayList<String> afkAliases = new ArrayList<String>();
-    public ArrayList<String> afkOtherAliases = new ArrayList<String>();
-    public ArrayList<String> pmAliases = new ArrayList<String>();
-    public ArrayList<String> replyAliases = new ArrayList<String>();
-    public ArrayList<String> inviteAliases = new ArrayList<String>();
-    public ArrayList<String> acceptAliases = new ArrayList<String>();
-    public ArrayList<String> denyAliases = new ArrayList<String>();
-    public ArrayList<String> leaveAliases = new ArrayList<String>();
-    */
 
+    // Lists
     public ArrayList<Socket> queryList = new ArrayList<Socket>();
 
     public void onEnable() {
@@ -247,8 +232,8 @@ public class mChatSuite extends JavaPlugin {
 
         // Initialize Configs
         if (new File("plugins/mChat/").isDirectory()) {
-           getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] Please move the files in the mChat directory to");
-           getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's than delete the mChat directory!");
+            getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] Please move the files in the mChat directory to");
+            getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's than delete the mChat directory!");
         }
 
         mConfigF = new File(getDataFolder(), "config.yml");
@@ -271,9 +256,11 @@ public class mChatSuite extends JavaPlugin {
 
         // Check License Boolean
         if (!licenseB) {
+            saveResource("LICENSE.txt", true);
+
             getServer().getLogger().log(Level.SEVERE, "-------------------------[" + pdfFile.getName() + "]-----------------------");
             getServer().getLogger().log(Level.SEVERE, "|    You have not yet agreed to " + pdfFile.getName() + "'s License.      |");
-            getServer().getLogger().log(Level.SEVERE, "|    Please read over the license.yml included in the      |");
+            getServer().getLogger().log(Level.SEVERE, "|    Please read over the LICENSE.txt included in the      |");
             getServer().getLogger().log(Level.SEVERE, "|  plugins/mChatSuite directory than set \"mchat.license\"   |");
             getServer().getLogger().log(Level.SEVERE, "|         in the config.yml to true if you agree.          |");
             getServer().getLogger().log(Level.SEVERE, "|   This message will continue to appear until you do so.  |");
@@ -324,7 +311,7 @@ public class mChatSuite extends JavaPlugin {
 
         if (eBroadcast)
             if (bMessage.connect())
-                bMessage.startListener();
+                bMessage.startListeners();
 
         // Add All Players To Info.yml
         if (useAddDefault)
@@ -352,7 +339,7 @@ public class mChatSuite extends JavaPlugin {
         sTime2 = new Date().getTime();
 
         // Calculate Startup Timer
-        sDiff = new Float(sTime2 - sTime1) / 1000;
+        sDiff = ((float) sTime2 - sTime1) / 1000;
 
         getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "s]");
     }
@@ -486,8 +473,6 @@ public class mChatSuite extends JavaPlugin {
         getCensorConfig().loadConfig();
 
         getLocale().checkLocale();
-
-        getLicense().load();
     }
 
     public void loadConfigs() {
@@ -496,8 +481,6 @@ public class mChatSuite extends JavaPlugin {
         getCensorConfig().load();
 
         getInfoConfig().load();
-
-        getLicense().load();
     }
 
     void setupTasks() {
@@ -513,7 +496,7 @@ public class mChatSuite extends JavaPlugin {
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (isAFK.get(player.getName()) == null)
-                            isAFK.put(player.getName(), false);
+                        isAFK.put(player.getName(), false);
 
                     if (isAFK.get(player.getName()) ||
                             lastMove.get(player.getName()) == null ||
@@ -587,11 +570,6 @@ public class mChatSuite extends JavaPlugin {
     // Language Config
     public LocaleConfig getLocale() {
         return new LocaleConfig(this, mELocale);
-    }
-
-    // License Config
-    public LicenseConfig getLicense() {
-        return new LicenseConfig(this);
     }
 
     // API

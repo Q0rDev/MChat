@@ -16,7 +16,7 @@ public class BMChatCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = null;
-
+System.out.println(sender.getName());
         if (sender instanceof Player)
             player = (Player) sender;
 
@@ -26,7 +26,16 @@ public class BMChatCommand implements CommandExecutor {
             return false;
 
         if (cmd.equalsIgnoreCase("mchat")) {
-            if (args[0].equalsIgnoreCase("gui")) {
+            if (args[0].equalsIgnoreCase("commands")) {
+                if (sender instanceof Player) {
+                    if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.commands")) {
+                        sender.sendMessage(plugin.getAPI().formatMessage("You are not allowed to view mChatSuite commands."));
+                        return true;
+                    }
+
+                    return false;
+                }
+            } else if (args[0].equalsIgnoreCase("gui")) {
                 if (sender instanceof Player) {
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.gui")) {
                         sender.sendMessage(plugin.getAPI().formatMessage("You are not to look at my fail GUI."));
@@ -73,6 +82,17 @@ public class BMChatCommand implements CommandExecutor {
 
                         plugin.getCensorConfig().load();
                         plugin.getCensorConfig().loadConfig();
+                        sender.sendMessage(plugin.getAPI().formatMessage("Censor Reloaded."));
+                        return true;
+                    } else if (args[1].equalsIgnoreCase("locale")
+                            || args[1].equalsIgnoreCase("l")) {
+                        if (sender instanceof Player)
+                            if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.reload.locale")) {
+                                sender.sendMessage(plugin.getAPI().formatMessage("You are not allowed to reload mChat."));
+                                return true;
+                            }
+
+                        plugin.getLocale().load();
                         sender.sendMessage(plugin.getAPI().formatMessage("Censor Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("all")

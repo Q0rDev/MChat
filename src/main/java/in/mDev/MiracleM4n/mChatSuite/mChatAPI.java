@@ -129,9 +129,9 @@ public class mChatAPI {
                 HeroClass heroClass = hero.getHeroClass();
                 HeroClass heroSClass = hero.getSecondClass();
 
-                int hL = Properties.getLevel(hero.getExperience());
+                int hL = Properties.getLevel(hero.getExperience(heroClass));
                 int hSL = hero.getLevel(heroSClass);
-                double hE = Properties.getExperience(hL);
+                double hE = Properties.getExp(hL);
                 double hSE = hero.getExperience(heroSClass);
 
                 hClass = hero.getHeroClass().getName();
@@ -420,7 +420,7 @@ public class mChatAPI {
     @Deprecated
     public Boolean checkPermissions(Player player, String node, Boolean useOp) {
         if (checkPermissions(player.getName(), player.getWorld().getName(), node))
-                return true;
+            return true;
 
         if (useOp)
             if (player.isOp())
@@ -432,7 +432,7 @@ public class mChatAPI {
     @Deprecated
     public Boolean checkPermissions(Player player, World world, String node, Boolean useOp) {
         if (checkPermissions(player.getName(), world.getName(), node))
-                return true;
+            return true;
 
         if (useOp)
             if (player.isOp())
@@ -541,7 +541,7 @@ public class mChatAPI {
 
         return msg;
     }
-    
+
     String replacer(String msg, String regex, String replacement) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(msg);
@@ -556,7 +556,7 @@ public class mChatAPI {
 
         return msg;
     }
-    
+
     Integer randomNumber(Integer minValue, Integer maxValue) {
         Random random = new Random();
 
