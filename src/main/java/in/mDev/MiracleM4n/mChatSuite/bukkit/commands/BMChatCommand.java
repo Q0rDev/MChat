@@ -16,7 +16,7 @@ public class BMChatCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = null;
-System.out.println(sender.getName());
+        System.out.println(sender.getName());
         if (sender instanceof Player)
             player = (Player) sender;
 
@@ -32,7 +32,7 @@ System.out.println(sender.getName());
                         sender.sendMessage(plugin.getAPI().formatMessage("You are not allowed to view mChatSuite commands."));
                         return true;
                     }
-
+                    System.out.println(sender.getName());
                     return false;
                 }
             } else if (args[0].equalsIgnoreCase("gui")) {

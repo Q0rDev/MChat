@@ -7,7 +7,7 @@ thread: http://forums.bukkit.org/threads/22958/
 softdepend: [Permissions, GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
 description: Full mChat Suite
 commands:
-    mchat:
+    ${comm.mchat}:
         description:
         usage: |
             [mChat] Help Screen
@@ -18,70 +18,71 @@ commands:
             - /<command> reload all = Reload All Configs.
             - /<command> user = Show Info User Help.
             - /<command> group = Show Info Group Help.
+        aliases: [${alias.mchat}]
         ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*, mchat.reload.*
-    mchatme:
+    ${comm.me}:
         description:
         usage: |
             /<command> *Message* - Displays message.
-        aliases: [${comm.me}]
+        aliases: [${alias.me}]
         ~permissions: mchat.me
-    mchatwho:
+    ${comm.who}:
         description:
         usage: |
             /<command> *PLAYER* - Displays info about player.
-        aliases: [${comm.who}]
+        aliases: [${alias.who}]
         ~permissions: mchat.who
-    mchatlist:
+    ${comm.list}:
         description:
         usage: |
             /<command> - See A list of online players.
-        aliases: [${comm.list}]
+        aliases: [${alias.list}]
         ~permissions: mchat.list
-    mchatsay:
+    ${comm.say}:
         description:
         usage: |
             /<command> *Message* - Broadcast a message.
-        aliases: [${comm.say}]
+        aliases: [${alias.say}]
         ~permissions: mchat.say
-    mchatafk:
+    ${comm.afk}:
         description:
         usage: |
             /<command> [REASON] - Displays you as AFK (REASON is optional).
-        aliases: [${comm.afk}]
+        aliases: [${alias.afk}]
         ~permissions: mchat.afk.self
-    mchatafkother:
+    ${comm.afko}:
         description:
         usage: |
             /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
-        aliases: [${comm.afko}]
+        aliases: [${alias.afko}]
         ~permissions: mchat.afk.other
-    pmchat:
+    ${comm.pm}:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
-        aliases: [${comm.pm}]
+        aliases: [${alias.pm}]
         ~permissions: mchat.pm.pm
-    pmchatreply:
+    ${comm.reply}:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
-        aliases: [${comm.reply}]
+        aliases: [${alias.reply}]
         ~permissions: mchat.pm.reply
-    pmchatinvite:
+    ${comm.invite}:
         usage: |
             /<command> {player} - Sends a private Convo invitation to player.
-        aliases: [${comm.invite}]
+        aliases: [${alias.invite}]
         ~permissions: mchat.pm.invite
-    pmchataccept:
+    ${comm.accept}:
         usage: |
             /<command> - Accept pending Convo.
-        aliases: [${comm.accept}]
-    pmchatdeny:
+        aliases: [${alias.accept}]
+    ${comm.deny}:
         usage: |
             /<command> - Deny pending Convo.
-        aliases: [${comm.deny}]
-    pmchatleave:
+        aliases: [${alias.deny}]
+    ${comm.leave}:
         usage: |
             /<command> - Ends convo.
-        aliases: [${comm.leave}]
+        aliases: [${alias.leave}]
 permissions:
     mchat.*:
         description: Allows full use of mChat.

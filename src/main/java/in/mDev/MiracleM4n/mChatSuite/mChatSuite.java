@@ -22,6 +22,7 @@ import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 
 import org.bukkit.Location;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -256,11 +257,11 @@ public class mChatSuite extends JavaPlugin {
 
         // Check License Boolean
         if (!licenseB) {
-            saveResource("LICENSE.txt", true);
+            saveResource("LICENCE.txt", true);
 
             getServer().getLogger().log(Level.SEVERE, "-------------------------[" + pdfFile.getName() + "]-----------------------");
             getServer().getLogger().log(Level.SEVERE, "|    You have not yet agreed to " + pdfFile.getName() + "'s License.      |");
-            getServer().getLogger().log(Level.SEVERE, "|    Please read over the LICENSE.txt included in the      |");
+            getServer().getLogger().log(Level.SEVERE, "|    Please read over the LICENCE.txt included in the      |");
             getServer().getLogger().log(Level.SEVERE, "|  plugins/mChatSuite directory than set \"mchat.license\"   |");
             getServer().getLogger().log(Level.SEVERE, "|         in the config.yml to true if you agree.          |");
             getServer().getLogger().log(Level.SEVERE, "|   This message will continue to appear until you do so.  |");
@@ -536,20 +537,25 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void setupCommands() {
-        getCommand("mchat").setExecutor(new BMChatCommand(this));
-        getCommand("mchatafk").setExecutor(new BMChatAFKCommand(this));
-        getCommand("mchatafkother").setExecutor(new BMChatAFKOtherCommand(this));
-        getCommand("mchatlist").setExecutor(new BMChatListCommand(this));
-        getCommand("mchatme").setExecutor(new BMChatCommand(this));
-        getCommand("mchatsay").setExecutor(new BMChatSayCommand(this));
-        getCommand("mchatwho").setExecutor(new BMChatWhoCommand(this));
+        regCommands("mchat", new BMChatCommand(this));
+        regCommands("mchatafk", new BMChatAFKCommand(this));
+        regCommands("mchatafkother", new BMChatAFKOtherCommand(this));
+        regCommands("mchatlist", new BMChatListCommand(this));
+        regCommands("mchatme", new BMChatMeCommand(this));
+        regCommands("mchatsay", new BMChatSayCommand(this));
+        regCommands("mchatwho", new BMChatWhoCommand(this));
 
-        getCommand("pmchat").setExecutor(new BPMChatCommand(this));
-        getCommand("pmchataccept").setExecutor(new BPMChatAcceptCommand(this));
-        getCommand("pmchatdeny").setExecutor(new BPMChatDenyCommand(this));
-        getCommand("pmchatinvite").setExecutor(new BPMChatInviteCommand(this));
-        getCommand("pmchatleave").setExecutor(new BPMChatLeaveCommand(this));
-        getCommand("pmchatreply").setExecutor(new BPMChatReplyCommand(this));
+        regCommands("pmchat", new BPMChatCommand(this));
+        regCommands("pmchataccept", new BPMChatAcceptCommand(this));
+        regCommands("pmchatdeny", new BPMChatDenyCommand(this));
+        regCommands("pmchatinvite", new BPMChatInviteCommand(this));
+        regCommands("pmchatleave", new BPMChatLeaveCommand(this));
+        regCommands("pmchatreply", new BPMChatReplyCommand(this));
+    }
+    
+    void regCommands(String command, CommandExecutor executor) {
+        if (getCommand(command) != null)
+            getCommand(command).setExecutor(executor);
     }
 
     // Main Config (config.yml)
