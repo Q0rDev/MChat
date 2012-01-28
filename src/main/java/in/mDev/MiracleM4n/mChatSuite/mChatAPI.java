@@ -131,7 +131,7 @@ public class mChatAPI {
 
                 int hL = Properties.getLevel(hero.getExperience(heroClass));
                 int hSL = hero.getLevel(heroSClass);
-                double hE = Properties.getExperience(hL);
+                double hE = Properties.getExp(hL);
                 double hSE = hero.getExperience(heroSClass);
 
                 hClass = hero.getHeroClass().getName();

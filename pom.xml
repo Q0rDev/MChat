@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.1</minecraft.version>
-        <mchat.version>R4_12</mchat.version>
+        <mchat.version>R4_13</mchat.version>
 
         <comm.mchat>mchat</comm.mchat>
         <comm.me>mchatme</comm.me>
@@ -36,7 +36,7 @@
         <comm.deny>pmchatdeny</comm.deny>
         <comm.leave>pmchatleave</comm.leave>
 
-        <alias.mchat>me</alias.mchat>
+        <alias.mchat>mchatsuite</alias.mchat>
         <alias.me>me</alias.me>
         <alias.who>who, mwho</alias.who>
         <alias.list>list, mlist, online, monline, playerlist</alias.list>
