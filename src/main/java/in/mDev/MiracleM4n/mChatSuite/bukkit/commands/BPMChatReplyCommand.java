@@ -48,9 +48,6 @@ public class BPMChatReplyCommand implements CommandExecutor {
                 final String senderName = plugin.getAPI().ParsePlayerName(pName, world);
                 player.sendMessage(formatPMSend(rName, message));
 
-                if (plugin.lastPMd != null)
-                    plugin.lastPMd.remove(pName);
-
                 plugin.lastPMd.put(rName, pName);
                 if (plugin.spoutB) {
                     if (plugin.spoutPM) {

@@ -74,7 +74,7 @@ public class BMChatListCommand implements CommandExecutor {
             if (collapsed)
                 continue;
 
-            if (plugin.isAFK.get(players.getName()))
+            if (plugin.isAFK.get(players.getName()) != null && plugin.isAFK.get(players.getName()))
                 if (msg.contains(iVar + ": &f"))
                     msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + plugin.getLocale().getOption("AFK") + "]" + mName + "&f, &f");
                 else
