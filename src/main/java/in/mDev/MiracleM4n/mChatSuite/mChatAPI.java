@@ -510,23 +510,25 @@ public class mChatAPI {
     String replaceCustVars(String pName, String format) {
         SortedMap<String, String> cVarMap = plugin.cVarMap;
 
+        String rFormat = format;
+
         for (Entry<String, String> entry : cVarMap.entrySet()) {
             String pKey = plugin.cusVarIndicator + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
-            if (format.contains(pKey))
-                format = format.replace(pKey, value);
+            if (rFormat.contains(pKey))
+                rFormat = rFormat.replace(pKey, value);
         }
 
         for (Entry<String, String> entry : cVarMap.entrySet()) {
             String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 
-            if (format.contains(gKey))
-                format = format.replace(gKey, value);
+            if (rFormat.contains(gKey))
+                rFormat = rFormat.replace(gKey, value);
         }
 
-        return format;
+        return rFormat;
     }
 
     String replaceCensoredWords(String msg) {
