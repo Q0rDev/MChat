@@ -19,9 +19,11 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class mChatAPI {
     mChatSuite plugin;
+    SortedMap<String, String> varMap;
 
     public mChatAPI(mChatSuite plugin) {
         this.plugin = plugin;
+        this.varMap = plugin.cVarMap;
     }
 
     /*
@@ -508,27 +510,26 @@ public class mChatAPI {
     }
 
     String replaceCustVars(String pName, String format) {
-        SortedMap<String, String> cVarMap = plugin.cVarMap;
+        SortedMap<String, String> gVarMap = varMap;
+        SortedMap<String, String> pVarMap = varMap;
 
-        String rFormat = format;
-
-        for (Entry<String, String> entry : cVarMap.entrySet()) {
+        for (Entry<String, String> entry : pVarMap.entrySet()) {
             String pKey = plugin.cusVarIndicator + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
-            if (rFormat.contains(pKey))
-                rFormat = rFormat.replace(pKey, value);
+            if (format.contains(pKey))
+                format = format.replace(pKey, value);
         }
 
-        for (Entry<String, String> entry : cVarMap.entrySet()) {
+        for (Entry<String, String> entry : gVarMap.entrySet()) {
             String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 
-            if (rFormat.contains(gKey))
-                rFormat = rFormat.replace(gKey, value);
+            if (format.contains(gKey))
+                format = format.replace(gKey, value);
         }
 
-        return rFormat;
+        return format;
     }
 
     String replaceCensoredWords(String msg) {
