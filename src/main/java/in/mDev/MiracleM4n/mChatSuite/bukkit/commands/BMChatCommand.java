@@ -32,8 +32,30 @@ public class BMChatCommand implements CommandExecutor {
                         sender.sendMessage(plugin.getAPI().formatMessage("You are not allowed to view mChatSuite commands."));
                         return true;
                     }
+
                     System.out.println(sender.getName());
-                    return false;
+                    return true;
+                }
+            } else if (args[0].equalsIgnoreCase("version")) {
+                if (sender instanceof Player) {
+                    if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.version")) {
+                        sender.sendMessage(plugin.getAPI().formatMessage("You are not to view the version of mChatSuite."));
+                        return true;
+                    }
+                    String cVersion = "&6MineCraft Version: &2" + plugin.pdfFile.getVersion();
+
+                    cVersion = cVersion.replaceFirst("-", "^*^&6Jenkins Build&5#&5: &2");
+                    cVersion = cVersion.replaceFirst("-", "^*^&6Release Version: &2");
+                    cVersion = cVersion.replaceFirst("_", "^*^&6Fix&5#&5: &2");
+                    
+                    String[] vArray = cVersion.split("\\^\\*\\^");
+
+                    sender.sendMessage(plugin.getAPI().formatMessage("&6Full Version: &1" + plugin.pdfFile.getVersion()));
+
+                    for (String string : vArray)
+                        sender.sendMessage(plugin.getAPI().formatMessage(string));
+
+                    return true;
                 }
             } else if (args[0].equalsIgnoreCase("gui")) {
                 if (sender instanceof Player) {

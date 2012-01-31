@@ -18,6 +18,7 @@ commands:
             - /<command> reload all = Reload All Configs.
             - /<command> user = Show Info User Help.
             - /<command> group = Show Info Group Help.
+            - /<command> version = Show mChatSuite Version.
         aliases: [${alias.mchat}]
         ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*, mchat.reload.*
     ${comm.me}:
@@ -100,6 +101,7 @@ permissions:
             mchat.me: true
             mchat.list: true
             mchat.who: true
+            mchat.version: true
     mchat.reload.*:
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
         children:
@@ -224,6 +226,8 @@ permissions:
         description: Allow use of the /mchatlist command.
     mchat.who:
         description: Allow use of the /mchatwho command.
+    mchat.version:
+        description: Allow use of the /mchat version command.
     mchat.suppress.join:
         description: Allow suppression of the mChat Join Messages.
     mchat.suppress.quit:
