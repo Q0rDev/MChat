@@ -40,6 +40,11 @@ public class BPMChatReplyCommand implements CommandExecutor {
                 String rName = plugin.lastPMd.get(pName);
                 Player recipient = plugin.getServer().getPlayer(rName);
 
+                if (recipient == null) {
+                    player.sendMessage(formatPMessage(plugin.getAPI().addColour("PM Recipient is offline.")));
+                    return true;
+                }
+
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.reply")) {
                     player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not allowed to use PM reply functions.")));
                     return true;

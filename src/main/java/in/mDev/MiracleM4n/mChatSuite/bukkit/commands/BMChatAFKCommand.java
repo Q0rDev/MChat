@@ -27,26 +27,26 @@ public class BMChatAFKCommand implements CommandExecutor {
                     message += " " + arg;
             }
 
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-
-                if (plugin.isAFK.get(player.getName()) != null)
-                    if (plugin.isAFK.get(player.getName())) {
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + player.getName());
-                        return true;
-                    }
-
-                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.self")) {
-                    player.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
-                    return true;
-                }
-
-                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender.getName() + message);
-                return true;
-            } else {
+            if (!(sender instanceof Player)) {
                 plugin.getAPI().log(plugin.getAPI().formatMessage("Console's can't be AFK."));
                 return true;
             }
+
+            Player player = (Player) sender;
+
+            if (plugin.isAFK.get(player.getName()) != null)
+                if (plugin.isAFK.get(player.getName())) {
+                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + player.getName());
+                    return true;
+                }
+
+            if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.self")) {
+                player.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                return true;
+            }
+
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender.getName() + message);
+            return true;
         }
 
         return false;

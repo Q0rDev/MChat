@@ -49,7 +49,7 @@ public class BMChatListCommand implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
-            String iVar = plugin.getAPI().ParseChatMessage(players.getName(), players.getWorld().getName(), plugin.varIndicator + plugin.listVar);
+            String iVar = plugin.getAPI().ParseMessage(players.getName(), players.getWorld().getName(), "", plugin.varIndicator + plugin.listVar);
             String mName = plugin.getAPI().ParseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;

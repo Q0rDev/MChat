@@ -3,6 +3,8 @@ package in.mDev.MiracleM4n.mChatSuite;
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 
+import de.bananaco.bpermissions.api.ApiLayer;
+import de.bananaco.bpermissions.api.util.CalculableType;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 
 import org.bukkit.World;
@@ -294,7 +296,7 @@ public class MInfoReader {
         if (info.equals("group"))
             return getbPermGroup(pName, world);
 
-        String userString = plugin.bInfoR.getValue(pName, world, info);
+        String userString = ApiLayer.getValue(world, CalculableType.USER, pName, info);
 
         if (userString != null)
             if (!userString.isEmpty())
@@ -304,15 +306,17 @@ public class MInfoReader {
     }
 
     String getbPermGroup(String pName, String world) {
-        List<String> groupS = plugin.bPermS.getPermissionSet(world).getGroups(pName);
+        String[] groupS = ApiLayer.getGroups(world, CalculableType.GROUP, pName);
 
-        if (groupS.isEmpty())
+        if (groupS.length == 0)
             return "";
 
-        String group = groupS.get(0);
+        String group = "";
 
-        if (group == null)
-            return "";
+        for (String g : groupS) {
+            group = g;
+            break;
+        }
 
         return group;
     }

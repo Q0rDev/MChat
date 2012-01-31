@@ -6,9 +6,6 @@ import com.massivecraft.factions.Conf;
 
 import com.smilingdevil.devilstats.api.DevilStats;
 
-import de.bananaco.permissions.info.InfoReader;
-import de.bananaco.permissions.worlds.WorldPermissionsManager;
-
 import in.mDev.MiracleM4n.mChatSuite.bukkit.GUI.*;
 import in.mDev.MiracleM4n.mChatSuite.bukkit.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
@@ -72,8 +69,6 @@ public class mChatSuite extends JavaPlugin {
     Boolean PermissionBuB = false;
 
     // bPermissions
-    WorldPermissionsManager bPermS;
-    InfoReader bInfoR;
     Boolean bPermB = false;
 
     // MobDisguise
@@ -387,8 +382,6 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("bPermissions");
         if (permTest != null) {
             bPermB = true;
-            bInfoR = de.bananaco.permissions.Permissions.getInfoReader();
-            bPermS = de.bananaco.permissions.Permissions.getWorldPermissionsManager();
             getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
