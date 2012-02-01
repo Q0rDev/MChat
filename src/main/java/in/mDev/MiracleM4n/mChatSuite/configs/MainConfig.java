@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 
 import java.io.File;
 import java.io.IOException;
-//import java.util.ArrayList;
 
 public class MainConfig {
     mChatSuite plugin;

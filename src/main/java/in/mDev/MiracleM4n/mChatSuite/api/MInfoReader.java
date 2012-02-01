@@ -1,19 +1,20 @@
-package in.mDev.MiracleM4n.mChatSuite;
+package in.mDev.MiracleM4n.mChatSuite.api;
 
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
+
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class MInfoReader {
@@ -306,17 +307,18 @@ public class MInfoReader {
     }
 
     String getbPermGroup(String pName, String world) {
-        String[] groupS = ApiLayer.getGroups(world, CalculableType.GROUP, pName);
+        List<String> groupS = new ArrayList<String>();
 
-        if (groupS.length == 0)
+        Collections.addAll(groupS, ApiLayer.getGroups(world, CalculableType.GROUP, pName));
+
+        if (groupS.size() == 0)
             return "";
 
         String group = "";
 
-        for (String g : groupS) {
-            group = g;
-            break;
-        }
+        try {
+            group = groupS.get(0);
+        } catch(Exception ignored) {}
 
         return group;
     }

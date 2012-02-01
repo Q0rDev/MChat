@@ -6,7 +6,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- *
  * @author SmilingDevil
  */
 public class DevilThread implements Runnable {
@@ -17,10 +16,8 @@ public class DevilThread implements Runnable {
     /**
      * Handles the HTTP connection to the webserver
      *
-     * @param url
-     *            Generated url to connect to
-     * @param hook
-     *            Hook to main class
+     * @param url  Generated url to connect to
+     * @param hook Hook to main class
      */
     public DevilThread(String url, DevilStats hook) {
         this._url = url;
@@ -54,15 +51,14 @@ public class DevilThread implements Runnable {
     /**
      * Parses result of the query to the stats server
      *
-     * @param result
-     *            Result of the query
+     * @param result Result of the query
      */
     private void parseResults(String result) {
         // Check for success
         if (result.equals("SUCCESS")) {
             if (hook.showHookedMessage) {
                 // Success
-                hook.log("Successfully logged startup for " + hook.getPlugin()
+                hook.log("Successfully logged " + hook.getPlugin()
                         + " version " + hook.getVersion());
             }
             // Check for missing information
@@ -78,6 +74,7 @@ public class DevilThread implements Runnable {
             // Other unhandled errors, possibly HTTP errors?
             hook.log("DevilStats couldn't handle the returned value from the server.");
             hook.log("Value: " + result);
+            hook.log("Please report this problem to SmilingDevil!");
         }
     }
 }

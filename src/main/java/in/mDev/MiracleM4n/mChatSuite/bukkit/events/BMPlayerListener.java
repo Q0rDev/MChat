@@ -160,7 +160,7 @@ public class BMPlayerListener implements Runnable, Listener {
         // For Lazy People
         if (plugin.useAddDefault)
             if (plugin.mIConfig.get("users." + pName) == null)
-                plugin.getInfoWriter().addPlayer(pName, plugin.mIDefaultGroup);
+                plugin.getInfoWriter().addBase(pName, plugin.mIDefaultGroup);
 
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {

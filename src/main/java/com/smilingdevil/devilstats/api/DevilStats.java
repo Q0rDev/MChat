@@ -1,14 +1,13 @@
 package com.smilingdevil.devilstats.api;
 
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
-@SuppressWarnings("unused")
 public class DevilStats {
 
     private JavaPlugin plugin;
@@ -25,12 +24,9 @@ public class DevilStats {
     protected boolean showHookedMessage = true;
 
     /**
-     *
-     * @param plugin
-     *            Reference to the parent class
-     * @throws Exception
-     *             In the case that the parent class didn't give a value or a
-     *             null value
+     * @param plugin Reference to the parent class
+     * @throws Exception In the case that the parent class didn't give a value or a
+     *                   null value
      */
     public DevilStats(JavaPlugin plugin) throws Exception {
         if (plugin != null) {
@@ -48,8 +44,7 @@ public class DevilStats {
     /**
      * Logs a string to the console
      *
-     * @param s
-     *            String to log
+     * @param s String to log
      */
     protected void log(String s) {
         Logger log = Logger.getLogger("Minecraft");
@@ -59,10 +54,8 @@ public class DevilStats {
     /**
      * Generate a URL for internal use only.
      *
-     * @param action
-     *            Action to input to the URL
-     * @return
-     * 			  Returns the URL
+     * @param action Action to input to the URL
+     * @return Returns the URL
      */
     private String genURL(String action) {
         StringBuilder sb = new StringBuilder();
@@ -75,13 +68,17 @@ public class DevilStats {
                 sb.append("&data=players:");
                 Player[] players = plugin.getServer().getOnlinePlayers();
                 for (int i = 0; i < players.length; i++) {
-                    if ((i + 1) > players.length)
-                        sb.append("," + players[i]);
-                    else
+                    if ((i + 1) > players.length) {
+                        sb.append(",");
+                        sb.append(players[i]);
+                    } else {
                         sb.append("," + players[i] + ",");
+                    }
+
                 }
             } else {
-                sb.append("&data=players-length:"+plugin.getServer().getOnlinePlayers().length);
+                sb.append("&data=players-length:");
+                sb.append(plugin.getServer().getOnlinePlayers().length);
             }
         }
         return sb.toString();
@@ -90,20 +87,16 @@ public class DevilStats {
     /**
      * Enables / Disables the hook message on startup
      *
-     * @param value
-     *            Enables / Disables the message
+     * @param value Enables / Disables the message
      */
     public void showHookedMessage(boolean value) {
         this.showHookedMessage = value;
     }
 
     /**
-     *
-     * @param value
-     *            Change value if we want to send player statistics about the
-     *            server.
-     * @param detailed
-     *            Send usernames of players to statistics server?
+     * @param value    Change value if we want to send player statistics about the
+     *                 server.
+     * @param detailed Send usernames of players to statistics server?
      */
     public void sendPlayers(boolean value, boolean detailed) {
         this.sendPlayers = value;

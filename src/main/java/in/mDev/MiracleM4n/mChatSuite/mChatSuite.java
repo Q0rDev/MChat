@@ -6,10 +6,15 @@ import com.massivecraft.factions.Conf;
 
 import com.smilingdevil.devilstats.api.DevilStats;
 
+import in.mDev.MiracleM4n.mChatSuite.api.MInfoReader;
+import in.mDev.MiracleM4n.mChatSuite.api.MInfoWriter;
+import in.mDev.MiracleM4n.mChatSuite.api.mChatAPI;
+
 import in.mDev.MiracleM4n.mChatSuite.bukkit.GUI.*;
 import in.mDev.MiracleM4n.mChatSuite.bukkit.commands.*;
-import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.bukkit.events.*;
+
+import in.mDev.MiracleM4n.mChatSuite.configs.*;
 
 import in.mDev.MiracleM4n.mChatSuite.external.BroadcastMessage;
 
@@ -58,32 +63,32 @@ public class mChatSuite extends JavaPlugin {
     public BroadcastMessage bMessage;
 
     // GroupManager
-    WorldsHolder gmPermissionsWH;
-    Boolean gmPermissionsB = false;
+    public WorldsHolder gmPermissionsWH;
+    public Boolean gmPermissionsB = false;
 
     // PermissionsEX
-    PermissionManager pexPermissions;
-    Boolean PEXB = false;
+    public PermissionManager pexPermissions;
+    public Boolean PEXB = false;
 
     // PermissionsBukkit
-    Boolean PermissionBuB = false;
+    public Boolean PermissionBuB = false;
 
     // bPermissions
-    Boolean bPermB = false;
+    public Boolean bPermB = false;
 
     // MobDisguise
     public Boolean mobD = false;
 
     // Factions
-    Boolean factionsB = false;
+    public Boolean factionsB = false;
 
     // Heroes
-    Heroes heroes;
-    Boolean heroesB = false;
+    public Heroes heroes;
+    public Boolean heroesB = false;
 
     // Vault
-    Permission vPerm = null;
-    Boolean vaultB = false;
+    public Permission vPerm;
+    public Boolean vaultB = false;
 
     // DevilStats
     DevilStats dStats = null;
@@ -313,7 +318,7 @@ public class mChatSuite extends JavaPlugin {
         if (useAddDefault)
             for (Player players : getServer().getOnlinePlayers())
                 if (mIConfig.get("users." + players.getName()) == null)
-                    getInfoWriter().addPlayer(players.getName(), mIDefaultGroup);
+                    getInfoWriter().addBase(players.getName(), mIDefaultGroup);
 
         if (mChatEB) {
             for (Player players : getServer().getOnlinePlayers()) {
