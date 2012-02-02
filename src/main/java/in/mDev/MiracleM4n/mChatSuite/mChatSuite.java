@@ -208,6 +208,7 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
+    public HashMap<String, Boolean> isShouting = new HashMap<String, Boolean>();
 
     public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
@@ -542,6 +543,7 @@ public class mChatSuite extends JavaPlugin {
         regCommands("mchatme", new BMChatMeCommand(this));
         regCommands("mchatsay", new BMChatSayCommand(this));
         regCommands("mchatwho", new BMChatWhoCommand(this));
+        regCommands("mchatshout", new BMChatShoutCommand(this));
 
         regCommands("pmchat", new BPMChatCommand(this));
         regCommands("pmchataccept", new BPMChatAcceptCommand(this));

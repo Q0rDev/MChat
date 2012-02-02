@@ -93,6 +93,16 @@ public class mChatAPI {
 
         // Display Name
         String dName = pName;
+        
+        // Chat Distance Type
+        String dType = "";
+
+        if (plugin.isShouting.get(pName) != null
+                && plugin.isShouting.get(pName)) {
+            dType = "[Shout]";
+        } else if (plugin.chatDistance > 0) {
+            dType = "[L]";
+        }
 
         // Player Object Stuff
         if (plugin.getServer().getPlayer(pName) != null)  {
@@ -183,6 +193,7 @@ public class mChatAPI {
 
         search = new String[]{
                 vI + "mnameformat," + vI + "mnf",
+                vI + "distancetype," + vI + "dtype",
                 vI + "displayname," + vI + "dname," + vI + "dn",
                 vI + "experiencebar," + vI + "expb," + vI + "ebar," + vI + "eb",
                 vI + "experience," + vI + "exp",
@@ -222,6 +233,7 @@ public class mChatAPI {
 
         replace = new String[]{
                 plugin.nameFormat,
+                dType,
                 dName,
                 expBar,
                 exp,

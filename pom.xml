@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.1</minecraft.version>
-        <mchat.version>R6_2</mchat.version>
+        <mchat.version>R6_3</mchat.version>
 
         <comm.mchat>mchat</comm.mchat>
         <comm.me>mchatme</comm.me>
@@ -29,6 +29,7 @@
         <comm.say>mchatsay</comm.say>
         <comm.afk>mchatafk</comm.afk>
         <comm.afko>mchatafkother</comm.afko>
+        <comm.shout>mchatshout</comm.shout>
         <comm.pm>pmchat</comm.pm>
         <comm.reply>pmchatreply</comm.reply>
         <comm.invite>pmchatinvite</comm.invite>
@@ -43,6 +44,7 @@
         <alias.say>msay, say</alias.say>
         <alias.afk>afk, mafk, maway, away</alias.afk>
         <alias.afko>afko, mafkother, mafko, mawayother, mawayo, awayother, awayo</alias.afko>
+        <alias.shout>shout, yell</alias.shout>
         <alias.pm>pm, msg, message, m, mchattell, mtell, tell, t</alias.pm>
         <alias.reply>pmchatr, pmreply, pmr, preply, reply, r</alias.reply>
         <alias.invite>pmchati, pminvite, pmi, pinvite, invite</alias.invite>
