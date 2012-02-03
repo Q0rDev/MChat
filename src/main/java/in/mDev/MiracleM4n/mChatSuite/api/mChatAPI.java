@@ -25,7 +25,7 @@ public class mChatAPI {
 
     public mChatAPI(mChatSuite plugin) {
         this.plugin = plugin;
-        this.varMap = plugin.cVarMap;
+        this.varMap.putAll(plugin.cVarMap);
     }
 
     /*
@@ -93,7 +93,7 @@ public class mChatAPI {
 
         // Display Name
         String dName = pName;
-        
+
         // Chat Distance Type
         String dType = "";
 

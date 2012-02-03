@@ -49,12 +49,12 @@ public class BMEntityListener implements Listener {
                 pCause = "a" + dEEvent.getDamager().getClass().getSimpleName().replace("Craft", "");
         }
 
-        if (plugin.sDeathB) {
-            suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI);
-            subEvent.setDeathMessage("");
-        } else
-            subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent));
-
+        if (plugin.alterEvents)
+            if (plugin.sDeathB) {
+                suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI);
+                subEvent.setDeathMessage("");
+            } else
+                subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent));
     }
 
     @EventHandler
