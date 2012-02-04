@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,11 @@ public class mChatAPI {
 
     public mChatAPI(mChatSuite plugin) {
         this.plugin = plugin;
-        this.varMap.putAll(plugin.cVarMap);
+
+        varMap = new TreeMap<String, String>();
+
+        if (plugin.cVarMap != null)
+            varMap.putAll(plugin.cVarMap);
     }
 
     /*

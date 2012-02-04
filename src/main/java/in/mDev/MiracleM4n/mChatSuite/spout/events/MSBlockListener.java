@@ -1,4 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.spout.events;
 
-public class MSBlockListener {
+import org.spout.api.event.Listener;
+
+public class MSBlockListener implements Listener {
 }
