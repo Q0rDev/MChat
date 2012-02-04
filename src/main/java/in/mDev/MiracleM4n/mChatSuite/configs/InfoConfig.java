@@ -16,7 +16,7 @@ public class InfoConfig {
         this.plugin = plugin;
     }
 
-    public void load() {
+    public void reload() {
         plugin.mIConfig = YamlConfiguration.loadConfiguration(plugin.mIConfigF);
         plugin.mIConfig.options().indent(4);
     }
@@ -62,7 +62,7 @@ public class InfoConfig {
         save();
     }
 
-    public void checkConfig() {
+    public void load() {
         if (!(new File(plugin.getDataFolder(), "info.yml").exists())
                 && !(new File("plugins/mChat/info.yml").exists()))
             defaultConfig();

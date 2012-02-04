@@ -15,7 +15,7 @@ public class MInfoWriter {
     void save() {
         try {
             plugin.mIConfig.save(plugin.mIConfigF);
-            plugin.getInfoConfig().load();
+            plugin.getInfoConfig().reload();
         } catch (Exception ignored) {}
     }
 

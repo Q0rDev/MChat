@@ -14,10 +14,10 @@ public class CensorConfig {
     public CensorConfig(mChatSuite plugin) {
         this.plugin = plugin;
 
-        load();
+        reload();
     }
 
-    public void load() {
+    public void reload() {
         plugin.mCConfig = YamlConfiguration.loadConfiguration(plugin.mCConfigF);
         plugin.mCConfig.options().indent(4);
     }
@@ -28,7 +28,7 @@ public class CensorConfig {
         } catch (IOException ignored) {}
     }
 
-    public void loadConfig() {
+    public void load() {
         if (!(new File(plugin.getDataFolder(), "censor.yml").exists())
                 && !(new File("plugins/mChat/censor.yml").exists()))
             defaultConfig();

@@ -468,19 +468,21 @@ public class mChatSuite extends JavaPlugin {
     public void setupConfigs() {
         getMainConfig().load();
 
-        getInfoConfig().checkConfig();
-
-        getCensorConfig().loadConfig();
-
-        getLocale().checkLocale();
-    }
-
-    public void loadConfigs() {
-        getMainConfig().reload();
+        getInfoConfig().load();
 
         getCensorConfig().load();
 
-        getInfoConfig().load();
+        getLocale().load();
+    }
+
+    public void reloadConfigs() {
+        getMainConfig().reload();
+
+        getInfoConfig().reload();
+
+        getCensorConfig().reload();
+
+        getLocale().reload();
     }
 
     void setupTasks() {
@@ -575,7 +577,7 @@ public class mChatSuite extends JavaPlugin {
 
     // Language Config
     public LocaleConfig getLocale() {
-        return new LocaleConfig(this, mELocale);
+        return new LocaleConfig(this);
     }
 
     // API

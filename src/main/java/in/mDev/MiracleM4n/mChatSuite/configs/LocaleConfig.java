@@ -11,11 +11,11 @@ public class LocaleConfig {
     mChatSuite plugin;
     YamlConfiguration config;
 
-    public LocaleConfig(mChatSuite plugin, YamlConfiguration config) {
+    public LocaleConfig(mChatSuite plugin) {
         this.plugin = plugin;
-        this.config = config;
+        this.config = plugin.mELocale;
 
-        load();
+        reload();
     }
 
     Boolean hasChanged = false;
@@ -39,6 +39,8 @@ public class LocaleConfig {
     String player = "Player";
     String notFound = "not found.";
     String sayName = "&6[Server]&e";
+    String shoutFormat = "[Shout]";
+    String localFormat = "[L]";
 
     public String getOption(String option) {
         if (config.isSet(option))
@@ -47,10 +49,10 @@ public class LocaleConfig {
         return "";
     }
 
-    public void load() {
+    public void reload() {
         plugin.mELocale = YamlConfiguration.loadConfiguration(plugin.mELocaleF);
 
-        checkLocale();
+        load();
     }
 
     void defaultLocale() {
@@ -79,14 +81,15 @@ public class LocaleConfig {
         config.set("player", player);
         config.set("notFound", notFound);
         config.set("sayName", sayName);
+        config.set("format.shout", shoutFormat);
+        config.set("format.local", localFormat);
 
         try {
             config.save(plugin.mELocaleF);
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
-    public void checkLocale() {
+    public void load() {
         if (!(plugin.mELocaleF).exists())
             defaultLocale();
 
@@ -119,8 +122,7 @@ public class LocaleConfig {
 
             try {
                 config.save(plugin.mELocaleF);
-            } catch (IOException ignored) {
-            }
+            } catch (IOException ignored) {}
 
             System.out.println("[" + plugin.pdfFile.getName() + "] locale.yml " + configUpdated);
         }

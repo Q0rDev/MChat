@@ -88,7 +88,7 @@ public class GUIEvent implements Listener {
         } catch (IOException ignored) {
         }
 
-        plugin.loadConfigs();
+        plugin.reloadConfigs();
         plugin.setupConfigs();
     }
 }

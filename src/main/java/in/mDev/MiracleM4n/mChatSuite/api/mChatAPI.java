@@ -104,9 +104,9 @@ public class mChatAPI {
 
         if (plugin.isShouting.get(pName) != null
                 && plugin.isShouting.get(pName)) {
-            dType = "[Shout]";
+            dType = plugin.getLocale().getOption("format.shout");
         } else if (plugin.chatDistance > 0) {
-            dType = "[L]";
+            dType = plugin.getLocale().getOption("format.local");
         }
 
         // Player Object Stuff

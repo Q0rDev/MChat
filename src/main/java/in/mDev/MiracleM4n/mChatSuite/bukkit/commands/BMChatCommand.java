@@ -92,8 +92,8 @@ public class BMChatCommand implements CommandExecutor {
                                 return true;
                             }
 
+                        plugin.getInfoConfig().reload();
                         plugin.getInfoConfig().load();
-                        plugin.getInfoConfig().checkConfig();
                         sender.sendMessage(plugin.getAPI().formatMessage("Info Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("censor")
@@ -104,8 +104,8 @@ public class BMChatCommand implements CommandExecutor {
                                 return true;
                             }
 
+                        plugin.getCensorConfig().reload();
                         plugin.getCensorConfig().load();
-                        plugin.getCensorConfig().loadConfig();
                         sender.sendMessage(plugin.getAPI().formatMessage("Censor Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("locale")
@@ -116,7 +116,7 @@ public class BMChatCommand implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.getLocale().load();
+                        plugin.getLocale().reload();
                         sender.sendMessage(plugin.getAPI().formatMessage("Censor Reloaded."));
                         return true;
                     } else if (args[1].equalsIgnoreCase("all")
@@ -127,7 +127,7 @@ public class BMChatCommand implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.loadConfigs();
+                        plugin.reloadConfigs();
                         plugin.setupConfigs();
                         sender.sendMessage(plugin.getAPI().formatMessage("All Config's Reloaded."));
                         return true;
