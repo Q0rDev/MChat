@@ -43,9 +43,7 @@ public class DevilThread implements Runnable {
                 parseResults(inputLine);
             // Close
             in.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
     /**
