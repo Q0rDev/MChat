@@ -64,10 +64,13 @@ public class BMPlayerListener implements Runnable, Listener {
         // For Dragonslife
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
-                if (players.getWorld() != player.getWorld()) {
+                if (plugin.getAPI().checkPermissions(player, player.getWorld(), "mchat.spy")) {
+                    continue;
+                } else if (players.getWorld() != player.getWorld()) {
                     event.getRecipients().remove(players);
-                } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
+                } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance) {
                     event.getRecipients().remove(players);
+                }
             }
 
         // For Obama?
@@ -293,27 +296,7 @@ public class BMPlayerListener implements Runnable, Listener {
 
         plugin.getAPI().log(format);
     }
-    /*
-    @SuppressWarnings("unchecked")
-    LinkedHashMap<String, String> sortMap(HashMap<String, String> map) {
-        List list = new LinkedList(map.entrySet());
-        LinkedHashMap<String, String> sortedMap = new LinkedHashMap<String, String>();
 
-        Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
-            public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
-                return o2.getKey().length()
-                        - o1.getKey().length();
-            }
-        });
-
-        for (Object aList : list) {
-            Map.Entry<String, String> entry = (Map.Entry) aList;
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-
-        return sortedMap;
-    }
-    */
     public void run() {}
 }
 

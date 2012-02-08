@@ -53,7 +53,7 @@ public class BPMChatCommand implements CommandExecutor {
             String rName = recipient.getName();
             String senderName = plugin.getAPI().ParsePlayerName(pName, world);
 
-            player.sendMessage(formatPMSend(rName, message));
+            player.sendMessage(formatPMSend(rName, recipient.getWorld().getName(), message));
 
             if (plugin.spoutB) {
                 if (plugin.spoutPM) {
@@ -81,7 +81,7 @@ public class BPMChatCommand implements CommandExecutor {
             }
 
             plugin.lastPMd.put(rName, pName);
-            recipient.sendMessage(formatPMRecieve(senderName, message));
+            recipient.sendMessage(formatPMRecieve(senderName, world, message));
             return true;
         }
 
@@ -111,11 +111,11 @@ public class BPMChatCommand implements CommandExecutor {
         return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
     }
 
-    String formatPMSend(String recipient, String message) {
-        return (plugin.getAPI().addColour("&fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
+    String formatPMSend(String recipient, String world, String message) {
+        return (plugin.getAPI().addColour("&fMe &1-&2-&3-&4> &f" + plugin.getAPI().ParsePlayerName(recipient, world) + "&f: " + message));
     }
 
-    String formatPMRecieve(String sender, String message) {
-        return (plugin.getAPI().addColour(sender + " &1-&2-&3-&4> &fMe: " + message));
+    String formatPMRecieve(String sender, String world, String message) {
+        return (plugin.getAPI().addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
     }
 }

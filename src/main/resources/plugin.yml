@@ -108,6 +108,7 @@ permissions:
             mchat.who: true
             mchat.version: true
             mchat.shout: true
+            mchat.spy: true
     mchat.reload.*:
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
         children:
@@ -220,6 +221,8 @@ permissions:
         description: Allow use of the /mchatwho command.
     mchat.version:
         description: Allow use of the /mchat version command.
+    mchat.spy:
+        description: Allows player to view all chat messages.
     mchat.suppress.join:
         description: Allow suppression of the mChat Join Messages.
     mchat.suppress.quit:
