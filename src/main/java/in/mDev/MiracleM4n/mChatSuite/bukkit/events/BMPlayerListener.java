@@ -64,9 +64,10 @@ public class BMPlayerListener implements Runnable, Listener {
         // For Dragonslife
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
-                if (plugin.getAPI().checkPermissions(player, player.getWorld(), "mchat.spy")) {
+                if (plugin.getAPI().checkPermissions(players, players.getWorld(), "mchat.spy"))
                     continue;
-                } else if (players.getWorld() != player.getWorld()) {
+
+                if (players.getWorld() != player.getWorld()) {
                     event.getRecipients().remove(players);
                 } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance) {
                     event.getRecipients().remove(players);

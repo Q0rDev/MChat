@@ -114,6 +114,8 @@ public class LocaleConfig {
         checkOption("player", player);
         checkOption("notFound", notFound);
         checkOption("sayName", sayName);
+        checkOption("format.shout", shoutFormat);
+        checkOption("format.local", localFormat);
 
         if (hasChanged) {
             configO.header(
