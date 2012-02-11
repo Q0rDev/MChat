@@ -9,6 +9,8 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -388,13 +390,18 @@ public class mChatAPI {
 
     @Deprecated
     public Boolean checkPermissions(Player player, String node) {
+        Permission perm = plugin.pm.getPermission(node);
+        perm.setDefault(PermissionDefault.FALSE);
+
         return checkPermissions(player.getName(), player.getWorld().getName(), node)
                 || player.hasPermission(node)
                 || player.isOp();
-
     }
 
     public Boolean checkPermissions(Player player, World world, String node) {
+        Permission perm = plugin.pm.getPermission(node);
+        perm.setDefault(PermissionDefault.FALSE);
+
         return checkPermissions(player.getName(), world.getName(), node)
                 || player.hasPermission(node)
                 || player.isOp();
@@ -402,6 +409,9 @@ public class mChatAPI {
 
     @Deprecated
     public Boolean checkPermissions(Player player, String node, Boolean useOp) {
+        Permission perm = plugin.pm.getPermission(node);
+        perm.setDefault(PermissionDefault.FALSE);
+
         if (checkPermissions(player.getName(), player.getWorld().getName(), node))
             return true;
 
@@ -414,6 +424,9 @@ public class mChatAPI {
 
     @Deprecated
     public Boolean checkPermissions(Player player, World world, String node, Boolean useOp) {
+        Permission perm = plugin.pm.getPermission(node);
+        perm.setDefault(PermissionDefault.FALSE);
+
         if (checkPermissions(player.getName(), world.getName(), node))
             return true;
 
@@ -425,6 +438,9 @@ public class mChatAPI {
     }
 
     public Boolean checkPermissions(Player player, String world, String node, Boolean useOp) {
+        Permission perm = plugin.pm.getPermission(node);
+        perm.setDefault(PermissionDefault.FALSE);
+
         if (checkPermissions(player.getName(), world, node))
             return true;
 
@@ -436,6 +452,9 @@ public class mChatAPI {
     }
 
     public Boolean checkPermissions(String pName, String world, String node) {
+        Permission perm = plugin.pm.getPermission(node);
+        perm.setDefault(PermissionDefault.FALSE);
+
         if (plugin.vaultB)
             if (plugin.vPerm.has(world, pName, node))
                 return true;
