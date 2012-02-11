@@ -91,6 +91,7 @@ commands:
         aliases: [${alias.leave}]
 permissions:
     mchat.*:
+        default: false
         description: Allows full use of mChat.
         children:
             mchat.reload.*: true
@@ -110,6 +111,7 @@ permissions:
             mchat.shout: true
             mchat.spy: true
     mchat.reload.*:
+        default: false
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
         children:
             mchat.reload.config: true
@@ -118,6 +120,7 @@ permissions:
             mchat.reload.locale: true
             mchat.reload.all: true
     mchat.suppress.*:
+        default: false
         description: Allow usage suppression of all messages.
         children:
             mchat.suppress.join: true
@@ -125,23 +128,27 @@ permissions:
             mchat.suppress.kick: true
             mchat.suppress.death: true
     mchat.pm.*:
+        default: false
         description: Allow usage of all PM functions
         children:
             mchat.pm.pm: true
             mchat.pm.reply: true
             mchat.pm.invite: true
     mchat.afk.*:
+        default: false
         description: Allow usage of all PM functions
         children:
             mchat.afk.self: true
             mchat.afk.other: true
     mchat.bypass.*:
+        default: false
         description: Allow bypass of all Automatic functions.
         children:
             mchat.bypass.afk: true
             mchat.bypass.afkkick: true
             mchat.bypass.suppress.*: true
     mchat.bypass.suppress.*:
+        default: false
         description: Allow bypass of all Override functions.
         children:
             mchat.bypass.suppress.join: true
@@ -149,17 +156,20 @@ permissions:
             mchat.bypass.suppress.kick: true
             mchat.bypass.suppress.death: true
     mchat.user.*:
+        default: false
         description: Allows full use of all user info related mChat commands.
         children:
             mchat.user.add.*: true
             mchat.user.set.*: true
             mchat.user.remove.*: true
     mchat.group.*:
+        default: false
         description: Allows full use of all group info related mChat commands.
         children:
             mchat.group.add.*: true
             mchat.group.remove.*: true
     mchat.user.add.*:
+        default: false
         description: Allows full use of all user info add mChat commands.
         children:
             mchat.user.add.player: true
@@ -167,10 +177,12 @@ permissions:
             mchat.user.add.world: true
             mchat.user.add.wvar: true
     mchat.user.set.*:
+        default: false
         description: Allows full use of all user info set mChat commands.
         children:
             mchat.user.set.group: true
     mchat.user.remove.*:
+        default: false
         description: Allows full use of all user info remove mChat commands.
         children:
             mchat.user.remove.player: true
@@ -178,6 +190,7 @@ permissions:
             mchat.user.remove.world: true
             mchat.user.remove.wvar: true
     mchat.group.add.*:
+        default: false
         description: Allows full use of all group info add mChat commands.
         children:
             mchat.group.add.group: true
@@ -185,6 +198,7 @@ permissions:
             mchat.group.add.world: true
             mchat.group.add.wvar: true
     mchat.group.remove.*:
+        default: false
         description: Allows full use of all group info remove mChat commands.
         children:
             mchat.group.remove.group: true
@@ -192,94 +206,140 @@ permissions:
             mchat.group.remove.world: true
             mchat.group.remove.wvar: true
     mchat.reload.config:
-        description: Allow usage of /mchat reload config
+        default: false
+		description: Allow usage of /mchat reload config
     mchat.reload.info:
-        description: Allow usage of /mchat reload info
+        default: false
+		description: Allow usage of /mchat reload info
     mchat.reload.censor:
-        description: Allow usage of /mchat reload censor
+        default: false
+		description: Allow usage of /mchat reload censor
     mchat.reload.locale:
-        description: Allow usage of /mchat reload locale
+        default: false
+		description: Allow usage of /mchat reload locale
     mchat.reload.all:
-        description: Allow usage of /mchat reload all
+        default: false
+		description: Allow usage of /mchat reload all
     mchat.coloredchat:
-        description: Allow colour in chat messages.
+        default: false
+		description: Allow colour in chat messages.
     mchat.censorbypass:
-        description: Allow bypass of msg censoring.
+        default: false
+		description: Allow bypass of msg censoring.
     mchat.gui:
-        description: Allow use of the /mchat gui command.
+        default: false
+		description: Allow use of the /mchat gui command.
     mchat.me:
-        description: Allow use of the /mchatme command.
+        default: false
+		description: Allow use of the /mchatme command.
     mchat.afk:
-        description: Allow use of the /mchatafk command.
+        default: false
+		description: Allow use of the /mchatafk command.
     mchat.afkother:
-        description: Allow use of the /mchatafkother command.
+        default: false
+		description: Allow use of the /mchatafkother command.
     mchat.shout:
-        description: Allow use of the /mchatshout command.
+        default: false
+		description: Allow use of the /mchatshout command.
     mchat.list:
-        description: Allow use of the /mchatlist command.
+        default: false
+		description: Allow use of the /mchatlist command.
     mchat.who:
-        description: Allow use of the /mchatwho command.
+        default: false
+		description: Allow use of the /mchatwho command.
     mchat.version:
-        description: Allow use of the /mchat version command.
+        default: false
+		description: Allow use of the /mchat version command.
     mchat.spy:
-        description: Allows player to view all chat messages.
+        default: false
+		description: Allows player to view all chat messages.
     mchat.suppress.join:
-        description: Allow suppression of the mChat Join Messages.
+        default: false
+		description: Allow suppression of the mChat Join Messages.
     mchat.suppress.quit:
-        description: Allow suppression of the mChat Quit Messages.
+        default: false
+		description: Allow suppression of the mChat Quit Messages.
     mchat.suppress.kick:
-        description: Allow suppression of the mChat Kick Messages.
+        default: false
+		description: Allow suppression of the mChat Kick Messages.
     mchat.suppress.death:
-        description: Allow suppression of the mChat Death Messages.
+        default: false
+		description: Allow suppression of the mChat Death Messages.
     mchat.pm.pm:
-        description: Allow use of the /pmchat command.
+        default: false
+		description: Allow use of the /pmchat command.
     mchat.pm.reply:
-        description: Allow use of the /pmchatreply command.
+        default: false
+		description: Allow use of the /pmchatreply command.
     mchat.pm.invite:
-        description: Allow use of the /pmchatinvite command.
+        default: false
+		description: Allow use of the /pmchatinvite command.
     mchat.bypass.afk:
-        description: Allow bypassing of AutoAFK.
+        default: false
+		description: Allow bypassing of AutoAFK.
     mchat.bypass.afkkick:
-        description: Allow bypassing of AutoAFK Kick.
+        default: false
+		description: Allow bypassing of AutoAFK Kick.
     mchat.bypass.suppress.join:
-        description: Allow bypassing of Join Suppression.
+        default: false
+		description: Allow bypassing of Join Suppression.
     mchat.bypass.suppress.quit:
-        description: Allow bypassing of Quit Suppression.
+        default: false
+		description: Allow bypassing of Quit Suppression.
     mchat.bypass.suppress.kick:
-        description: Allow bypassing of Kick Suppression.
+        default: false
+		description: Allow bypassing of Kick Suppression.
     mchat.bypass.suppress.death:
-        description: Allow bypassing of Death Suppression.
+        default: false
+		description: Allow bypassing of Death Suppression.
     mchat.user.add.player:
-        description: Allow usage of /mchat user add player Player
+        default: false
+		description: Allow usage of /mchat user add player Player
     mchat.user.add.ivar:
-        description: Allow usage of /mchat user add ivar Player InfoVariable InfoValue
+        default: false
+		description: Allow usage of /mchat user add ivar Player InfoVariable InfoValue
     mchat.user.add.world:
-        description: Allow usage of /mchat user add world Player World
+        default: false
+		description: Allow usage of /mchat user add world Player World
     mchat.user.add.wvar:
-        description: Allow usage of /mchat user add world Player World InfoVariable InfoValue
+        default: false
+		description: Allow usage of /mchat user add world Player World InfoVariable InfoValue
     mchat.user.set.group:
-        description: Allow usage of /mchat user set group Player NewGroup
+        default: false
+		description: Allow usage of /mchat user set group Player NewGroup
     mchat.user.remove.player:
-        description: Allow usage of /mchat user remove Player
+        default: false
+		description: Allow usage of /mchat user remove Player
     mchat.user.remove.ivar:
-        description: Allow usage of /mchat user remove Player InfoVariable
+        default: false
+		description: Allow usage of /mchat user remove Player InfoVariable
     mchat.user.remove.world:
-        description: Allow usage of /mchat user remove Player World
+        default: false
+		description: Allow usage of /mchat user remove Player World
     mchat.user.remove.wvar:
-        description: Allow usage of /mchat user remove Player World InfoVariable
+        default: false
+		description: Allow usage of /mchat user remove Player World InfoVariable
     mchat.group.add.group:
-        description: Allow usage of /mchat group add group Group
+        default: false
+		description: Allow usage of /mchat group add group Group
     mchat.group.add.ivar:
-        description: Allow usage of /mchat group add ivar Group InfoVariable InfoValue
+        default: false
+		description: Allow usage of /mchat group add ivar Group InfoVariable InfoValue
     mchat.group.add.world:
-        description: Allow usage of /mchat group add world Group World
+        default: false
+		description: Allow usage of /mchat group add world Group World
     mchat.group.add.wvar:
-        description: Allow usage of /mchat group add world Group World InfoVariable InfoValue
+        default: false
+		description: Allow usage of /mchat group add world Group World InfoVariable InfoValue
     mchat.group.remove.group:
-        description: Allow usage of /mchat group remove group Group
+        default: false
+		description: Allow usage of /mchat group remove group Group
     mchat.group.remove.ivar:
-        description: Allow usage of /mchat group remove ivar Group InfoVariable
+        default: false
+		description: Allow usage of /mchat group remove ivar Group InfoVariable
     mchat.group.remove.world:
-        description: Allow usage of /mchat group remove world Group World
+        default: false
+		description: Allow usage of /mchat group remove world Group World
     mchat.group.remove.wvar:
-        description: Allow usage of /mchat group remove wvar Group World InfoVariable
+        default: false
+		description: Allow usage of /mchat group remove wvar Group World InfoVariable
