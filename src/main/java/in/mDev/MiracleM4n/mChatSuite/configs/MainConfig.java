@@ -71,6 +71,7 @@ public class MainConfig {
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
         plugin.useIPRestrict = config.getBoolean("mchat.IPCensor", plugin.useIPRestrict);
         plugin.licenseB = config.getBoolean("mchat.license", plugin.licenseB);
+        plugin.licenseB = config.getBoolean("mchat.enableList", plugin.listB);
 
         plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.sDeathB);
         plugin.sJoinB = config.getBoolean("suppress.useJoin", plugin.sJoinB);
@@ -158,6 +159,7 @@ public class MainConfig {
         config.set("mchat.spout", plugin.spoutEnabled);
         config.set("mchat.IPCensor", plugin.useIPRestrict);
         config.set("mchat.license", plugin.licenseB);
+        config.set("mchat.enableList", plugin.listB);
 
         config.set("suppress.useDeath", plugin.sDeathB);
         config.set("suppress.useJoin", plugin.sJoinB);
@@ -225,7 +227,6 @@ public class MainConfig {
 
         editOption(config, "mchat.formatEvents", "mchat.alterEvents");
 
-
         checkOption(config, "format.date", plugin.dateFormat);
         checkOption(config, "format.chat", plugin.chatFormat);
         checkOption(config, "format.name", plugin.nameFormat);
@@ -265,6 +266,7 @@ public class MainConfig {
         checkOption(config, "mchat.spout", plugin.spoutEnabled);
         checkOption(config, "mchat.IPCensor", plugin.useIPRestrict);
         checkOption(config, "mchat.license", plugin.licenseB);
+        checkOption(config, "mchat.enableList", plugin.listB);
 
         checkOption(config, "suppress.useDeath", plugin.sDeathB);
         checkOption(config, "suppress.useJoin", plugin.sJoinB);

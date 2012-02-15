@@ -75,7 +75,8 @@ public class BPMChatReplyCommand implements CommandExecutor {
                     }
                 }
 
-                recipient.sendMessage(formatPMRecieve(senderName, message));
+                recipient.sendMessage(formatPMRecieve(senderName, world, message));
+                plugin.getAPI().log(formatPMRecieve(senderName, world, message));
                 return true;
             } else {
                 player.sendMessage(formatPMessage(plugin.getAPI().addColour("No one has yet PM'd you.")));
@@ -109,7 +110,7 @@ public class BPMChatReplyCommand implements CommandExecutor {
         return (plugin.getAPI().addColour("&fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
     }
 
-    String formatPMRecieve(String sender, String message) {
-        return (plugin.getAPI().addColour(sender + " &1-&2-&3-&4> &fMe: " + message));
+    String formatPMRecieve(String sender, String world, String message) {
+        return (plugin.getAPI().addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
     }
 }

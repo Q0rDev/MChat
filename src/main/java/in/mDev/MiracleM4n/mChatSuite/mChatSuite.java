@@ -182,6 +182,7 @@ public class mChatSuite extends JavaPlugin {
     public Boolean useGroupedList = true;
     public Boolean eBroadcast = true;
     public Boolean licenseB = false;
+    public Boolean listB = false;
 
     // Numbers
     public Integer AFKTimer = 30;
@@ -209,6 +210,7 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isShouting = new HashMap<String, Boolean>();
+    public HashMap<String, Boolean> isSpying = new HashMap<String, Boolean>();
 
     public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
@@ -541,7 +543,10 @@ public class mChatSuite extends JavaPlugin {
         regCommands("mchat", new BMChatCommand(this));
         regCommands("mchatafk", new BMChatAFKCommand(this));
         regCommands("mchatafkother", new BMChatAFKOtherCommand(this));
-        regCommands("mchatlist", new BMChatListCommand(this));
+
+        if (listB)
+            regCommands("mchatlist", new BMChatListCommand(this));
+
         regCommands("mchatme", new BMChatMeCommand(this));
         regCommands("mchatsay", new BMChatSayCommand(this));
         regCommands("mchatwho", new BMChatWhoCommand(this));

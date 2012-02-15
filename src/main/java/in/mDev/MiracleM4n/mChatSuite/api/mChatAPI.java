@@ -108,6 +108,13 @@ public class mChatAPI {
             dType = plugin.getLocale().getOption("format.local");
         }
 
+        // Chat Distance Type
+        String sType = "";
+
+        if (plugin.isSpying.get(pName) != null
+                && plugin.isSpying.get(pName))
+            sType = plugin.getLocale().getOption("format.spy");
+
         // Player Object Stuff
         if (plugin.getServer().getPlayer(pName) != null)  {
             Player player = plugin.getServer().getPlayer(pName);
@@ -214,6 +221,7 @@ public class mChatAPI {
         dVarMap.put(vI + "mname," + vI + "mn", plugin.getInfoReader().getmName(pName));
         dVarMap.put(vI + "pname," + vI + "n", pName);
         dVarMap.put(vI + "prefix," + vI + "p", prefix);
+        dVarMap.put(vI + "spying," + vI + "spy", sType);
         dVarMap.put(vI + "suffix," + vI + "s", suffix);
         dVarMap.put(vI + "totalexp," + vI + "texp," + vI + "te", tExp);
         dVarMap.put(vI + "time," + vI + "t", time);

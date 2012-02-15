@@ -81,6 +81,7 @@ public class BPMChatCommand implements CommandExecutor {
             }
 
             plugin.lastPMd.put(rName, pName);
+            plugin.getAPI().log(formatPMRecieve(senderName, world, message));
             recipient.sendMessage(formatPMRecieve(senderName, world, message));
             return true;
         }

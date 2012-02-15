@@ -41,6 +41,7 @@ public class LocaleConfig {
     String sayName = "&6[Server]&e";
     String shoutFormat = "[Shout]";
     String localFormat = "[L]";
+    String spyFormat = "[Spy]";
 
     public String getOption(String option) {
         if (config.isSet(option))
@@ -83,6 +84,7 @@ public class LocaleConfig {
         config.set("sayName", sayName);
         config.set("format.shout", shoutFormat);
         config.set("format.local", localFormat);
+        config.set("format.spy", spyFormat);
 
         try {
             config.save(plugin.mELocaleF);
@@ -115,7 +117,7 @@ public class LocaleConfig {
         checkOption("notFound", notFound);
         checkOption("sayName", sayName);
         checkOption("format.shout", shoutFormat);
-        checkOption("format.local", localFormat);
+        checkOption("format.spy", spyFormat);
 
         if (hasChanged) {
             configO.header(
