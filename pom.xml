@@ -107,16 +107,6 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
-        <repository>
-            <id>mBowl-repo</id>
-            <url>http://ci.milkbowl.net/plugin/repository/everything</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
     </repositories>
 
     <build>
@@ -234,9 +224,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.milkbowl.vault</groupId>
+            <groupId>net.milkbowl</groupId>
             <artifactId>Vault</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.2.9</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
