@@ -12,7 +12,6 @@ import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
@@ -214,8 +213,9 @@ public class MInfoReader {
     }
 
     String getPermBukkitGroup(String pName) {
-        Plugin pPlugin = plugin.pm.getPlugin("PermissionsBukkit");
-        PermissionsPlugin pBukkit = (PermissionsPlugin) pPlugin;
+        PermissionsPlugin pBukkit =
+                (PermissionsPlugin) plugin.pm.getPlugin("PermissionsBukkit");
+
         List<Group> pGroups = pBukkit.getGroups(pName);
 
         try {

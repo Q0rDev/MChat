@@ -256,6 +256,10 @@ public class BMPlayerListener implements Runnable, Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        if (event.getTo().getBlock()
+                == event.getFrom().getBlock())
+            return;
+
         Player player = event.getPlayer();
 
         if (!plugin.mChatEB)

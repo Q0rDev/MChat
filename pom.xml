@@ -107,6 +107,16 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>mBowl-repo</id>
+            <url>http://ci.milkbowl.net/plugin/repository/project/Vault/LastSuccessful/repository</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
     </repositories>
 
     <build>
@@ -156,7 +166,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.1-R3</version>
+            <version>1.1-R4</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -224,9 +234,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.milkbowl</groupId>
+            <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.9</version>
+            <version>1.2.9-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
