@@ -4,10 +4,12 @@ BananaCode Minecraft License v1.1
     access any Minecraft instance on which it is activated and running with the express purpose of enhancing the Minecraft experience.
 2.  This may include occasionally broadcasting promotional messages or downloading additional software for use on the server,
     as well as sending any amount of data back to the creator of the software and related bodies.
-3.  This license begins from the time you install the software and extends until such a time as you uninstall it.
-4.  This license is subject to change without notice at any time, and you are responsible for being aware of the change,
+3.  This does NOT include anything that would jeopardize your privacy, your server, the patrons of your server or any personal
+    details about any of those.
+4.  This license begins from the time you install the software and extends until such a time as you uninstall it.
+5.  This license is subject to change without notice at any time, and you are responsible for being aware of the change,
     no notification has to be made on the part of the creator of this software.
-5.  The creator of this software, nor any related bodies cannot be held responsible for any damage done by or during the use of this software.
-6.  By accepting this license you are completely accepting full responsibility for any damage or injury which may occur during the use of this software.
-7.  By accepting this license you are agreeing that you and you alone are solely responsible for how you use this software,
+6.  The creator of this software, nor any related bodies cannot be held responsible for any damage done by or during the use of this software.
+7.  By accepting this license you are completely accepting full responsibility for any damage or injury which may occur during the use of this software.
+8.  By accepting this license you are agreeing that you and you alone are solely responsible for how you use this software,
     and that no-one other than yourself can be liable for prosecution for its use.

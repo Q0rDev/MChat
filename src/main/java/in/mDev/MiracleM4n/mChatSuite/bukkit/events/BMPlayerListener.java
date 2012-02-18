@@ -9,6 +9,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
@@ -45,7 +46,7 @@ public class BMPlayerListener implements Runnable, Listener {
             player.performCommand("mafk");
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(PlayerChatEvent event) {
         if (event.isCancelled())
             return;
@@ -136,7 +137,7 @@ public class BMPlayerListener implements Runnable, Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final String world = player.getWorld().getName();
@@ -189,7 +190,7 @@ public class BMPlayerListener implements Runnable, Listener {
                 event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerKick(PlayerKickEvent event) {
         if (!plugin.alterEvents)
             return;
@@ -217,7 +218,7 @@ public class BMPlayerListener implements Runnable, Listener {
             event.setLeaveMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
         String pName = event.getPlayer().getName();
         String world = event.getPlayer().getWorld().getName();

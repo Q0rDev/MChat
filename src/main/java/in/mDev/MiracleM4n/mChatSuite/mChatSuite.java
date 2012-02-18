@@ -182,7 +182,7 @@ public class mChatSuite extends JavaPlugin {
     public Boolean useGroupedList = true;
     public Boolean eBroadcast = true;
     public Boolean licenseB = false;
-    public Boolean listB = false;
+    public Boolean listB = true;
 
     // Numbers
     public Integer AFKTimer = 30;
