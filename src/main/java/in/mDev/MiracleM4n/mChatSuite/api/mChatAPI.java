@@ -460,9 +460,6 @@ public class mChatAPI {
     }
 
     public Boolean checkPermissions(String pName, String world, String node) {
-        Permission perm = plugin.pm.getPermission(node);
-        perm.setDefault(PermissionDefault.FALSE);
-
         if (plugin.vaultB)
             if (plugin.vPerm.has(world, pName, node))
                 return true;
