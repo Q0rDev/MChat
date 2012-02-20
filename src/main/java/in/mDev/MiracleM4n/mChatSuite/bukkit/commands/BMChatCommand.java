@@ -213,7 +213,7 @@ public class BMChatCommand implements CommandExecutor {
                         sender.sendMessage(plugin.getAPI().formatMessage("Usage for '/mchat user set':"));
                         sender.sendMessage("- /mchat user set group Player NewGroup");
                         return true;
-                    } else if (args[2].equalsIgnoreCase("group")
+                    } else if (args[2].equalsIgnoreCase("g")
                             || args[2].equalsIgnoreCase("group")) {
                         if (sender instanceof Player)
                             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.user.set.group")) {
