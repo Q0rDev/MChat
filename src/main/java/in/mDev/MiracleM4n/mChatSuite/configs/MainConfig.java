@@ -71,7 +71,7 @@ public class MainConfig {
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
         plugin.useIPRestrict = config.getBoolean("mchat.IPCensor", plugin.useIPRestrict);
         plugin.licenseB = config.getBoolean("mchat.license", plugin.licenseB);
-        plugin.licenseB = config.getBoolean("mchat.enableList", plugin.listB);
+        plugin.listB = config.getBoolean("mchat.enableList", plugin.listB);
 
         plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.sDeathB);
         plugin.sJoinB = config.getBoolean("suppress.useJoin", plugin.sJoinB);

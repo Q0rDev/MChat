@@ -234,12 +234,12 @@ public class mChatSuite extends JavaPlugin {
         // First we kill Essentials Chat
         killEss();
 
-        // Initialize Configs
         if (new File("plugins/mChat/").isDirectory()) {
             getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] Please move the files in the mChat directory to");
             getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's than delete the mChat directory!");
         }
 
+        // Initialize Configs
         mConfigF = new File(getDataFolder(), "config.yml");
         mIConfigF = new File(getDataFolder(), "info.yml");
         mCConfigF = new File(getDataFolder(), "censor.yml");
