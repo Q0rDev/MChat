@@ -23,8 +23,14 @@ public class MInfoReader {
         this.plugin = plugin;
     }
 
-    /*
-     * Info Stuff
+    //Info Stuff
+
+    /**
+     * Raw Info Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @param info Info Variable being resolved.
+     * @return Raw Info.
      */
     public String getRawInfo(String pName, String world, String info) {
         if (plugin.useLeveledNodes)
@@ -48,58 +54,151 @@ public class MInfoReader {
         return getmChatInfo(pName, world, info);
     }
 
+    /**
+     * Raw Prefix Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Raw Prefix.
+     */
+    @Deprecated
     public String getRawPrefix(Player player, World world) {
         return getRawInfo(player.getName(), world.getName(), "prefix");
     }
 
+    /**
+     * Raw Suffix Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Raw Suffix.
+     */
+    @Deprecated
     public String getRawSuffix(Player player, World world) {
         return getRawInfo(player.getName(), world.getName(), "suffix");
     }
 
+    /**
+     * Raw Group Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Raw Group.
+     */
+    @Deprecated
     public String getRawGroup(Player player, World world) {
         return getRawInfo(player.getName(), world.getName(), "group");
     }
 
+    /**
+     * Formatted Info Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @param info Info Variable being resolved.
+     * @return Formatted Info.
+     */
+    @Deprecated
     public String getInfo(Player player, World world, String info) {
         return plugin.getAPI().addColour(getRawInfo(player.getName(), world.getName(), info));
     }
 
+    /**
+     * Formatted Prefix Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted Prefix.
+     */
+    @Deprecated
     public String getPrefix(Player player, World world) {
         return getInfo(player.getName(), world.getName(), "prefix");
     }
 
+    /**
+     * Formatted Suffix Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted Suffix.
+     */
+    @Deprecated
     public String getSuffix(Player player, World world) {
         return getInfo(player.getName(), world.getName(), "suffix");
     }
 
+    /**
+     * Formatted Group Resolving
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted Group.
+     */
+    @Deprecated
     public String getGroup(Player player, World world) {
         return getInfo(player.getName(), world.getName(), "group");
     }
 
+    /**
+     * Raw Prefix Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Raw Prefix.
+     */
     public String getRawPrefix(String pName, String world) {
         return getRawInfo(pName, world, "prefix");
     }
 
+    /**
+     * Raw Suffix Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Raw Suffix.
+     */
     public String getRawSuffix(String pName, String world) {
         return getRawInfo(pName, world, "suffix");
     }
 
+    /**
+     * Raw Group Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Raw Group.
+     */
     public String getRawGroup(String pName, String world) {
         return getRawInfo(pName, world, "group");
     }
 
+    /**
+     * Raw Info Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Player's World.
+     * @param info Info Variable being resolved.
+     * @return Raw Info.
+     */
     public String getInfo(String pName, String world, String info) {
         return plugin.getAPI().addColour(getRawInfo(pName, world, info));
     }
 
+    /**
+     * Formatted Prefix Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted Prefix.
+     */
     public String getPrefix(String pName, String world) {
         return getInfo(pName, world, "prefix");
     }
 
+    /**
+     * Formatted Suffix Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted Suffix.
+     */
     public String getSuffix(String pName, String world) {
         return getInfo(pName, world, "suffix");
     }
 
+    /**
+     * Formatted Group Resolving
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted Group.
+     */
     public String getGroup(String pName, String world) {
         return getInfo(pName, world, "group");
     }
@@ -323,9 +422,13 @@ public class MInfoReader {
         return group;
     }
 
-    /*
-    * Misc
-    */
+    // Misc
+
+    /**
+     * Group Name Resolver
+     * @param group Group to be Resolved.
+     * @return Group Name's Alias.
+     */
     public String getGroupName(String group) {
         if (group.isEmpty())
             return "";
@@ -336,6 +439,11 @@ public class MInfoReader {
         return group;
     }
 
+    /**
+     * World Name Resolver
+     * @param world Group to be Resolved.
+     * @return World Name's Alias.
+     */
     public String getWorldName(String world) {
         if (world.isEmpty())
             return "";
@@ -346,6 +454,11 @@ public class MInfoReader {
         return world;
     }
 
+    /**
+     * Player Name Resolver
+     * @param pName Name of Player to be Resolved.
+     * @return Player Name's mChat Alias.
+     */
     public String getmName(String pName) {
         if (plugin.mIConfig.isSet("mname." + pName))
             if (!(plugin.mIConfig.getString("mname." + pName).isEmpty()))
@@ -354,6 +467,11 @@ public class MInfoReader {
         return pName;
     }
 
+    /**
+     * Event Message Resolver.
+     * @param eventName Type of Base you want to set.
+     * @return Event Message.
+     */
     public String getEventMessage(String eventName) {
         if (eventName.equalsIgnoreCase("join"))
             eventName = plugin.joinMessage;

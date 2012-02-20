@@ -9,14 +9,11 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 @SuppressWarnings("unused")
 public class mChatAPI {
@@ -32,8 +29,15 @@ public class mChatAPI {
             varMap.putAll(plugin.cVarMap);
     }
 
-    /*
-     * Format Stuff
+    //Format Stuff
+
+    /**
+     * Core Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Player's World.
+     * @param msg Message being displayed.
+     * @param format Resulting Format.
+     * @return Formatted Message.
      */
     public String ParseMessage(String pName, String world, String msg, String format) {
         String prefix = plugin.getInfoReader().getRawPrefix(pName, world);
@@ -41,6 +45,9 @@ public class mChatAPI {
         String group = plugin.getInfoReader().getRawGroup(pName, world);
 
         String vI = plugin.varIndicator;
+
+        if (msg == null)
+            msg = "";
 
         if (prefix == null)
             prefix = "";
@@ -253,62 +260,143 @@ public class mChatAPI {
         return replaceVars(formatAll, lVarMap);
     }
 
+    /**
+     * Chat Formatting
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @param msg Message being displayed.
+     * @return Formatted Chat Message.
+     */
     @Deprecated
     public String ParseChatMessage(Player player, World world, String msg) {
         return ParseMessage(player.getName(), world.getName(), msg, plugin.chatFormat);
     }
 
+    /**
+     * Player Name Formatting
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted Player Name.
+     */
     @Deprecated
     public String ParsePlayerName(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.nameFormat);
     }
 
+    /**
+     * Event Message Formatting
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted Event Message.
+     */
     @Deprecated
     public String ParseEventName(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.eventFormat);
     }
 
+    /**
+     * TabbedList Formatting
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted TabbedList Name.
+     */
     @Deprecated
     public String ParseTabbedList(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.tabbedListFormat);
     }
 
+    /**
+     * ListCommand Formatting
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @return Formatted ListCommand Name.
+     */
     @Deprecated
     public String ParseListCmd(Player player, World world) {
         return ParseMessage(player.getName(), world.getName(), "", plugin.listCmdFormat);
     }
 
+    /**
+     * Me Formatting
+     * @param player Player being reflected upon.
+     * @param world Player's World.
+     * @param msg Message being displayed.
+     * @return Formatted Me Message.
+     */
     @Deprecated
     public String ParseMe(Player player, World world, String msg) {
         return ParseMessage(player.getName(), world.getName(), msg, plugin.meFormat);
     }
 
+    /**
+     * Chat Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @param msg Message being displayed.
+     * @return Formatted Chat Message.
+     */
     public String ParseChatMessage(String pName, String world, String msg) {
         return ParseMessage(pName, world, msg, plugin.chatFormat);
     }
 
+    /**
+     * Player Name Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted Player Name.
+     */
     public String ParsePlayerName(String pName, String world) {
         return ParseMessage(pName, world, "", plugin.nameFormat);
     }
 
+    /**
+     * Event Message Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted Event Message.
+     */
     public String ParseEventName(String pName, String world) {
         return ParseMessage(pName, world, "", plugin.eventFormat);
     }
 
+    /**
+     * TabbedList Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted TabbedList Name.
+     */
     public String ParseTabbedList(String pName, String world) {
         return ParseMessage(pName, world, "", plugin.tabbedListFormat);
     }
 
+    /**
+     * ListCommand Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @return Formatted ListCommand Name.
+     */
     public String ParseListCmd(String pName, String world) {
         return ParseMessage(pName, world, "", plugin.listCmdFormat);
     }
 
+    /**
+     * Me Formatting
+     * @param pName Name of Player being reflected upon.
+     * @param world Name of Player's World.
+     * @param msg Message being displayed.
+     * @return Formatted Me Message.
+     */
     public String ParseMe(String pName, String world, String msg) {
         return ParseMessage(pName, world, msg, plugin.meFormat);
     }
 
-    /*
-     * Misc Stuff
+    // Misc Stuff
+
+
+    /**
+     * Global Variable Addition
+     * @param var Name of Variable being added.
+     * @param value Value of Variable being added.
      */
     public void addGlobalVar(String var, String value) {
         if (var == null || var.isEmpty())
@@ -320,6 +408,12 @@ public class mChatAPI {
         plugin.cVarMap.put("%^global^%|" + var, value);
     }
 
+    /**
+     * Player Variable Addition
+     * @param pName Name of Player this Variable is being added for.
+     * @param var Name of Variable being added.
+     * @param value Value of Variable being added.
+     */
     public void addPlayerVar(String pName, String var, String value) {
         if (var == null || var.isEmpty())
             return;
@@ -330,6 +424,11 @@ public class mChatAPI {
         plugin.cVarMap.put(pName + "|" +var, value);
     }
 
+    /**
+     * Health Bar Formatting
+     * @param player Player the HealthBar is being rendered for.
+     * @return Formatted Health Bar.
+     */
     public String healthBar(Player player) {
         float maxHealth = 20;
         float barLength = 10;
@@ -338,6 +437,13 @@ public class mChatAPI {
         return basicBar(health, maxHealth, barLength);
     }
 
+    /**
+     * Basic Bar Formatting
+     * @param currentValue Current Value of Bar.
+     * @param maxValue Max Value of Bar.
+     * @param barLength Length of Bar.
+     * @return Formatted Health Bar.
+     */
     public String basicBar(float currentValue, float maxValue, float barLength) {
         int fill = Math.round((currentValue / maxValue) * barLength);
 
@@ -358,6 +464,11 @@ public class mChatAPI {
         return out.toString();
     }
 
+    /**
+     * Colour Formatting
+     * @param string String being Formatted.
+     * @return Coloured String.
+     */
     public String addColour(String string) {
         string = string.replace("`e", "")
                 .replace("`r", "\u00A7c").replace("`R", "\u00A74")
@@ -386,6 +497,11 @@ public class mChatAPI {
         return string.replace("&&", "&");
     }
 
+    /**
+     * Colour Removal
+     * @param string String Colour is being removed from.
+     * @return DeColoured String.
+     */
     public String removeColour(String string) {
         addColour(string);
 
@@ -396,30 +512,41 @@ public class mChatAPI {
         return string.replace("&&", "&");
     }
 
+    /**
+     * Permission Checking
+     * @param player Player being checked.
+     * @param node Permission Node being checked.
+     * @return Player has Node.
+     */
     @Deprecated
     public Boolean checkPermissions(Player player, String node) {
-        Permission perm = plugin.pm.getPermission(node);
-        perm.setDefault(PermissionDefault.FALSE);
-
         return checkPermissions(player.getName(), player.getWorld().getName(), node)
                 || player.hasPermission(node)
                 || player.isOp();
     }
 
+    /**
+     * Permission Checking
+     * @param player Player being checked.
+     * @param world Player's World.
+     * @param node Permission Node being checked.
+     * @return Player has Node.
+     */
     public Boolean checkPermissions(Player player, World world, String node) {
-        Permission perm = plugin.pm.getPermission(node);
-        perm.setDefault(PermissionDefault.FALSE);
-
         return checkPermissions(player.getName(), world.getName(), node)
                 || player.hasPermission(node)
                 || player.isOp();
     }
 
+    /**
+     * Permission Checking
+     * @param player Player being checked.
+     * @param node Permission Node being checked.
+     * @param useOp Whether to take Op Status into account.
+     * @return Player has Node.
+     */
     @Deprecated
     public Boolean checkPermissions(Player player, String node, Boolean useOp) {
-        Permission perm = plugin.pm.getPermission(node);
-        perm.setDefault(PermissionDefault.FALSE);
-
         if (checkPermissions(player.getName(), player.getWorld().getName(), node))
             return true;
 
@@ -430,11 +557,15 @@ public class mChatAPI {
         return player.hasPermission(node);
     }
 
-    @Deprecated
+    /**
+     * Permission Checking
+     * @param player Player being checked.
+     * @param world Player's World.
+     * @param node Permission Node being checked.
+     * @param useOp Whether to take Op Status into account.
+     * @return Player has Node.
+     */
     public Boolean checkPermissions(Player player, World world, String node, Boolean useOp) {
-        Permission perm = plugin.pm.getPermission(node);
-        perm.setDefault(PermissionDefault.FALSE);
-
         if (checkPermissions(player.getName(), world.getName(), node))
             return true;
 
@@ -445,10 +576,16 @@ public class mChatAPI {
         return player.hasPermission(node);
     }
 
+    /**
+     * Permission Checking
+     * @param player Player being checked.
+     * @param world Name of Player's World.
+     * @param node Permission Node being checked.
+     * @param useOp Whether to take Op Status into account.
+     * @return Player has Node.
+     */
+    @Deprecated
     public Boolean checkPermissions(Player player, String world, String node, Boolean useOp) {
-        Permission perm = plugin.pm.getPermission(node);
-        perm.setDefault(PermissionDefault.FALSE);
-
         if (checkPermissions(player.getName(), world, node))
             return true;
 
@@ -459,6 +596,13 @@ public class mChatAPI {
         return player.hasPermission(node);
     }
 
+    /**
+     * Permission Checking
+     * @param pName Name of Player being checked.
+     * @param world Name of Player's World.
+     * @param node Permission Node being checked.
+     * @return Player has Node.
+     */
     public Boolean checkPermissions(String pName, String world, String node) {
         if (plugin.vaultB)
             if (plugin.vPerm.has(world, pName, node))
@@ -568,10 +712,19 @@ public class mChatAPI {
         return random.nextInt(maxValue - minValue + 1) + minValue;
     }
 
+    /**
+     * Plugin Formatting
+     * @param message Message being appended.
+     * @return Message appended to [mChatSuite]
+     */
     public String formatMessage(String message) {
         return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
+    /**
+     * Logger
+     * @param loggedObject Object being Logged.
+     */
     public void log(Object loggedObject) {
         try {
             plugin.getServer().getConsoleSender().sendMessage(loggedObject.toString());

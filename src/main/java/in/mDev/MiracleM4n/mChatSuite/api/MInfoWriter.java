@@ -20,9 +20,9 @@ public class MInfoWriter {
     }
 
     /**
-     * Used to add the Base of an InfoType.
+     * Used to set the Base values of an InfoType.
      * @param type Type of Base you want to set.
-     * @param name Defining value of the base(Also known as name).
+     * @param name Defining value of the base(Also known as Name).
      */
     public void addBase(String name, InfoType type) {
         YamlConfiguration config = plugin.mIConfig;
