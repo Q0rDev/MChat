@@ -40,9 +40,9 @@ public class mChatAPI {
      * @return Formatted Message.
      */
     public String ParseMessage(String pName, String world, String msg, String format) {
-        String prefix = plugin.getInfoReader().getRawPrefix(pName, world);
-        String suffix = plugin.getInfoReader().getRawSuffix(pName, world);
-        String group = plugin.getInfoReader().getRawGroup(pName, world);
+        Object prefix = plugin.getInfoReader().getRawPrefix(pName, InfoType.USER, world);
+        Object suffix = plugin.getInfoReader().getRawSuffix(pName, InfoType.USER, world);
+        Object group = plugin.getInfoReader().getRawGroup(pName, InfoType.USER, world);
 
         String vI = plugin.varIndicator;
 
@@ -207,9 +207,9 @@ public class mChatAPI {
         if (!checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
         
-        SortedMap<String, String> fVarMap = new TreeMap<String, String>();
-        SortedMap<String, String> dVarMap = new TreeMap<String, String>();
-        SortedMap<String, String> lVarMap = new TreeMap<String, String>();
+        SortedMap<String, Object> fVarMap = new TreeMap<String, Object>();
+        SortedMap<String, Object> dVarMap = new TreeMap<String, Object>();
+        SortedMap<String, Object> lVarMap = new TreeMap<String, Object>();
 
         fVarMap.put(vI + "mnameformat," + vI + "mnf", plugin.nameFormat);
 
@@ -233,7 +233,7 @@ public class mChatAPI {
         dVarMap.put(vI + "totalexp," + vI + "texp," + vI + "te", tExp);
         dVarMap.put(vI + "time," + vI + "t", time);
         dVarMap.put(vI + "world," + vI + "w", pWorld);
-        dVarMap.put(vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGroupName(group));
+        dVarMap.put(vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGrouname(group.toString()));
         dVarMap.put(vI + "HClass," + vI + "HC", hClass);
         dVarMap.put(vI + "HExp," + vI + "HEx", hExp);
         dVarMap.put(vI + "HEBar," + vI + "HEb", hEBar);
@@ -630,7 +630,7 @@ public class mChatAPI {
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String var = plugin.getInfoReader().getRawInfo(pName, world, matcher.group(1));
+            String var = plugin.getInfoReader().getRawInfo(pName, InfoType.USER, world, matcher.group(1)).toString();
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
         }
 
@@ -639,17 +639,17 @@ public class mChatAPI {
         return sb.toString();
     }
 
-    String replaceVars(String format, Map<String, String> map) {
-        for (Entry<String, String> entry : map.entrySet()) {
+    String replaceVars(String format, Map<String, Object> map) {
+        for (Entry<String, Object> entry : map.entrySet()) {
             if (entry.getKey().contains(","))
                 for (String s : entry.getKey().split(",")) {
                     if (s == null || entry.getValue() == null)
                         continue;
 
-                    format = format.replace(s, entry.getValue());
+                    format = format.replace(s, entry.getValue().toString());
                 }
             else
-                format = format.replace(entry.getKey(), entry.getValue());
+                format = format.replace(entry.getKey(), entry.getValue().toString());
         }
 
         return addColour(format);

@@ -17,7 +17,7 @@ public class Stats {
     static Logger logger = Logger.getLogger("in.mDev");
     static FileHandler logFileHandler;
 
-    public static void init(Plugin plugin) {
+    public static void init(mChatSuite plugin) {
         if (configExists(plugin) && logExists(plugin) && !config.getBoolean("opt-out")) {
             plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Pinger(plugin, config.getString("guid"), logger), 300L, 20L * 60L * 60 * 24);
             System.out.println("[" + plugin.getDescription().getName() + "] Stats are being kept. To opt-out check stats.yml.");
@@ -29,7 +29,7 @@ public class Stats {
             logFileHandler.close();
     }
 
-    static Boolean configExists(Plugin plugin) {
+    static Boolean configExists(mChatSuite plugin) {
         config.addDefault("opt-out", false);
         config.addDefault("guid", UUID.randomUUID().toString());
 
@@ -48,7 +48,7 @@ public class Stats {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    static Boolean logExists(Plugin plugin) {
+    static Boolean logExists(mChatSuite plugin) {
         try {
             if(!logger.getUseParentHandlers())
                 return true;
@@ -95,11 +95,11 @@ public class Stats {
 }
 
 class Pinger implements Runnable {
-    Plugin plugin;
+    mChatSuite plugin;
     String guid;
     Logger logger;
 
-    public Pinger(Plugin plugin, String guid, Logger theLogger) {
+    public Pinger(mChatSuite plugin, String guid, Logger theLogger) {
         this.plugin = plugin;
         this.guid = guid;
         this.logger = theLogger;
@@ -126,7 +126,7 @@ class Pinger implements Runnable {
             authors = authors.trim();
             authors = authors.substring(0, (authors.length() - 1)) + ".";
 
-            String url = String.format("http://mdev.in/update.php?server=%s&ip=%s&port=%s&hash=%s&bukkit=%s&players=%s&name=%s&authors=%s&plugins=%s&version=%s",
+            String url = String.format("http://mdev.in/update.php?server=%s&ip=%s&port=%s&hash=%s&bukkit=%s&players=%s&name=%s&authors=%s&plugins=%s&version=%s&license=%s",
                     URLEncoder.encode(plugin.getServer().getServerName(), "UTF-8"),
                     URLEncoder.encode(plugin.getServer().getIp(), "UTF-8"),
                     plugin.getServer().getPort(),
@@ -136,7 +136,8 @@ class Pinger implements Runnable {
                     URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"),
                     URLEncoder.encode(authors, "UTF-8"),
                     URLEncoder.encode(plugins, "UTF-8"),
-                    URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"));
+                    URLEncoder.encode(plugin.getDescription().getVersion(), "UTF-8"),
+                    plugin.licenseB);
 
             new URL(url).openConnection().getInputStream();
 

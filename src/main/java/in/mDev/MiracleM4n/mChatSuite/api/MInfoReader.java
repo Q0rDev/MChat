@@ -27,31 +27,32 @@ public class MInfoReader {
 
     /**
      * Raw Info Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param world Name of the InfoType's World.
+     * @param type InfoType being reflected upon.
      * @param info Info Variable being resolved.
      * @return Raw Info.
      */
-    public String getRawInfo(String pName, String world, String info) {
+    public Object getRawInfo(String name, InfoType type, String world, String info) {
         if (plugin.useLeveledNodes)
-            return getLeveledInfo(pName, world, info);
+            return getLeveledInfo(name, world, info);
 
         if (plugin.useOldNodes)
-            return getBukkitInfo(pName, world, info);
+            return getBukkitInfo(name, world, info);
 
         if (plugin.useNewInfo)
-            return getmChatInfo(pName, world, info);
+            return getmChatInfo(name, type, world, info);
 
         if (plugin.gmPermissionsB)
-            return getGroupManagerInfo(pName, info);
+            return getGroupManagerInfo(name, type, info);
 
         if (plugin.PEXB)
-            return getPEXInfo(pName, world, info);
+            return getPEXInfo(name, type, world, info);
 
         if (plugin.bPermB)
-            return getbPermInfo(pName, world, info);
+            return getbPermInfo(name, type, world, info);
 
-        return getmChatInfo(pName, world, info);
+        return getmChatInfo(name, type, world, info);
     }
 
     /**
@@ -61,8 +62,8 @@ public class MInfoReader {
      * @return Raw Prefix.
      */
     @Deprecated
-    public String getRawPrefix(Player player, World world) {
-        return getRawInfo(player.getName(), world.getName(), "prefix");
+    public Object getRawPrefix(Player player, World world) {
+        return getRawInfo(player.getName(), InfoType.USER, world.getName(), "prefix");
     }
 
     /**
@@ -72,8 +73,8 @@ public class MInfoReader {
      * @return Raw Suffix.
      */
     @Deprecated
-    public String getRawSuffix(Player player, World world) {
-        return getRawInfo(player.getName(), world.getName(), "suffix");
+    public Object getRawSuffix(Player player, World world) {
+        return getRawInfo(player.getName(), InfoType.USER, world.getName(), "suffix");
     }
 
     /**
@@ -83,8 +84,8 @@ public class MInfoReader {
      * @return Raw Group.
      */
     @Deprecated
-    public String getRawGroup(Player player, World world) {
-        return getRawInfo(player.getName(), world.getName(), "group");
+    public Object getRawGroup(Player player, World world) {
+        return getRawInfo(player.getName(), InfoType.USER, world.getName(), "group");
     }
 
     /**
@@ -96,7 +97,7 @@ public class MInfoReader {
      */
     @Deprecated
     public String getInfo(Player player, World world, String info) {
-        return plugin.getAPI().addColour(getRawInfo(player.getName(), world.getName(), info));
+        return plugin.getAPI().addColour(getRawInfo(player.getName(), InfoType.USER, world.getName(), info).toString());
     }
 
     /**
@@ -107,7 +108,7 @@ public class MInfoReader {
      */
     @Deprecated
     public String getPrefix(Player player, World world) {
-        return getInfo(player.getName(), world.getName(), "prefix");
+        return getInfo(player.getName(), InfoType.USER, world.getName(), "prefix");
     }
 
     /**
@@ -118,7 +119,7 @@ public class MInfoReader {
      */
     @Deprecated
     public String getSuffix(Player player, World world) {
-        return getInfo(player.getName(), world.getName(), "suffix");
+        return getInfo(player.getName(), InfoType.USER, world.getName(), "suffix");
     }
 
     /**
@@ -129,120 +130,107 @@ public class MInfoReader {
      */
     @Deprecated
     public String getGroup(Player player, World world) {
-        return getInfo(player.getName(), world.getName(), "group");
+        return getInfo(player.getName(), InfoType.USER, world.getName(), "group");
     }
 
     /**
      * Raw Prefix Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
      * @return Raw Prefix.
      */
-    public String getRawPrefix(String pName, String world) {
-        return getRawInfo(pName, world, "prefix");
+    public Object getRawPrefix(String name, InfoType type, String world) {
+        return getRawInfo(name, type, world, "prefix");
     }
 
     /**
      * Raw Suffix Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
      * @return Raw Suffix.
      */
-    public String getRawSuffix(String pName, String world) {
-        return getRawInfo(pName, world, "suffix");
+    public Object getRawSuffix(String name, InfoType type, String world) {
+        return getRawInfo(name, type, world, "suffix");
     }
 
     /**
      * Raw Group Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
      * @return Raw Group.
      */
-    public String getRawGroup(String pName, String world) {
-        return getRawInfo(pName, world, "group");
+    public Object getRawGroup(String name, InfoType type, String world) {
+        return getRawInfo(name, type, world, "group");
     }
 
     /**
      * Raw Info Resolving
-     * @param pName Name of Player being reflected upon.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
      * @param world Player's World.
      * @param info Info Variable being resolved.
      * @return Raw Info.
      */
-    public String getInfo(String pName, String world, String info) {
-        return plugin.getAPI().addColour(getRawInfo(pName, world, info));
+    public String getInfo(String name, InfoType type, String world, String info) {
+        return plugin.getAPI().addColour(getRawInfo(name, type, world, info).toString());
     }
 
     /**
      * Formatted Prefix Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
      * @return Formatted Prefix.
      */
-    public String getPrefix(String pName, String world) {
-        return getInfo(pName, world, "prefix");
+    public String getPrefix(String name, InfoType type, String world) {
+        return getInfo(name, type, world, "prefix");
     }
 
     /**
      * Formatted Suffix Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
      * @return Formatted Suffix.
      */
-    public String getSuffix(String pName, String world) {
-        return getInfo(pName, world, "suffix");
+    public String getSuffix(String name, InfoType type, String world) {
+        return getInfo(name, type, world, "suffix");
     }
 
     /**
      * Formatted Group Resolving
-     * @param pName Name of Player being reflected upon.
-     * @param world Name of Player's World.
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param world Name of the InfoType's World.
      * @return Formatted Group.
      */
-    public String getGroup(String pName, String world) {
-        return getInfo(pName, world, "group");
+    public String getGroup(String name, String world) {
+        return getInfo(name, InfoType.USER, world, "group");
     }
 
     /*
      * mChatSuite Stuff
      */
-    String getmChatInfo(String pName, String world, String info) {
+    Object getmChatInfo(String name, InfoType type, String world, String info) {
         if (info.equals("group"))
-            if (getmChatGroup(pName) != null)
-                return getmChatGroup(pName);
+            return getmChatGroup(name);
 
-        if (getmChatPlayerInfo(pName, world, info).isEmpty())
-            return getmChatGroupInfo(pName, world, info);
+        String iType = type.getName();
 
-        return getmChatPlayerInfo(pName, world, info);
-    }
+        if (plugin.mIConfig.isSet(iType + "." + name + ".info." + info))
+            return plugin.mIConfig.get(iType + "." + name + ".info." + info);
 
-    String getmChatPlayerInfo(String pName, String world, String info) {
-        if (plugin.mIConfig.isSet("users." + pName + ".info." + info))
-            return plugin.mIConfig.getString("users." + pName + ".info." + info);
-
-        else if (plugin.mIConfig.isSet("users." + pName + ".worlds." + world + "." + info))
-            return plugin.mIConfig.getString("users." + pName + ".worlds." + world + "." + info);
+        else if (plugin.mIConfig.isSet(iType + "." + name + ".worlds." + world + "." + info))
+            return plugin.mIConfig.get(iType + "." + name + ".worlds." + world + "." + info);
 
         return "";
     }
 
-
-    String getmChatGroupInfo(String pName, String world, String info) {
-        String group = getmChatGroup(pName);
-
-        if (plugin.mIConfig.isSet("groups." + group + ".info." + info))
-            return plugin.mIConfig.getString("groups." + group + ".info." + info);
-
-        else if (plugin.mIConfig.isSet("groups." + group + ".worlds." + world + "." + info))
-            return plugin.mIConfig.getString("groups." + group + ".worlds." + world + "." + info);
-
-        return "";
-    }
-
-    String getmChatGroup(String pName) {
-        if (plugin.mIConfig.isSet("users." + pName + ".group"))
-            return plugin.mIConfig.getString("users." + pName + ".group");
+    Object getmChatGroup(String name) {
+        if (plugin.mIConfig.isSet("users." + name + ".group"))
+            return plugin.mIConfig.get("users." + name + ".group");
 
         return "";
     }
@@ -250,22 +238,22 @@ public class MInfoReader {
     /*
      * Leveled Nodes Stuff
      */
-    String getLeveledInfo(String pName, String world, String info) {
+    Object getLeveledInfo(String name, String world, String info) {
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
         if (plugin.PermissionBuB)
             if (info.equals("group"))
-                return getPermBukkitGroup(pName);
+                return getPermBukkitGroup(name);
 
         if (!plugin.mIConfig.isSet("mchat." + info))
             return "";
 
         if (!plugin.mIConfig.isSet("rank." + info))
-            return getBukkitInfo(pName, world, info);
+            return getBukkitInfo(name, world, info);
 
         for (Map.Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
-                if (plugin.getAPI().checkPermissions(pName, world, entry.getKey())) {
+                if (plugin.getAPI().checkPermissions(name, world, entry.getKey())) {
                     String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
 
                     if (!plugin.mIConfig.isSet(rVal))
@@ -282,24 +270,24 @@ public class MInfoReader {
                 return iMap.get(i);
         }
 
-        return getBukkitInfo(pName, world, info);
+        return getBukkitInfo(name, world, info);
     }
 
     /*
      * Old Nodes Stuff
      */
-    String getBukkitInfo(String pName, String world, String info) {
+    Object getBukkitInfo(String name, String world, String info) {
         if (plugin.PermissionBuB)
             if (info.equals("group"))
-                return getPermBukkitGroup(pName);
+                return getPermBukkitGroup(name);
 
         if (!plugin.mIConfig.isSet("mchat." + info))
             return "";
 
         for (Map.Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
-                if (plugin.getAPI().checkPermissions(pName, world, entry.getKey())) {
-                    String infoResolve = entry.getValue().toString();
+                if (plugin.getAPI().checkPermissions(name, world, entry.getKey())) {
+                    Object infoResolve = entry.getValue();
 
                     if (infoResolve != null && !info.isEmpty())
                         return infoResolve;
@@ -311,11 +299,11 @@ public class MInfoReader {
         return "";
     }
 
-    String getPermBukkitGroup(String pName) {
+    String getPermBukkitGroup(String name) {
         PermissionsPlugin pBukkit =
                 (PermissionsPlugin) plugin.pm.getPlugin("PermissionsBukkit");
 
-        List<Group> pGroups = pBukkit.getGroups(pName);
+        List<Group> pGroups = pBukkit.getGroups(name);
 
         try {
             return pGroups.get(0).getName();
@@ -327,28 +315,27 @@ public class MInfoReader {
     /*
      * GroupManager Stuff
      */
-    String getGroupManagerInfo(String pName, String info) {
-        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(pName);
+    Object getGroupManagerInfo(String name, InfoType type, String info) {
+        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(name);
 
         if (info.equals("group"))
-            return getGroupManagerGroups(pName);
+            return getGroupManagerGroup(name);
 
-        String group = gmPermissions.getGroup(pName);
-        String userString = gmPermissions.getUserPermissionString(pName, info);
+        String infoString = "";
 
-        if (userString != null && !userString.isEmpty())
-            return userString;
+        if (type == InfoType.USER)
+            infoString = gmPermissions.getUserPermissionString(name, info);
 
-        if (group == null)
-            return "";
+        if (type == InfoType.GROUP)
+            infoString = gmPermissions.getGroupPermissionString(name, info);
 
-        return gmPermissions.getGroupPermissionString(group, info);
+        return infoString;
     }
 
-    String getGroupManagerGroups(String pName) {
-        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(pName);
+    String getGroupManagerGroup(String name) {
+        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(name);
 
-        String group = gmPermissions.getGroup(pName);
+        String group = gmPermissions.getGroup(name);
 
         if (group == null)
             return "";
@@ -359,29 +346,37 @@ public class MInfoReader {
     /*
      * PEX Stuff
      */
-    String getPEXInfo(String pName, String world, String info) {
-        String userString;
+    Object getPEXInfo(String name, InfoType type, String world, String info) {
+        Object infoString = "";
 
         if (info.equals("group"))
-            return getPEXGroup(pName);
+            return getPEXGroup(name);
 
-        else if (info.equals("prefix"))
-            userString = plugin.pexPermissions.getUser(pName).getPrefix(world);
+        if (type == InfoType.USER) {
+            if (info.equals("prefix"))
+                infoString = plugin.pexPermissions.getUser(name).getPrefix(world);
 
-        else if (info.equals("suffix"))
-            userString = plugin.pexPermissions.getUser(pName).getSuffix(world);
+            else if (info.equals("suffix"))
+                infoString = plugin.pexPermissions.getUser(name).getSuffix(world);
 
-        else
-            userString = plugin.pexPermissions.getUser(pName).getOption(info, world);
+            else
+                infoString = plugin.pexPermissions.getUser(name).getOption(info, world);
+        } else if (type == InfoType.GROUP) {
+            if (info.equals("prefix"))
+                infoString = plugin.pexPermissions.getGroup(name).getPrefix(world);
 
-        if (userString != null)
-            return userString;
+            else if (info.equals("suffix"))
+                infoString = plugin.pexPermissions.getGroup(name).getSuffix(world);
 
-        return "";
+            else
+                infoString = plugin.pexPermissions.getGroup(name).getOption(info, world);
+        }
+
+        return infoString;
     }
 
-    String getPEXGroup(String pName) {
-        String group = plugin.pexPermissions.getUser(pName).getGroupsNames()[0];
+    String getPEXGroup(String name) {
+        String group = plugin.pexPermissions.getUser(name).getGroupsNames()[0];
 
         if (group == null)
             return "";
@@ -392,23 +387,25 @@ public class MInfoReader {
     /*
      * bPermissions Stuff
      */
-    String getbPermInfo(String pName, String world, String info) {
+    Object getbPermInfo(String name, InfoType type, String world, String info) {
         if (info.equals("group"))
-            return getbPermGroup(pName, world);
+            return getbPermGroup(name, world);
 
-        String userString = ApiLayer.getValue(world, CalculableType.USER, pName, info);
+        Object userString = "";
 
-        if (userString != null)
-            if (!userString.isEmpty())
-                return userString;
+        if (type == InfoType.USER)
+            userString = ApiLayer.getValue(world, CalculableType.USER, name, info);
 
-        return "";
+        else if (type == InfoType.GROUP)
+            userString = ApiLayer.getValue(world, CalculableType.GROUP, name, info);
+
+        return userString;
     }
 
-    String getbPermGroup(String pName, String world) {
+    Object getbPermGroup(String name, String world) {
         List<String> groupS = new ArrayList<String>();
 
-        Collections.addAll(groupS, ApiLayer.getGroups(world, CalculableType.GROUP, pName));
+        Collections.addAll(groupS, ApiLayer.getGroups(world, CalculableType.GROUP, name));
 
         if (groupS.size() == 0)
             return "";
@@ -429,12 +426,12 @@ public class MInfoReader {
      * @param group Group to be Resolved.
      * @return Group Name's Alias.
      */
-    public String getGroupName(String group) {
+    public String getGrouname(String group) {
         if (group.isEmpty())
             return "";
 
-        if (plugin.mIConfig.isSet("groupnames." + group))
-            return plugin.mIConfig.get("groupnames." + group).toString();
+        if (plugin.mIConfig.isSet("grounames." + group))
+            return plugin.mIConfig.get("grounames." + group).toString();
 
         return group;
     }
@@ -456,20 +453,20 @@ public class MInfoReader {
 
     /**
      * Player Name Resolver
-     * @param pName Name of Player to be Resolved.
+     * @param name Name of Player to be Resolved.
      * @return Player Name's mChat Alias.
      */
-    public String getmName(String pName) {
-        if (plugin.mIConfig.isSet("mname." + pName))
-            if (!(plugin.mIConfig.getString("mname." + pName).isEmpty()))
-                return plugin.mIConfig.getString("mname." + pName);
+    public String getmName(String name) {
+        if (plugin.mIConfig.isSet("mname." + name))
+            if (!(plugin.mIConfig.getString("mname." + name).isEmpty()))
+                return plugin.mIConfig.getString("mname." + name);
 
-        return pName;
+        return name;
     }
 
     /**
      * Event Message Resolver.
-     * @param eventName Type of Base you want to set.
+     * @param eventName Name of Event you want to grab.
      * @return Event Message.
      */
     public String getEventMessage(String eventName) {

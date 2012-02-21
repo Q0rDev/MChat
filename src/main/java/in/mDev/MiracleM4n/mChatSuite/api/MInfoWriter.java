@@ -84,7 +84,7 @@ public class MInfoWriter {
      * @param var Name of the Variable you are trying to add.
      * @param value Value of the Variable you are trying to add.
      */
-    public void setInfoVar(String name, InfoType type, String var, String value) {
+    public void setInfoVar(String name, InfoType type, String var, Object value) {
         YamlConfiguration config = plugin.mIConfig;
         String base = type.getName();
 
@@ -104,7 +104,7 @@ public class MInfoWriter {
      * @param var Name of the Variable you are trying to add.
      * @param value Value of the Variable you are trying to add.
      */
-    public void setWorldVar(String name, InfoType type, String world, String var, String value) {
+    public void setWorldVar(String name, InfoType type, String world, String var, Object value) {
         YamlConfiguration config = plugin.mIConfig;
         String base = type.getName();
 
