@@ -70,7 +70,6 @@ public class MainConfig {
         plugin.cusVarIndicator = config.getString("mchat.cusVarIndicator", plugin.cusVarIndicator);
         plugin.spoutEnabled = config.getBoolean("mchat.spout", plugin.spoutEnabled);
         plugin.useIPRestrict = config.getBoolean("mchat.IPCensor", plugin.useIPRestrict);
-        plugin.licenseB = config.getBoolean("mchat.license", plugin.licenseB);
         plugin.listB = config.getBoolean("mchat.enableList", plugin.listB);
 
         plugin.sDeathB = config.getBoolean("suppress.useDeath", plugin.sDeathB);
@@ -158,7 +157,6 @@ public class MainConfig {
         config.set("mchat.cusVarIndicator", plugin.cusVarIndicator);
         config.set("mchat.spout", plugin.spoutEnabled);
         config.set("mchat.IPCensor", plugin.useIPRestrict);
-        config.set("mchat.license", plugin.licenseB);
         config.set("mchat.enableList", plugin.listB);
 
         config.set("suppress.useDeath", plugin.sDeathB);
@@ -265,7 +263,6 @@ public class MainConfig {
         checkOption(config, "mchat.cusVarIndicator", plugin.cusVarIndicator);
         checkOption(config, "mchat.spout", plugin.spoutEnabled);
         checkOption(config, "mchat.IPCensor", plugin.useIPRestrict);
-        checkOption(config, "mchat.license", plugin.licenseB);
         checkOption(config, "mchat.enableList", plugin.listB);
 
         checkOption(config, "suppress.useDeath", plugin.sDeathB);

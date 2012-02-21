@@ -176,7 +176,6 @@ public class mChatSuite extends JavaPlugin {
     public Boolean useIPRestrict = true;
     public Boolean useGroupedList = true;
     public Boolean eBroadcast = false;
-    public Boolean licenseB = false;
     public Boolean listB = true;
 
     // Numbers
@@ -253,19 +252,6 @@ public class mChatSuite extends JavaPlugin {
         // Setup Configs
         setupConfigs();
 
-        // Check License Boolean
-        if (!licenseB) {
-            saveResource("LICENCE.txt", true);
-
-            getServer().getLogger().log(Level.SEVERE, "-------------------------[" + pdfFile.getName() + "]-----------------------");
-            getServer().getLogger().log(Level.SEVERE, "|    You have not yet agreed to " + pdfFile.getName() + "'s License.      |");
-            getServer().getLogger().log(Level.SEVERE, "|    Please read over the LICENCE.txt included in the      |");
-            getServer().getLogger().log(Level.SEVERE, "|  plugins/mChatSuite directory than set \"mchat.license\"   |");
-            getServer().getLogger().log(Level.SEVERE, "|         in the config.yml to true if you agree.          |");
-            getServer().getLogger().log(Level.SEVERE, "|   This message will continue to appear until you do so.  |");
-            getServer().getLogger().log(Level.SEVERE, "------------------------------------------------------------");
-        }
-
         // Setup Plugins
         setupPlugins();
 
@@ -294,9 +280,6 @@ public class mChatSuite extends JavaPlugin {
 
         // Setup Commands
         setupCommands();
-
-        // Ping Stats                                       `
-        Stats.init(this);
 
         // External Messaging
         bMessage = new BroadcastMessage(this);
@@ -338,8 +321,6 @@ public class mChatSuite extends JavaPlugin {
 
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
-
-        Stats.unload();
 
         if (eBroadcast)
             bMessage.disconnect();
