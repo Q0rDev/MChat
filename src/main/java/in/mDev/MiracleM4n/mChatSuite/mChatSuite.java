@@ -4,8 +4,6 @@ import com.herocraftonline.dev.heroes.Heroes;
 
 import com.massivecraft.factions.Conf;
 
-import com.smilingdevil.devilstats.api.DevilStats;
-
 import in.mDev.MiracleM4n.mChatSuite.api.MInfoReader;
 import in.mDev.MiracleM4n.mChatSuite.api.MInfoWriter;
 import in.mDev.MiracleM4n.mChatSuite.api.mChatAPI;
@@ -89,9 +87,6 @@ public class mChatSuite extends JavaPlugin {
     // Vault
     public Permission vPerm;
     public Boolean vaultB = false;
-
-    // DevilStats
-    DevilStats dStats = null;
 
     // Configuration
     public YamlConfiguration mConfig = null;
@@ -180,7 +175,7 @@ public class mChatSuite extends JavaPlugin {
     public Boolean sKickB = false;
     public Boolean useIPRestrict = true;
     public Boolean useGroupedList = true;
-    public Boolean eBroadcast = true;
+    public Boolean eBroadcast = false;
     public Boolean licenseB = false;
     public Boolean listB = true;
 
@@ -303,13 +298,6 @@ public class mChatSuite extends JavaPlugin {
         // Ping Stats                                       `
         Stats.init(this);
 
-        // Setup DevilStats
-        try {
-            dStats = new DevilStats(this);
-            dStats.startup();
-        } catch (Exception ignored) {}
-
-
         // External Messaging
         bMessage = new BroadcastMessage(this);
 
@@ -352,9 +340,6 @@ public class mChatSuite extends JavaPlugin {
         getServer().getScheduler().cancelTasks(this);
 
         Stats.unload();
-
-        if(dStats != null)
-            dStats.shutdown();
 
         if (eBroadcast)
             bMessage.disconnect();
