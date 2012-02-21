@@ -212,6 +212,7 @@ public class mChatAPI {
         SortedMap<String, Object> lVarMap = new TreeMap<String, Object>();
 
         fVarMap.put(vI + "mnameformat," + vI + "mnf", plugin.nameFormat);
+        fVarMap.put(vI + "healthbar," + vI + "hb", healthbar);
 
         dVarMap.put(vI + "distancetype," + vI + "dtype", dType);
         dVarMap.put(vI + "displayname," + vI + "dname," + vI + "dn", dName);
@@ -221,7 +222,6 @@ public class mChatAPI {
         dVarMap.put(vI + "group," + vI + "g", group);
         dVarMap.put(vI + "hungerbar," + vI + "hub", hungerBar);
         dVarMap.put(vI + "hunger", hungerLevel);
-        dVarMap.put(vI + "healthbar," + vI + "hb", healthbar);
         dVarMap.put(vI + "health," + vI + "h", health);
         dVarMap.put(vI + "location," + vI + "loc", loc);
         dVarMap.put(vI + "level," + vI + "l", level);
