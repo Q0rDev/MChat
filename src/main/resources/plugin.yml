@@ -4,7 +4,7 @@ version: ${minecraft.version}-${build.number}-${mchat.version}
 author: MiracleM4n
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
-softdepend: [Permissions, GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
+softdepend: [GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
 description: Full mChat Suite
 commands:
     ${comm.mchat}:

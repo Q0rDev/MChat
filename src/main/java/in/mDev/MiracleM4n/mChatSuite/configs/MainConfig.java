@@ -64,7 +64,7 @@ public class MainConfig {
 
         plugin.mAPIOnly = config.getBoolean("mchat.apiOnly", plugin.mAPIOnly);
         plugin.alterEvents = config.getBoolean("mchat.alterEvents", plugin.alterEvents);
-        plugin.alterEvents = config.getBoolean("mchat.alterDeathEvents", plugin.alterDMessages);
+        plugin.alterDMessages = config.getBoolean("mchat.alterDeathEvents", plugin.alterDMessages);
         plugin.chatDistance = config.getDouble("mchat.chatDistance", plugin.chatDistance);
         plugin.varIndicator = config.getString("mchat.varIndicator", plugin.varIndicator);
         plugin.cusVarIndicator = config.getString("mchat.cusVarIndicator", plugin.cusVarIndicator);
