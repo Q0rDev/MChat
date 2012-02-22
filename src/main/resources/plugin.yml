@@ -1,6 +1,7 @@
 name: mChatSuite
 main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
 version: ${minecraft.version}-${build.number}-${mchat.version}
+MCMAPluginID: 13A44EB7-D013-4AD2-87E0-49CB2DAC6C08
 author: MiracleM4n
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
