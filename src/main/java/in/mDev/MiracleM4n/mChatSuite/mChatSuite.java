@@ -176,7 +176,6 @@ public class mChatSuite extends JavaPlugin {
     public Boolean useIPRestrict = true;
     public Boolean useGroupedList = true;
     public Boolean eBroadcast = false;
-    public Boolean listB = true;
 
     // Numbers
     public Integer AFKTimer = 30;
@@ -510,8 +509,7 @@ public class mChatSuite extends JavaPlugin {
         regCommands("mchatafk", new BMChatAFKCommand(this));
         regCommands("mchatafkother", new BMChatAFKOtherCommand(this));
 
-        if (listB)
-            regCommands("mchatlist", new BMChatListCommand(this));
+        regCommands("mchatlist", new BMChatListCommand(this));
 
         regCommands("mchatme", new BMChatMeCommand(this));
         regCommands("mchatsay", new BMChatSayCommand(this));

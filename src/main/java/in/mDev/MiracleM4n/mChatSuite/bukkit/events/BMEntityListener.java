@@ -36,6 +36,8 @@ public class BMEntityListener implements Listener {
         String pName = player.getName();
         String pCause = "";
         String world = player.getWorld().getName();
+        
+        Boolean isPlayer = false;
 
         PlayerDeathEvent subEvent = (PlayerDeathEvent) event;
         EntityDamageEvent dEvent = player.getLastDamageCause();
@@ -43,18 +45,19 @@ public class BMEntityListener implements Listener {
         if (dEvent instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
 
-            if (dEEvent.getDamager() instanceof Player)
+            if (dEEvent.getDamager() instanceof Player) {
                 pCause = plugin.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName(), dEEvent.getDamager().getWorld().getName());
-            else
+                isPlayer = true;
+            } else
                 pCause = "a " + dEEvent.getDamager().getClass().getSimpleName().replace("Craft", "");
         }
 
         if (plugin.alterEvents)
             if (plugin.sDeathB) {
-                suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI);
+                suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI, isPlayer);
                 subEvent.setDeathMessage("");
             } else
-                subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent));
+                subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent, isPlayer));
     }
 
     @EventHandler
@@ -165,66 +168,70 @@ public class BMEntityListener implements Listener {
         }
     }
 
-    String handlePlayerDeath(String pName, String pCause, String world, PlayerDeathEvent event) {
+    String handlePlayerDeath(String pName, String pCause, String world, PlayerDeathEvent event, Boolean isPlayer) {
         String dMsg = event.getDeathMessage();
 
         if (dMsg == null)
             return dMsg;
 
         if (dMsg.contains("went up in flames"))
-            return deathMessage(pName, world, pCause, plugin.deathInFire);
+            return deathMessage(pName, world, pCause, plugin.deathInFire, isPlayer);
 
         else if (dMsg.contains("burned to death"))
-            return deathMessage(pName, world, pCause, plugin.deathOnFire);
+            return deathMessage(pName, world, pCause, plugin.deathOnFire, isPlayer);
 
         else if (dMsg.contains("tried to swim in lava"))
-            return deathMessage(pName, world, pCause, plugin.deathLava);
+            return deathMessage(pName, world, pCause, plugin.deathLava, isPlayer);
 
         else if (dMsg.contains("suffocated in a wall"))
-            return deathMessage(pName, world, pCause, plugin.deathInWall);
+            return deathMessage(pName, world, pCause, plugin.deathInWall, isPlayer);
 
         else if (dMsg.contains("drowned"))
-            return deathMessage(pName, world, pCause, plugin.deathDrown);
+            return deathMessage(pName, world, pCause, plugin.deathDrown, isPlayer);
 
         else if (dMsg.contains("starved to death"))
-            return deathMessage(pName, world, pCause, plugin.deathStarve);
+            return deathMessage(pName, world, pCause, plugin.deathStarve, isPlayer);
 
         else if (dMsg.contains("was pricked to death"))
-            return deathMessage(pName, world, pCause, plugin.deathCactus);
+            return deathMessage(pName, world, pCause, plugin.deathCactus, isPlayer);
 
         else if (dMsg.contains("hit the ground too hard"))
-            return deathMessage(pName, world, pCause, plugin.deathFall);
+            return deathMessage(pName, world, pCause, plugin.deathFall, isPlayer);
 
         else if (dMsg.contains("fell out of the world"))
-            return deathMessage(pName, world, pCause, plugin.deathOutOfWorld);
+            return deathMessage(pName, world, pCause, plugin.deathOutOfWorld, isPlayer);
 
         else if (dMsg.contains("died"))
-            return deathMessage(pName, world, pCause, plugin.deathGeneric);
+            return deathMessage(pName, world, pCause, plugin.deathGeneric, isPlayer);
 
         else if (dMsg.contains("blew up"))
-            return deathMessage(pName, world, pCause, plugin.deathExplosion);
+            return deathMessage(pName, world, pCause, plugin.deathExplosion, isPlayer);
 
         else if (dMsg.contains("was killed by"))
-            return deathMessage(pName, world, pCause, plugin.deathMagic);
+            return deathMessage(pName, world, pCause, plugin.deathMagic, isPlayer);
 
         else if (dMsg.contains("was slain by"))
-            return deathMessage(pName, world, pCause, plugin.deathEntity);
+            return deathMessage(pName, world, pCause, plugin.deathEntity, isPlayer);
 
         else if (dMsg.contains("was shot by"))
-            return deathMessage(pName, world, pCause, plugin.deathArrow);
+            return deathMessage(pName, world, pCause, plugin.deathArrow, isPlayer);
 
         else if (dMsg.contains("was fireballed by"))
-            return deathMessage(pName, world, pCause, plugin.deathFireball);
+            return deathMessage(pName, world, pCause, plugin.deathFireball, isPlayer);
 
         else if (dMsg.contains("was pummeled by"))
-            return deathMessage(pName, world, pCause, plugin.deathThrown);
+            return deathMessage(pName, world, pCause, plugin.deathThrown, isPlayer);
 
         return dMsg;
     }
 
-    String deathMessage(String pName, String world, String pCause, String msg) {
-        return plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getAPI().ParseMessage(pName, world, "", msg)
+    String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
+        if (isPlayer)
+            return plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getAPI().ParseMessage(pName, world, "", msg)
                 .replace("+CName", plugin.getAPI().ParseEventName(pCause, world));
+
+        return plugin.getAPI().ParseEventName(pName, world) + " " +  plugin.getAPI().ParseMessage(pName, world, "", msg)
+                .replace("+CName", pCause);
     }
 
     String healthBarDamage(Player player, Integer damage) {
@@ -250,23 +257,23 @@ public class BMEntityListener implements Listener {
         return out.toString().replaceAll("(&([A-Fa-f0-9]))", "\u00A7$2");
     }
 
-    void suppressDeathMessage(String pName, String pCause, String world, PlayerDeathEvent event, Integer max) {
+    void suppressDeathMessage(String pName, String pCause, String world, PlayerDeathEvent event, Integer max, Boolean isPlayer) {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.suppress.death")) {
-                player.sendMessage(handlePlayerDeath(pName, pCause, world, event));
+                player.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death"))
-                    player.sendMessage(handlePlayerDeath(pName, pCause, world, event));
+                    player.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
         }
 
         if (plugin.eBroadcast) {
             plugin.bMessage.checkState();
-            plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, event));
+            plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
         }
 
-        plugin.getAPI().log(handlePlayerDeath(pName, pCause, world, event));
+        plugin.getAPI().log(handlePlayerDeath(pName, pCause, world, event, isPlayer));
     }
 }
