@@ -1,10 +1,3 @@
-<!--
-	Maven build file for mChatSuite
-
-	Copyright (c) 2011-2012 MiracleM4n <http://www.mdev.in>
-	mChatSuite is licensed under BananaCode Minecraft License v1.1. Please see the `LICENCE.txt` file for details.
--->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.1</minecraft.version>
-        <mchat.version>R8_2</mchat.version>
+        <mchat.version>R8_3</mchat.version>
 
         <comm.mchat>mchat</comm.mchat>
         <comm.me>mchatme</comm.me>
@@ -52,15 +45,6 @@
         <alias.deny>pmchatd, pmdeny, pmd, pdeny, deny</alias.deny>
         <alias.leave>pmchatl, pmleave, pml, pleave, leave</alias.leave>
     </properties>
-
-    <!-- License -->
-    <licenses>
-        <license>
-            <name>BananaCode Minecraft License v1.1</name>
-            <url>http://www.mdev.in/license/BananaCodeMinecraftLicensev1-1.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
 
     <!-- Source code -->
     <scm>
@@ -180,7 +164,7 @@
         <dependency>
             <groupId>org.anjocaido</groupId>
             <artifactId>GroupManager</artifactId>
-            <version>1.0.alpha-5</version>
+            <version>1.9</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

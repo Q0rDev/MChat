@@ -8,7 +8,7 @@ import de.bananaco.bpermissions.api.util.CalculableType;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
-import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
+import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -44,7 +44,7 @@ public class MInfoReader {
             return getmChatInfo(name, type, world, info);
 
         if (plugin.gmPermissionsB)
-            return getGroupManagerInfo(name, type, info);
+            return getGroupManagerInfo(name, type, world, info);
 
         if (plugin.PEXB)
             return getPEXInfo(name, type, world, info);
@@ -315,27 +315,27 @@ public class MInfoReader {
     /*
      * GroupManager Stuff
      */
-    Object getGroupManagerInfo(String name, InfoType type, String info) {
-        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(name);
+    Object getGroupManagerInfo(String name, InfoType type, String world, String info) {
+        OverloadedWorldHolder gmPermissions = plugin.gmPermissionsWH.getWorldData(world);
 
         if (info.equals("group"))
-            return getGroupManagerGroup(name);
+            return getGroupManagerGroup(name, world);
 
         String infoString = "";
 
         if (type == InfoType.USER)
-            infoString = gmPermissions.getUserPermissionString(name, info);
+            infoString = gmPermissions.getUser(name).getVariables().getVarString(info);
 
         if (type == InfoType.GROUP)
-            infoString = gmPermissions.getGroupPermissionString(name, info);
+            infoString = gmPermissions.getGroup(name).getVariables().getVarString(info);
 
         return infoString;
     }
 
-    String getGroupManagerGroup(String name) {
-        AnjoPermissionsHandler gmPermissions = plugin.gmPermissionsWH.getWorldPermissions(name);
+    String getGroupManagerGroup(String name, String world) {
+        OverloadedWorldHolder gmPermissions = plugin.gmPermissionsWH.getWorldData(world);
 
-        String group = gmPermissions.getGroup(name);
+        String group = gmPermissions.getUser(name).getGroup().getName();
 
         if (group == null)
             return "";
