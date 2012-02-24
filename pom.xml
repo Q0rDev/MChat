@@ -56,7 +56,7 @@
     <!-- Continuous integration -->
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.mdev.in</url>
+        <url>http://ci.mdev.in/job/${project.name}</url>
     </ciManagement>
 
     <!-- Repository locations -->
