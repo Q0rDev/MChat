@@ -31,7 +31,7 @@ public class BPMChatDenyCommand implements CommandExecutor {
             Player recipient = plugin.getServer().getPlayer(rName);
             String rWorld = recipient.getWorld().getName();
 
-            if (rName != null) {
+            if (rName != null && recipient != null) {
                 plugin.getInvite.remove(pName);
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);

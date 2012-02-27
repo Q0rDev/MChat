@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.1</minecraft.version>
-        <mchat.version>R8_3</mchat.version>
+        <mchat.version>R8_4</mchat.version>
 
         <comm.mchat>mchat</comm.mchat>
         <comm.me>mchatme</comm.me>
@@ -220,7 +220,7 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.9-SNAPSHOT</version>
+            <version>1.2.10-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
