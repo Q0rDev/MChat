@@ -233,7 +233,7 @@ public class mChatAPI {
         dVarMap.put(vI + "totalexp," + vI + "texp," + vI + "te", tExp);
         dVarMap.put(vI + "time," + vI + "t", time);
         dVarMap.put(vI + "world," + vI + "w", pWorld);
-        dVarMap.put(vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGrouname(group.toString()));
+        dVarMap.put(vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGroupName(group.toString()));
         dVarMap.put(vI + "HClass," + vI + "HC", hClass);
         dVarMap.put(vI + "HExp," + vI + "HEx", hExp);
         dVarMap.put(vI + "HEBar," + vI + "HEb", hEBar);

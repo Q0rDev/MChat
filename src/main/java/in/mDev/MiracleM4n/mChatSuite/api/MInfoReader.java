@@ -426,12 +426,12 @@ public class MInfoReader {
      * @param group Group to be Resolved.
      * @return Group Name's Alias.
      */
-    public String getGrouname(String group) {
+    public String getGroupName(String group) {
         if (group.isEmpty())
             return "";
 
-        if (plugin.mIConfig.isSet("grounames." + group))
-            return plugin.mIConfig.get("grounames." + group).toString();
+        if (plugin.mIConfig.isSet("groupnames." + group))
+            return plugin.mIConfig.get("groupnames." + group).toString();
 
         return group;
     }
