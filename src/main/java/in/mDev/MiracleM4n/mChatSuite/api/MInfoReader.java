@@ -488,14 +488,13 @@ public class MInfoReader {
         return plugin.getAPI().addColour(eventName);
     }
 
-    /**
-     * Raw Prefix Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param world Name of the InfoType's World.
-     * @return Raw Prefix.
-     */
     @Deprecated
     public String getRawPrefix(String name, String world) {
         return getRawInfo(name, InfoType.USER, world, "prefix").toString();
+    }
+
+    @Deprecated
+    public String getRawSuffix(String name, String world) {
+        return getRawInfo(name, InfoType.USER, world, "suffix").toString();
     }
 }
