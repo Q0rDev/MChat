@@ -73,7 +73,7 @@
         </repository>
         <repository>
             <id>spout-repo</id>
-            <url>http://repo.getspout.org</url>
+            <url>http://repo.spout.org</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -120,7 +120,7 @@
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
-                    <include>plugin.yml</include>
+                    <include>*.yml</include>
                 </includes>
             </resource>
         </resources>

@@ -1,19 +1,14 @@
-package in.mDev.MiracleM4n.mChatSuite.api;
+package in.mDev.MiracleM4n.mChatSuite.spout.api;
 
-import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.hero.Hero;
-import com.herocraftonline.dev.heroes.util.Messaging;
-import com.herocraftonline.dev.heroes.util.Properties;
-
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
-import org.bukkit.World;
-import org.bukkit.entity.Player;
+import in.mDev.MiracleM4n.mChatSuite.spout.mChatSuite;
+import org.spout.api.geo.World;
+import org.spout.api.player.Player;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class mChatAPI {
@@ -123,24 +118,28 @@ public class mChatAPI {
             sType = plugin.getLocale().getOption("format.spy");
 
         // Player Object Stuff
-        if (plugin.getServer().getPlayer(pName) != null)  {
-            Player player = plugin.getServer().getPlayer(pName);
+        if (plugin.getGame().getPlayer(pName, false) != null)  {
+            Player player = plugin.getGame().getPlayer(pName, false);
 
             // Location
-            locX = player.getLocation().getX();
-            locY = player.getLocation().getY();
-            locZ = player.getLocation().getZ();
+            locX = Double.valueOf(player.getEntity().getX());
+            locY = Double.valueOf(player.getEntity().getY());
+            locZ = Double.valueOf(player.getEntity().getZ());
 
             loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
 
             // Health
             healthbar = healthBar(player);
-            health = String.valueOf(player.getHealth());
+            //TODO Wait for implementation
+            //health = String.valueOf(player.getHealth());
 
             // World
-            pWorld = player.getWorld().getName();
+            pWorld = player.getEntity().getWorld().getName();
 
+            //TODO Wait for implementation
             // 1.8 Vars
+            /*
+
             hungerLevel = String.valueOf(player.getFoodLevel());
             hungerBar = basicBar(player.getFoodLevel(), 20, 10);
             level = String.valueOf(player.getLevel());
@@ -148,14 +147,16 @@ public class mChatAPI {
             expBar = basicBar(player.getExp(), ((player.getLevel() + 1) * 10), 10);
             tExp = String.valueOf(player.getTotalExperience());
             gMode = "";
-
             if (player.getGameMode() != null && player.getGameMode().name() != null)
                 gMode = player.getGameMode().name();
 
+            */
+
             // Display Name
             dName = player.getDisplayName();
-
+            //TODO Wait for implementation
             // Initialize Heroes Vars
+            /*
             if (plugin.heroesB) {
                 Hero hero = plugin.heroes.getHeroManager().getHero(player);
                 HeroClass heroClass = hero.getHeroClass();
@@ -191,6 +192,7 @@ public class mChatAPI {
                 else
                     hMastered = plugin.hMasterF;
             }
+            */
         }
 
         String formatAll = parseVars(format, pName, world);
@@ -206,7 +208,7 @@ public class mChatAPI {
 
         if (!checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
-        
+
         SortedMap<String, Object> fVarMap = new TreeMap<String, Object>();
         SortedMap<String, Object> dVarMap = new TreeMap<String, Object>();
         SortedMap<String, Object> lVarMap = new TreeMap<String, Object>();
@@ -249,11 +251,11 @@ public class mChatAPI {
         dVarMap.put(vI + "HSecEBar," + vI + "HSEb", hSEBar);
         dVarMap.put(vI + "HSecLevel," + vI + "HSL", hSLevel);
         dVarMap.put(vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getInfoReader().getWorldName(world));
-       
+
         lVarMap.put(vI + "message," + vI + "msg," + vI + "m", msg);
 
         formatAll = replaceCustVars(pName, formatAll);
-        
+
         formatAll = replaceVars(formatAll, fVarMap);
         formatAll = replaceVars(formatAll, dVarMap);
 
@@ -432,7 +434,9 @@ public class mChatAPI {
     public String healthBar(Player player) {
         float maxHealth = 20;
         float barLength = 10;
-        float health = player.getHealth();
+        //TODO Wait for implementation
+        //float health = player.getHealth();
+        float health = 20;
 
         return basicBar(health, maxHealth, barLength);
     }
@@ -520,9 +524,10 @@ public class mChatAPI {
      */
     @Deprecated
     public Boolean checkPermissions(Player player, String node) {
-        return checkPermissions(player.getName(), player.getWorld().getName(), node)
-                || player.hasPermission(node)
-                || player.isOp();
+        return checkPermissions(player.getName(), player.getEntity().getWorld().getName(), node)
+                || player.hasPermission(node);
+                //TODO Wait for implementation
+                //|| player.isOp();
     }
 
     /**
@@ -534,8 +539,9 @@ public class mChatAPI {
      */
     public Boolean checkPermissions(Player player, World world, String node) {
         return checkPermissions(player.getName(), world.getName(), node)
-                || player.hasPermission(node)
-                || player.isOp();
+                || player.hasPermission(node);
+                //TODO Wait for implementation
+                //|| player.isOp();
     }
 
     /**
@@ -547,12 +553,15 @@ public class mChatAPI {
      */
     @Deprecated
     public Boolean checkPermissions(Player player, String node, Boolean useOp) {
-        if (checkPermissions(player.getName(), player.getWorld().getName(), node))
+        if (checkPermissions(player.getName(), player.getEntity().getWorld().getName(), node))
             return true;
 
+        //TODO Wait for implementation
+        /*
         if (useOp)
             if (player.isOp())
                 return true;
+        */
 
         return player.hasPermission(node);
     }
@@ -569,9 +578,12 @@ public class mChatAPI {
         if (checkPermissions(player.getName(), world.getName(), node))
             return true;
 
+        //TODO Wait for implementation
+        /*
         if (useOp)
             if (player.isOp())
                 return true;
+        */
 
         return player.hasPermission(node);
     }
@@ -589,9 +601,12 @@ public class mChatAPI {
         if (checkPermissions(player.getName(), world, node))
             return true;
 
+        //TODO Wait for implementation
+        /*
         if (useOp)
             if (player.isOp())
                 return true;
+        */
 
         return player.hasPermission(node);
     }
@@ -616,8 +631,8 @@ public class mChatAPI {
             if (plugin.pexPermissions.has(pName, world, node))
                 return true;
 
-        if (plugin.getServer().getPlayer(pName) != null)
-            if (plugin.getServer().getPlayer(pName).hasPermission(node))
+        if (plugin.getGame().getPlayer(pName, false) != null)
+            if (plugin.getGame().getPlayer(pName, false).hasPermission(node))
                 return true;
 
         return false;
@@ -682,11 +697,14 @@ public class mChatAPI {
         if (plugin.useIPRestrict)
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
 
+        //TODO Wait for implementation
+        /*
         for (Entry<String, Object> entry : plugin.mCConfig.getValues(false).entrySet()) {
             String val = entry.getValue().toString();
 
             msg = replacer(msg, "(?i)" + entry.getKey(), val);
         }
+        */
 
         return msg;
     }

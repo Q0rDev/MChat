@@ -1,0 +1,120 @@
+Main Page:
+>General Options
+>Format Options
+>Message Options
+>Info Options
+
+
+General Options Page:
+API Only
+Format Events
+Use Spout
+Chat Distance
+Variable Indicator
+Suppress Event Messages
+>mChatEssentials Options
+>pmChat Options
+
+mChatEssentials Options:
+Enable mChatEssentials Features
+Notify Health Changes
+Use Achievement for Health Changes
+Hardcore AFK
+List Command Variable
+Auto AFK Timer
+Auto AFK Kick Timer
+Add AFK To Tabbed List
+
+pmChat Options:
+Enable pmChat Features
+Use Spout For PM’s
+
+
+Format Page:
+Chat Format
+Name Format
+Me Format
+Event Format
+Date Format
+Tabbed List Format
+List Command Format
+
+
+Message Page:
+>Event
+>Death
+>Other Plugins
+
+Event Message Page:   
+Join
+Leave
+Kick
+
+Death Message Page:
+In Fire
+On Fire
+Lava
+In Wall
+Starve
+Cactus
+Fall
+Out Of World
+Generic
+Explosion
+Magic
+Entity
+Arrow
+Fireball
+Thrown
+
+Other Plugin Messages Page:
+Heroes Mastered
+Heroes Non-Mastered
+
+
+Info Page:
+Use New Info
+Use Leveled Nodes
+Use Old Nodes
+Add New Players (New Info Only)
+Default Group (New Info Only)
+>Edit Info
+
+Edit Info Page (Old Info):
+Add Variable
+    Variable
+    Value
+   
+Edit Info Page (Leveled Info):
+Add Variable
+    Variable
+    Rank (Under 100)
+    Value
+
+Edit Info Page (New Info):
+>Change Player Options
+>Change Group Options
+
+Edit Player Info Page (New Info):
+Add Player
+  Group
+Edit Player
+  Name
+  Var
+  Value
+  World
+  WorldVar
+  WorldValue
+Remove Player
+Edit Group
+
+Edit Group Info Page (New Info):
+Add Group
+Edit Group
+  Name
+  Var
+  Value
+  World
+  WorldVar
+  WorldValue
+RemoveGroup

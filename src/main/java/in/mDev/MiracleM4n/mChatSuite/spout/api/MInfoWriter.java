@@ -1,8 +1,7 @@
-package in.mDev.MiracleM4n.mChatSuite.api;
+package in.mDev.MiracleM4n.mChatSuite.spout.api;
 
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
-import org.bukkit.configuration.file.YamlConfiguration;
+import in.mDev.MiracleM4n.mChatSuite.spout.mChatSuite;
+import org.spout.api.util.config.Configuration;
 
 @SuppressWarnings("unused")
 public class MInfoWriter {
@@ -13,10 +12,8 @@ public class MInfoWriter {
     }
 
     void save() {
-        try {
-            plugin.mIConfig.save(plugin.mIConfigF);
-            plugin.getInfoConfig().reload();
-        } catch (Exception ignored) {}
+        plugin.mIConfig.save();
+        plugin.getInfoConfig().reload();
     }
 
     /**
@@ -25,14 +22,14 @@ public class MInfoWriter {
      * @param name Defining value of the base(Also known as Name).
      */
     public void addBase(String name, InfoType type) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
         String base = type.getName();
 
         if (type.equals(InfoType.USER))
-            config.set(base + "." + name + ".group", plugin.mIDefaultGroup);
+            config.setValue(base + "." + name + ".group", plugin.mIDefaultGroup);
 
-        config.set(base + "." + name + ".info.prefix", "");
-        config.set(base + "." + name + ".info.suffix", "");
+        config.setValue(base + "." + name + ".info.prefix", "");
+        config.setValue(base + "." + name + ".info.suffix", "");
 
         save();
 
@@ -46,12 +43,12 @@ public class MInfoWriter {
      * @param group Default Group to set to the Base(Only needed if doing for InfoType.USER).
      */
     public void addBase(String player, String group) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
 
-        config.set("users." + player + ".group", group);
+        config.setValue("users." + player + ".group", group);
 
-        config.set("users." + player + ".info.prefix", "");
-        config.set("users." + player + ".info.suffix", "");
+        config.setValue("users." + player + ".info.prefix", "");
+        config.setValue("users." + player + ".info.suffix", "");
 
         save();
 
@@ -65,14 +62,14 @@ public class MInfoWriter {
      * @param world Name of the World you are trying to add.
      */
     public void addWorld(String name, InfoType type, String world) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
         String base = type.getName();
 
-        if (!config.isSet(base + "." + name))
+        if (config.getValue(base + "." + name) == null)
             addBase(name, type);
 
-        config.set(base + "." + name + ".worlds." + world + "prefix", "");
-        config.set(base + "." + name + ".worlds." + world + "suffix", "");
+        config.setValue(base + "." + name + ".worlds." + world + "prefix", "");
+        config.setValue(base + "." + name + ".worlds." + world + "suffix", "");
 
         save();
     }
@@ -85,13 +82,13 @@ public class MInfoWriter {
      * @param value Value of the Variable you are trying to add.
      */
     public void setInfoVar(String name, InfoType type, String var, Object value) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
         String base = type.getName();
 
-        if (!config.isSet(base + "." + name))
+        if (config.getValue(base + "." + name) == null)
             addBase(name, type);
 
-        config.set(base + "." + name + ".info." + var, value);
+        config.setValue(base + "." + name + ".info." + var, value);
 
         save();
     }
@@ -105,13 +102,13 @@ public class MInfoWriter {
      * @param value Value of the Variable you are trying to add.
      */
     public void setWorldVar(String name, InfoType type, String world, String var, Object value) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
         String base = type.getName();
 
-        if (!config.isSet(base + "." + name + ".worlds." + world))
+        if (config.getValue(base + "." + name + ".worlds." + world) == null)
             addWorld(name, type, world);
 
-        config.set(base + "." + name + ".worlds." + world + "." + var, value);
+        config.setValue(base + "." + name + ".worlds." + world + "." + var, value);
 
         save();
     }
@@ -122,12 +119,12 @@ public class MInfoWriter {
      * @param group Group to be set to Player.
      */
     public void setGroup(String player, String group) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
 
-        if (!config.isSet(player + "." + group))
+        if (config.getValue(player + "." + group) == null)
             addBase(player, group);
 
-        config.set("users." + player + ".group", group);
+        config.setValue("users." + player + ".group", group);
 
         save();
     }
@@ -138,11 +135,11 @@ public class MInfoWriter {
      * @param type Type of Base you want to remove.
      */
     public void removeBase(String name, InfoType type) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
         String base = type.getName();
 
-        if (config.isSet(base + "." + name)) {
-            config.set(base + "." + name, null);
+        if (config.getValue(base + "." + name) != null) {
+            config.setValue(base + "." + name, null);
 
             save();
         }
@@ -165,12 +162,12 @@ public class MInfoWriter {
      * @param world Name of the World you are trying to remove.
      */
     public void removeWorld(String name, InfoType type, String world) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
         String base = type.getName();
 
-        if (config.isSet(base + "." + name)) {
-            if (config.isSet(base + "." + name + ".worlds." + world)) {
-                config.set(base + "." + name + ".worlds." + world, null);
+        if (config.getValue(base + "." + name) != null) {
+            if (config.getValue(base + "." + name + ".worlds." + world) != null) {
+                config.setValue(base + "." + name + ".worlds." + world, null);
 
                 save();
             }
@@ -189,11 +186,11 @@ public class MInfoWriter {
     }
 
     void setDGroup(String group) {
-        YamlConfiguration config = plugin.mIConfig;
+        Configuration config = plugin.mIConfig;
 
-        if (!config.isSet("groups." + group)) {
-            config.set("groups." + group + ".info.prefix", "");
-            config.set("groups." + group + ".info.suffix", "");
+        if (config.getValue("groups." + group) == null) {
+            config.setValue("groups." + group + ".info.prefix", "");
+            config.setValue("groups." + group + ".info.suffix", "");
 
             save();
         }
