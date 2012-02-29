@@ -59,16 +59,6 @@ public class BMChatCommand implements CommandExecutor {
                     sender.sendMessage(plugin.getAPI().formatMessage(string));
 
                 return true;
-            } else if (args[0].equalsIgnoreCase("gui")) {
-                if (sender instanceof Player) {
-                    if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.gui")) {
-                        sender.sendMessage(plugin.getAPI().formatMessage("You are not to look at my fail GUI."));
-                        return true;
-                    }
-
-                    mChatSuite.mGUI.openMainPopup(player);
-                    return true;
-                }
             } else if (args[0].equalsIgnoreCase("reload")
                     || args[0].equalsIgnoreCase("r")) {
                 if (args.length > 1)
