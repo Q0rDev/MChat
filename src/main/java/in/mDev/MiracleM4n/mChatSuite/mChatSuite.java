@@ -4,17 +4,11 @@ import com.herocraftonline.dev.heroes.Heroes;
 
 import com.massivecraft.factions.Conf;
 
-import in.mDev.MiracleM4n.mChatSuite.api.MInfoReader;
-import in.mDev.MiracleM4n.mChatSuite.api.MInfoWriter;
-import in.mDev.MiracleM4n.mChatSuite.api.mChatAPI;
-
-import in.mDev.MiracleM4n.mChatSuite.bukkit.GUI.*;
-import in.mDev.MiracleM4n.mChatSuite.bukkit.commands.*;
-import in.mDev.MiracleM4n.mChatSuite.bukkit.events.*;
-
+import in.mDev.MiracleM4n.mChatSuite.api.*;
+import in.mDev.MiracleM4n.mChatSuite.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
-
-import in.mDev.MiracleM4n.mChatSuite.external.BroadcastMessage;
+import in.mDev.MiracleM4n.mChatSuite.events.*;
+import in.mDev.MiracleM4n.mChatSuite.external.*;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -51,11 +45,6 @@ public class mChatSuite extends JavaPlugin {
     public static BMEntityListener eListener;
     public static BMBlockListener bListener;
     public static BMCustomListener cusListener;
-
-    // GUI
-    public static Main mGUI;
-    public static GUIEvent mGUIEvent;
-    public static Pages mPages;
 
     // External Messaging
     public BroadcastMessage bMessage;
@@ -255,13 +244,8 @@ public class mChatSuite extends JavaPlugin {
         setupPlugins();
 
         if (!mAPIOnly) {
-            if (spoutB) {
+            if (spoutB)
                 cusListener = new BMCustomListener(this);
-
-                mGUI = new Main(this);
-                mGUIEvent = new GUIEvent(this);
-                mPages = new Pages(this);
-            }
 
             pListener = new BMPlayerListener(this);
             bListener = new BMBlockListener(this);
@@ -335,10 +319,8 @@ public class mChatSuite extends JavaPlugin {
 
             pm.registerEvents(eListener, this);
 
-            if (spoutB) {
+            if (spoutB)
                 pm.registerEvents(cusListener, this);
-                pm.registerEvents(mGUIEvent, this);
-            }
         }
     }
 
