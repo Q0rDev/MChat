@@ -148,7 +148,7 @@ public class BMPlayerListener implements Runnable, Listener {
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null)
                 mPName = MobDisguise.p2p.get(pName);
-        
+
         final String rPName = mPName;
 
         if (msg == null)
@@ -300,7 +300,7 @@ public class BMPlayerListener implements Runnable, Listener {
 
         plugin.getAPI().log(format);
     }
-    
+
     Boolean checkSpy(String player, String world) {
         if (plugin.getAPI().checkPermissions(player, world, "mchat.spy")) {
             plugin.isSpying.put(player, true);
@@ -310,7 +310,7 @@ public class BMPlayerListener implements Runnable, Listener {
         plugin.isSpying.put(player, false);
         return false;
     }
-    
+
     void doPlayerListStuff(Player player, String listName) {
         try {
             player.setPlayerListName(listName);

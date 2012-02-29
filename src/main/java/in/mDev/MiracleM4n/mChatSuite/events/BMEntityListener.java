@@ -36,7 +36,7 @@ public class BMEntityListener implements Listener {
         String pName = player.getName();
         String pCause = "";
         String world = player.getWorld().getName();
-        
+
         Boolean isPlayer = false;
 
         PlayerDeathEvent subEvent = (PlayerDeathEvent) event;
@@ -228,7 +228,7 @@ public class BMEntityListener implements Listener {
     String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
         if (isPlayer)
             return plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getAPI().ParseMessage(pName, world, "", msg)
-                .replace("+CName", plugin.getAPI().ParseEventName(pCause, world));
+                    .replace("+CName", plugin.getAPI().ParseEventName(pCause, world));
 
         return plugin.getAPI().ParseEventName(pName, world) + " " +  plugin.getAPI().ParseMessage(pName, world, "", msg)
                 .replace("+CName", pCause);

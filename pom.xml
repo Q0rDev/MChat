@@ -109,14 +109,6 @@
         <resources>
             <resource>
                 <targetPath>.</targetPath>
-                <filtering>false</filtering>
-                <directory>${basedir}</directory>
-                <includes>
-                    <include>LICENCE.txt</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>.</targetPath>
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
@@ -150,14 +142,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.1-R5-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spout</groupId>
-            <artifactId>spoutapi</artifactId>
-            <version>dev-SNAPSHOT</version>
+            <version>1.1-R4</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
