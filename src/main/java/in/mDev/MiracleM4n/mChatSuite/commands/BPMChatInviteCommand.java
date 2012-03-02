@@ -44,15 +44,14 @@ public class BPMChatInviteCommand implements CommandExecutor {
                 return true;
             }
 
-            if (plugin.getInvite.get(rName) != null) {
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("&5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.")));
-                return true;
-            } else {
+            if (plugin.getInvite.get(rName) == null) {
                 plugin.getInvite.put(rName, pName);
                 player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have invited &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.")));
                 recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("You have been invited to a Convo by &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.")));
-                return true;
-            }
+            } else
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("&5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.")));
+
+            return true;
         }
 
         return false;
