@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.2.2</minecraft.version>
-        <mchat.version>R0_2</mchat.version>
+        <mchat.version>R0_3</mchat.version>
 
         <comm.mchat>mchat</comm.mchat>
         <comm.me>mchatme</comm.me>
@@ -91,6 +91,7 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        <!--
         <repository>
             <id>mBowl-repo</id>
             <url>http://ci.milkbowl.net/plugin/repository/project/Vault/LastSuccessful/repository</url>
@@ -101,6 +102,7 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        -->
     </repositories>
 
     <build>
