@@ -375,11 +375,12 @@ public class MInfoReader {
         return infoString;
     }
 
-    String getPEXGroup(String name) {
-        String group = plugin.pexPermissions.getUser(name).getGroupsNames()[0];
+    Object getPEXGroup(String name) {
+        String[] groupNames = plugin.pexPermissions.getUser(name).getGroupsNames();
+        String group = "";
 
-        if (group == null)
-            return "";
+        if (groupNames.length > 0)
+            group = plugin.pexPermissions.getUser(name).getGroupsNames()[0];
 
         return group;
     }
@@ -403,18 +404,11 @@ public class MInfoReader {
     }
 
     Object getbPermGroup(String name, String world) {
-        List<String> groupS = new ArrayList<String>();
-
-        Collections.addAll(groupS, ApiLayer.getGroups(world, CalculableType.GROUP, name));
-
-        if (groupS.size() == 0)
-            return "";
-
+        String[] groupNames = ApiLayer.getGroups(world, CalculableType.GROUP, name);
         String group = "";
 
-        try {
-            group = groupS.get(0);
-        } catch(Exception ignored) {}
+        if (groupNames.length > 0)
+            group = ApiLayer.getGroups(world, CalculableType.GROUP, name)[0];
 
         return group;
     }

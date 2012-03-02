@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.2.2</minecraft.version>
-        <mchat.version>R0_1</mchat.version>
+        <mchat.version>R0_2</mchat.version>
 
         <comm.mchat>mchat</comm.mchat>
         <comm.me>mchatme</comm.me>
