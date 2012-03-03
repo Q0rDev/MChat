@@ -425,7 +425,7 @@ public class MInfoReader {
             return "";
 
         if (plugin.mIConfig.isSet("groupnames." + group))
-            return plugin.mIConfig.get("groupnames." + group).toString();
+            return plugin.mIConfig.getString("groupnames." + group);
 
         return group;
     }
@@ -440,7 +440,7 @@ public class MInfoReader {
             return "";
 
         if (plugin.mIConfig.isSet("worldnames." + world))
-            return plugin.mIConfig.get("worldnames." + world).toString();
+            return plugin.mIConfig.getString("worldnames." + world);
 
         return world;
     }

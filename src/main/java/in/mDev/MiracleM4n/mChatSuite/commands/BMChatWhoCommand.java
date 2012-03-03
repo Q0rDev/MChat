@@ -55,7 +55,7 @@ public class BMChatWhoCommand implements CommandExecutor {
         sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s Location: [ " + loc + " ]"));
         sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s World: " + world));
         sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s Health: " + plugin.getAPI().healthBar(recipient) + " " + recipient.getHealth() + "/20"));
-        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s IP: " + recipient.getAddress().toString().replace("/", "")));
+        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s IP: " + recipient.getAddress().getHostString()));
         sender.sendMessage(plugin.getAPI().addColour("Current Item: " + recipient.getItemInHand().getType().name()));
         sender.sendMessage(plugin.getAPI().addColour("Entity ID: #" + recipient.getEntityId()));
     }

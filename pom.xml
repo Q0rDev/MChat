@@ -13,37 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <minecraft.version>1.2.2</minecraft.version>
-        <mchat.version>R0_5</mchat.version>
-
-        <comm.mchat>mchat</comm.mchat>
-        <comm.me>mchatme</comm.me>
-        <comm.who>mchatwho</comm.who>
-        <comm.list>mchatlist</comm.list>
-        <comm.say>mchatsay</comm.say>
-        <comm.afk>mchatafk</comm.afk>
-        <comm.afko>mchatafkother</comm.afko>
-        <comm.shout>mchatshout</comm.shout>
-        <comm.pm>pmchat</comm.pm>
-        <comm.reply>pmchatreply</comm.reply>
-        <comm.invite>pmchatinvite</comm.invite>
-        <comm.accept>pmchataccept</comm.accept>
-        <comm.deny>pmchatdeny</comm.deny>
-        <comm.leave>pmchatleave</comm.leave>
-
-        <alias.mchat>mchatsuite</alias.mchat>
-        <alias.me>me</alias.me>
-        <alias.who>who, mwho</alias.who>
-        <alias.list>list, mlist, online, monline, playerlist</alias.list>
-        <alias.say>msay, say</alias.say>
-        <alias.afk>afk, mafk, maway, away</alias.afk>
-        <alias.afko>afko, mafkother, mafko, mawayother, mawayo, awayother, awayo</alias.afko>
-        <alias.shout>shout, yell</alias.shout>
-        <alias.pm>pm, msg, message, m, mchattell, mtell, tell, t</alias.pm>
-        <alias.reply>pmchatr, pmreply, pmr, preply, reply, r</alias.reply>
-        <alias.invite>pmchati, pminvite, pmi, pinvite, invite</alias.invite>
-        <alias.accept>pmchata, pmaccept, pma, paccept, accept</alias.accept>
-        <alias.deny>pmchatd, pmdeny, pmd, pdeny, deny</alias.deny>
-        <alias.leave>pmchatl, pmleave, pml, pleave, leave</alias.leave>
+        <mchat.version>R0_6</mchat.version>
     </properties>
 
     <!-- Source code -->

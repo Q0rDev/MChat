@@ -1,6 +1,6 @@
 name: mChatSuite
 main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
-version: ${minecraft.version}-${build.number}-${mchat.version}
+version: 1.2.2-Unknown-R0_5
 MCMAPluginID: 13A44EB7-D013-4AD2-87E0-49CB2DAC6C08
 author: MiracleM4n
 website: http://mdev.in/
@@ -8,7 +8,7 @@ thread: http://forums.bukkit.org/threads/22958/
 softdepend: [GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
 description: Full mChat Suite
 commands:
-    ${comm.mchat}:
+    mchat:
         usage: |
             [mChat] Help Screen
             - /<command> reload config = Reload Config.
@@ -19,70 +19,70 @@ commands:
             - /<command> user = Show Info User Help.
             - /<command> group = Show Info Group Help.
             - /<command> version = Show mChatSuite Version.
-        aliases: [${alias.mchat}]
+        aliases: [mchatsuite]
         ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*, mchat.reload.*
-    ${comm.me}:
+    mchatme:
         usage: |
             /<command> *Message* - Displays message.
-        aliases: [${alias.me}]
+        aliases: [mme]
         ~permissions: mchat.me
-    ${comm.who}:
+    mchatwho:
         usage: |
             /<command> *PLAYER* - Displays info about player.
-        aliases: [${alias.who}]
+        aliases: [mwho]
         ~permissions: mchat.who
-    ${comm.list}:
+    mchatlist:
         usage: |
             /<command> - See A list of online players.
-        aliases: [${alias.list}]
+        aliases: [mlist, monline, mplayerlist]
         ~permissions: mchat.list
-    ${comm.say}:
+    mchatsay:
         usage: |
             /<command> *Message* - Broadcast a message.
-        aliases: [${alias.say}]
+        aliases: [msay]
         ~permissions: mchat.say
-    ${comm.afk}:
+    mchatafk:
         usage: |
             /<command> [REASON] - Displays you as AFK (REASON is optional).
-        aliases: [${alias.afk}]
+        aliases: [mafk, maway]
         ~permissions: mchat.afk.self
-    ${comm.afko}:
+    mchatafkother:
         usage: |
             /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
-        aliases: [${alias.afko}]
+        aliases: [mafkother, mafko, mawayother, mawayo]
         ~permissions: mchat.afk.other
-    ${comm.shout}:
+    mchatshout:
         usage: |
             /<command> - Broadcasts message overriding Local Chat.
-        aliases: [${alias.shout}]
+        aliases: [mshout, myell]
         ~permissions: mchat.shout
-    ${comm.pm}:
+    pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
-        aliases: [${alias.pm}]
+        aliases: [mchattell, mtell, mmsg, mmessage]
         ~permissions: mchat.pm.pm
-    ${comm.reply}:
+    pmchatreply:
         usage: |
             /<command> *Message* - Sends Reply to a players PM.
-        aliases: [${alias.reply}]
+        aliases: [pmchatr, pmreply, pmr, preply]
         ~permissions: mchat.pm.reply
-    ${comm.invite}:
+    pmchatinvite:
         usage: |
             /<command> {player} - Sends a private Convo invitation to player.
-        aliases: [${alias.invite}]
+        aliases: [pmchati, pminvite, pmi, pinvite]
         ~permissions: mchat.pm.invite
-    ${comm.accept}:
+    pmchataccept:
         usage: |
             /<command> - Accept pending Convo.
-        aliases: [${alias.accept}]
-    ${comm.deny}:
+        aliases: [pmchata, pmaccept, pma, paccept]
+    pmchatdeny:
         usage: |
             /<command> - Deny pending Convo.
-        aliases: [${alias.deny}]
-    ${comm.leave}:
+        aliases: [pmchatd, pmdeny, pmd, pdeny]
+    pmchatleave:
         usage: |
             /<command> - Ends convo.
-        aliases: [${alias.leave}]
+        aliases: [pmchatl, pmleave, pml, pleave]
 permissions:
     mchat.*:
         default: false
@@ -97,7 +97,6 @@ permissions:
             mchat.group.*: true
             mchat.coloredchat: true
             mchat.censorbypass: true
-            mchat.gui: true
             mchat.me: true
             mchat.list: true
             mchat.who: true
@@ -220,9 +219,6 @@ permissions:
     mchat.censorbypass:
         default: false
         description: Allow bypass of msg censoring.
-    mchat.gui:
-        default: false
-        description: Allow use of the /mchat gui command.
     mchat.me:
         default: false
         description: Allow use of the /mchatme command.

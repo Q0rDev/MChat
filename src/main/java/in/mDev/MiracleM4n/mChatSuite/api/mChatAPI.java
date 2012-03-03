@@ -248,7 +248,7 @@ public class mChatAPI {
         dVarMap.put(vI + "HSecExp," + vI + "HSEx", hSExp);
         dVarMap.put(vI + "HSecEBar," + vI + "HSEb", hSEBar);
         dVarMap.put(vI + "HSecLevel," + vI + "HSL", hSLevel);
-        dVarMap.put(vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getInfoReader().getWorldName(world));
+        dVarMap.put(vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getInfoReader().getWorldName(pWorld));
        
         lVarMap.put(vI + "message," + vI + "msg," + vI + "m", msg);
 
