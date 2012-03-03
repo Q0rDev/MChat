@@ -9,7 +9,6 @@ softdepend: [GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx
 description: Full mChat Suite
 commands:
     ${comm.mchat}:
-        description:
         usage: |
             [mChat] Help Screen
             - /<command> reload config = Reload Config.
@@ -23,37 +22,31 @@ commands:
         aliases: [${alias.mchat}]
         ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*, mchat.reload.*
     ${comm.me}:
-        description:
         usage: |
             /<command> *Message* - Displays message.
         aliases: [${alias.me}]
         ~permissions: mchat.me
     ${comm.who}:
-        description:
         usage: |
             /<command> *PLAYER* - Displays info about player.
         aliases: [${alias.who}]
         ~permissions: mchat.who
     ${comm.list}:
-        description:
         usage: |
             /<command> - See A list of online players.
         aliases: [${alias.list}]
         ~permissions: mchat.list
     ${comm.say}:
-        description:
         usage: |
             /<command> *Message* - Broadcast a message.
         aliases: [${alias.say}]
         ~permissions: mchat.say
     ${comm.afk}:
-        description:
         usage: |
             /<command> [REASON] - Displays you as AFK (REASON is optional).
         aliases: [${alias.afk}]
         ~permissions: mchat.afk.self
     ${comm.afko}:
-        description:
         usage: |
             /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
         aliases: [${alias.afko}]
