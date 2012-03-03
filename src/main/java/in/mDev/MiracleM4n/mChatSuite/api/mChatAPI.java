@@ -640,30 +640,17 @@ public class mChatAPI {
     }
 
     String replaceVars(String format, Map<String, Object> map) {
-        //First Pass
         for (Entry<String, Object> entry : map.entrySet()) {
-            if (entry.getKey().contains(","))
+            if (entry.getKey().contains(",")) {
                 for (String s : entry.getKey().split(",")) {
                     if (s == null || entry.getValue() == null)
                         continue;
 
                     format = format.replace(s, entry.getValue().toString());
                 }
-            else
+            } else {
                 format = format.replace(entry.getKey(), entry.getValue().toString());
-        }
-
-        //Second Pass
-        for (Entry<String, Object> entry : map.entrySet()) {
-            if (entry.getKey().contains(","))
-                for (String s : entry.getKey().split(",")) {
-                    if (s == null || entry.getValue() == null)
-                        continue;
-
-                    format = format.replace(s, entry.getValue().toString());
-                }
-            else
-                format = format.replace(entry.getKey(), entry.getValue().toString());
+            }
         }
 
         return addColour(format);
