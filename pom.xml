@@ -12,8 +12,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
-        <minecraft.version>1.2.2</minecraft.version>
-        <mchat.version>R0_6</mchat.version>
+        <m.version>1.2.2</m.version>
+        <p.version>R0_7</p.version>
     </properties>
 
     <!-- Source code -->
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.2.2-R0.1-SNAPSHOT</version>
+            <version>1.2.3-R0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
