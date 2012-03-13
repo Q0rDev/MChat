@@ -209,9 +209,9 @@ public class mChatAPI {
             msg = replaceCensoredWords(msg);
 
 
-        SortedMap<String, Object> fVarMap = new TreeMap<String, Object>();
-        SortedMap<String, Object> rVarMap = new TreeMap<String, Object>();
-        SortedMap<String, Object> lVarMap = new TreeMap<String, Object>();
+        TreeMap<String, Object> fVarMap = new TreeMap<String, Object>();
+        TreeMap<String, Object> rVarMap = new TreeMap<String, Object>();
+        TreeMap<String, Object> lVarMap = new TreeMap<String, Object>();
 
         addVar(fVarMap, vI + "mnameformat," + vI + "mnf", plugin.nameFormat);
         addVar(fVarMap, vI + "healthbar," + vI + "hb", healthbar);
@@ -256,10 +256,10 @@ public class mChatAPI {
 
         formatAll = replaceCustVars(pName, formatAll);
         
-        formatAll = replaceVars(formatAll, fVarMap);
-        formatAll = replaceVars(formatAll, rVarMap);
+        formatAll = replaceVars(formatAll, fVarMap.descendingMap());
+        formatAll = replaceVars(formatAll, rVarMap.descendingMap());
 
-        return replaceVars(formatAll, lVarMap);
+        return replaceVars(formatAll, lVarMap.descendingMap());
     }
 
     /**
@@ -639,7 +639,7 @@ public class mChatAPI {
         return sender.hasPermission(node);
     }
 
-    Map<String, Object> addVar(Map<String, Object> map, String keys, Object value) {
+    TreeMap<String, Object> addVar(TreeMap<String, Object> map, String keys, Object value) {
         if (keys.contains(","))
             for (String s : keys.split(",")) {
                 if (s == null || value == null)
