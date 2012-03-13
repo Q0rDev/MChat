@@ -12,8 +12,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
-        <m.version>1.2.2</m.version>
-        <p.version>R0_8</p.version>
+        <m.version>1.2.3</m.version>
+        <p.version>R0_9</p.version>
     </properties>
 
     <!-- Source code -->

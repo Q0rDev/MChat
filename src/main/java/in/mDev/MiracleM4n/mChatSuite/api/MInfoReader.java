@@ -404,11 +404,11 @@ public class MInfoReader {
     }
 
     Object getbPermGroup(String name, String world) {
-        String[] groupNames = ApiLayer.getGroups(world, CalculableType.GROUP, name);
+        String[] groupNames = ApiLayer.getGroups(world, CalculableType.USER, name);
         String group = "";
 
         if (groupNames.length > 0)
-            group = ApiLayer.getGroups(world, CalculableType.GROUP, name)[0];
+            group = ApiLayer.getGroups(world, CalculableType.USER, name)[0];
 
         return group;
     }
