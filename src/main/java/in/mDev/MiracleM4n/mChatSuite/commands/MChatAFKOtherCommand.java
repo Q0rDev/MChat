@@ -11,10 +11,10 @@ import org.bukkit.entity.Player;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class BMChatAFKOtherCommand implements CommandExecutor {
+public class MChatAFKOtherCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BMChatAFKOtherCommand(mChatSuite plugin) {
+    public MChatAFKOtherCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

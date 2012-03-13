@@ -7,10 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BPMChatDenyCommand implements CommandExecutor {
+public class PMChatLeaveCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BPMChatDenyCommand(mChatSuite plugin) {
+    public PMChatLeaveCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
@@ -24,21 +24,25 @@ public class BPMChatDenyCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         String pName = player.getName();
-        String world = player.getWorld().getName();
 
-        if (commandName.equalsIgnoreCase("pmchatdeny")) {
-            String rName = plugin.getInvite.get(pName);
-            Player recipient = plugin.getServer().getPlayer(rName);
-            String rWorld = recipient.getWorld().getName();
+        if (commandName.equalsIgnoreCase("pmchatleave")) {
+            String rName = plugin.chatPartner.get(pName);
+            Player recipient = null;
 
-            if (rName != null && recipient != null) {
-                plugin.getInvite.remove(pName);
+            if (rName != null)
+                recipient = plugin.getServer().getPlayer(rName);
+
+            if (plugin.isConv.get(pName) == null)
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not currently in a Convo.")));
+            else if (plugin.isConv.get(pName)) {
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have left the convo.")));
+                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Conversation has been ended.")));
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been denied.")));
+                plugin.chatPartner.remove(rName);
+                plugin.chatPartner.remove(pName);
             } else
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("No pending Convo request.")));
+                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not currently in a Convo.")));
 
             return true;
         }

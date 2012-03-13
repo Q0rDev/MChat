@@ -62,6 +62,11 @@ public class BMPlayerListener implements Runnable, Listener {
         if (msg == null)
             return;
 
+        // Message Prefix
+        if (plugin.mPrefix.get(pName) != null
+                && !plugin.mPrefix.get(pName).isEmpty())
+            msg = plugin.mPrefix.get(pName) + msg;
+
         // For Dragonslife
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {

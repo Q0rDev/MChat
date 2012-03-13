@@ -7,10 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BPMChatAcceptCommand implements CommandExecutor {
+public class PMChatAcceptCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BPMChatAcceptCommand(mChatSuite plugin) {
+    public PMChatAcceptCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

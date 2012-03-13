@@ -8,10 +8,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BMChatMeCommand implements CommandExecutor {
+public class MChatMeCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BMChatMeCommand(mChatSuite plugin) {
+    public MChatMeCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

@@ -7,10 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BMChatAFKCommand implements CommandExecutor {
+public class MChatAFKCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BMChatAFKCommand(mChatSuite plugin) {
+    public MChatAFKCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

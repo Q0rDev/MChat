@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class BPMChatReplyCommand implements CommandExecutor {
+public class PMChatReplyCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BPMChatReplyCommand(mChatSuite plugin) {
+    public PMChatReplyCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

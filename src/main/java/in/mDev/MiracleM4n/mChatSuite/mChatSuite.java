@@ -197,6 +197,7 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
+    public HashMap<String, String> mPrefix = new HashMap<String, String>();
 
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
@@ -487,23 +488,24 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void setupCommands() {
-        regCommands("mchat", new BMChatCommand(this));
-        regCommands("mchatafk", new BMChatAFKCommand(this));
-        regCommands("mchatafkother", new BMChatAFKOtherCommand(this));
+        regCommands("mchat", new MChatCommand(this));
+        regCommands("mchatafk", new MChatAFKCommand(this));
+        regCommands("mchatafkother", new MChatAFKOtherCommand(this));
 
-        regCommands("mchatlist", new BMChatListCommand(this));
+        regCommands("mchatlist", new MChatListCommand(this));
 
-        regCommands("mchatme", new BMChatMeCommand(this));
-        regCommands("mchatsay", new BMChatSayCommand(this));
-        regCommands("mchatwho", new BMChatWhoCommand(this));
-        regCommands("mchatshout", new BMChatShoutCommand(this));
+        regCommands("mchatme", new MChatMeCommand(this));
+        regCommands("mchatsay", new MChatSayCommand(this));
+        regCommands("mchatwho", new MChatWhoCommand(this));
+        regCommands("mchatshout", new MChatShoutCommand(this));
+        regCommands("mchatmessageprefix", new MChatMessagePrefixCommand(this));
 
-        regCommands("pmchat", new BPMChatCommand(this));
-        regCommands("pmchataccept", new BPMChatAcceptCommand(this));
-        regCommands("pmchatdeny", new BPMChatDenyCommand(this));
-        regCommands("pmchatinvite", new BPMChatInviteCommand(this));
-        regCommands("pmchatleave", new BPMChatLeaveCommand(this));
-        regCommands("pmchatreply", new BPMChatReplyCommand(this));
+        regCommands("pmchat", new PMChatCommand(this));
+        regCommands("pmchataccept", new PMChatAcceptCommand(this));
+        regCommands("pmchatdeny", new PMChatDenyCommand(this));
+        regCommands("pmchatinvite", new PMChatInviteCommand(this));
+        regCommands("pmchatleave", new PMChatLeaveCommand(this));
+        regCommands("pmchatreply", new PMChatReplyCommand(this));
     }
     
     void regCommands(String command, CommandExecutor executor) {

@@ -8,10 +8,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BMChatCommand implements CommandExecutor {
+public class MChatCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BMChatCommand(mChatSuite plugin) {
+    public MChatCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
@@ -27,16 +27,7 @@ public class BMChatCommand implements CommandExecutor {
             return false;
 
         if (cmd.equalsIgnoreCase("mchat")) {
-            if (args[0].equalsIgnoreCase("commands")) {
-                if (sender instanceof Player) {
-                    if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.commands")) {
-                        sender.sendMessage(plugin.getAPI().formatMessage("You are not allowed to view mChatSuite commands."));
-                        return true;
-                    }
-
-                    return false;
-                }
-            } else if (args[0].equalsIgnoreCase("version")) {
+            if (args[0].equalsIgnoreCase("version")) {
                 if (sender instanceof Player) {
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.version")) {
                         sender.sendMessage(plugin.getAPI().formatMessage("You are not to view the version of mChatSuite."));

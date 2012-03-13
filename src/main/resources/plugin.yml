@@ -20,7 +20,7 @@ commands:
             - /<command> group = Show Info Group Help.
             - /<command> version = Show mChatSuite Version.
         aliases: [mchatsuite]
-        ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*, mchat.reload.*
+        ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*
     mchatme:
         usage: |
             /<command> *Message* - Displays message.
@@ -56,6 +56,12 @@ commands:
             /<command> - Broadcasts message overriding Local Chat.
         aliases: [mshout, myell]
         ~permissions: mchat.shout
+    mchatmessageprefix:
+        usage: |
+            /<command> set *Prefix* - Adds a Prefix to chat messages.
+            /<command> remove - Removes the Prefix from chat messages.
+        aliases: [mchatprefix, mmprefix, mprefix]
+        ~permissions: mchat.messageprefix
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
@@ -103,6 +109,7 @@ permissions:
             mchat.version: true
             mchat.shout: true
             mchat.spy: true
+            mchat.messageprefix: true
     mchat.reload.*:
         default: false
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
@@ -243,6 +250,9 @@ permissions:
     mchat.spy:
         default: false
         description: Allows player to view all chat messages.
+    mchat.messageprefix:
+        default: false
+        description: Allows player to add a prefix to their message.
     mchat.suppress.join:
         default: false
         description: Allow suppression of the mChat Join Messages.

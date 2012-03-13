@@ -8,6 +8,7 @@ import com.herocraftonline.dev.heroes.util.Properties;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
@@ -206,56 +207,57 @@ public class mChatAPI {
 
         if (!checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
-        
+
+
         SortedMap<String, Object> fVarMap = new TreeMap<String, Object>();
-        SortedMap<String, Object> dVarMap = new TreeMap<String, Object>();
+        SortedMap<String, Object> rVarMap = new TreeMap<String, Object>();
         SortedMap<String, Object> lVarMap = new TreeMap<String, Object>();
 
-        fVarMap.put(vI + "mnameformat," + vI + "mnf", plugin.nameFormat);
-        fVarMap.put(vI + "healthbar," + vI + "hb", healthbar);
+        addVar(fVarMap, vI + "mnameformat," + vI + "mnf", plugin.nameFormat);
+        addVar(fVarMap, vI + "healthbar," + vI + "hb", healthbar);
 
-        dVarMap.put(vI + "distancetype," + vI + "dtype", dType);
-        dVarMap.put(vI + "displayname," + vI + "dname," + vI + "dn", dName);
-        dVarMap.put(vI + "experiencebar," + vI + "expb," + vI + "ebar," + vI + "eb", expBar);
-        dVarMap.put(vI + "experience," + vI + "exp", exp);
-        dVarMap.put(vI + "gamemode," + vI + "gm", gMode);
-        dVarMap.put(vI + "group," + vI + "g", group);
-        dVarMap.put(vI + "hungerbar," + vI + "hub", hungerBar);
-        dVarMap.put(vI + "hunger", hungerLevel);
-        dVarMap.put(vI + "health," + vI + "h", health);
-        dVarMap.put(vI + "location," + vI + "loc", loc);
-        dVarMap.put(vI + "level," + vI + "l", level);
-        dVarMap.put(vI + "mname," + vI + "mn", plugin.getInfoReader().getmName(pName));
-        dVarMap.put(vI + "pname," + vI + "n", pName);
-        dVarMap.put(vI + "prefix," + vI + "p", prefix);
-        dVarMap.put(vI + "spying," + vI + "spy", sType);
-        dVarMap.put(vI + "suffix," + vI + "s", suffix);
-        dVarMap.put(vI + "totalexp," + vI + "texp," + vI + "te", tExp);
-        dVarMap.put(vI + "time," + vI + "t", time);
-        dVarMap.put(vI + "world," + vI + "w", pWorld);
-        dVarMap.put(vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGroupName(group.toString()));
-        dVarMap.put(vI + "HClass," + vI + "HC", hClass);
-        dVarMap.put(vI + "HExp," + vI + "HEx", hExp);
-        dVarMap.put(vI + "HEBar," + vI + "HEb", hEBar);
-        dVarMap.put(vI + "HHBar," + vI + "HHB", hHBar);
-        dVarMap.put(vI + "HHealth," + vI + "HH", hHealth);
-        dVarMap.put(vI + "HLevel," + vI + "HL", hLevel);
-        dVarMap.put(vI + "HMastered," + vI + "HMa", hMastered);
-        dVarMap.put(vI + "HMana," + vI + "HMn", hMana);
-        dVarMap.put(vI + "HMBar," + vI + "HMb", hMBar);
-        dVarMap.put(vI + "HParty," + vI + "HPa", hParty);
-        dVarMap.put(vI + "HSecClass," + vI + "HSC", hSClass);
-        dVarMap.put(vI + "HSecExp," + vI + "HSEx", hSExp);
-        dVarMap.put(vI + "HSecEBar," + vI + "HSEb", hSEBar);
-        dVarMap.put(vI + "HSecLevel," + vI + "HSL", hSLevel);
-        dVarMap.put(vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getInfoReader().getWorldName(pWorld));
-       
-        lVarMap.put(vI + "message," + vI + "msg," + vI + "m", msg);
+        addVar(rVarMap, vI + "distancetype," + vI + "dtype", dType);
+        addVar(rVarMap, vI + "displayname," + vI + "dname," + vI + "dn", dName);
+        addVar(rVarMap, vI + "experiencebar," + vI + "expb," + vI + "ebar," + vI + "eb", expBar);
+        addVar(rVarMap, vI + "experience," + vI + "exp", exp);
+        addVar(rVarMap, vI + "gamemode," + vI + "gm", gMode);
+        addVar(rVarMap, vI + "group," + vI + "g", group);
+        addVar(rVarMap, vI + "hungerbar," + vI + "hub", hungerBar);
+        addVar(rVarMap, vI + "hunger", hungerLevel);
+        addVar(rVarMap, vI + "health," + vI + "h", health);
+        addVar(rVarMap, vI + "location," + vI + "loc", loc);
+        addVar(rVarMap, vI + "level," + vI + "l", level);
+        addVar(rVarMap, vI + "mname," + vI + "mn", plugin.getInfoReader().getmName(pName));
+        addVar(rVarMap, vI + "pname," + vI + "n", pName);
+        addVar(rVarMap, vI + "prefix," + vI + "p", prefix);
+        addVar(rVarMap, vI + "spying," + vI + "spy", sType);
+        addVar(rVarMap, vI + "suffix," + vI + "s", suffix);
+        addVar(rVarMap, vI + "totalexp," + vI + "texp," + vI + "te", tExp);
+        addVar(rVarMap, vI + "time," + vI + "t", time);
+        addVar(rVarMap, vI + "world," + vI + "w", pWorld);
+        addVar(rVarMap, vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGroupName(group.toString()));
+        addVar(rVarMap, vI + "HClass," + vI + "HC", hClass);
+        addVar(rVarMap, vI + "HExp," + vI + "HEx", hExp);
+        addVar(rVarMap, vI + "HEBar," + vI + "HEb", hEBar);
+        addVar(rVarMap, vI + "HHBar," + vI + "HHB", hHBar);
+        addVar(rVarMap, vI + "HHealth," + vI + "HH", hHealth);
+        addVar(rVarMap, vI + "HLevel," + vI + "HL", hLevel);
+        addVar(rVarMap, vI + "HMastered," + vI + "HMa", hMastered);
+        addVar(rVarMap, vI + "HMana," + vI + "HMn", hMana);
+        addVar(rVarMap, vI + "HMBar," + vI + "HMb", hMBar);
+        addVar(rVarMap, vI + "HParty," + vI + "HPa", hParty);
+        addVar(rVarMap, vI + "HSecClass," + vI + "HSC", hSClass);
+        addVar(rVarMap, vI + "HSecExp," + vI + "HSEx", hSExp);
+        addVar(rVarMap, vI + "HSecEBar," + vI + "HSEb", hSEBar);
+        addVar(rVarMap, vI + "HSecLevel," + vI + "HSL", hSLevel);
+        addVar(rVarMap, vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getInfoReader().getWorldName(pWorld));
+
+        addVar(lVarMap, vI + "message," + vI + "msg," + vI + "m", msg);
 
         formatAll = replaceCustVars(pName, formatAll);
         
         formatAll = replaceVars(formatAll, fVarMap);
-        formatAll = replaceVars(formatAll, dVarMap);
+        formatAll = replaceVars(formatAll, rVarMap);
 
         return replaceVars(formatAll, lVarMap);
     }
@@ -623,6 +625,34 @@ public class mChatAPI {
         return false;
     }
 
+    /**
+     * Permission Checking
+     * @param sender CommandSender being checked.
+     * @param node Permission Node being checked.
+     * @return Sender has Node.
+     */
+    public Boolean checkPermissions(CommandSender sender, String node) {
+        if (plugin.vaultB)
+            if (plugin.vPerm.has(sender, node))
+                return true;
+
+        return sender.hasPermission(node);
+    }
+
+    Map<String, Object> addVar(Map<String, Object> map, String keys, Object value) {
+        if (keys.contains(","))
+            for (String s : keys.split(",")) {
+                if (s == null || value == null)
+                    continue;
+
+                map.put(s, value);
+            }
+        else if (value != null)
+            map.put(keys, value);
+
+        return map;
+    }
+
     String parseVars(String format, String pName, String world) {
         String vI = "\\" + plugin.varIndicator;
         Pattern pattern = Pattern.compile(vI + "<(.*?)>");
@@ -640,18 +670,8 @@ public class mChatAPI {
     }
 
     String replaceVars(String format, Map<String, Object> map) {
-        for (Entry<String, Object> entry : map.entrySet()) {
-            if (entry.getKey().contains(",")) {
-                for (String s : entry.getKey().split(",")) {
-                    if (s == null || entry.getValue() == null)
-                        continue;
-
-                    format = format.replace(s, entry.getValue().toString());
-                }
-            } else {
-                format = format.replace(entry.getKey(), entry.getValue().toString());
-            }
-        }
+        for (Entry<String, Object> entry : map.entrySet())
+            format = format.replace(entry.getKey(), entry.getValue().toString());
 
         return addColour(format);
     }

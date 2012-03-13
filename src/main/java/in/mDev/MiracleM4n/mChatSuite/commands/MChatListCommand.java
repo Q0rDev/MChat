@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BMChatListCommand implements CommandExecutor {
+public class MChatListCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public BMChatListCommand(mChatSuite plugin) {
+    public MChatListCommand(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
