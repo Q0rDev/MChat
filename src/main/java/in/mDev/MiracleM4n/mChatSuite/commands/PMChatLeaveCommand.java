@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +19,7 @@ public class PMChatLeaveCommand implements CommandExecutor {
         String commandName = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(plugin.getAPI().addColour("Console's can't send PM's.")));
+            sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
             return true;
         }
 
@@ -33,16 +34,16 @@ public class PMChatLeaveCommand implements CommandExecutor {
                 recipient = plugin.getServer().getPlayer(rName);
 
             if (plugin.isConv.get(pName) == null)
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not currently in a Convo.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You are not currently in a Convo.")));
             else if (plugin.isConv.get(pName)) {
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have left the convo.")));
-                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Conversation has been ended.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You have left the convo.")));
+                recipient.sendMessage(formatPMessage(Messanger.addColour("Conversation has been ended.")));
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
                 plugin.chatPartner.remove(rName);
                 plugin.chatPartner.remove(pName);
             } else
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not currently in a Convo.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You are not currently in a Convo.")));
 
             return true;
         }
@@ -51,6 +52,6 @@ public class PMChatLeaveCommand implements CommandExecutor {
     }
 
     String formatPMessage(String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 }

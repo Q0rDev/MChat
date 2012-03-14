@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.3</m.version>
-        <p.version>R0.1_2</p.version>
+        <p.version>R0.1_3</p.version>
     </properties>
 
     <!-- Source code -->
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>com.herocraftonline</groupId>
             <artifactId>Heroes</artifactId>
-            <version>1.4.3-b1124</version>
+            <version>1.4.7-b1330</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

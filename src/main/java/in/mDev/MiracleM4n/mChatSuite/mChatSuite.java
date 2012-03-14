@@ -1,6 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite;
 
-import com.herocraftonline.dev.heroes.Heroes;
+import com.herocraftonline.heroes.Heroes;
 
 import com.massivecraft.factions.Conf;
 
@@ -9,6 +9,7 @@ import in.mDev.MiracleM4n.mChatSuite.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.events.*;
 import in.mDev.MiracleM4n.mChatSuite.external.*;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -300,16 +301,16 @@ public class mChatSuite extends JavaPlugin {
         // Calculate Startup Timer
         sDiff = (sTime2 - sTime1);
 
-        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "ms]");
+        Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "ms]");
     }
 
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
 
-        if (eBroadcast)
+        if (eBroadcast && bMessage != null)
             bMessage.disconnect();
 
-        getAPI().log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
+        Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
     }
 
     void registerEvents() {
@@ -331,14 +332,14 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("PermissionsBukkit");
         if (permTest != null) {
             PermissionBuB = true;
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
         permTest = pm.getPlugin("bPermissions");
         if (permTest != null) {
             bPermB = true;
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -346,7 +347,7 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             pexPermissions = PermissionsEx.getPermissionManager();
             PEXB = true;
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
@@ -354,18 +355,18 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             gmPermissionsB = true;
             gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
-            getAPI().log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
             return;
         }
 
-        getAPI().log("[" + pdfFile.getName() + "] No Permissions plugins were found defaulting to permissions.yml/info.yml.");
+        Messanger.log("[" + pdfFile.getName() + "] No Permissions plugins were found defaulting to permissions.yml/info.yml.");
     }
 
     public Boolean setupPlugin(String pluginName) {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {
-            getAPI().log("[" + pdfFile.getName() + "] " + plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] " + plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
             return true;
         }
 

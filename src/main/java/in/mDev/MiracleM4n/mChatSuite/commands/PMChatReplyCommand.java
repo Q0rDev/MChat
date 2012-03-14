@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -23,7 +24,7 @@ public class PMChatReplyCommand implements CommandExecutor {
         String commandName = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(plugin.getAPI().addColour("Console's can't send PM's.")));
+            sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
             return true;
         }
 
@@ -41,12 +42,12 @@ public class PMChatReplyCommand implements CommandExecutor {
                 Player recipient = plugin.getServer().getPlayer(rName);
 
                 if (recipient == null) {
-                    player.sendMessage(formatPMessage(plugin.getAPI().addColour("PM Recipient is offline.")));
+                    player.sendMessage(formatPMessage(Messanger.addColour("PM Recipient is offline.")));
                     return true;
                 }
 
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.reply")) {
-                    player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not allowed to use PM reply functions.")));
+                    player.sendMessage(formatPMessage(Messanger.addColour("You are not allowed to use PM reply functions.")));
                     return true;
                 }
 
@@ -76,10 +77,10 @@ public class PMChatReplyCommand implements CommandExecutor {
                 }
 
                 recipient.sendMessage(formatPMRecieve(senderName, world, message));
-                plugin.getAPI().log(formatPMRecieve(senderName, world, message));
+                Messanger.log(formatPMRecieve(senderName, world, message));
                 return true;
             } else {
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("No one has yet PM'd you.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("No one has yet PM'd you.")));
                 return true;
             }
         }
@@ -103,14 +104,14 @@ public class PMChatReplyCommand implements CommandExecutor {
     }
 
     String formatPMessage(String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
     String formatPMSend(String recipient, String message) {
-        return (plugin.getAPI().addColour("&fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
+        return (Messanger.addColour("&fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return (plugin.getAPI().addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
+        return (Messanger.addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
     }
 }

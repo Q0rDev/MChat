@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
@@ -45,7 +46,7 @@ public class LocaleConfig {
 
     public String getOption(String option) {
         if (config.isSet(option))
-            return plugin.getAPI().addColour(config.getString(option));
+            return Messanger.addColour(config.getString(option));
 
         return "";
     }

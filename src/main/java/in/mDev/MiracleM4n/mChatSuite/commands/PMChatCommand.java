@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -23,7 +24,7 @@ public class PMChatCommand implements CommandExecutor {
         String commandName = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(plugin.getAPI().addColour("Console's can't send PM's.")));
+            sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
             return true;
         }
 
@@ -33,7 +34,7 @@ public class PMChatCommand implements CommandExecutor {
 
         if (commandName.equalsIgnoreCase("pmchat")) {
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.pm")) {
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You are not allowed to use PM functions.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You are not allowed to use PM functions.")));
                 return true;
             }
 
@@ -81,7 +82,7 @@ public class PMChatCommand implements CommandExecutor {
             }
 
             plugin.lastPMd.put(rName, pName);
-            plugin.getAPI().log(formatPMRecieve(senderName, world, message));
+            Messanger.log(formatPMRecieve(senderName, world, message));
             recipient.sendMessage(formatPMRecieve(senderName, world, message));
             return true;
         }
@@ -105,18 +106,18 @@ public class PMChatCommand implements CommandExecutor {
     }
 
     String formatPMessage(String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 
     String formatPNF(String playerNotFound) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
+        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
     }
 
     String formatPMSend(String recipient, String world, String message) {
-        return (plugin.getAPI().addColour("&fMe &1-&2-&3-&4> &f" + plugin.getAPI().ParsePlayerName(recipient, world) + "&f: " + message));
+        return (Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getAPI().ParsePlayerName(recipient, world) + "&f: " + message));
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return (plugin.getAPI().addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
+        return (Messanger.addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
     }
 }

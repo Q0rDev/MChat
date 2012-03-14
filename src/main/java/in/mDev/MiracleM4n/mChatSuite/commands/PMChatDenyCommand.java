@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +19,7 @@ public class PMChatDenyCommand implements CommandExecutor {
         String commandName = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(plugin.getAPI().addColour("Console's can't send PM's.")));
+            sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
             return true;
         }
 
@@ -35,10 +36,10 @@ public class PMChatDenyCommand implements CommandExecutor {
                 plugin.getInvite.remove(pName);
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(plugin.getAPI().addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been denied.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(Messanger.addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been denied.")));
             } else
-                player.sendMessage(formatPMessage(plugin.getAPI().addColour("No pending Convo request.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("No pending Convo request.")));
 
             return true;
         }
@@ -47,6 +48,6 @@ public class PMChatDenyCommand implements CommandExecutor {
     }
 
     String formatPMessage(String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 }

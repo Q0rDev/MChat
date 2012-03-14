@@ -1,11 +1,11 @@
 package in.mDev.MiracleM4n.mChatSuite.api;
 
-import com.herocraftonline.dev.heroes.classes.HeroClass;
-import com.herocraftonline.dev.heroes.hero.Hero;
-import com.herocraftonline.dev.heroes.util.Messaging;
-import com.herocraftonline.dev.heroes.util.Properties;
+import com.herocraftonline.heroes.characters.Hero;
+import com.herocraftonline.heroes.characters.classes.HeroClass;
+import com.herocraftonline.heroes.util.Messaging;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -158,20 +158,20 @@ public class mChatAPI {
 
             // Initialize Heroes Vars
             if (plugin.heroesB) {
-                Hero hero = plugin.heroes.getHeroManager().getHero(player);
+                Hero hero = plugin.heroes.getCharacterManager().getHero(player);
                 HeroClass heroClass = hero.getHeroClass();
                 HeroClass heroSClass = hero.getSecondClass();
 
-                int hL = Properties.getLevel(hero.getExperience(heroClass));
+                int hL = hero.getLevel();
                 int hSL = hero.getLevel(heroSClass);
-                double hE = Properties.getExp(hL);
+                double hE = hero.getExperience(heroClass);
                 double hSE = hero.getExperience(heroSClass);
 
                 hClass = hero.getHeroClass().getName();
                 hHealth = String.valueOf(hero.getHealth());
                 hHBar = Messaging.createHealthBar((float) hero.getHealth(), (float) hero.getMaxHealth());
                 hMana = String.valueOf(hero.getMana());
-                hMBar = Messaging.createManaBar(hero.getMana());
+                hMBar = Messaging.createManaBar(hero.getMana(), hero.getMaxMana());
                 hLevel = String.valueOf(hL);
                 hExp = String.valueOf(hE);
                 hEBar = Messaging.createExperienceBar(hero, heroClass);
@@ -203,7 +203,7 @@ public class mChatAPI {
             return msg;
 
         if (!checkPermissions(pName, world, "mchat.coloredchat"))
-            msg = removeColour(msg);
+            msg = Messanger.removeColour(msg);
 
         if (!checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
@@ -467,54 +467,6 @@ public class mChatAPI {
     }
 
     /**
-     * Colour Formatting
-     * @param string String being Formatted.
-     * @return Coloured String.
-     */
-    public String addColour(String string) {
-        string = string.replace("`e", "")
-                .replace("`r", "\u00A7c").replace("`R", "\u00A74")
-                .replace("`y", "\u00A7e").replace("`Y", "\u00A76")
-                .replace("`g", "\u00A7a").replace("`G", "\u00A72")
-                .replace("`a", "\u00A7b").replace("`A", "\u00A73")
-                .replace("`b", "\u00A79").replace("`B", "\u00A71")
-                .replace("`p", "\u00A7d").replace("`P", "\u00A75")
-                .replace("`k", "\u00A70").replace("`s", "\u00A77")
-                .replace("`S", "\u00A78").replace("`w", "\u00A7f");
-
-        string = string.replace("<r>", "")
-                .replace("<black>", "\u00A70").replace("<navy>", "\u00A71")
-                .replace("<green>", "\u00A72").replace("<teal>", "\u00A73")
-                .replace("<red>", "\u00A74").replace("<purple>", "\u00A75")
-                .replace("<gold>", "\u00A76").replace("<silver>", "\u00A77")
-                .replace("<gray>", "\u00A78").replace("<blue>", "\u00A79")
-                .replace("<lime>", "\u00A7a").replace("<aqua>", "\u00A7b")
-                .replace("<rose>", "\u00A7c").replace("<pink>", "\u00A7d")
-                .replace("<yellow>", "\u00A7e").replace("<white>", "\u00A7f");
-
-        string = string.replaceAll("(§([a-fA-F0-9]))", "\u00A7$2");
-
-        string = string.replaceAll("(&([a-fA-F0-9]))", "\u00A7$2");
-
-        return string.replace("&&", "&");
-    }
-
-    /**
-     * Colour Removal
-     * @param string String Colour is being removed from.
-     * @return DeColoured String.
-     */
-    public String removeColour(String string) {
-        addColour(string);
-
-        string = string.replaceAll("(§([a-fA-F0-9]))", "& $2");
-
-        string = string.replaceAll("(&([a-fA-F0-9]))", "& $2");
-
-        return string.replace("&&", "&");
-    }
-
-    /**
      * Permission Checking
      * @param player Player being checked.
      * @param node Permission Node being checked.
@@ -673,7 +625,7 @@ public class mChatAPI {
         for (Entry<String, Object> entry : map.entrySet())
             format = format.replace(entry.getKey(), entry.getValue().toString());
 
-        return addColour(format);
+        return Messanger.addColour(format);
     }
 
     String replaceCustVars(String pName, String format) {
@@ -731,22 +683,5 @@ public class mChatAPI {
         Random random = new Random();
 
         return random.nextInt(maxValue - minValue + 1) + minValue;
-    }
-
-    /**
-     * Plugin Formatting
-     * @param message Message being appended.
-     * @return Message appended to [mChatSuite]
-     */
-    public String formatMessage(String message) {
-        return (plugin.getAPI().addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
-    }
-
-    /**
-     * Logger
-     * @param loggedObject Object being Logged.
-     */
-    public void log(Object loggedObject) {
-        System.out.println(loggedObject);
     }
 }

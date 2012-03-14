@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,16 +25,16 @@ public class MChatListCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
-                    player.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                    player.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                     return true;
                 }
             }
 
             // My Way
-            // sender.sendMessage(plugin.getAPI().addColour("&4" + plugin.getLocale().pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
+            // sender.sendMessage(Messanger.addColour("&4" + plugin.getLocale().pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
 
             // Waxdt's Way
-            sender.sendMessage(plugin.getAPI().addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
+            sender.sendMessage(Messanger.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
             formatList(sender);
             return true;
         }
@@ -98,18 +99,18 @@ public class MChatListCommand implements CommandExecutor {
 
 
                 for (String arg : msgS)
-                    sender.sendMessage(plugin.getAPI().addColour(arg));
+                    sender.sendMessage(Messanger.addColour(arg));
             } else {
-                msg = plugin.getAPI().addColour(msg.replace("" + '\n', "&5 | &f"));
+                msg = Messanger.addColour(msg.replace("" + '\n', "&5 | &f"));
 
                 sender.sendMessage(msg);
             }
         } else
-            sender.sendMessage(plugin.getAPI().addColour(msg));
+            sender.sendMessage(Messanger.addColour(msg));
 
-        for (int i = 20; i < plugin.getAPI().addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --").length(); i++)
+        for (int i = 20; i < Messanger.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --").length(); i++)
             line += "-";
 
-        sender.sendMessage(plugin.getAPI().addColour("&6" + line));
+        sender.sendMessage(Messanger.addColour("&6" + line));
     }
 }

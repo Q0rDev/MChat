@@ -2,6 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import me.desmin88.mobdisguise.MobDisguise;
 
 import org.bukkit.ChatColor;
@@ -100,9 +101,9 @@ public class BMPlayerListener implements Runnable, Listener {
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                recipient.sendMessage(plugin.getAPI().addColour("&4[Convo] " + eventFormat));
-                player.sendMessage(plugin.getAPI().addColour("&4[Convo] " + eventFormat));
-                plugin.getAPI().log(plugin.getAPI().addColour("&4[Convo] " + eventFormat));
+                recipient.sendMessage(Messanger.addColour("&4[Convo] " + eventFormat));
+                player.sendMessage(Messanger.addColour("&4[Convo] " + eventFormat));
+                Messanger.log(Messanger.addColour("&4[Convo] " + eventFormat));
                 event.setCancelled(true);
             }
         }
@@ -120,7 +121,7 @@ public class BMPlayerListener implements Runnable, Listener {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + plugin.getAPI().addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName, world));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + Messanger.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName, world));
 
             plugin.chatt.put(player.getName(), false);
 
@@ -211,7 +212,7 @@ public class BMPlayerListener implements Runnable, Listener {
 
         String kickMsg = plugin.getInfoReader().getEventMessage("Kick");
 
-        kickMsg = plugin.getAPI().addColour(kickMsg.replace("+reason", reason).replace("+r", reason));
+        kickMsg = Messanger.addColour(kickMsg.replace("+reason", reason).replace("+r", reason));
 
         if (msg == null)
             return;
@@ -254,7 +255,7 @@ public class BMPlayerListener implements Runnable, Listener {
             if (sign.getLine(0).equals("[mChat]"))
                 if (plugin.getServer().getPlayer(sign.getLine(2)) != null)
                     if (sign.getLine(3) != null) {
-                        sign.setLine(1, plugin.getAPI().addColour("&f" + (plugin.getAPI().ParseMessage(sign.getLine(2), block.getWorld().getName(),"", sign.getLine(3)))));
+                        sign.setLine(1, Messanger.addColour("&f" + (plugin.getAPI().ParseMessage(sign.getLine(2), block.getWorld().getName(), "", sign.getLine(3)))));
                         sign.update(true);
                     }
         }
@@ -281,7 +282,7 @@ public class BMPlayerListener implements Runnable, Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                player.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("stillAFK")));
+                player.sendMessage(Messanger.format(plugin.getLocale().getOption("stillAFK")));
             } else
                 player.performCommand("mafk");
     }
@@ -303,7 +304,7 @@ public class BMPlayerListener implements Runnable, Listener {
             plugin.bMessage.sendMessage(format);
         }
 
-        plugin.getAPI().log(format);
+        Messanger.log(format);
     }
 
     Boolean checkSpy(String player, String world) {

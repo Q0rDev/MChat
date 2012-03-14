@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +23,7 @@ public class MChatWhoCommand implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.who")) {
-                        sender.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
                         return true;
                     }
                 }
@@ -49,18 +50,18 @@ public class MChatWhoCommand implements CommandExecutor {
         String loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
         String world = recipient.getWorld().getName();
 
-        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + " Name: " + recipient.getName()));
-        sender.sendMessage(plugin.getAPI().addColour("Display Name: " + recipient.getDisplayName()));
-        sender.sendMessage(plugin.getAPI().addColour("Formatted Name: " + recipientName));
-        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s Location: [ " + loc + " ]"));
-        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s World: " + world));
-        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s Health: " + plugin.getAPI().healthBar(recipient) + " " + recipient.getHealth() + "/20"));
-        sender.sendMessage(plugin.getAPI().addColour(plugin.getLocale().getOption("player") + "'s IP: " + recipient.getAddress().getHostString()));
-        sender.sendMessage(plugin.getAPI().addColour("Current Item: " + recipient.getItemInHand().getType().name()));
-        sender.sendMessage(plugin.getAPI().addColour("Entity ID: #" + recipient.getEntityId()));
+        sender.sendMessage(Messanger.addColour(plugin.getLocale().getOption("player") + " Name: " + recipient.getName()));
+        sender.sendMessage(Messanger.addColour("Display Name: " + recipient.getDisplayName()));
+        sender.sendMessage(Messanger.addColour("Formatted Name: " + recipientName));
+        sender.sendMessage(Messanger.addColour(plugin.getLocale().getOption("player") + "'s Location: [ " + loc + " ]"));
+        sender.sendMessage(Messanger.addColour(plugin.getLocale().getOption("player") + "'s World: " + world));
+        sender.sendMessage(Messanger.addColour(plugin.getLocale().getOption("player") + "'s Health: " + plugin.getAPI().healthBar(recipient) + " " + recipient.getHealth() + "/20"));
+        sender.sendMessage(Messanger.addColour(plugin.getLocale().getOption("player") + "'s IP: " + recipient.getAddress().getHostString()));
+        sender.sendMessage(Messanger.addColour("Current Item: " + recipient.getItemInHand().getType().name()));
+        sender.sendMessage(Messanger.addColour("Entity ID: #" + recipient.getEntityId()));
     }
 
     String formatPNF(String playerNotFound) {
-        return (plugin.getAPI().addColour(plugin.getAPI().formatMessage("") + " " + plugin.getLocale().getOption("player") + " &e" + playerNotFound + " &4" + plugin.getLocale().getOption("notFound")));
+        return (Messanger.addColour(Messanger.format("") + " " + plugin.getLocale().getOption("player") + " &e" + playerNotFound + " &4" + plugin.getLocale().getOption("notFound")));
     }
 }

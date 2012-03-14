@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -34,13 +35,13 @@ public class MChatMeCommand implements CommandExecutor {
                     if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.me"))
                         plugin.getServer().broadcastMessage(plugin.getAPI().ParseMe(player.getName(), world.getName(), message));
                     else
-                        sender.sendMessage(plugin.getAPI().formatMessage(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
 
                     return true;
                 } else {
                     String senderName = "Console";
                     plugin.getServer().broadcastMessage("* " + senderName + " " + message);
-                    plugin.getAPI().log("* " + senderName + " " + message);
+                    Messanger.log("* " + senderName + " " + message);
                     return true;
                 }
             }

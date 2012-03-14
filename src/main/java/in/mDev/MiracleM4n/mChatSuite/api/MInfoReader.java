@@ -7,6 +7,7 @@ import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 
@@ -97,7 +98,7 @@ public class MInfoReader {
      */
     @Deprecated
     public String getInfo(Player player, World world, String info) {
-        return plugin.getAPI().addColour(getRawInfo(player.getName(), InfoType.USER, world.getName(), info).toString());
+        return Messanger.addColour(getRawInfo(player.getName(), InfoType.USER, world.getName(), info).toString());
     }
 
     /**
@@ -175,7 +176,7 @@ public class MInfoReader {
      * @return Raw Info.
      */
     public String getInfo(String name, InfoType type, String world, String info) {
-        return plugin.getAPI().addColour(getRawInfo(name, type, world, info).toString());
+        return Messanger.addColour(getRawInfo(name, type, world, info).toString());
     }
 
     /**
@@ -479,7 +480,7 @@ public class MInfoReader {
         if (eventName.equalsIgnoreCase("leave"))
             eventName = plugin.leaveMessage;
 
-        return plugin.getAPI().addColour(eventName);
+        return Messanger.addColour(eventName);
     }
 
     @Deprecated

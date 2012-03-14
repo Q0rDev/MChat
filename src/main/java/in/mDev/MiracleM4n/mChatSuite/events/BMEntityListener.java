@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -275,6 +276,6 @@ public class BMEntityListener implements Listener {
             plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
         }
 
-        plugin.getAPI().log(handlePlayerDeath(pName, pCause, world, event, isPlayer));
+        Messanger.log(handlePlayerDeath(pName, pCause, world, event, isPlayer));
     }
 }
