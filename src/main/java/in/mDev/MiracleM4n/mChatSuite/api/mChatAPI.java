@@ -169,12 +169,16 @@ public class mChatAPI {
 
                 hClass = hero.getHeroClass().getName();
                 hHealth = String.valueOf(hero.getHealth());
-                hHBar = Messaging.createHealthBar((float) hero.getHealth(), (float) hero.getMaxHealth());
+                hHBar = Messaging.createHealthBar(hero.getHealth(), hero.getMaxHealth());
                 hMana = String.valueOf(hero.getMana());
-                hMBar = Messaging.createManaBar(hero.getMana(), hero.getMaxMana());
                 hLevel = String.valueOf(hL);
                 hExp = String.valueOf(hE);
                 hEBar = Messaging.createExperienceBar(hero, heroClass);
+
+                Integer hMMana = hero.getMaxMana();
+
+                if (hMMana != null)
+                    hMBar = Messaging.createManaBar(hero.getMana(), hero.getMaxMana());
 
                 if (hero.getParty() != null)
                     hParty = hero.getParty().toString();
