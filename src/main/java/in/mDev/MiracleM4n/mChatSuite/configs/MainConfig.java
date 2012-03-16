@@ -56,6 +56,7 @@ public class MainConfig {
         plugin.deathExplosion = config.getString("message.deathExplosion", plugin.deathExplosion);
         plugin.deathMagic = config.getString("message.deathMagic", plugin.deathMagic);
         plugin.deathEntity = config.getString("message.deathEntity", plugin.deathEntity);
+        plugin.deathMobFormat = config.getString("message.deathMobFormat", plugin.deathMobFormat);
         plugin.deathArrow = config.getString("message.deathArrow", plugin.deathArrow);
         plugin.deathFireball = config.getString("message.deathFireball", plugin.deathFireball);
         plugin.deathThrown = config.getString("message.deathThrown", plugin.deathThrown);
@@ -134,7 +135,6 @@ public class MainConfig {
         config.set("message.deathOnFire", plugin.deathOnFire);
         config.set("message.deathLava", plugin.deathLava);
         config.set("message.deathInWall", plugin.deathInWall);
-        config.set("message.deathInWall", plugin.deathInWall);
         config.set("message.deathStarve", plugin.deathStarve);
         config.set("message.deathCactus", plugin.deathCactus);
         config.set("message.deathFall", plugin.deathFall);
@@ -143,6 +143,7 @@ public class MainConfig {
         config.set("message.deathExplosion", plugin.deathExplosion);
         config.set("message.deathMagic", plugin.deathMagic);
         config.set("message.deathEntity", plugin.deathEntity);
+        config.set("message.deathMobFormat", plugin.deathMobFormat);
         config.set("message.deathArrow", plugin.deathArrow);
         config.set("message.deathFireball", plugin.deathFireball);
         config.set("message.deathThrown", plugin.deathThrown);
@@ -242,7 +243,6 @@ public class MainConfig {
         checkOption(config, "message.deathOnFire", plugin.deathOnFire);
         checkOption(config, "message.deathLava", plugin.deathLava);
         checkOption(config, "message.deathInWall", plugin.deathInWall);
-        checkOption(config, "message.deathInWall", plugin.deathInWall);
         checkOption(config, "message.deathStarve", plugin.deathStarve);
         checkOption(config, "message.deathCactus", plugin.deathCactus);
         checkOption(config, "message.deathFall", plugin.deathFall);
@@ -251,6 +251,7 @@ public class MainConfig {
         checkOption(config, "message.deathExplosion", plugin.deathExplosion);
         checkOption(config, "message.deathMagic", plugin.deathMagic);
         checkOption(config, "message.deathEntity", plugin.deathEntity);
+        checkOption(config, "message.deathMobFormat", plugin.deathMobFormat);
         checkOption(config, "message.deathArrow", plugin.deathArrow);
         checkOption(config, "message.deathFireball", plugin.deathFireball);
         checkOption(config, "message.deathThrown", plugin.deathThrown);
@@ -299,7 +300,23 @@ public class MainConfig {
 
         checkOption(config, "pmchat.enable", plugin.mChatPB);
         checkOption(config, "pmchat.spoutPM", plugin.spoutPM);
-
+        
+        editValue(config, "message.deathInFire", config.getString("message.deathInFire").replace("+CName", "+killer"));
+        editValue(config, "message.deathOnFire", config.getString("message.deathOnFire").replace("+CName", "+killer"));
+        editValue(config, "message.deathLava", config.getString("message.deathLava").replace("+CName", "+killer"));
+        editValue(config, "message.deathInWall", config.getString("message.deathInWall").replace("+CName", "+killer"));
+        editValue(config, "message.deathStarve", config.getString("message.deathStarve").replace("+CName", "+killer"));
+        editValue(config, "message.deathCactus", config.getString("message.deathCactus").replace("+CName", "+killer"));
+        editValue(config, "message.deathFall", config.getString("message.deathFall").replace("+CName", "+killer"));
+        editValue(config, "message.deathOutOfWorld", config.getString("message.deathOutOfWorld").replace("+CName", "+killer"));
+        editValue(config, "message.deathGeneric", config.getString("message.deathGeneric").replace("+CName", "+killer"));
+        editValue(config, "message.deathExplosion", config.getString("message.deathExplosion").replace("+CName", "+killer"));
+        editValue(config, "message.deathMagic", config.getString("message.deathMagic").replace("+CName", "+killer"));
+        editValue(config, "message.deathEntity", config.getString("message.deathEntity").replace("+CName", "+killer"));
+        editValue(config, "message.deathArrow", config.getString("message.deathArrow").replace("+CName", "+killer"));
+        editValue(config, "message.deathFireball", config.getString("message.deathFireball").replace("+CName", "+killer"));
+        editValue(config, "message.deathThrown", config.getString("message.deathThrown").replace("+CName", "+killer"));
+        
         if (hasChanged) {
             configO.header("mChat Configuration File");
 
@@ -327,5 +344,13 @@ public class MainConfig {
             config.set(option, null);
             hasChanged = true;
         }
+    }
+
+    void editValue(YamlConfiguration config, String option, Object newValue) {
+        if (config.isSet(option))
+            if (config.get(option) != newValue) {
+                config.set(option, newValue);
+                hasChanged = true;
+            }
     }
 }

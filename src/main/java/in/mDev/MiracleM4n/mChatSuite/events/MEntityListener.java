@@ -42,24 +42,24 @@ public class MEntityListener implements Listener {
         Boolean isPlayer = false;
 
         PlayerDeathEvent subEvent = (PlayerDeathEvent) event;
-        EntityDamageEvent dEvent = player.getLastDamageCause();
+        EntityDamageEvent dEvent = event.getEntity().getLastDamageCause();
 
         if (dEvent instanceof EntityDamageByEntityEvent) {
-            EntityDamageByEntityEvent dEEvent = (EntityDamageByEntityEvent) dEvent;
+            EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) dEvent;
 
-            if (dEEvent.getDamager() instanceof Player) {
-                pCause = plugin.getAPI().ParsePlayerName(((Player) dEEvent.getDamager()).getName(), dEEvent.getDamager().getWorld().getName());
+            if (damageEvent.getDamager() instanceof Player) {
+                pCause = plugin.getAPI().ParsePlayerName(player.getKiller().getName(), player.getKiller().getWorld().getName());
                 isPlayer = true;
             } else
-                pCause = "a " + dEEvent.getDamager().getClass().getSimpleName().replace("Craft", "");
+                pCause = damageEvent.getDamager().getType().getName();
         }
 
         if (plugin.alterEvents)
             if (plugin.sDeathB) {
-                suppressDeathMessage(pName, pCause, world, subEvent, plugin.sDeathI, isPlayer);
+                suppressDeathMessage(pName, pCause, world, subEvent.getDeathMessage(), plugin.sDeathI, isPlayer);
                 subEvent.setDeathMessage("");
             } else
-                subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent, isPlayer));
+                subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent.getDeathMessage(), isPlayer));
     }
 
     @EventHandler
@@ -170,9 +170,7 @@ public class MEntityListener implements Listener {
         }
     }
 
-    String handlePlayerDeath(String pName, String pCause, String world, PlayerDeathEvent event, Boolean isPlayer) {
-        String dMsg = event.getDeathMessage();
-
+    String handlePlayerDeath(String pName, String pCause, String world, String dMsg, Boolean isPlayer) {
         if (dMsg == null)
             return dMsg;
 
@@ -230,10 +228,11 @@ public class MEntityListener implements Listener {
     String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
         if (isPlayer)
             return plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getAPI().ParseMessage(pName, world, "", msg)
-                    .replace("+CName", plugin.getAPI().ParseEventName(pCause, world));
+                    .replace("+killer", plugin.getAPI().ParseEventName(pCause, world));
 
-        return plugin.getAPI().ParseEventName(pName, world) + " " +  plugin.getAPI().ParseMessage(pName, world, "", msg)
-                .replace("+CName", pCause);
+        return Messanger.addColour(plugin.getAPI().ParseEventName(pName, world) + " " +  plugin.getAPI().ParseMessage(pName, world, "", msg)
+                .replace("+killer", plugin.deathMobFormat)
+                .replace("+killer", pCause));
     }
 
     String healthBarDamage(Player player, Integer damage) {
@@ -259,23 +258,21 @@ public class MEntityListener implements Listener {
         return out.toString().replaceAll("(&([A-Fa-f0-9]))", "\u00A7$2");
     }
 
-    void suppressDeathMessage(String pName, String pCause, String world, PlayerDeathEvent event, Integer max, Boolean isPlayer) {
+    void suppressDeathMessage(String pName, String pCause, String world, String dMsg, Integer max, Boolean isPlayer) {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.suppress.death")) {
-                player.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
+                player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death"))
-                    player.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
+                    player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
         }
 
         if (plugin.eBroadcast) {
             plugin.bMessage.checkState();
-            plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, event, isPlayer));
+            plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
         }
-
-        Messanger.log(handlePlayerDeath(pName, pCause, world, event, isPlayer));
     }
 }

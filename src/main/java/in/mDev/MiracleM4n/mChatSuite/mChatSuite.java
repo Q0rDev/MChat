@@ -139,10 +139,11 @@ public class mChatSuite extends JavaPlugin {
     public String deathGeneric = "died.";
     public String deathExplosion = "blew up.";
     public String deathMagic = "was killed by magic.";
-    public String deathEntity = "was slain by +CName.";
-    public String deathArrow = "was shot by +CName.";
-    public String deathFireball = "was fireballed by +CName.";
-    public String deathThrown = "was pummeled by +CName.";
+    public String deathEntity = "was slain by +killer.";
+    public String deathMobFormat = "a +killer";
+    public String deathArrow = "was shot by +killer.";
+    public String deathFireball = "was fireballed by +killer.";
+    public String deathThrown = "was pummeled by +killer.";
     public String hMasterT = "The Great";
     public String hMasterF = "The Squire";
 
