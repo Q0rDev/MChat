@@ -1,5 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
+import in.mDev.MiracleM4n.mChatSuite.api.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
@@ -50,7 +51,7 @@ public class MChatListCommand implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
-            String iVar = plugin.getAPI().ParseMessage(players.getName(), players.getWorld().getName(), "", plugin.varIndicator + plugin.listVar);
+            String iVar = plugin.getInfoReader().getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), plugin.listVar);
             String mName = plugin.getAPI().ParseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;
