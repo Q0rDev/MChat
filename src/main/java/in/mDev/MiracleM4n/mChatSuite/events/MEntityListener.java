@@ -228,11 +228,11 @@ public class MEntityListener implements Listener {
     String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
         if (isPlayer)
             return plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getAPI().ParseMessage(pName, world, "", msg)
-                    .replace("+killer", plugin.getAPI().ParseEventName(pCause, world));
+                    .replace(plugin.varIndicator + "killer", plugin.getAPI().ParseEventName(pCause, world));
 
         return Messanger.addColour(plugin.getAPI().ParseEventName(pName, world) + " " +  plugin.getAPI().ParseMessage(pName, world, "", msg)
-                .replace("+killer", plugin.deathMobFormat)
-                .replace("+killer", pCause));
+                .replace(plugin.varIndicator + "killer", plugin.deathMobFormat)
+                .replace(plugin.varIndicator + "killer", pCause));
     }
 
     String healthBarDamage(Player player, Integer damage) {

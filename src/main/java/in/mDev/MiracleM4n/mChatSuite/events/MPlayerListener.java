@@ -212,7 +212,7 @@ public class MPlayerListener implements Runnable, Listener {
 
         String kickMsg = plugin.getInfoReader().getEventMessage("Kick");
 
-        kickMsg = Messanger.addColour(kickMsg.replace("+reason", reason).replace("+r", reason));
+        kickMsg = Messanger.addColour(kickMsg.replace(plugin.varIndicator + "reason", reason).replace(plugin.varIndicator + "r", reason));
 
         if (msg == null)
             return;
