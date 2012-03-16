@@ -10,10 +10,10 @@ import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class BMCustomListener implements Listener {
+public class MCustomListener implements Listener {
     mChatSuite plugin;
 
-    public BMCustomListener(mChatSuite plugin) {
+    public MCustomListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

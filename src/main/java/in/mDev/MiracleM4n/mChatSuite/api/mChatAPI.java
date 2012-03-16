@@ -201,7 +201,11 @@ public class mChatAPI {
         String formatAll = parseVars(format, pName, world);
 
         msg = msg.replaceAll("%", "%%");
+
         formatAll = formatAll.replaceAll("%", "%%");
+
+        if (plugin.cLockRange > 0)
+            msg = fixCaps(msg, plugin.cLockRange);
 
         if (formatAll == null)
             return msg;
@@ -262,8 +266,9 @@ public class mChatAPI {
         
         formatAll = replaceVars(formatAll, fVarMap.descendingMap());
         formatAll = replaceVars(formatAll, rVarMap.descendingMap());
+        formatAll = replaceVars(formatAll, lVarMap.descendingMap());
 
-        return replaceVars(formatAll, lVarMap.descendingMap());
+        return formatAll;
     }
 
     /**
@@ -607,6 +612,21 @@ public class mChatAPI {
             map.put(keys, value);
 
         return map;
+    }
+    
+    String fixCaps(String format, Integer range) {
+        Pattern pattern = Pattern.compile("([A-Z]{" + range + ",300})");
+        Matcher matcher = pattern.matcher(format);
+        StringBuffer sb = new StringBuffer();
+
+        while (matcher.find())
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(matcher.group().toLowerCase()));
+
+        matcher.appendTail(sb);
+
+        format = sb.toString();
+
+        return format;
     }
 
     String parseVars(String format, String pName, String world) {

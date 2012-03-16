@@ -42,10 +42,10 @@ public class mChatSuite extends JavaPlugin {
     public PluginDescriptionFile pdfFile;
 
     // Listeners
-    public static BMPlayerListener pListener;
-    public static BMEntityListener eListener;
-    public static BMBlockListener bListener;
-    public static BMCustomListener cusListener;
+    public static MPlayerListener pListener;
+    public static MEntityListener eListener;
+    public static MBlockListener bListener;
+    public static MCustomListener cusListener;
 
     // External Messaging
     public BroadcastMessage bMessage;
@@ -175,6 +175,7 @@ public class mChatSuite extends JavaPlugin {
     public Integer sQuitI = 30;
     public Integer sKickI = 30;
     public Integer eBroadcastPort = 1940;
+    public Integer cLockRange = 3;
 
     // Other Config Stuff
     public Double chatDistance = -1.0;
@@ -247,11 +248,11 @@ public class mChatSuite extends JavaPlugin {
 
         if (!mAPIOnly) {
             if (spoutB)
-                cusListener = new BMCustomListener(this);
+                cusListener = new MCustomListener(this);
 
-            pListener = new BMPlayerListener(this);
-            bListener = new BMBlockListener(this);
-            eListener = new BMEntityListener(this);
+            pListener = new MPlayerListener(this);
+            bListener = new MBlockListener(this);
+            eListener = new MEntityListener(this);
         }
 
         // Setup Permissions

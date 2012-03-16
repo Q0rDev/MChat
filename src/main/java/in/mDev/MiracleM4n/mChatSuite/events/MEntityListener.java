@@ -13,10 +13,10 @@ import org.bukkit.event.entity.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class BMEntityListener implements Listener {
+public class MEntityListener implements Listener {
     mChatSuite plugin;
 
-    public BMEntityListener(mChatSuite plugin) {
+    public MEntityListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
