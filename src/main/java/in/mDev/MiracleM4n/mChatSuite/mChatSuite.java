@@ -41,12 +41,6 @@ public class mChatSuite extends JavaPlugin {
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
 
-    // Listeners
-    public static MPlayerListener pListener;
-    public static MEntityListener eListener;
-    public static MBlockListener bListener;
-    public static MCustomListener cusListener;
-
     // External Messaging
     public BroadcastMessage bMessage;
 
@@ -247,15 +241,6 @@ public class mChatSuite extends JavaPlugin {
         // Setup Plugins
         setupPlugins();
 
-        if (!mAPIOnly) {
-            if (spoutB)
-                cusListener = new MCustomListener(this);
-
-            pListener = new MPlayerListener(this);
-            bListener = new MBlockListener(this);
-            eListener = new MEntityListener(this);
-        }
-
         // Setup Permissions
         setupPerms();
 
@@ -317,14 +302,14 @@ public class mChatSuite extends JavaPlugin {
 
     void registerEvents() {
         if (!mAPIOnly) {
-            pm.registerEvents(pListener, this);
+            pm.registerEvents(new MPlayerListener(this), this);
 
-            pm.registerEvents(bListener, this);
+            pm.registerEvents(new MBlockListener(this), this);
 
-            pm.registerEvents(eListener, this);
+            pm.registerEvents(new MEntityListener(this), this);
 
             if (spoutB)
-                pm.registerEvents(cusListener, this);
+                pm.registerEvents(new MCustomListener(this), this);
         }
     }
 
@@ -364,7 +349,7 @@ public class mChatSuite extends JavaPlugin {
         Messanger.log("[" + pdfFile.getName() + "] No Permissions plugins were found defaulting to permissions.yml/info.yml.");
     }
 
-    public Boolean setupPlugin(String pluginName) {
+    Boolean setupPlugin(String pluginName) {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {

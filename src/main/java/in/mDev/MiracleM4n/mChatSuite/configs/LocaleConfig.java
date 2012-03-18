@@ -11,6 +11,7 @@ import java.io.IOException;
 public class LocaleConfig {
     mChatSuite plugin;
     YamlConfiguration config;
+    Boolean hasChanged = false;
 
     public LocaleConfig(mChatSuite plugin) {
         this.plugin = plugin;
@@ -18,8 +19,6 @@ public class LocaleConfig {
 
         reload();
     }
-
-    Boolean hasChanged = false;
 
     String playerDied = "has died!";
     String playerDamaged = "has lost health!";
