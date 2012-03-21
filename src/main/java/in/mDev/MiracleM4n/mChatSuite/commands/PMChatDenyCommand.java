@@ -16,7 +16,7 @@ public class PMChatDenyCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
@@ -27,7 +27,7 @@ public class PMChatDenyCommand implements CommandExecutor {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        if (commandName.equalsIgnoreCase("pmchatdeny")) {
+        if (cmd.equalsIgnoreCase("pmchatdeny")) {
             String rName = plugin.getInvite.get(pName);
             Player recipient = plugin.getServer().getPlayer(rName);
             String rWorld = recipient.getWorld().getName();

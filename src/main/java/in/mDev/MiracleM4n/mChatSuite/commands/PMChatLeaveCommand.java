@@ -16,7 +16,7 @@ public class PMChatLeaveCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
@@ -26,7 +26,7 @@ public class PMChatLeaveCommand implements CommandExecutor {
         Player player = (Player) sender;
         String pName = player.getName();
 
-        if (commandName.equalsIgnoreCase("pmchatleave")) {
+        if (cmd.equalsIgnoreCase("pmchatleave")) {
             String rName = plugin.chatPartner.get(pName);
             Player recipient = null;
 

@@ -16,14 +16,14 @@ public class MChatWhoCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
-        if (commandName.equalsIgnoreCase("mchatwho")) {
+        if (cmd.equalsIgnoreCase("mchatwho")) {
             if (args.length > 0) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.who")) {
-                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
                         return true;
                     }
                 }

@@ -20,13 +20,13 @@ public class MChatListCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
-        if (commandName.equalsIgnoreCase("mchatlist")) {
+        if (cmd.equalsIgnoreCase("mchatlist")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
-                    player.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                    player.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
                     return true;
                 }
             }

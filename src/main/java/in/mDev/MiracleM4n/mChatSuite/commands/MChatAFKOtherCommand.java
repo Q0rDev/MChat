@@ -20,9 +20,9 @@ public class MChatAFKOtherCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
-        if (commandName.equalsIgnoreCase("mchatafkother")) {
+        if (cmd.equalsIgnoreCase("mchatafkother")) {
             String message = " Away From Keyboard";
 
             if (args.length > 1) {
@@ -35,7 +35,7 @@ public class MChatAFKOtherCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.other")) {
-                    Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + commandName + ".");
+                    Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
                     return true;
                 }
             }

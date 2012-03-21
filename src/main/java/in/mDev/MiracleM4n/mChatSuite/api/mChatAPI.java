@@ -19,15 +19,9 @@ import java.util.regex.*;
 @SuppressWarnings("unused")
 public class mChatAPI {
     mChatSuite plugin;
-    SortedMap<String, String> varMap;
 
     public mChatAPI(mChatSuite plugin) {
         this.plugin = plugin;
-
-        varMap = new TreeMap<String, String>();
-
-        if (plugin.cVarMap != null)
-            varMap.putAll(plugin.cVarMap);
     }
 
     //Format Stuff
@@ -653,10 +647,9 @@ public class mChatAPI {
     }
 
     String replaceCustVars(String pName, String format) {
-        SortedMap<String, String> gVarMap = varMap;
-        SortedMap<String, String> pVarMap = varMap;
+        SortedMap<String, String> varMap = plugin.cVarMap.descendingMap();
 
-        for (Entry<String, String> entry : pVarMap.entrySet()) {
+        for (Entry<String, String> entry : varMap.entrySet()) {
             String pKey = plugin.cusVarIndicator + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
@@ -664,7 +657,7 @@ public class mChatAPI {
                 format = format.replace(pKey, value);
         }
 
-        for (Entry<String, String> entry : gVarMap.entrySet()) {
+        for (Entry<String, String> entry : varMap.entrySet()) {
             String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 

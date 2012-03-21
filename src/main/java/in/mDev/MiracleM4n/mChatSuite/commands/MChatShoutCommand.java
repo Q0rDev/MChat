@@ -16,9 +16,9 @@ public class MChatShoutCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
-        if (commandName.equalsIgnoreCase("mchatshout")) {
+        if (cmd.equalsIgnoreCase("mchatshout")) {
             String message = "";
 
             for (String arg : args)
@@ -32,7 +32,7 @@ public class MChatShoutCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.shout")) {
-                player.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                player.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
                 return true;
             }
 

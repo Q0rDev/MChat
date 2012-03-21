@@ -21,7 +21,7 @@ public class PMChatCommand implements CommandExecutor {
     String message = "";
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
@@ -32,7 +32,7 @@ public class PMChatCommand implements CommandExecutor {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        if (commandName.equalsIgnoreCase("pmchat")) {
+        if (cmd.equalsIgnoreCase("pmchat")) {
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.pm")) {
                 player.sendMessage(formatPMessage(Messanger.addColour("You are not allowed to use PM functions.")));
                 return true;

@@ -32,9 +32,7 @@ public class InfoConfig {
         YamlConfiguration config = plugin.mIConfig;
         YamlConfigurationOptions configO = config.options();
 
-        configO.header(
-                "mChat Info Config"
-        );
+        configO.header("Info Config");
 
         config.set("groupnames.admin", "[a]");
         config.set("groupnames.sadmin", "[sa]");
@@ -63,8 +61,7 @@ public class InfoConfig {
     }
 
     public void load() {
-        if (!(new File(plugin.getDataFolder(), "info.yml").exists())
-                && !(new File("plugins/mChat/info.yml").exists()))
+        if (!(new File(plugin.getDataFolder(), "info.yml").exists()))
             defaultConfig();
 
         YamlConfiguration config = plugin.mIConfig;
@@ -115,9 +112,7 @@ public class InfoConfig {
 
 
         if (hasChanged) {
-            configO.header(
-                    "mChat Info Config"
-            );
+            configO.header("Info Config");
 
             save();
         }

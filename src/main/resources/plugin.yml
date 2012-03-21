@@ -89,6 +89,8 @@ commands:
         usage: |
             /<command> - Ends convo.
         aliases: [pmchatl, pmleave, pml, pleave]
+    mchannel:
+        aliases: [mchann, mchan]
 permissions:
     mchat.*:
         default: false

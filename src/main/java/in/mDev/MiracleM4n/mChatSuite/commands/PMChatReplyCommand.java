@@ -21,7 +21,7 @@ public class PMChatReplyCommand implements CommandExecutor {
     String message = "";
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
@@ -32,7 +32,7 @@ public class PMChatReplyCommand implements CommandExecutor {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        if (commandName.equalsIgnoreCase("pmchatreply")) {
+        if (cmd.equalsIgnoreCase("pmchatreply")) {
             message = "";
             for (String arg : args)
                 message += " " + arg;

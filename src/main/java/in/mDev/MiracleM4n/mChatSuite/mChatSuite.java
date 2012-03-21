@@ -11,6 +11,7 @@ import in.mDev.MiracleM4n.mChatSuite.events.*;
 import in.mDev.MiracleM4n.mChatSuite.external.*;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
+import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
 import net.milkbowl.vault.permission.Permission;
 
 import org.anjocaido.groupmanager.GroupManager;
@@ -72,17 +73,22 @@ public class mChatSuite extends JavaPlugin {
     public Permission vPerm;
     public Boolean vaultB = false;
 
+    // ChannelManager
+    public ChannelManager channelManager;
+
     // Configuration
     public YamlConfiguration mConfig = null;
     public YamlConfiguration mIConfig = null;
     public YamlConfiguration mCConfig = null;
     public YamlConfiguration mELocale = null;
+    public YamlConfiguration mChConfig = null;
 
     // Configuration Files
     public File mConfigF = null;
     public File mIConfigF = null;
     public File mCConfigF = null;
     public File mELocaleF = null;
+    public File mChConfigF = null;
 
     // Optional mChatSuite only Info Support
     public Boolean useNewInfo = false;
@@ -198,7 +204,7 @@ public class mChatSuite extends JavaPlugin {
 
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
-    public SortedMap<String, String> cVarMap = new TreeMap<String, String>();
+    public TreeMap<String, String> cVarMap = new TreeMap<String, String>();
 
     // Lists
     public ArrayList<Socket> queryList = new ArrayList<Socket>();
@@ -224,16 +230,21 @@ public class mChatSuite extends JavaPlugin {
         mIConfigF = new File(getDataFolder(), "info.yml");
         mCConfigF = new File(getDataFolder(), "censor.yml");
         mELocaleF = new File(getDataFolder(), "locale.yml");
+        mChConfigF = new File(getDataFolder(), "channels.yml");
 
         mConfig = YamlConfiguration.loadConfiguration(mConfigF);
         mIConfig = YamlConfiguration.loadConfiguration(mIConfigF);
         mCConfig = YamlConfiguration.loadConfiguration(mCConfigF);
         mELocale = YamlConfiguration.loadConfiguration(mELocaleF);
+        mChConfig = YamlConfiguration.loadConfiguration(mChConfigF);
 
         // Manage Config options
         mConfig.options().indent(4);
         mIConfig.options().indent(4);
         mCConfig.options().indent(4);
+
+        // ChannelManager
+        channelManager = new ChannelManager(this);
 
         // Setup Configs
         setupConfigs();
@@ -307,6 +318,8 @@ public class mChatSuite extends JavaPlugin {
             pm.registerEvents(new MBlockListener(this), this);
 
             pm.registerEvents(new MEntityListener(this), this);
+
+            pm.registerEvents(new ChannelEventListener(this), this);
 
             if (spoutB)
                 pm.registerEvents(new MCustomListener(this), this);
@@ -411,6 +424,8 @@ public class mChatSuite extends JavaPlugin {
         getCensorConfig().load();
 
         getLocale().load();
+
+        getChannelConfig().load();
     }
 
     public void reloadConfigs() {
@@ -421,6 +436,8 @@ public class mChatSuite extends JavaPlugin {
         getCensorConfig().reload();
 
         getLocale().reload();
+
+        getChannelConfig().reload();
     }
 
     void setupTasks() {
@@ -494,6 +511,8 @@ public class mChatSuite extends JavaPlugin {
         regCommands("pmchatinvite", new PMChatInviteCommand(this));
         regCommands("pmchatleave", new PMChatLeaveCommand(this));
         regCommands("pmchatreply", new PMChatReplyCommand(this));
+
+        regCommands("mchannel", new MChannelCommand(this));
     }
     
     void regCommands(String command, CommandExecutor executor) {
@@ -516,6 +535,11 @@ public class mChatSuite extends JavaPlugin {
         return new CensorConfig(this);
     }
 
+    // Channel Config (channels.yml)
+    public ChannelConfig getChannelConfig() {
+        return new ChannelConfig(this);
+    }
+
     // Language Config
     public LocaleConfig getLocale() {
         return new LocaleConfig(this);
@@ -534,5 +558,10 @@ public class mChatSuite extends JavaPlugin {
     // InfoWriter
     public MInfoWriter getInfoWriter() {
         return new MInfoWriter(this);
+    }
+
+    // ChannelManager
+    public ChannelManager getChannelManager() {
+        return channelManager;
     }
 }

@@ -59,9 +59,7 @@ public class LocaleConfig {
     void defaultLocale() {
         YamlConfigurationOptions configO = config.options();
 
-        configO.header(
-                "mChatSuite Locale file."
-        );
+        configO.header("Locale file.");
 
         config.set("spoutChatColour", spoutChatColour);
         config.set("typingMessage", typingMessage);
@@ -120,15 +118,13 @@ public class LocaleConfig {
         checkOption("format.spy", spyFormat);
 
         if (hasChanged) {
-            configO.header(
-                    "mChatSuite Locale file."
-            );
+            configO.header("Locale file.");
 
             try {
                 config.save(plugin.mELocaleF);
             } catch (IOException ignored) {}
 
-            System.out.println("[" + plugin.pdfFile.getName() + "] locale.yml " + configUpdated);
+            Messanger.log("[" + plugin.pdfFile.getName() + "] locale.yml " + getOption("configUpdated") + ".");
         }
     }
 

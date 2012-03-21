@@ -15,13 +15,13 @@ public class MChatMessagePrefixCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String commandName = command.getName();
+        String cmd = command.getName();
 
-        if (commandName.equalsIgnoreCase("mchatmessageprefix")) {
+        if (cmd.equalsIgnoreCase("mchatmessageprefix")) {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("set")) {
                     if (!plugin.getAPI().checkPermissions(sender, "mchat.messageprefix")) {
-                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + commandName + "."));
+                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
                         return true;
                     }
 

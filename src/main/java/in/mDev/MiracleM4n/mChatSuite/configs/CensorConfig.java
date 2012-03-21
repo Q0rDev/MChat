@@ -29,8 +29,7 @@ public class CensorConfig {
     }
 
     public void load() {
-        if (!(new File(plugin.getDataFolder(), "censor.yml").exists())
-                && !(new File("plugins/mChat/censor.yml").exists()))
+        if (!(new File(plugin.getDataFolder(), "censor.yml").exists()))
             defaultConfig();
     }
 
@@ -38,9 +37,7 @@ public class CensorConfig {
         YamlConfiguration config = plugin.mCConfig;
         YamlConfigurationOptions configO = config.options();
 
-        configO.header(
-                " mChat Censor File"
-        );
+        configO.header("mChat Censor File");
 
         config.set("fuck", "fawg");
         config.set("cunt", "punt");
