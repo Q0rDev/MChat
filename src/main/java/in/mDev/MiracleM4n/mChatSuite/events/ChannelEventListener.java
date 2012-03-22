@@ -1,14 +1,9 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
-import com.massivecraft.factions.Conf;
-import com.massivecraft.factions.FPlayer;
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
-import in.mDev.MiracleM4n.mChatSuite.channel.ChannelType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
-import me.desmin88.mobdisguise.MobDisguise;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,7 +26,7 @@ public class ChannelEventListener implements Listener {
 
         Player player = event.getPlayer();
 
-        Set<Channel> channels = plugin.getChannelManager().getPlayersChannels(player.getName());
+        Set<Channel> channels = plugin.getChannelManager().getPlayersActiveChannels(player.getName());
 
         if (channels.size() < 1)
             return;

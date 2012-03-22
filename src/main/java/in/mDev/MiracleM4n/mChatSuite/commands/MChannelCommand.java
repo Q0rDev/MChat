@@ -22,8 +22,10 @@ public class MChannelCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (cmd.equalsIgnoreCase("mchannel")) {
-            if (!(args.length > 1)) {
+            if (!(args.length > 0)) {
                 String[] message = new String[] {
+                        Messanger.format("'/" + cmd + " types' for more information."),
+                        Messanger.format("'/" + cmd + " edittypes' for more information."),
                         Messanger.format("'/" + cmd + " create' for more information."),
                         Messanger.format("'/" + cmd + " remove' for more information."),
                         Messanger.format("'/" + cmd + " edit' for more information."),
@@ -49,11 +51,11 @@ public class MChannelCommand implements CommandExecutor {
 
                 types.trim();
 
-                Messanger.sendMessage(sender, "All valid ChannelEditTypes: '" + types + "'.");
+                Messanger.sendMessage(sender, "All valid ChannelTypes: '" + types + "'.");
 
                 return true;
             } else if (args[0].equalsIgnoreCase("editTypes")) {
-                if (!plugin.getAPI().checkPermissions(sender, "mchannel.create." + args[1].toLowerCase())) {
+                if (!plugin.getAPI().checkPermissions(sender, "mchannel.edittypes")) {
                     Messanger.sendMessage(sender, "You don't have Permissions for: 'mchannel.edittypes'.");
                     return true;
                 }
@@ -69,7 +71,7 @@ public class MChannelCommand implements CommandExecutor {
 
                 return true;
             } else if (args[0].equalsIgnoreCase("create")) {
-                if (!(args.length > 3)) {
+                if (!(args.length > 2)) {
                     Messanger.sendMessage(sender, "Please use'/" + cmd + " create [ChannelName] [ChannelType]'.");
                     return true;
                 }
@@ -89,7 +91,7 @@ public class MChannelCommand implements CommandExecutor {
 
                 return true;
             } else if (args[0].equalsIgnoreCase("remove")) {
-                if (!(args.length > 2)) {
+                if (!(args.length > 1)) {
                     Messanger.sendMessage(sender, "Please use'/" + cmd + " remove [ChannelName]'.");
                     return true;
                 }
@@ -104,7 +106,7 @@ public class MChannelCommand implements CommandExecutor {
 
                 return true;
             } else if (args[0].equalsIgnoreCase("edit")) {
-                if (!(args.length > 4)) {
+                if (!(args.length > 3)) {
                     Messanger.sendMessage(sender, "Please use'/" + cmd + " edit [ChannelName] [EditType] [Option]'.");
                     return true;
                 }
@@ -162,7 +164,7 @@ public class MChannelCommand implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase("join")) {
-                if (!(args.length > 2)) {
+                if (!(args.length > 1)) {
                     Messanger.sendMessage(sender, "Please use'/" + cmd + " join [ChannelName]'.");
                     return true;
                 }
@@ -171,16 +173,27 @@ public class MChannelCommand implements CommandExecutor {
                     Messanger.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.join." + args[1].toLowerCase() + "'.");
                     return true;
                 }
+                
+                Channel channel = plugin.getChannelManager().getChannel(args[1]);
 
-                if (plugin.getChannelManager().getChannel(args[1]) == null)
+                if (channel == null)
                     Messanger.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
+
+                if (channel.isPassworded() && !(args.length > 2)) {
+                    if (!(args.length > 2))
+                        Messanger.sendMessage(sender, "'" + args[1] + "' is a Passworded channel. Please use'/" + cmd + " join [ChannelName] [Password]' to enter.");
+                    else if (!args[2].equalsIgnoreCase(channel.getPassword()))
+                        Messanger.sendMessage(sender, "Password entered for channel '" + args[1] + "' is invalid.");
+
+                    return true;
+                }
 
                 plugin.getChannelManager().getChannel(args[1]).addOccupant(sender.getName(), true);
                 Messanger.sendMessage(sender, "You have successfully joined '" + args[1].toLowerCase() + "'.");
 
                 return true;
             } else if (args[0].equalsIgnoreCase("leave")) {
-                if (!(args.length > 2)) {
+                if (!(args.length > 1)) {
                     Messanger.sendMessage(sender, "Please use'/" + cmd + " leave [ChannelName]'.");
                     return true;
                 }
@@ -201,26 +214,5 @@ public class MChannelCommand implements CommandExecutor {
         }
 
         return true;
-    }
-
-    Boolean editTypes(String option) {
-        if (option.equalsIgnoreCase("name"))
-            return true;
-        else if (option.equalsIgnoreCase("type"))
-            return true;
-        else if (option.equalsIgnoreCase("default"))
-            return true;
-        else if (option.equalsIgnoreCase("distance"))
-            return true;
-        else if (option.equalsIgnoreCase("passworded"))
-            return true;
-        else if (option.equalsIgnoreCase("password"))
-            return true;
-        else if (option.equalsIgnoreCase("prefix"))
-            return true;
-        else if (option.equalsIgnoreCase("suffix"))
-            return true;
-
-        return false;
     }
 }

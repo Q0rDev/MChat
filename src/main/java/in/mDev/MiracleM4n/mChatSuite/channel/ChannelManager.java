@@ -22,6 +22,9 @@ public class ChannelManager {
         return channels;
     }
 
+    /**
+     * Loads Channels from Config to Memory.
+     */
     public void loadChannels() {
         for (String key : plugin.mChConfig.getKeys(false)) {
             ChannelType type = ChannelType.fromName(plugin.mChConfig.getString(key + ".type"));
@@ -39,6 +42,17 @@ public class ChannelManager {
         }
     }
 
+    /**
+     * Loads Channels from Config to Memory.
+     * @param name Name of Channel being created.
+     * @param type Type of Channel being created.
+     * @param prefix Prefix of Channel being created.
+     * @param suffix Suffix of Channel being created.
+     * @param passworded Is Channel passworded?
+     * @param password Channel's Password.
+     * @param distance Distance used if Type is local.
+     * @param defaulted Is Channel the Default channel.
+     */
     public void createChannel(String name, ChannelType type, String prefix, String suffix, Boolean passworded, String password, Integer distance, Boolean defaulted) {
         channels.add(new Channel(name.toLowerCase(), type, prefix, suffix, passworded, password, distance, defaulted));
 
@@ -50,11 +64,18 @@ public class ChannelManager {
         plugin.mChConfig.set(name.toLowerCase() + ".distance", distance);
         plugin.mChConfig.set(name.toLowerCase() + ".default", defaulted);
 
+        if (defaulted)
+           setDefaultChannel(name);
+
         try {
             plugin.mChConfig.save(plugin.mChConfigF);
         } catch (IOException ignored) {}
     }
 
+    /**
+     * Removes a Channel from Config/Memory.
+     * @param name Name of Channel being removed.
+     */
     public void removeChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name))
@@ -67,6 +88,11 @@ public class ChannelManager {
         } catch (IOException ignored) {}
     }
 
+    /**
+     * Looks for a Channel in Memory.
+     * @param name Name of Channel being sought after.
+     * @return Channel being sought after or null.
+     */
     public Channel getChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name))
@@ -75,6 +101,10 @@ public class ChannelManager {
         return null;
     }
 
+    /**
+     * Makes a Channel the Default Channel.
+     * @param name Name of Channel being defaulted.
+     */
     public void setDefaultChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name))
@@ -83,6 +113,10 @@ public class ChannelManager {
                 channel.setDefault(false);
     }
 
+    /**
+     * Reads Default Channel from Memory.
+     * @return Default Channel or null.
+     */
     public Channel getDefaultChannel() {
         for (Channel channel : channels)
             if (channel.isDefault())
@@ -91,7 +125,12 @@ public class ChannelManager {
         return null;
     }
 
-    public Set<Channel> getPlayersChannels(String player) {
+    /**
+     * Reads Player's Active Channels
+     * @param player Player's name being sought.
+     * @return Set containing all Channels the Player is Active in.
+     */
+    public Set<Channel> getPlayersActiveChannels(String player) {
         Set<Channel> channels = new HashSet<Channel>();
 
         for (Channel channelz : plugin.getChannelManager().getChannels())
@@ -101,23 +140,44 @@ public class ChannelManager {
         return channels;
     }
 
-    public void editChannel(Channel channel, ChannelEditType edit, Object option) {
-        if (option.getClass() == edit.getOptionClass()) {
-            if (edit.getName().equalsIgnoreCase("Name"))
+    /**
+     * Reads Player's Channels
+     * @param player Player's name being sought.
+     * @return Set containing all Channels the Player is in.
+     */
+    public Set<Channel> getPlayersChannels(String player) {
+        Set<Channel> channels = new HashSet<Channel>();
+
+        for (Channel channelz : plugin.getChannelManager().getChannels())
+            if (channelz.getOccupants().contains(player))
+                channels.add(channelz);
+
+        return channels;
+    }
+
+    /**
+     * Loads Channels from Config to Memory.
+     * @param channel Name of Channel being edited.
+     * @param type EditType being used.
+     * @param option Option being used.
+     */
+    public void editChannel(Channel channel, ChannelEditType type, Object option) {
+        if (option.getClass() == type.getOptionClass()) {
+            if (type.getName().equalsIgnoreCase("Name"))
                 channel.setName((String) option);
-            else if (edit.getName().equalsIgnoreCase("Default"))
+            else if (type.getName().equalsIgnoreCase("Default"))
                 setDefaultChannel(channel.getName());
-            else if (edit.getName().equalsIgnoreCase("Distance"))
+            else if (type.getName().equalsIgnoreCase("Distance"))
                 channel.setDistance((Integer) option);
-            else if (edit.getName().equalsIgnoreCase("Password"))
+            else if (type.getName().equalsIgnoreCase("Password"))
                 channel.setPassword((String) option);
-            else if (edit.getName().equalsIgnoreCase("Passworded"))
+            else if (type.getName().equalsIgnoreCase("Passworded"))
                 channel.setPassworded((Boolean) option, channel.getPassword());
-            else if (edit.getName().equalsIgnoreCase("Prefix"))
+            else if (type.getName().equalsIgnoreCase("Prefix"))
                 channel.setPrefix((String) option);
-            else if (edit.getName().equalsIgnoreCase("Suffix"))
+            else if (type.getName().equalsIgnoreCase("Suffix"))
                 channel.setSuffix((String) option);
-            else if (edit.getName().equalsIgnoreCase("Type"))
+            else if (type.getName().equalsIgnoreCase("Type"))
                 channel.setType((ChannelType) option);
         }
     }
