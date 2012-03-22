@@ -23,7 +23,7 @@ public class MChatWhoCommand implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.who")) {
-                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
+                        Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
                         return true;
                     }
                 }

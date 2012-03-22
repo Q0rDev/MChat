@@ -31,7 +31,7 @@ public class MChatSayCommand implements CommandExecutor {
                     Player player = (Player) sender;
 
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.say")) {
-                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
+                        Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
                         return true;
                     }
                 }

@@ -132,13 +132,13 @@ public class Channel {
         return passworded;
     }
     
-    public void setPassworded(String password) {
-        if (password == null)
+    public void setPassworded(Boolean passworded, String password) {
+        if (passworded == null || password == null)
             return;
 
         type = ChannelType.PASSWORD;
 
-        passworded = true;
+        this.passworded = passworded;
         this.password = password;
     }
 

@@ -100,4 +100,25 @@ public class ChannelManager {
 
         return channels;
     }
+
+    public void editChannel(Channel channel, ChannelEditType edit, Object option) {
+        if (option.getClass() == edit.getOptionClass()) {
+            if (edit.getName().equalsIgnoreCase("Name"))
+                channel.setName((String) option);
+            else if (edit.getName().equalsIgnoreCase("Default"))
+                setDefaultChannel(channel.getName());
+            else if (edit.getName().equalsIgnoreCase("Distance"))
+                channel.setDistance((Integer) option);
+            else if (edit.getName().equalsIgnoreCase("Password"))
+                channel.setPassword((String) option);
+            else if (edit.getName().equalsIgnoreCase("Passworded"))
+                channel.setPassworded((Boolean) option, channel.getPassword());
+            else if (edit.getName().equalsIgnoreCase("Prefix"))
+                channel.setPrefix((String) option);
+            else if (edit.getName().equalsIgnoreCase("Suffix"))
+                channel.setSuffix((String) option);
+            else if (edit.getName().equalsIgnoreCase("Type"))
+                channel.setType((ChannelType) option);
+        }
+    }
 }

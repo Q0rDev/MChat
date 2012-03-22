@@ -282,7 +282,7 @@ public class MPlayerListener implements Runnable, Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                player.sendMessage(Messanger.format(plugin.getLocale().getOption("stillAFK")));
+                Messanger.sendMessage(player, plugin.getLocale().getOption("stillAFK"));
             } else
                 player.performCommand("mafk");
     }

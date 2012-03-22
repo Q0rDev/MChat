@@ -21,7 +21,7 @@ public class MChatMessagePrefixCommand implements CommandExecutor {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("set")) {
                     if (!plugin.getAPI().checkPermissions(sender, "mchat.messageprefix")) {
-                        sender.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
+                        Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
                         return true;
                     }
 

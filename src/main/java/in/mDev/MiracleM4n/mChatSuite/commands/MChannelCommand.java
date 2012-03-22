@@ -1,5 +1,8 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
+import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
+import in.mDev.MiracleM4n.mChatSuite.channel.ChannelEditType;
+import in.mDev.MiracleM4n.mChatSuite.channel.ChannelType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
@@ -19,44 +22,136 @@ public class MChannelCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (cmd.equalsIgnoreCase("mchannel")) {
-            if (!(args.length > 0)) {
+            if (!(args.length > 1)) {
                 String[] message = new String[] {
-                        Messanger.format("'/" + cmd + " join' for more information."),
-                        Messanger.format("'/" + cmd + " leave' for more information."),
                         Messanger.format("'/" + cmd + " create' for more information."),
                         Messanger.format("'/" + cmd + " remove' for more information."),
-                        Messanger.format("'/" + cmd + " edit' for more information.")
-                    };
+                        Messanger.format("'/" + cmd + " edit' for more information."),
+                        Messanger.format("'/" + cmd + " types' for more information."),
+                        Messanger.format("'/" + cmd + " join' for more information."),
+                        Messanger.format("'/" + cmd + " leave' for more information.")
+                };
 
                 sender.sendMessage(message);
                 return true;
             }
 
-            if (args[0].equalsIgnoreCase("create")) {
-                if (!(args.length > 1)) {
-                    sender.sendMessage(Messanger.format("Please use'/" + cmd + " create [ChannelName]' for more information."));
+            if (args[0].equalsIgnoreCase("types")) {
+                if (!plugin.getAPI().checkPermissions(sender, "mchannel.types")) {
+                    Messanger.sendMessage(sender, "You don't have Permissions for: 'mchannel.types'.");
                     return true;
                 }
 
+                String types = "";
 
+                for (ChannelType type : ChannelType.values())
+                    types += " " + type.getName();
+
+                types.trim();
+
+                Messanger.sendMessage(sender, "All valid ChannelEditTypes: '" + types + "'.");
+
+                return true;
+            } else if (args[0].equalsIgnoreCase("editTypes")) {
+                if (!plugin.getAPI().checkPermissions(sender, "mchannel.create." + args[1].toLowerCase())) {
+                    Messanger.sendMessage(sender, "You don't have Permissions for: 'mchannel.edittypes'.");
+                    return true;
+                }
+
+                String editTypes = "";
+
+                for (ChannelEditType type : ChannelEditType.values())
+                    editTypes += " " + type.getName();
+
+                editTypes.trim();
+
+                Messanger.sendMessage(sender, "All valid ChannelEditTypes: '" + editTypes + "'.");
+
+                return true;
+            } else if (args[0].equalsIgnoreCase("create")) {
+                if (!(args.length > 3)) {
+                    Messanger.sendMessage(sender, "Please use'/" + cmd + " create [ChannelName] [ChannelType]'.");
+                    return true;
+                }
+
+                if (!plugin.getAPI().checkPermissions(sender, "mchannel.create." + args[1].toLowerCase())) {
+                    Messanger.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.create." + args[1].toLowerCase() + "'.");
+                    return true;
+                }
+
+                if (ChannelType.fromName(args[2]) == null) {
+                    Messanger.sendMessage(sender, "'" + args[2] + "' is not a valid ChannelType. Use '/" + cmd + " types' for more information.");
+                    return true;
+                }
+
+                plugin.getChannelManager().createChannel(args[1], ChannelType.fromName(args[2]), "[", "]", false, "", -1, false);
+                Messanger.sendMessage(sender, "You have successfully created Channel '" + args[1].toLowerCase() + "'.");
 
                 return true;
             } else if (args[0].equalsIgnoreCase("remove")) {
-                if (!(args.length > 1)) {
-                    sender.sendMessage(Messanger.format("Please use'/" + cmd + " remove [ChannelName]'."));
+                if (!(args.length > 2)) {
+                    Messanger.sendMessage(sender, "Please use'/" + cmd + " remove [ChannelName]'.");
                     return true;
                 }
 
+                if (!plugin.getAPI().checkPermissions(sender, "mchannel.remove." + args[1].toLowerCase())) {
+                    Messanger.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.remove." + args[1].toLowerCase() + "'.");
+                    return true;
+                }
 
+                plugin.getChannelManager().removeChannel(args[1]);
+                Messanger.sendMessage(sender, "You have successfully removed Channel '" + args[1].toLowerCase() + "'.");
 
                 return true;
             } else if (args[0].equalsIgnoreCase("edit")) {
-                if (!(args.length > 1)) {
-                    sender.sendMessage(Messanger.format("Please use'/" + cmd + " edit [ChannelName]' for more information."));
+                if (!(args.length > 4)) {
+                    Messanger.sendMessage(sender, "Please use'/" + cmd + " edit [ChannelName] [EditType] [Option]'.");
                     return true;
                 }
 
+                if (plugin.getChannelManager().getChannel(args[1]) == null) {
+                    Messanger.sendMessage(sender, "'" + args[1] + "' is not a valid channel.");
+                    return true;
+                }
 
+                if (ChannelEditType.fromName(args[2]) == null) {
+                    Messanger.sendMessage(sender, "'" + args[2] + "' is not a valid EditType.");
+                    return true;
+                }
+                
+                ChannelEditType edit = ChannelEditType.fromName(args[2]);
+                Channel channel = plugin.getChannelManager().getChannel(args[1]);
+                Object option = null;
+                
+                try {
+                    if (edit.getName().equalsIgnoreCase("Name"))
+                        option = args[3];
+                    else if (edit.getName().equalsIgnoreCase("Default"))
+                        plugin.getChannelManager().setDefaultChannel(channel.getName());
+                    else if (edit.getName().equalsIgnoreCase("Distance"))
+                        option = Integer.valueOf(args[3]);
+                    else if (edit.getName().equalsIgnoreCase("Password"))
+                        option = args[3];
+                    else if (edit.getName().equalsIgnoreCase("Passworded"))
+                        option = Boolean.parseBoolean(args[3]);
+                    else if (edit.getName().equalsIgnoreCase("Prefix"))
+                        option = args[3];
+                    else if (edit.getName().equalsIgnoreCase("Suffix"))
+                        option = args[3];
+                    else if (edit.getName().equalsIgnoreCase("Type"))
+                        option = ChannelType.fromName(args[3]);
+                } catch (Exception ignored) {
+                    Messanger.sendMessage(sender, "Error when converting '" + args[3] + "' to an Object of type '" + ChannelEditType.fromName(args[2]).getOptionClass().getSimpleName() + "'.");
+                    return true;
+                }
+
+                if (option == null) {
+                    Messanger.sendMessage(sender, "The option '" + args[3] + "' seems to not be resolving properly.");
+                    return true;
+                }
+
+                plugin.getChannelManager().editChannel(channel, edit, option);
+                Messanger.sendMessage(sender, "You have successfully edited '" + args[1].toLowerCase() + "'.");
 
                 return true;
             }
@@ -67,44 +162,65 @@ public class MChannelCommand implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase("join")) {
-                if (!(args.length > 1)) {
-                    sender.sendMessage(Messanger.format("Please use'/" + cmd + " join [ChannelName]'."));
+                if (!(args.length > 2)) {
+                    Messanger.sendMessage(sender, "Please use'/" + cmd + " join [ChannelName]'.");
                     return true;
                 }
 
                 if (!plugin.getAPI().checkPermissions(sender, "mchannel.join." + args[1].toLowerCase())) {
-                    sender.sendMessage(Messanger.format("You don't have Permissions for: '" + "mchannel.join." + args[1].toLowerCase() + "'."));
+                    Messanger.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.join." + args[1].toLowerCase() + "'.");
                     return true;
                 }
 
                 if (plugin.getChannelManager().getChannel(args[1]) == null)
-                    sender.sendMessage(Messanger.format("No Channel by the name of '" + args[1].toLowerCase() + "' could be found."));
+                    Messanger.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
 
                 plugin.getChannelManager().getChannel(args[1]).addOccupant(sender.getName(), true);
-                sender.sendMessage(Messanger.format("You have successfully joined '" + args[1].toLowerCase() + "'."));
+                Messanger.sendMessage(sender, "You have successfully joined '" + args[1].toLowerCase() + "'.");
 
                 return true;
             } else if (args[0].equalsIgnoreCase("leave")) {
-                if (!(args.length > 1)) {
-                    sender.sendMessage(Messanger.format("Please use'/" + cmd + " leave [ChannelName]'."));
+                if (!(args.length > 2)) {
+                    Messanger.sendMessage(sender, "Please use'/" + cmd + " leave [ChannelName]'.");
                     return true;
                 }
 
                 if (!plugin.getAPI().checkPermissions(sender, "mchannel.leave." + args[1].toLowerCase())) {
-                    sender.sendMessage(Messanger.format("You don't have Permissions for: '" + args[1].toLowerCase() + "'."));
+                    Messanger.sendMessage(sender, "You don't have Permissions for: '" + args[1].toLowerCase() + "'.");
                     return true;
                 }
 
                 if (plugin.getChannelManager().getChannel(args[1]) == null)
-                    sender.sendMessage(Messanger.format("No Channel by the name of '" + "mchannel.leave." + args[1].toLowerCase() + "' could be found."));
+                    Messanger.sendMessage(sender, "No Channel by the name of '" + "mchannel.leave." + args[1].toLowerCase() + "' could be found.");
 
                 plugin.getChannelManager().getChannel(args[1]).removeOccupant(sender.getName());
-                sender.sendMessage(Messanger.format("You have successfully left '" + args[1].toLowerCase() + "'."));
+                Messanger.sendMessage(sender, "You have successfully left '" + args[1].toLowerCase() + "'.");
 
                 return true;
             }
         }
 
         return true;
+    }
+
+    Boolean editTypes(String option) {
+        if (option.equalsIgnoreCase("name"))
+            return true;
+        else if (option.equalsIgnoreCase("type"))
+            return true;
+        else if (option.equalsIgnoreCase("default"))
+            return true;
+        else if (option.equalsIgnoreCase("distance"))
+            return true;
+        else if (option.equalsIgnoreCase("passworded"))
+            return true;
+        else if (option.equalsIgnoreCase("password"))
+            return true;
+        else if (option.equalsIgnoreCase("prefix"))
+            return true;
+        else if (option.equalsIgnoreCase("suffix"))
+            return true;
+
+        return false;
     }
 }

@@ -26,7 +26,7 @@ public class MChatListCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
-                    player.sendMessage(Messanger.format(plugin.getLocale().getOption("noPermissions") + " " + cmd + "."));
+                    Messanger.sendMessage(player, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
                     return true;
                 }
             }
