@@ -181,7 +181,7 @@ public class MChannelCommand implements CommandExecutor {
 
                 if (channel.isPassworded() && !(args.length > 2)) {
                     if (!(args.length > 2))
-                        Messanger.sendMessage(sender, "'" + args[1] + "' is a Passworded channel. Please use'/" + cmd + " join [ChannelName] [Password]' to enter.");
+                        Messanger.sendMessage(sender, "'" + args[1] + "' is a Passworded channel. Please use '/" + cmd + " join [ChannelName] [Password]' to enter.");
                     else if (!args[2].equalsIgnoreCase(channel.getPassword()))
                         Messanger.sendMessage(sender, "Password entered for channel '" + args[1] + "' is invalid.");
 

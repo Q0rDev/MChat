@@ -308,6 +308,8 @@ public class mChatSuite extends JavaPlugin {
         if (eBroadcast && bMessage != null)
             bMessage.disconnect();
 
+        getChannelManager().saveChannels();
+
         Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
     }
 

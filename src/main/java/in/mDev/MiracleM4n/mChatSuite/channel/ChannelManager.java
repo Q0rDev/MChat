@@ -102,6 +102,35 @@ public class ChannelManager {
     }
 
     /**
+     * Saves all Channels in Memory to Config.
+     */
+    public void saveChannels() {
+        for (Channel channel : channels)
+            saveChannel(channel.getName());
+    }
+
+    /**
+     * Saves a Channel from Memory to config.
+     * @param name Name of Channel being saved.
+     */
+    public void saveChannel(String name) {
+        for (Channel channel : channels)
+            if (channel.getName().equalsIgnoreCase(name)) {
+                plugin.mChConfig.set(name.toLowerCase() + ".type", channel.getType().getName().toLowerCase());
+                plugin.mChConfig.set(name.toLowerCase() + ".prefix", channel.getPrefix());
+                plugin.mChConfig.set(name.toLowerCase() + ".suffix", channel.getSuffix());
+                plugin.mChConfig.set(name.toLowerCase() + ".passworded", channel.isPassworded());
+                plugin.mChConfig.set(name.toLowerCase() + ".password", channel.getPassword());
+                plugin.mChConfig.set(name.toLowerCase() + ".distance", channel.getDistance());
+                plugin.mChConfig.set(name.toLowerCase() + ".default", channel.isDefault());
+
+                try {
+                    plugin.mChConfig.save(plugin.mChConfigF);
+                } catch (IOException ignored) {}
+            }
+    }
+
+    /**
      * Makes a Channel the Default Channel.
      * @param name Name of Channel being defaulted.
      */
@@ -163,9 +192,11 @@ public class ChannelManager {
      */
     public void editChannel(Channel channel, ChannelEditType type, Object option) {
         if (option.getClass() == type.getOptionClass()) {
-            if (type.getName().equalsIgnoreCase("Name"))
+            if (type.getName().equalsIgnoreCase("Name")) {
+                plugin.mChConfig.set(channel.getName(), null);
+
                 channel.setName((String) option);
-            else if (type.getName().equalsIgnoreCase("Default"))
+            } else if (type.getName().equalsIgnoreCase("Default"))
                 setDefaultChannel(channel.getName());
             else if (type.getName().equalsIgnoreCase("Distance"))
                 channel.setDistance((Integer) option);
@@ -179,6 +210,8 @@ public class ChannelManager {
                 channel.setSuffix((String) option);
             else if (type.getName().equalsIgnoreCase("Type"))
                 channel.setType((ChannelType) option);
+
+            saveChannel(channel.getName());
         }
     }
 }

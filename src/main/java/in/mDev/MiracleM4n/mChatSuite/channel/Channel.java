@@ -168,7 +168,7 @@ public class Channel {
         if (player == null || message == null)
             return;
 
-        String msg = Messanger.addColour(prefix + suffix) + message;
+        String msg = Messanger.addColour(prefix + name + suffix) + message;
 
         for (String names : occupants.keySet()) {
             Player playerz = Bukkit.getServer().getPlayer(names);
@@ -176,16 +176,16 @@ public class Channel {
             if (playerz == null)
                 continue;
 
-            if (type == ChannelType.PASSWORD || type == ChannelType.PRIVATE) {
+            if (getType() == ChannelType.PASSWORD || getType() == ChannelType.PRIVATE) {
                 playerz.sendMessage(msg);
-            } else if (type == ChannelType.LOCAL) {
+            } else if (getType() == ChannelType.LOCAL) {
                 if (playerz.getWorld().getName().equals(player.getWorld().getName())
                         && playerz.getLocation().distance(player.getLocation()) > distance)
                     playerz.sendMessage(msg);
-            } else if (type == ChannelType.WORLD) {
+            } else if (getType() == ChannelType.WORLD) {
                 if (playerz.getWorld().getName().equals(player.getWorld().getName()))
                     playerz.sendMessage(msg);
-            } else if (type == ChannelType.CHUNK) {
+            } else if (getType() == ChannelType.CHUNK) {
                 if (playerz.getWorld().getName().equals(player.getWorld().getName())
                         && playerz.getLocation().getChunk() == player.getLocation().getChunk())
                     playerz.sendMessage(msg);
