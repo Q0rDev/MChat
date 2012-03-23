@@ -91,7 +91,7 @@ public class MChatListCommand implements CommandExecutor {
                 msg += '\n';
         }
 
-        for (Map.Entry entry : cLMap.entrySet())
+        for (Map.Entry<String,Integer> entry : cLMap.entrySet())
             msg += (entry.getKey() + ": &f" + entry.getValue() + '\n');
 
         if (msg.contains("" + '\n')) {

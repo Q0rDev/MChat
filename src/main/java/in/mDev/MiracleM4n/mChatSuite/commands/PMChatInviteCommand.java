@@ -15,7 +15,8 @@ public class PMChatInviteCommand implements CommandExecutor {
         this.plugin = plugin;
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    @SuppressWarnings("unused")
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
