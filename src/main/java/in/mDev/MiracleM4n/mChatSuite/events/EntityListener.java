@@ -7,16 +7,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class MEntityListener implements Listener {
+public class EntityListener implements Listener {
     mChatSuite plugin;
 
-    public MEntityListener(mChatSuite plugin) {
+    public EntityListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
@@ -50,6 +51,10 @@ public class MEntityListener implements Listener {
             if (damageEvent.getDamager() instanceof Player) {
                 pCause = plugin.getAPI().ParsePlayerName(player.getKiller().getName(), player.getKiller().getWorld().getName());
                 isPlayer = true;
+            } else if (damageEvent.getDamager() instanceof Projectile) {
+                Projectile projectile = (Projectile) damageEvent.getDamager();
+
+                pCause = projectile.getShooter().getType().getName();
             } else
                 pCause = damageEvent.getDamager().getType().getName();
         }

@@ -315,16 +315,16 @@ public class mChatSuite extends JavaPlugin {
 
     void registerEvents() {
         if (!mAPIOnly) {
-            pm.registerEvents(new MPlayerListener(this), this);
+            pm.registerEvents(new PlayerListener(this), this);
 
-            pm.registerEvents(new MBlockListener(this), this);
+            pm.registerEvents(new BlockListener(this), this);
 
-            pm.registerEvents(new MEntityListener(this), this);
+            pm.registerEvents(new EntityListener(this), this);
 
             pm.registerEvents(new ChannelEventListener(this), this);
 
             if (spoutB)
-                pm.registerEvents(new MCustomListener(this), this);
+                pm.registerEvents(new CustomListener(this), this);
         }
     }
 
@@ -553,13 +553,13 @@ public class mChatSuite extends JavaPlugin {
     }
 
     // InfoReader
-    public MInfoReader getInfoReader() {
-        return new MInfoReader(this);
+    public InfoReader getInfoReader() {
+        return new InfoReader(this);
     }
 
     // InfoWriter
-    public MInfoWriter getInfoWriter() {
-        return new MInfoWriter(this);
+    public InfoWriter getInfoWriter() {
+        return new InfoWriter(this);
     }
 
     // ChannelManager

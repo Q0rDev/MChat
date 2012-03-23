@@ -19,10 +19,10 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.*;
 
-public class MPlayerListener implements Runnable, Listener {
+public class PlayerListener implements Runnable, Listener {
     mChatSuite plugin;
 
-    public MPlayerListener(mChatSuite plugin) {
+    public PlayerListener(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
