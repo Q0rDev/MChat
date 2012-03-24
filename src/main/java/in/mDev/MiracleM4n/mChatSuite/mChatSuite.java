@@ -217,7 +217,7 @@ public class mChatSuite extends JavaPlugin {
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
 
-        // First we kill Essentials Chat
+        // First we kill EssentialsChat
         killEss();
 
         if (new File("plugins/mChat/").isDirectory()) {

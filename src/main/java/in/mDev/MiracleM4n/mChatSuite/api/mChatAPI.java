@@ -609,6 +609,9 @@ public class mChatAPI {
     }
     
     String fixCaps(String format, Integer range) {
+        if (range < 1)
+            return format;
+
         Pattern pattern = Pattern.compile("([A-Z]{" + range + ",300})");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
