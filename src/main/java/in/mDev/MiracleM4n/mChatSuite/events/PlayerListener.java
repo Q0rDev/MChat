@@ -54,6 +54,14 @@ public class PlayerListener implements Runnable, Listener {
 
         Player player = event.getPlayer();
         String pName = player.getName();
+
+        if (plugin.isMuted.get(pName) != null
+                && plugin.isMuted.get(pName)) {
+            event.setCancelled(true);
+
+            return;
+        }
+
         String world = player.getWorld().getName();
         String mPName = player.getName();
         String pLName = plugin.getAPI().ParseTabbedList(pName, world);

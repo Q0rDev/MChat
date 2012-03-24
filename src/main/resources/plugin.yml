@@ -56,6 +56,11 @@ commands:
             /<command> - Broadcasts message overriding Local Chat.
         aliases: [mshout, myell]
         ~permissions: mchat.shout
+    mchatmute:
+        usage: |
+            /<command> [Player] - Mutes a player.
+        aliases: [mmute]
+        ~permissions: mchat.mute
     mchatmessageprefix:
         usage: |
             /<command> set *Prefix* - Adds a Prefix to chat messages.
@@ -112,6 +117,7 @@ permissions:
             mchat.shout: true
             mchat.spy: true
             mchat.messageprefix: true
+            mchat.mute: true
     mchat.reload.*:
         default: false
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
@@ -255,6 +261,9 @@ permissions:
     mchat.messageprefix:
         default: false
         description: Allows player to add a prefix to their message.
+    mchat.mute:
+        default: false
+        description: Allows muting and unmuting of players.
     mchat.suppress.join:
         default: false
         description: Allow suppression of the mChat Join Messages.
