@@ -50,9 +50,9 @@ public class Messanger {
                 .replace("<rose>", "\u00A7c").replace("<pink>", "\u00A7d")
                 .replace("<yellow>", "\u00A7e").replace("<white>", "\u00A7f");
 
-        string = string.replaceAll("(§([a-fk-oA-FK-O0-9]))", "\u00A7$2");
+        string = string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "\u00A7$2");
 
-        string = string.replaceAll("(&([a-fk-oA-FK-O0-9]))", "\u00A7$2");
+        string = string.replaceAll("(&([a-fk-orA-FK-OR0-9]))", "\u00A7$2");
 
         return string.replace("&&", "&");
     }
@@ -65,9 +65,9 @@ public class Messanger {
     public static String removeColour(String string) {
         addColour(string);
 
-        string = string.replaceAll("(§([a-fk-oA-FK-O0-9]))", "& $2");
+        string = string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "& $2");
 
-        string = string.replaceAll("(&([a-fk-oA-FK-O0-9]))", "& $2");
+        string = string.replaceAll("(&([a-fk-orA-FK-OR0-9]))", "& $2");
 
         return string.replace("&&", "&");
     }
