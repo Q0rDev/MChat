@@ -16,7 +16,6 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class InfoReader {
     mChatSuite plugin;
 

@@ -16,7 +16,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.*;
 
-@SuppressWarnings("unused")
 public class mChatAPI {
     mChatSuite plugin;
 

@@ -13,7 +13,7 @@ public enum ChannelEditType {
     DISTANCE("Distance", Integer.class);
 
     private final String name;
-    private final Class clazz;
+    private final Class<?> clazz;
 
     private static final HashMap<String, ChannelEditType> nMap = new HashMap<String, ChannelEditType>();
 
@@ -22,7 +22,7 @@ public enum ChannelEditType {
             nMap.put(type.name.toLowerCase(), type);
     }
 
-    ChannelEditType(String name, Class clazz) {
+    ChannelEditType(String name, Class<?> clazz) {
         this.name = name;
         this.clazz = clazz;
     }
@@ -31,7 +31,7 @@ public enum ChannelEditType {
         return name;
     }
 
-    public Class getOptionClass() {
+    public Class<?> getOptionClass() {
         return clazz;
     }
 

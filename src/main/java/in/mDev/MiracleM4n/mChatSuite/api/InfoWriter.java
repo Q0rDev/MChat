@@ -4,7 +4,6 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-@SuppressWarnings("unused")
 public class InfoWriter {
     mChatSuite plugin;
 
