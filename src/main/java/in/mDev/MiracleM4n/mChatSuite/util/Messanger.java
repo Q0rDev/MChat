@@ -63,13 +63,9 @@ public class Messanger {
      * @return DeColoured String.
      */
     public static String removeColour(String string) {
-        addColour(string);
+        string = addColour(string);
 
-        string = string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "& $2");
-
-        string = string.replaceAll("(&([a-fk-orA-FK-OR0-9]))", "& $2");
-
-        return string.replace("&&", "&");
+        return string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "§z");
     }
     /**
      * Plugin Formatting

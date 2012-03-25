@@ -1,5 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
+import in.mDev.MiracleM4n.mChatSuite.api.EventType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
@@ -198,10 +199,10 @@ public class PlayerListener implements Runnable, Listener {
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
-                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage("Join"));
+                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.JOIN));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -218,7 +219,7 @@ public class PlayerListener implements Runnable, Listener {
 
         String reason = event.getReason();
 
-        String kickMsg = plugin.getInfoReader().getEventMessage("Kick");
+        String kickMsg = plugin.getInfoReader().getEventMessage(EventType.KICK);
 
         kickMsg = Messanger.addColour(kickMsg.replace(plugin.varIndicator + "reason", reason).replace(plugin.varIndicator + "r", reason));
 
@@ -245,10 +246,10 @@ public class PlayerListener implements Runnable, Listener {
             return;
 
         if (plugin.sQuitB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage("Quit"), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
             event.setQuitMessage("");
         } else
-            event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage("Quit"));
+            event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.QUIT));
     }
 
     @EventHandler
