@@ -555,13 +555,13 @@ public class mChatSuite extends JavaPlugin {
     }
 
     // InfoReader
-    public InfoReader getInfoReader() {
-        return new InfoReader(this);
+    public MInfoReader getInfoReader() {
+        return new MInfoReader(this);
     }
 
     // InfoWriter
-    public InfoWriter getInfoWriter() {
-        return new InfoWriter(this);
+    public MInfoWriter getInfoWriter() {
+        return new MInfoWriter(this);
     }
 
     // ChannelManager

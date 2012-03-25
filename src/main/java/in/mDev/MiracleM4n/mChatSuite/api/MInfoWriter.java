@@ -5,10 +5,10 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 @SuppressWarnings("unused")
-public class InfoWriter {
+public class MInfoWriter {
     mChatSuite plugin;
 
-    public InfoWriter(mChatSuite plugin) {
+    public MInfoWriter(mChatSuite plugin) {
         this.plugin = plugin;
     }
 

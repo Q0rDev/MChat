@@ -17,10 +17,10 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class InfoReader {
+public class MInfoReader {
     mChatSuite plugin;
 
-    public InfoReader(mChatSuite plugin) {
+    public MInfoReader(mChatSuite plugin) {
         this.plugin = plugin;
     }
 
