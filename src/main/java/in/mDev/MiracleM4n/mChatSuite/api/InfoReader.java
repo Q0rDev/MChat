@@ -461,26 +461,22 @@ public class InfoReader {
 
     /**
      * Event Message Resolver.
-     * @param eventName Name of Event you want to grab.
+     * @param type Type of Event you want to grab.
      * @return Event Message.
      */
-    public String getEventMessage(String eventName) {
-        if (eventName.equalsIgnoreCase("join"))
-            eventName = plugin.joinMessage;
+    public String getEventMessage(EventType type) {
+        String event = "";
 
-        if (eventName.equalsIgnoreCase("enter"))
-            eventName = plugin.joinMessage;
+        if (type.getName().equalsIgnoreCase("join"))
+            event = plugin.joinMessage;
 
-        if (eventName.equalsIgnoreCase("kick"))
-            eventName = plugin.kickMessage;
+        else if (type.getName().equalsIgnoreCase("kick"))
+            event = plugin.kickMessage;
 
-        if (eventName.equalsIgnoreCase("quit"))
-            eventName = plugin.leaveMessage;
+        else if (type.getName().equalsIgnoreCase("quit"))
+            event = plugin.leaveMessage;
 
-        if (eventName.equalsIgnoreCase("leave"))
-            eventName = plugin.leaveMessage;
-
-        return Messanger.addColour(eventName);
+        return Messanger.addColour(event);
     }
 
     @Deprecated
