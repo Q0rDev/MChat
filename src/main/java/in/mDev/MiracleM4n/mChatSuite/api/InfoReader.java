@@ -480,6 +480,22 @@ public class InfoReader {
     }
 
     @Deprecated
+    public String getEventMessage(String type) {
+        String event = "";
+
+        if (type.equalsIgnoreCase("join"))
+            event = plugin.joinMessage;
+
+        else if (type.equalsIgnoreCase("kick"))
+            event = plugin.kickMessage;
+
+        else if (type.equalsIgnoreCase("quit"))
+            event = plugin.leaveMessage;
+
+        return Messanger.addColour(event);
+    }
+
+    @Deprecated
     public String getRawPrefix(String name, String world) {
         return getRawInfo(name, InfoType.USER, world, "prefix").toString();
     }
