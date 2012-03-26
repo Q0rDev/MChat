@@ -178,7 +178,7 @@ public class PlayerListener implements Runnable, Listener {
         // For Lazy People
         if (plugin.useAddDefault)
             if (plugin.mIConfig.get("users." + pName) == null)
-                plugin.getInfoWriter().addBase(pName, plugin.mIDefaultGroup);
+                plugin.getWriter().addBase(pName, plugin.mIDefaultGroup);
 
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
             public void run() {
@@ -199,10 +199,10 @@ public class PlayerListener implements Runnable, Listener {
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
-                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.JOIN));
+                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -219,7 +219,7 @@ public class PlayerListener implements Runnable, Listener {
 
         String reason = event.getReason();
 
-        String kickMsg = plugin.getInfoReader().getEventMessage(EventType.KICK);
+        String kickMsg = plugin.getReader().getEventMessage(EventType.KICK);
 
         kickMsg = Messanger.addColour(kickMsg.replace(plugin.varIndicator + "reason", reason).replace(plugin.varIndicator + "r", reason));
 
@@ -246,10 +246,10 @@ public class PlayerListener implements Runnable, Listener {
             return;
 
         if (plugin.sQuitB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
+            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
             event.setQuitMessage("");
         } else
-            event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getInfoReader().getEventMessage(EventType.QUIT));
+            event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT));
     }
 
     @EventHandler

@@ -16,7 +16,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.*;
 
-@SuppressWarnings("unused")
 public class mChatAPI {
     mChatSuite plugin;
 
@@ -35,9 +34,9 @@ public class mChatAPI {
      * @return Formatted Message.
      */
     public String ParseMessage(String pName, String world, String msg, String format) {
-        Object prefix = plugin.getInfoReader().getRawPrefix(pName, InfoType.USER, world);
-        Object suffix = plugin.getInfoReader().getRawSuffix(pName, InfoType.USER, world);
-        Object group = plugin.getInfoReader().getRawGroup(pName, InfoType.USER, world);
+        Object prefix = plugin.getReader().getRawPrefix(pName, InfoType.USER, world);
+        Object suffix = plugin.getReader().getRawSuffix(pName, InfoType.USER, world);
+        Object group = plugin.getReader().getRawGroup(pName, InfoType.USER, world);
 
         String vI = plugin.varIndicator;
 
@@ -229,7 +228,7 @@ public class mChatAPI {
         addVar(rVarMap, vI + "health," + vI + "h", health);
         addVar(rVarMap, vI + "location," + vI + "loc", loc);
         addVar(rVarMap, vI + "level," + vI + "l", level);
-        addVar(rVarMap, vI + "mname," + vI + "mn", plugin.getInfoReader().getmName(pName));
+        addVar(rVarMap, vI + "mname," + vI + "mn", plugin.getReader().getmName(pName));
         addVar(rVarMap, vI + "pname," + vI + "n", pName);
         addVar(rVarMap, vI + "prefix," + vI + "p", prefix);
         addVar(rVarMap, vI + "spying," + vI + "spy", sType);
@@ -237,7 +236,7 @@ public class mChatAPI {
         addVar(rVarMap, vI + "totalexp," + vI + "texp," + vI + "te", tExp);
         addVar(rVarMap, vI + "time," + vI + "t", time);
         addVar(rVarMap, vI + "world," + vI + "w", pWorld);
-        addVar(rVarMap, vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getInfoReader().getGroupName(group.toString()));
+        addVar(rVarMap, vI + "Groupname," + vI + "Gname," + vI + "G", plugin.getReader().getGroupName(group.toString()));
         addVar(rVarMap, vI + "HClass," + vI + "HC", hClass);
         addVar(rVarMap, vI + "HExp," + vI + "HEx", hExp);
         addVar(rVarMap, vI + "HEBar," + vI + "HEb", hEBar);
@@ -252,7 +251,7 @@ public class mChatAPI {
         addVar(rVarMap, vI + "HSecExp," + vI + "HSEx", hSExp);
         addVar(rVarMap, vI + "HSecEBar," + vI + "HSEb", hSEBar);
         addVar(rVarMap, vI + "HSecLevel," + vI + "HSL", hSLevel);
-        addVar(rVarMap, vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getInfoReader().getWorldName(pWorld));
+        addVar(rVarMap, vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getReader().getWorldName(pWorld));
 
         addVar(lVarMap, vI + "message," + vI + "msg," + vI + "m", msg);
 
@@ -633,7 +632,7 @@ public class mChatAPI {
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String var = plugin.getInfoReader().getRawInfo(pName, InfoType.USER, world, matcher.group(1)).toString();
+            String var = plugin.getReader().getRawInfo(pName, InfoType.USER, world, matcher.group(1)).toString();
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
         }
 

@@ -136,7 +136,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().addBase(args[3], args[4]);
+                            plugin.getWriter().addBase(args[3], args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -151,7 +151,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().setInfoVar(args[3], InfoType.USER, args[4], stringArgs(args, 5));
+                            plugin.getWriter().setInfoVar(args[3], InfoType.USER, args[4], stringArgs(args, 5));
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -166,7 +166,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().addWorld(args[3], InfoType.USER, args[4]);
+                            plugin.getWriter().addWorld(args[3], InfoType.USER, args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -181,7 +181,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().setWorldVar(args[3], InfoType.USER, args[4], args[5], stringArgs(args, 6));
+                            plugin.getWriter().setWorldVar(args[3], InfoType.USER, args[4], args[5], stringArgs(args, 6));
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -203,7 +203,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().setGroup(args[3], args[4]);
+                            plugin.getWriter().setGroup(args[3], args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -228,7 +228,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeBase(args[3], InfoType.USER);
+                            plugin.getWriter().removeBase(args[3], InfoType.USER);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -243,7 +243,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeInfoVar(args[3], InfoType.USER, args[4]);
+                            plugin.getWriter().removeInfoVar(args[3], InfoType.USER, args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -258,7 +258,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeWorld(args[3], InfoType.USER, args[4]);
+                            plugin.getWriter().removeWorld(args[3], InfoType.USER, args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -273,7 +273,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeWorldVar(args[3], InfoType.USER, args[4], args[5]);
+                            plugin.getWriter().removeWorldVar(args[3], InfoType.USER, args[4], args[5]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -304,7 +304,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().addBase(args[3], InfoType.GROUP);
+                            plugin.getWriter().addBase(args[3], InfoType.GROUP);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -319,7 +319,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().setInfoVar(args[3], InfoType.GROUP, args[4], stringArgs(args, 5));
+                            plugin.getWriter().setInfoVar(args[3], InfoType.GROUP, args[4], stringArgs(args, 5));
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -334,7 +334,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().addWorld(args[3], InfoType.GROUP, args[4]);
+                            plugin.getWriter().addWorld(args[3], InfoType.GROUP, args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -349,7 +349,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().setWorldVar(args[3], InfoType.GROUP, args[4], args[5], stringArgs(args, 6));
+                            plugin.getWriter().setWorldVar(args[3], InfoType.GROUP, args[4], args[5], stringArgs(args, 6));
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -374,7 +374,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeBase(args[3], InfoType.GROUP);
+                            plugin.getWriter().removeBase(args[3], InfoType.GROUP);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -389,7 +389,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeInfoVar(args[3], InfoType.GROUP, args[4]);
+                            plugin.getWriter().removeInfoVar(args[3], InfoType.GROUP, args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -404,7 +404,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeWorld(args[3], InfoType.GROUP, args[4]);
+                            plugin.getWriter().removeWorld(args[3], InfoType.GROUP, args[4]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {
@@ -419,7 +419,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
                         try {
-                            plugin.getInfoWriter().removeWorldVar(args[3], InfoType.GROUP, args[4], args[5]);
+                            plugin.getWriter().removeWorldVar(args[3], InfoType.GROUP, args[4], args[5]);
                             Messanger.sendMessage(sender, "Info Addition Successful.");
                             return true;
                         } catch (ArrayIndexOutOfBoundsException er) {

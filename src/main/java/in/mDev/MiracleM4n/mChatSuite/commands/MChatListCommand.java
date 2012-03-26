@@ -51,7 +51,7 @@ public class MChatListCommand implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
-            String iVar = plugin.getInfoReader().getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), plugin.listVar);
+            String iVar = plugin.getReader().getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), plugin.listVar);
             String mName = plugin.getAPI().ParseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;
@@ -91,7 +91,7 @@ public class MChatListCommand implements CommandExecutor {
                 msg += '\n';
         }
 
-        for (Map.Entry entry : cLMap.entrySet())
+        for (Map.Entry<String, Integer> entry : cLMap.entrySet())
             msg += (entry.getKey() + ": &f" + entry.getValue() + '\n');
 
         if (msg.contains("" + '\n')) {

@@ -276,7 +276,7 @@ public class mChatSuite extends JavaPlugin {
         if (useAddDefault)
             for (Player players : getServer().getOnlinePlayers())
                 if (mIConfig.get("users." + players.getName()) == null)
-                    getInfoWriter().addBase(players.getName(), mIDefaultGroup);
+                    getWriter().addBase(players.getName(), mIDefaultGroup);
 
         if (mChatEB) {
             for (Player players : getServer().getOnlinePlayers()) {
@@ -555,17 +555,30 @@ public class mChatSuite extends JavaPlugin {
     }
 
     // InfoReader
-    public MInfoReader getInfoReader() {
-        return new MInfoReader(this);
+    public InfoReader getReader() {
+        return new InfoReader(this);
     }
 
     // InfoWriter
-    public MInfoWriter getInfoWriter() {
-        return new MInfoWriter(this);
+    public InfoWriter getWriter() {
+        return new InfoWriter(this);
     }
 
     // ChannelManager
     public ChannelManager getChannelManager() {
         return channelManager;
+    }
+
+
+    // MInfoReader
+    @Deprecated
+    public MInfoReader getInfoReader() {
+        return new MInfoReader(this);
+    }
+
+    // MInfoWriter
+    @Deprecated
+    public MInfoWriter getInfoWriter() {
+        return new MInfoWriter(this);
     }
 }

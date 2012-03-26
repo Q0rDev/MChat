@@ -60,9 +60,9 @@ public class Channel {
     public Set<String> getActiveOccupants() {
         Set<String> set = new HashSet<String>();
         
-        for (Map.Entry entry : occupants.entrySet())
-            if ((Boolean)entry.getValue())
-                set.add(entry.getKey().toString());
+        for (Map.Entry<String, Boolean> entry : occupants.entrySet())
+            if (entry.getValue())
+                set.add(entry.getKey());
 
         return set;
     }
