@@ -24,8 +24,7 @@ public class InfoConfig {
     void save() {
         try {
             plugin.mIConfig.save(plugin.mIConfigF);
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
     void defaultConfig() {

@@ -49,7 +49,7 @@ public class MChannelCommand implements CommandExecutor {
                 for (ChannelType type : ChannelType.values())
                     types += " " + type.getName();
 
-                types.trim();
+                types = types.trim();
 
                 Messanger.sendMessage(sender, "All valid ChannelTypes: '" + types + "'.");
 
@@ -65,7 +65,7 @@ public class MChannelCommand implements CommandExecutor {
                 for (ChannelEditType type : ChannelEditType.values())
                     editTypes += " " + type.getName();
 
-                editTypes.trim();
+                editTypes = editTypes.trim();
 
                 Messanger.sendMessage(sender, "All valid ChannelEditTypes: '" + editTypes + "'.");
 
