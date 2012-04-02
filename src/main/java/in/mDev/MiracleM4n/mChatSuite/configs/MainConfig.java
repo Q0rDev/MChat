@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfigurationOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainConfig {
     mChatSuite plugin;
@@ -14,7 +15,25 @@ public class MainConfig {
 
     public MainConfig(mChatSuite plugin) {
         this.plugin = plugin;
+
+        loadAliases();
     }
+
+    ArrayList<String> meAliases = new ArrayList<String>();
+    ArrayList<String> whoAliases = new ArrayList<String>();
+    ArrayList<String> listAliases = new ArrayList<String>();
+    ArrayList<String> sayAliases = new ArrayList<String>();
+    ArrayList<String> afkAliases = new ArrayList<String>();
+    ArrayList<String> afkOtherAliases = new ArrayList<String>();
+    ArrayList<String> shoutAliases = new ArrayList<String>();
+    ArrayList<String> muteAliases = new ArrayList<String>();
+    ArrayList<String> pmAliases = new ArrayList<String>();
+    ArrayList<String> replyAliases = new ArrayList<String>();
+    ArrayList<String> inviteAliases = new ArrayList<String>();
+    ArrayList<String> acceptAliases = new ArrayList<String>();
+    ArrayList<String> denyAliases = new ArrayList<String>();
+    ArrayList<String> leaveAliases = new ArrayList<String>();
+    ArrayList<String> mChannelAliases = new ArrayList<String>();
 
     public void reload() {
         plugin.mConfig = YamlConfiguration.loadConfiguration(plugin.mConfigF);
@@ -193,6 +212,22 @@ public class MainConfig {
         config.set("pmchat.enable", plugin.spoutPM);
         config.set("pmchat.spoutPM", plugin.spoutPM);
 
+        config.set("aliases.mchatme", meAliases);
+        config.set("aliases.mchatwho", whoAliases);
+        config.set("aliases.mchatlist", listAliases);
+        config.set("aliases.mchatsay", sayAliases);
+        config.set("aliases.mchatafk", afkAliases);
+        config.set("aliases.mchatafkother", afkOtherAliases);
+        config.set("aliases.pmchat", pmAliases);
+        config.set("aliases.pmchatreply", replyAliases);
+        config.set("aliases.pmchatinvite", inviteAliases);
+        config.set("aliases.pmchataccept", acceptAliases);
+        config.set("aliases.pmchatdeny", denyAliases);
+        config.set("aliases.pmchatleave", leaveAliases);
+        config.set("aliases.mchatshout", shoutAliases);
+        config.set("aliases.mchatmute", muteAliases);
+        config.set("aliases.mchannel", mChannelAliases);
+
         save();
     }
 
@@ -227,6 +262,7 @@ public class MainConfig {
         editOption(config, "format.list", "format.tabbedList");
 
         editOption(config, "mchat.formatEvents", "mchat.alterEvents");
+
 
         checkOption(config, "format.date", plugin.dateFormat);
         checkOption(config, "format.chat", plugin.chatFormat);
@@ -300,7 +336,23 @@ public class MainConfig {
 
         checkOption(config, "pmchat.enable", plugin.mChatPB);
         checkOption(config, "pmchat.spoutPM", plugin.spoutPM);
-        
+
+        checkOption(config, "aliases.mchatme", meAliases);
+        checkOption(config, "aliases.mchatwho", whoAliases);
+        checkOption(config, "aliases.mchatlist", listAliases);
+        checkOption(config, "aliases.mchatsay", sayAliases);
+        checkOption(config, "aliases.mchatafk", afkAliases);
+        checkOption(config, "aliases.mchatafkother", afkOtherAliases);
+        checkOption(config, "aliases.pmchat", pmAliases);
+        checkOption(config, "aliases.pmchatreply", replyAliases);
+        checkOption(config, "aliases.pmchatinvite", inviteAliases);
+        checkOption(config, "aliases.pmchataccept", acceptAliases);
+        checkOption(config, "aliases.pmchatdeny", denyAliases);
+        checkOption(config, "aliases.pmchatleave", leaveAliases);
+        checkOption(config, "aliases.mchatshout", shoutAliases);
+        checkOption(config, "aliases.mchatmute", muteAliases);
+        checkOption(config, "aliases.mchannel", mChannelAliases);
+
         editValue(config, "message.deathInFire", config.getString("message.deathInFire").replace("+CName", "+killer"));
         editValue(config, "message.deathOnFire", config.getString("message.deathOnFire").replace("+CName", "+killer"));
         editValue(config, "message.deathLava", config.getString("message.deathLava").replace("+CName", "+killer"));
@@ -322,6 +374,51 @@ public class MainConfig {
 
             save();
         }
+    }
+
+    void loadAliases() {
+        meAliases.add("me");
+
+        whoAliases.add("who");
+
+        listAliases.add("list");
+        listAliases.add("online");
+        listAliases.add("playerlist");
+
+        sayAliases.add("say");
+
+        afkAliases.add("afk");
+        afkAliases.add("away");
+
+        afkOtherAliases.add("afko");
+        afkOtherAliases.add("awayother");
+        afkOtherAliases.add("awayo");
+
+        shoutAliases.add("shout");
+        shoutAliases.add("yell");
+
+        muteAliases.add("mute");
+        muteAliases.add("quiet");
+
+        pmAliases.add("pm");
+        pmAliases.add("msg");
+        pmAliases.add("message");
+        pmAliases.add("m");
+        pmAliases.add("tell");
+        pmAliases.add("t");
+
+        replyAliases.add("reply");
+        replyAliases.add("r");
+
+        inviteAliases.add("invite");
+
+        acceptAliases.add("accept");
+
+        denyAliases.add("deny");
+
+        leaveAliases.add("leave");
+
+        mChannelAliases.add("channel");
     }
 
     void checkOption(YamlConfiguration config, String option, Object defValue) {
