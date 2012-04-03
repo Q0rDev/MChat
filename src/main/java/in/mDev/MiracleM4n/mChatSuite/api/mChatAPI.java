@@ -5,6 +5,7 @@ import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.World;
@@ -104,9 +105,9 @@ public class mChatAPI {
 
         if (plugin.isShouting.get(pName) != null
                 && plugin.isShouting.get(pName)) {
-            dType = plugin.getLocale().getOption("format.shout");
+            dType = plugin.getLocale().getOption(LocaleType.FORMAT_SHOUT);
         } else if (plugin.chatDistance > 0) {
-            dType = plugin.getLocale().getOption("format.local");
+            dType = plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL);
         }
 
         // Chat Distance Type
@@ -114,7 +115,7 @@ public class mChatAPI {
 
         if (plugin.isSpying.get(pName) != null
                 && plugin.isSpying.get(pName))
-            sType = plugin.getLocale().getOption("format.spy");
+            sType = plugin.getLocale().getOption(LocaleType.FORMAT_SPY);
 
         // Player Object Stuff
         if (plugin.getServer().getPlayer(pName) != null)  {
