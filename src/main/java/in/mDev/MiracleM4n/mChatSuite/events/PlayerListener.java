@@ -3,6 +3,7 @@ package in.mDev.MiracleM4n.mChatSuite.events;
 import in.mDev.MiracleM4n.mChatSuite.api.EventType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import me.desmin88.mobdisguise.MobDisguise;
 
@@ -130,7 +131,7 @@ public class PlayerListener implements Listener {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + Messanger.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName, world));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + Messanger.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName, world));
 
             plugin.chatt.put(player.getName(), false);
 
@@ -177,7 +178,7 @@ public class PlayerListener implements Listener {
 
         // For Lazy People
         if (plugin.useAddDefault)
-            if (plugin.mIConfig.get("users." + pName) == null)
+            if (plugin.info.get("users." + pName) == null)
                 plugin.getWriter().addBase(pName, plugin.mIDefaultGroup);
 
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
@@ -291,7 +292,7 @@ public class PlayerListener implements Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                Messanger.sendMessage(player, plugin.getLocale().getOption("stillAFK"));
+                Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.PLAYER_STILL_AFK));
             } else
                 player.performCommand("mafk");
     }

@@ -41,7 +41,7 @@ public class CommandListener implements Listener {
         commands.add("mchannel");
 
         for (String oCommand : commands.descendingSet())
-            for (String string : plugin.mConfig.getStringList("aliases." + oCommand))
+            for (String string : plugin.config.getStringList("aliases." + oCommand))
                 if (command.equalsIgnoreCase(string)) {
                     event.setMessage(msg.replaceFirst("/" + string, "/" + oCommand));
                     return;

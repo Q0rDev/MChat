@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.ChatColor;
@@ -134,27 +135,27 @@ public class EntityListener implements Listener {
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()) + " " + plugin.getLocale().getOption("playerDied"));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DIED).replace("%player%", plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName())));
                             else
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()) + " " + plugin.getLocale().getOption("playerDamaged") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DAMAGED).replace("%player%", plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName())).replace("%health&", "" + (player.getHealth() - event.getDamage())));
                         } else {
                             if (plugin.spoutB) {
                                 SpoutPlayer sPlayer = (SpoutPlayer) player;
                                 if (plugin.healthAchievement) {
                                     if (sPlayer.isSpoutCraftEnabled()) {
                                         if ((player.getHealth() - event.getDamage()) < 1) {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption("youDied"), Material.LAVA);
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption(LocaleType.YOU_DIED), Material.LAVA);
                                         } else {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"), Material.LAVA);
+                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption(LocaleType.YOU_DAMAGED).replace("%health&", "" + (player.getHealth() - event.getDamage())), Material.LAVA);
                                         }
                                     }
                                 }
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption("youDied"));
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.YOU_DIED));
                             else
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption("youDamaged") + " " + plugin.getLocale().getOption("youHave") + " " + (player.getHealth() - event.getDamage()) + " " + plugin.getLocale().getOption("healthLeft"));
+                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.YOU_DAMAGED).replace("%health&", "" + (player.getHealth() - event.getDamage())));
                         }
                     }
 
@@ -167,7 +168,7 @@ public class EntityListener implements Listener {
 
                     plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4 * 20);
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption("spoutChatColour").toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
 
                     plugin.chatt.put(player.getName(), false);
                 }
