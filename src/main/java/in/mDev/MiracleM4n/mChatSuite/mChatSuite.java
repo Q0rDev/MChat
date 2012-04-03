@@ -35,12 +35,25 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 import java.io.File;
 import java.net.Socket;
 import java.util.*;
-import java.util.logging.Level;
 
 public class mChatSuite extends JavaPlugin {
     // Default Plugin Data
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
+
+    // Configs
+    public YamlConfiguration censor;
+    public YamlConfiguration channels;
+    public YamlConfiguration config;
+    public YamlConfiguration info;
+    public YamlConfiguration locale;
+
+    // Files
+    public File censorF;
+    public File channelsF;
+    public File configF;
+    public File infoF;
+    public File localeF;
 
     // External Messaging
     public BroadcastMessage bMessage;
@@ -75,20 +88,6 @@ public class mChatSuite extends JavaPlugin {
 
     // ChannelManager
     public ChannelManager channelManager;
-
-    // Configuration
-    public YamlConfiguration mConfig = null;
-    public YamlConfiguration mIConfig = null;
-    public YamlConfiguration mCConfig = null;
-    public YamlConfiguration mELocale = null;
-    public YamlConfiguration mChConfig = null;
-
-    // Configuration Files
-    public File mConfigF = null;
-    public File mIConfigF = null;
-    public File mCConfigF = null;
-    public File mELocaleF = null;
-    public File mChConfigF = null;
 
     // Optional mChatSuite only Info Support
     public Boolean useNewInfo = false;
@@ -218,31 +217,11 @@ public class mChatSuite extends JavaPlugin {
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
 
+        // Initialize Configs
+        initializeConfigs();
+
         // First we kill EssentialsChat
         killEss();
-
-        if (new File("plugins/mChat/").isDirectory()) {
-            getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] Please move the files in the mChat directory to");
-            getServer().getLogger().log(Level.SEVERE, "[" + pdfFile.getName() + "] mChatSuite's than delete the mChat directory!");
-        }
-
-        // Initialize Configs
-        mConfigF = new File(getDataFolder(), "config.yml");
-        mIConfigF = new File(getDataFolder(), "info.yml");
-        mCConfigF = new File(getDataFolder(), "censor.yml");
-        mELocaleF = new File(getDataFolder(), "locale.yml");
-        mChConfigF = new File(getDataFolder(), "channels.yml");
-
-        mConfig = YamlConfiguration.loadConfiguration(mConfigF);
-        mIConfig = YamlConfiguration.loadConfiguration(mIConfigF);
-        mCConfig = YamlConfiguration.loadConfiguration(mCConfigF);
-        mELocale = YamlConfiguration.loadConfiguration(mELocaleF);
-        mChConfig = YamlConfiguration.loadConfiguration(mChConfigF);
-
-        // Manage Config options
-        mConfig.options().indent(4);
-        mIConfig.options().indent(4);
-        mCConfig.options().indent(4);
 
         // ChannelManager
         channelManager = new ChannelManager(this);
@@ -275,7 +254,7 @@ public class mChatSuite extends JavaPlugin {
         // Add All Players To Info.yml
         if (useAddDefault)
             for (Player players : getServer().getOnlinePlayers())
-                if (mIConfig.get("users." + players.getName()) == null)
+                if (info.get("users." + players.getName()) == null)
                     getWriter().addBase(players.getName(), mIDefaultGroup);
 
         if (mChatEB) {
@@ -337,14 +316,14 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("PermissionsBukkit");
         if (permTest != null) {
             PermissionBuB = true;
-            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
         permTest = pm.getPlugin("bPermissions");
         if (permTest != null) {
             bPermB = true;
-            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
@@ -352,7 +331,7 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             pexPermissions = PermissionsEx.getPermissionManager();
             PEXB = true;
-            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
@@ -360,18 +339,18 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             gmPermissionsB = true;
             gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
-            Messanger.log("[" + pdfFile.getName() + "] " + permTest.getDescription().getName() + " v" + (permTest.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
-        Messanger.log("[" + pdfFile.getName() + "] No Permissions plugins were found defaulting to permissions.yml/info.yml.");
+        Messanger.log("[" + pdfFile.getName() + "] <Permissions> SuperPerms hooked!.");
     }
 
     Boolean setupPlugin(String pluginName) {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {
-            Messanger.log("[" + pdfFile.getName() + "] " + plugin.getDescription().getName() + " " + (plugin.getDescription().getVersion()) + " found hooking in.");
+            Messanger.log("[" + pdfFile.getName() + "] <Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
             return true;
         }
 
@@ -419,6 +398,26 @@ public class mChatSuite extends JavaPlugin {
 
         if (plugin != null)
             pm.disablePlugin(plugin);
+    }
+
+    void initializeConfigs() {
+        censorF = new File(getDataFolder(), "censor.yml");
+        channelsF = new File(getDataFolder(), "channels.yml");
+        configF = new File(getDataFolder(), "config.yml");
+        infoF = new File(getDataFolder(), "info.yml");
+        localeF = new File(getDataFolder(), "locale.yml");
+
+        censor = YamlConfiguration.loadConfiguration(censorF);
+        channels = YamlConfiguration.loadConfiguration(channelsF);
+        config = YamlConfiguration.loadConfiguration(configF);
+        info = YamlConfiguration.loadConfiguration(infoF);
+        locale = YamlConfiguration.loadConfiguration(localeF);
+
+        censor.options().indent(4);
+        channels.options().indent(4);
+        config.options().indent(4);
+        info.options().indent(4);
+        locale.options().indent(4);
     }
 
     public void setupConfigs() {
@@ -499,24 +498,24 @@ public class mChatSuite extends JavaPlugin {
 
     void setupCommands() {
         regCommands("mchat", new MChatCommand(this));
-        regCommands("mchatafk", new MChatAFKCommand(this));
-        regCommands("mchatafkother", new MChatAFKOtherCommand(this));
+        regCommands("mchatafk", new AFKCommand(this));
+        regCommands("mchatafkother", new AFKOtherCommand(this));
 
-        regCommands("mchatlist", new MChatListCommand(this));
+        regCommands("mchatlist", new ListCommand(this));
 
-        regCommands("mchatme", new MChatMeCommand(this));
-        regCommands("mchatsay", new MChatSayCommand(this));
-        regCommands("mchatwho", new MChatWhoCommand(this));
-        regCommands("mchatshout", new MChatShoutCommand(this));
-        regCommands("mchatmute", new MChatMuteCommand(this));
-        regCommands("mchatmessageprefix", new MChatMessagePrefixCommand(this));
+        regCommands("mchatme", new MeCommand(this));
+        regCommands("mchatsay", new SayCommand(this));
+        regCommands("mchatwho", new WhoCommand(this));
+        regCommands("mchatshout", new ShoutCommand(this));
+        regCommands("mchatmute", new MuteCommand(this));
+        regCommands("mchatmessageprefix", new MessagePrefixCommand(this));
 
-        regCommands("pmchat", new PMChatCommand(this));
-        regCommands("pmchataccept", new PMChatAcceptCommand(this));
-        regCommands("pmchatdeny", new PMChatDenyCommand(this));
-        regCommands("pmchatinvite", new PMChatInviteCommand(this));
-        regCommands("pmchatleave", new PMChatLeaveCommand(this));
-        regCommands("pmchatreply", new PMChatReplyCommand(this));
+        regCommands("pmchat", new PMCommand(this));
+        regCommands("pmchataccept", new AcceptCommand(this));
+        regCommands("pmchatdeny", new DenyCommand(this));
+        regCommands("pmchatinvite", new InviteCommand(this));
+        regCommands("pmchatleave", new LeaveCommand(this));
+        regCommands("pmchatreply", new ReplyCommand(this));
 
         regCommands("mchannel", new MChannelCommand(this));
     }

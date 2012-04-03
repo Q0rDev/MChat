@@ -2,6 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.api.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.command.Command;
@@ -12,11 +13,11 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MChatListCommand implements CommandExecutor {
+public class ListCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public MChatListCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public ListCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -26,7 +27,7 @@ public class MChatListCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
-                    Messanger.sendMessage(player, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
+                    Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.list"));
                     return true;
                 }
             }
@@ -78,9 +79,9 @@ public class MChatListCommand implements CommandExecutor {
 
             if (plugin.isAFK.get(players.getName()) != null && plugin.isAFK.get(players.getName()))
                 if (msg.contains(iVar + ": &f"))
-                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + plugin.getLocale().getOption("AFK") + "]" + mName + "&f, &f");
+                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[AFK]" + mName + "&f, &f");
                 else
-                    msg += (iVar + ": &f&4[" + plugin.getLocale().getOption("AFK") + "]" + mName + "&f, &f" + '\n');
+                    msg += (iVar + ": &f&4[AFK]" + mName + "&f, &f" + '\n');
             else
             if (msg.contains(iVar + ": &f"))
                 msg = msg.replace(iVar + ": &f", iVar + ": &f" + mName + "&f, &f");

@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.World;
@@ -9,11 +10,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MChatMeCommand implements CommandExecutor {
+public class MeCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public MChatMeCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MeCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -35,7 +36,7 @@ public class MChatMeCommand implements CommandExecutor {
                     if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.me"))
                         plugin.getServer().broadcastMessage(plugin.getAPI().ParseMe(player.getName(), world.getName(), message));
                     else
-                        Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
+                        Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.me"));
 
                     return true;
                 } else {

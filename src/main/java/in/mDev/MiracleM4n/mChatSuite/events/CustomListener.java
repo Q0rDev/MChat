@@ -13,8 +13,8 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 public class CustomListener implements Listener {
     mChatSuite plugin;
 
-    public CustomListener(mChatSuite plugin) {
-        this.plugin = plugin;
+    public CustomListener(mChatSuite instance) {
+        plugin = instance;
     }
 
     @EventHandler

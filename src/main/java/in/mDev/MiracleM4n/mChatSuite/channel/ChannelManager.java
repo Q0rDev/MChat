@@ -2,16 +2,14 @@ package in.mDev.MiracleM4n.mChatSuite.channel;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ChannelManager {
     mChatSuite plugin;
     Set<Channel> channels;
 
-    public ChannelManager(mChatSuite plugin) {
-        this.plugin = plugin;
+    public ChannelManager(mChatSuite instance) {
+        plugin = instance;
 
         this.channels = new HashSet<Channel>();
     }
@@ -26,14 +24,14 @@ public class ChannelManager {
      * Loads Channels from Config to Memory.
      */
     public void loadChannels() {
-        for (String key : plugin.mChConfig.getKeys(false)) {
-            ChannelType type = ChannelType.fromName(plugin.mChConfig.getString(key + ".type"));
-            String prefix = plugin.mChConfig.getString(key + ".prefix", "[");
-            String suffix = plugin.mChConfig.getString(key + ".suffix", "]");
-            Boolean passworded = plugin.mChConfig.getBoolean(key + ".passworded", false);
-            String password = plugin.mChConfig.getString(key + ".password");
-            Integer distance = plugin.mChConfig.getInt(key + ".distance", -1);
-            Boolean defaulted = plugin.mChConfig.getBoolean(key + ".default", false);
+        for (String key : plugin.channels.getKeys(false)) {
+            ChannelType type = ChannelType.fromName(plugin.channels.getString(key + ".type"));
+            String prefix = plugin.channels.getString(key + ".prefix", "[");
+            String suffix = plugin.channels.getString(key + ".suffix", "]");
+            Boolean passworded = plugin.channels.getBoolean(key + ".passworded", false);
+            String password = plugin.channels.getString(key + ".password");
+            Integer distance = plugin.channels.getInt(key + ".distance", -1);
+            Boolean defaulted = plugin.channels.getBoolean(key + ".default", false);
 
             if (type == null)
                 type = ChannelType.GLOBAL;
@@ -56,20 +54,20 @@ public class ChannelManager {
     public void createChannel(String name, ChannelType type, String prefix, String suffix, Boolean passworded, String password, Integer distance, Boolean defaulted) {
         channels.add(new Channel(name.toLowerCase(), type, prefix, suffix, passworded, password, distance, defaulted));
 
-        plugin.mChConfig.set(name.toLowerCase() + ".type", type.getName());
-        plugin.mChConfig.set(name.toLowerCase() + ".prefix", prefix);
-        plugin.mChConfig.set(name.toLowerCase() + ".suffix", suffix);
-        plugin.mChConfig.set(name.toLowerCase() + ".passworded", passworded);
-        plugin.mChConfig.set(name.toLowerCase() + ".password", password);
-        plugin.mChConfig.set(name.toLowerCase() + ".distance", distance);
-        plugin.mChConfig.set(name.toLowerCase() + ".default", defaulted);
+        plugin.channels.set(name.toLowerCase() + ".type", type.getName());
+        plugin.channels.set(name.toLowerCase() + ".prefix", prefix);
+        plugin.channels.set(name.toLowerCase() + ".suffix", suffix);
+        plugin.channels.set(name.toLowerCase() + ".passworded", passworded);
+        plugin.channels.set(name.toLowerCase() + ".password", password);
+        plugin.channels.set(name.toLowerCase() + ".distance", distance);
+        plugin.channels.set(name.toLowerCase() + ".default", defaulted);
 
         if (defaulted)
            setDefaultChannel(name);
 
         try {
-            plugin.mChConfig.save(plugin.mChConfigF);
-        } catch (IOException ignored) {}
+            plugin.channels.save(plugin.channelsF);
+        } catch (Exception ignored) {}
     }
 
     /**
@@ -81,11 +79,11 @@ public class ChannelManager {
             if (channel.getName().equalsIgnoreCase(name))
                 channels.remove(channel);
 
-        plugin.mChConfig.set(name, null);
+        plugin.channels.set(name, null);
 
         try {
-            plugin.mChConfig.save(plugin.mChConfigF);
-        } catch (IOException ignored) {}
+            plugin.channels.save(plugin.channelsF);
+        } catch (Exception ignored) {}
     }
 
     /**
@@ -116,17 +114,17 @@ public class ChannelManager {
     public void saveChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name)) {
-                plugin.mChConfig.set(name.toLowerCase() + ".type", channel.getType().getName().toLowerCase());
-                plugin.mChConfig.set(name.toLowerCase() + ".prefix", channel.getPrefix());
-                plugin.mChConfig.set(name.toLowerCase() + ".suffix", channel.getSuffix());
-                plugin.mChConfig.set(name.toLowerCase() + ".passworded", channel.isPassworded());
-                plugin.mChConfig.set(name.toLowerCase() + ".password", channel.getPassword());
-                plugin.mChConfig.set(name.toLowerCase() + ".distance", channel.getDistance());
-                plugin.mChConfig.set(name.toLowerCase() + ".default", channel.isDefault());
+                plugin.channels.set(name.toLowerCase() + ".type", channel.getType().getName().toLowerCase());
+                plugin.channels.set(name.toLowerCase() + ".prefix", channel.getPrefix());
+                plugin.channels.set(name.toLowerCase() + ".suffix", channel.getSuffix());
+                plugin.channels.set(name.toLowerCase() + ".passworded", channel.isPassworded());
+                plugin.channels.set(name.toLowerCase() + ".password", channel.getPassword());
+                plugin.channels.set(name.toLowerCase() + ".distance", channel.getDistance());
+                plugin.channels.set(name.toLowerCase() + ".default", channel.isDefault());
 
                 try {
-                    plugin.mChConfig.save(plugin.mChConfigF);
-                } catch (IOException ignored) {}
+                    plugin.channels.save(plugin.channelsF);
+                } catch (Exception ignored) {}
             }
     }
 
@@ -193,7 +191,7 @@ public class ChannelManager {
     public void editChannel(Channel channel, ChannelEditType type, Object option) {
         if (option.getClass() == type.getOptionClass()) {
             if (type.getName().equalsIgnoreCase("Name")) {
-                plugin.mChConfig.set(channel.getName(), null);
+                plugin.channels.set(channel.getName(), null);
 
                 channel.setName((String) option);
             } else if (type.getName().equalsIgnoreCase("Default"))

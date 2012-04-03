@@ -2,35 +2,42 @@ package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
-import java.io.File;
-import java.io.IOException;
-
 public class InfoConfig {
     mChatSuite plugin;
+    YamlConfiguration config;
+    YamlConfigurationOptions configO;
     Boolean hasChanged = false;
 
-    public InfoConfig(mChatSuite plugin) {
-        this.plugin = plugin;
+    public InfoConfig(mChatSuite instance) {
+        plugin = instance;
+
+        config = plugin.info;
+
+        configO = config.options();
+        configO.indent(4);
     }
 
     public void reload() {
-        plugin.mIConfig = YamlConfiguration.loadConfiguration(plugin.mIConfigF);
-        plugin.mIConfig.options().indent(4);
+        config = YamlConfiguration.loadConfiguration(plugin.infoF);
+        plugin.info = config;
+        config.options().indent(4);
     }
 
-    void save() {
+    public void save() {
         try {
-            plugin.mIConfig.save(plugin.mIConfigF);
-        } catch (IOException ignored) {}
+            plugin.info = config;
+            plugin.info.save(plugin.infoF);
+
+            Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "info.yml"));
+        } catch (Exception ignored) {}
     }
 
     void defaultConfig() {
-        YamlConfiguration config = plugin.mIConfig;
-        YamlConfigurationOptions configO = config.options();
-
         configO.header("Info Config");
 
         config.set("groupnames.admin", "[a]");
@@ -60,11 +67,8 @@ public class InfoConfig {
     }
 
     public void load() {
-        if (!(new File(plugin.getDataFolder(), "info.yml").exists()))
+        if (!(plugin.configF).exists())
             defaultConfig();
-
-        YamlConfiguration config = plugin.mIConfig;
-        YamlConfigurationOptions configO = config.options();
 
         if (config.get("users") == null) {
             config.set("users.MiracleM4n.group", "admin");
@@ -117,6 +121,4 @@ public class InfoConfig {
         }
     }
 }
-
-
 

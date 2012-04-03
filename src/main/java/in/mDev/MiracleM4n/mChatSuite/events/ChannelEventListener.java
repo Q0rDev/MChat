@@ -15,8 +15,8 @@ import java.util.*;
 public class ChannelEventListener implements Listener {
     mChatSuite plugin;
 
-    public ChannelEventListener(mChatSuite plugin) {
-        this.plugin = plugin;
+    public ChannelEventListener(mChatSuite instance) {
+        plugin = instance;
     }
 
     @EventHandler(priority = EventPriority.LOW)

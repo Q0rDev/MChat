@@ -1,16 +1,17 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class MChatMuteCommand implements CommandExecutor {
+public class MuteCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public MChatMuteCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MuteCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -19,7 +20,7 @@ public class MChatMuteCommand implements CommandExecutor {
         if (cmd.equalsIgnoreCase("mchatmute")) {
             if (args.length > 0) {
                 if (!plugin.getAPI().checkPermissions(sender, "mchat.mute")) {
-                    Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
+                    Messanger.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.mute"));
                     return true;
                 }
                 

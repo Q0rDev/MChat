@@ -10,8 +10,8 @@ import org.bukkit.event.block.SignChangeEvent;
 public class BlockListener implements Listener {
     mChatSuite plugin;
 
-    public BlockListener(mChatSuite plugin) {
-        this.plugin = plugin;
+    public BlockListener(mChatSuite instance) {
+        plugin = instance;
     }
 
     @EventHandler

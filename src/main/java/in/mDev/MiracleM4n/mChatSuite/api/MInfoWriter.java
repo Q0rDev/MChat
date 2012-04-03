@@ -5,8 +5,8 @@ import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 public class MInfoWriter {
     mChatSuite plugin;
 
-    public MInfoWriter(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MInfoWriter(mChatSuite instance) {
+        plugin = instance;
     }
 
     public void addBase(String name, InfoType type) {

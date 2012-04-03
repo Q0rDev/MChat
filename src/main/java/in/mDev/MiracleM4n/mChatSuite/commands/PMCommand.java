@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class PMChatCommand implements CommandExecutor {
+public class PMCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public PMChatCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public PMCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     String message = "";

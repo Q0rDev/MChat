@@ -19,8 +19,8 @@ import java.util.regex.*;
 public class mChatAPI {
     mChatSuite plugin;
 
-    public mChatAPI(mChatSuite plugin) {
-        this.plugin = plugin;
+    public mChatAPI(mChatSuite instance) {
+        plugin = instance;
     }
 
     //Format Stuff
@@ -674,7 +674,7 @@ public class mChatAPI {
         if (plugin.useIPRestrict)
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
 
-        for (Entry<String, Object> entry : plugin.mCConfig.getValues(false).entrySet()) {
+        for (Entry<String, Object> entry : plugin.censor.getValues(false).entrySet()) {
             String val = entry.getValue().toString();
 
             msg = replacer(msg, "(?i)" + entry.getKey(), val);

@@ -20,11 +20,11 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 import java.util.*;
 
-public class PlayerListener implements Runnable, Listener {
+public class PlayerListener implements Listener {
     mChatSuite plugin;
 
-    public PlayerListener(mChatSuite plugin) {
-        this.plugin = plugin;
+    public PlayerListener(mChatSuite instance) {
+        plugin = instance;
     }
 
     @EventHandler
@@ -81,10 +81,10 @@ public class PlayerListener implements Runnable, Listener {
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 if (players.getWorld() != player.getWorld()) {
-                    if (!checkSpy(players.getName(), players.getWorld().getName()))
+                    if (!isSpy(players.getName(), players.getWorld().getName()))
                         event.getRecipients().remove(players);
                 } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
-                    if (!checkSpy(players.getName(), players.getWorld().getName()))
+                    if (!isSpy(players.getName(), players.getWorld().getName()))
                         event.getRecipients().remove(players);
             }
 
@@ -99,9 +99,9 @@ public class PlayerListener implements Runnable, Listener {
         // For Cruxsky
         if (pLName.length() > 15) {
             pLName = pLName.substring(0, 16);
-            doPlayerListStuff(player, pLName);
+            setListName(player, pLName);
         } else
-            doPlayerListStuff(player, pLName);
+            setListName(player, pLName);
 
         // PMChat
         if (plugin.mChatPB) {
@@ -186,9 +186,9 @@ public class PlayerListener implements Runnable, Listener {
                 if (plugin.getAPI().ParseTabbedList(rPName, world).length() > 15) {
                     String pLName = plugin.getAPI().ParseTabbedList(rPName, world);
                     pLName = pLName.substring(0, 16);
-                    doPlayerListStuff(player, pLName);
+                    setListName(player, pLName);
                 } else
-                    doPlayerListStuff(player, plugin.getAPI().ParseTabbedList(rPName, world));
+                    setListName(player, plugin.getAPI().ParseTabbedList(rPName, world));
             }
         }, 20L);
 
@@ -316,7 +316,7 @@ public class PlayerListener implements Runnable, Listener {
         Messanger.log(format);
     }
 
-    Boolean checkSpy(String player, String world) {
+    Boolean isSpy(String player, String world) {
         if (plugin.getAPI().checkPermissions(player, world, "mchat.spy")) {
             plugin.isSpying.put(player, true);
             return true;
@@ -326,12 +326,10 @@ public class PlayerListener implements Runnable, Listener {
         return false;
     }
 
-    void doPlayerListStuff(Player player, String listName) {
+    void setListName(Player player, String listName) {
         try {
             player.setPlayerListName(listName);
         } catch(Exception ignored) {}
     }
-
-    public void run() {}
 }
 

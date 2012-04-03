@@ -2,6 +2,8 @@ package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -10,30 +12,34 @@ import java.io.IOException;
 
 public class ChannelConfig {
     mChatSuite plugin;
+    YamlConfiguration config;
+    YamlConfigurationOptions configO;
 
-    public ChannelConfig(mChatSuite plugin) {
-        this.plugin = plugin;
+    public ChannelConfig(mChatSuite instance) {
+        plugin = instance;
 
-        plugin.mChConfig.options().indent(4);
+        config = plugin.channels;
+
+        configO = config.options();
+        configO.indent(4);
     }
 
     public void reload() {
-        plugin.mChConfig = YamlConfiguration.loadConfiguration(plugin.mChConfigF);
-        plugin.mChConfig.options().indent(4);
-        
-        load();
+        config = YamlConfiguration.loadConfiguration(plugin.channelsF);
+        plugin.channels = config;
+        config.options().indent(4);
     }
 
-    void save() {
+    public void save() {
         try {
-            plugin.mChConfig.save(plugin.mChConfigF);
-        } catch (IOException ignored) {}
+            plugin.info = config;
+            plugin.info.save(plugin.infoF);
+
+            Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "channels.yml"));
+        } catch (Exception ignored) {}
     }
 
     void defaultConfig() {
-        YamlConfiguration config = plugin.mChConfig;
-        YamlConfigurationOptions configO = config.options();
-
         configO.header("Channels Config");
 
         config.set("global.prefix", "[");
@@ -73,12 +79,9 @@ public class ChannelConfig {
     }
 
     public void load() {
-        if (!(new File(plugin.getDataFolder(), "channels.yml").exists()))
+        if (!(plugin.channelsF.exists()))
             defaultConfig();
 
         plugin.getChannelManager().loadChannels();
     }
 }
-
-
-

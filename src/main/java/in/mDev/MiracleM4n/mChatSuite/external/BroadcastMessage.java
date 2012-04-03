@@ -12,8 +12,8 @@ public class BroadcastMessage {
     String host;
     Integer port;
 
-    public BroadcastMessage(mChatSuite plugin) {
-        this.plugin = plugin;
+    public BroadcastMessage(mChatSuite instance) {
+        plugin = instance;
         this.host = plugin.eBroadcastIP;
         this.port = plugin.eBroadcastPort;
     }

@@ -2,19 +2,26 @@ package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainConfig {
     mChatSuite plugin;
+    YamlConfiguration config;
+    YamlConfigurationOptions configO;
     Boolean hasChanged = false;
 
-    public MainConfig(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MainConfig(mChatSuite instance) {
+        plugin = instance;
+
+        config = plugin.config;
+
+        configO = config.options();
+        configO.indent(4);
 
         loadAliases();
     }
@@ -36,19 +43,21 @@ public class MainConfig {
     ArrayList<String> mChannelAliases = new ArrayList<String>();
 
     public void reload() {
-        plugin.mConfig = YamlConfiguration.loadConfiguration(plugin.mConfigF);
-        plugin.mConfig.options().indent(4);
+        config = YamlConfiguration.loadConfiguration(plugin.configF);
+        plugin.config = config;
+        config.options().indent(4);
     }
 
-    void save() {
+    public void save() {
         try {
-            plugin.mConfig.save(plugin.mConfigF);
-        } catch (IOException ignored) {}
+            plugin.config = config;
+            plugin.config.save(plugin.configF);
+
+            Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "config.yml"));
+        } catch (Exception ignored) {}
     }
 
     public void load() {
-        YamlConfiguration config = plugin.mConfig;
-
         checkConfig();
 
         plugin.dateFormat = config.getString("format.date", plugin.dateFormat);
@@ -134,10 +143,7 @@ public class MainConfig {
     }
 
     void defaultConfig() {
-        YamlConfiguration config = plugin.mConfig;
-        YamlConfigurationOptions configO = config.options();
-
-        configO.header("mChat Configuration File");
+        configO.header("MChat Configuration File");
 
         config.set("format.date", plugin.dateFormat);
         config.set("format.chat", plugin.chatFormat);
@@ -228,14 +234,11 @@ public class MainConfig {
         config.set("aliases.mchatmute", muteAliases);
         config.set("aliases.mchannel", mChannelAliases);
 
-        save();
+        hasChanged = true;
     }
 
     void checkConfig() {
-        YamlConfiguration config = plugin.mConfig;
-        YamlConfigurationOptions configO = config.options();
-
-        if (!(new File(plugin.getDataFolder(), "config.yml").exists()))
+        if (!(plugin.configF.exists()))
             defaultConfig();
 
         removeOption(config, "auto-Changed");
@@ -353,6 +356,7 @@ public class MainConfig {
         checkOption(config, "aliases.mchatmute", muteAliases);
         checkOption(config, "aliases.mchannel", mChannelAliases);
 
+
         editValue(config, "message.deathInFire", config.getString("message.deathInFire").replace("+CName", "+killer"));
         editValue(config, "message.deathOnFire", config.getString("message.deathOnFire").replace("+CName", "+killer"));
         editValue(config, "message.deathLava", config.getString("message.deathLava").replace("+CName", "+killer"));
@@ -368,9 +372,9 @@ public class MainConfig {
         editValue(config, "message.deathArrow", config.getString("message.deathArrow").replace("+CName", "+killer"));
         editValue(config, "message.deathFireball", config.getString("message.deathFireball").replace("+CName", "+killer"));
         editValue(config, "message.deathThrown", config.getString("message.deathThrown").replace("+CName", "+killer"));
-        
+
         if (hasChanged) {
-            configO.header("mChat Configuration File");
+            configO.header("MChat Configuration File");
 
             save();
         }

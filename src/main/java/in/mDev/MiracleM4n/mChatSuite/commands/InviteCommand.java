@@ -8,11 +8,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PMChatInviteCommand implements CommandExecutor {
+public class InviteCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public PMChatInviteCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public InviteCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

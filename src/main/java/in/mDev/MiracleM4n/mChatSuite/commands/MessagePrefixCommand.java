@@ -1,17 +1,18 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class MChatMessagePrefixCommand implements CommandExecutor {
+public class MessagePrefixCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public MChatMessagePrefixCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MessagePrefixCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -21,7 +22,7 @@ public class MChatMessagePrefixCommand implements CommandExecutor {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("set")) {
                     if (!plugin.getAPI().checkPermissions(sender, "mchat.messageprefix")) {
-                        Messanger.sendMessage(sender, plugin.getLocale().getOption("noPermissions") + " " + cmd + ".");
+                        Messanger.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.messageprefix"));
                         return true;
                     }
 

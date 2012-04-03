@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 public class MInfoReader {
     mChatSuite plugin;
 
-    public MInfoReader(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MInfoReader(mChatSuite instance) {
+        plugin = instance;
     }
 
     public Object getRawInfo(String name, InfoType type, String world, String info) {

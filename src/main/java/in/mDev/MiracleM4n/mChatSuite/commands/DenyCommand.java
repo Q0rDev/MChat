@@ -8,11 +8,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PMChatAcceptCommand implements CommandExecutor {
+public class DenyCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public PMChatAcceptCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public DenyCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -27,19 +27,17 @@ public class PMChatAcceptCommand implements CommandExecutor {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        if (cmd.equalsIgnoreCase("pmchataccept")) {
+        if (cmd.equalsIgnoreCase("pmchatdeny")) {
             String rName = plugin.getInvite.get(pName);
             Player recipient = plugin.getServer().getPlayer(rName);
             String rWorld = recipient.getWorld().getName();
 
             if (rName != null && recipient != null) {
                 plugin.getInvite.remove(pName);
-                plugin.isConv.put(pName, true);
-                plugin.isConv.put(rName, true);
-                plugin.chatPartner.put(rName, pName);
-                plugin.chatPartner.put(pName, rName);
-                player.sendMessage(formatPMessage(Messanger.addColour("You have started a Convo with &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(Messanger.addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been accepted.")));
+                plugin.isConv.put(pName, false);
+                plugin.isConv.put(rName, false);
+                player.sendMessage(formatPMessage(Messanger.addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(Messanger.addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been denied.")));
             } else
                 player.sendMessage(formatPMessage(Messanger.addColour("No pending Convo request.")));
 

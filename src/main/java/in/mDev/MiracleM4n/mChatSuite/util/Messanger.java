@@ -8,8 +8,8 @@ public class Messanger {
         sender.sendMessage(message);
     }
 
-    public static void sendColoredMessage(CommandSender sender, String message) {
-        sender.sendMessage(message);
+    public static void sendColouredMessage(CommandSender sender, String message) {
+        sender.sendMessage(addColour(message));
     }
 
     public static void sendMessage(CommandSender sender, String message) {

@@ -19,8 +19,8 @@ import java.util.*;
 public class InfoReader {
     mChatSuite plugin;
 
-    public InfoReader(mChatSuite plugin) {
-        this.plugin = plugin;
+    public InfoReader(mChatSuite instance) {
+        plugin = instance;
     }
 
     //Info Stuff
@@ -219,18 +219,18 @@ public class InfoReader {
 
         String iType = type.getName();
 
-        if (plugin.mIConfig.isSet(iType + "." + name + ".info." + info))
-            return plugin.mIConfig.get(iType + "." + name + ".info." + info);
+        if (plugin.info.isSet(iType + "." + name + ".info." + info))
+            return plugin.info.get(iType + "." + name + ".info." + info);
 
-        else if (plugin.mIConfig.isSet(iType + "." + name + ".worlds." + world + "." + info))
-            return plugin.mIConfig.get(iType + "." + name + ".worlds." + world + "." + info);
+        else if (plugin.info.isSet(iType + "." + name + ".worlds." + world + "." + info))
+            return plugin.info.get(iType + "." + name + ".worlds." + world + "." + info);
 
         return "";
     }
 
     Object getmChatGroup(String name) {
-        if (plugin.mIConfig.isSet("users." + name + ".group"))
-            return plugin.mIConfig.get("users." + name + ".group");
+        if (plugin.info.isSet("users." + name + ".group"))
+            return plugin.info.get("users." + name + ".group");
 
         return "";
     }
@@ -245,22 +245,22 @@ public class InfoReader {
             if (info.equals("group"))
                 return getPermBukkitGroup(name);
 
-        if (!plugin.mIConfig.isSet("mchat." + info))
+        if (!plugin.info.isSet("mchat." + info))
             return "";
 
-        if (!plugin.mIConfig.isSet("rank." + info))
+        if (!plugin.info.isSet("rank." + info))
             return getBukkitInfo(name, world, info);
 
-        for (Map.Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
+        for (Map.Entry<String, Object> entry : plugin.info.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
                 if (plugin.getAPI().checkPermissions(name, world, entry.getKey())) {
                     String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
 
-                    if (!plugin.mIConfig.isSet(rVal))
+                    if (!plugin.info.isSet(rVal))
                         continue;
 
                     try {
-                        iMap.put(plugin.mIConfig.getInt(rVal), entry.getValue().toString());
+                        iMap.put(plugin.info.getInt(rVal), entry.getValue().toString());
                     } catch (NumberFormatException ignored) {}
                 }
         }
@@ -281,10 +281,10 @@ public class InfoReader {
             if (info.equals("group"))
                 return getPermBukkitGroup(name);
 
-        if (!plugin.mIConfig.isSet("mchat." + info))
+        if (!plugin.info.isSet("mchat." + info))
             return "";
 
-        for (Map.Entry<String, Object> entry : plugin.mIConfig.getValues(true).entrySet()) {
+        for (Map.Entry<String, Object> entry : plugin.info.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
                 if (plugin.getAPI().checkPermissions(name, world, entry.getKey())) {
                     Object infoResolve = entry.getValue();
@@ -424,8 +424,8 @@ public class InfoReader {
         if (group.isEmpty())
             return "";
 
-        if (plugin.mIConfig.isSet("groupnames." + group))
-            return plugin.mIConfig.getString("groupnames." + group);
+        if (plugin.info.isSet("groupnames." + group))
+            return plugin.info.getString("groupnames." + group);
 
         return group;
     }
@@ -439,8 +439,8 @@ public class InfoReader {
         if (world.isEmpty())
             return "";
 
-        if (plugin.mIConfig.isSet("worldnames." + world))
-            return plugin.mIConfig.getString("worldnames." + world);
+        if (plugin.info.isSet("worldnames." + world))
+            return plugin.info.getString("worldnames." + world);
 
         return world;
     }
@@ -451,9 +451,9 @@ public class InfoReader {
      * @return Player Name's mChat Alias.
      */
     public String getmName(String name) {
-        if (plugin.mIConfig.isSet("mname." + name))
-            if (!(plugin.mIConfig.getString("mname." + name).isEmpty()))
-                return plugin.mIConfig.getString("mname." + name);
+        if (plugin.info.isSet("mname." + name))
+            if (!(plugin.info.getString("mname." + name).isEmpty()))
+                return plugin.info.getString("mname." + name);
 
         return name;
     }

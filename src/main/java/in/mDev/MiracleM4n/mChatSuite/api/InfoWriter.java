@@ -7,13 +7,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class InfoWriter {
     mChatSuite plugin;
 
-    public InfoWriter(mChatSuite plugin) {
-        this.plugin = plugin;
+    public InfoWriter(mChatSuite instance) {
+        plugin = instance;
     }
 
     void save() {
         try {
-            plugin.mIConfig.save(plugin.mIConfigF);
+            plugin.info.save(plugin.infoF);
             plugin.getInfoConfig().reload();
         } catch (Exception ignored) {}
     }
@@ -24,7 +24,7 @@ public class InfoWriter {
      * @param name Defining value of the base(Also known as Name).
      */
     public void addBase(String name, InfoType type) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
         String base = type.getName();
 
         if (type.equals(InfoType.USER))
@@ -45,7 +45,7 @@ public class InfoWriter {
      * @param group Default Group to set to the Base(Only needed if doing for InfoType.USER).
      */
     public void addBase(String player, String group) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
 
         config.set("users." + player + ".group", group);
 
@@ -64,7 +64,7 @@ public class InfoWriter {
      * @param world Name of the World you are trying to add.
      */
     public void addWorld(String name, InfoType type, String world) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
         String base = type.getName();
 
         if (!config.isSet(base + "." + name))
@@ -84,7 +84,7 @@ public class InfoWriter {
      * @param value Value of the Variable you are trying to add.
      */
     public void setInfoVar(String name, InfoType type, String var, Object value) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
         String base = type.getName();
 
         if (!config.isSet(base + "." + name))
@@ -104,7 +104,7 @@ public class InfoWriter {
      * @param value Value of the Variable you are trying to add.
      */
     public void setWorldVar(String name, InfoType type, String world, String var, Object value) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
         String base = type.getName();
 
         if (!config.isSet(base + "." + name + ".worlds." + world))
@@ -121,7 +121,7 @@ public class InfoWriter {
      * @param group Group to be set to Player.
      */
     public void setGroup(String player, String group) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
 
         if (!config.isSet(player + "." + group))
             addBase(player, group);
@@ -137,7 +137,7 @@ public class InfoWriter {
      * @param type Type of Base you want to remove.
      */
     public void removeBase(String name, InfoType type) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
         String base = type.getName();
 
         if (config.isSet(base + "." + name)) {
@@ -164,7 +164,7 @@ public class InfoWriter {
      * @param world Name of the World you are trying to remove.
      */
     public void removeWorld(String name, InfoType type, String world) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
         String base = type.getName();
 
         if (config.isSet(base + "." + name)) {
@@ -188,7 +188,7 @@ public class InfoWriter {
     }
 
     void setDGroup(String group) {
-        YamlConfiguration config = plugin.mIConfig;
+        YamlConfiguration config = plugin.info;
 
         if (!config.isSet("groups." + group)) {
             config.set("groups." + group + ".info.prefix", "");

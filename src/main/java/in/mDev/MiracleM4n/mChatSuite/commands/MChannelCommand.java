@@ -14,8 +14,8 @@ import org.bukkit.entity.Player;
 public class MChannelCommand implements CommandExecutor {
     mChatSuite plugin;
 
-    public MChannelCommand(mChatSuite plugin) {
-        this.plugin = plugin;
+    public MChannelCommand(mChatSuite instance) {
+        plugin = instance;
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

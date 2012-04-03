@@ -17,8 +17,8 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 public class EntityListener implements Listener {
     mChatSuite plugin;
 
-    public EntityListener(mChatSuite plugin) {
-        this.plugin = plugin;
+    public EntityListener(mChatSuite instance) {
+        plugin = instance;
     }
 
     Boolean messageTimeout = true;
