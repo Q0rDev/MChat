@@ -63,7 +63,7 @@ public class ChannelManager {
         plugin.channels.set(name.toLowerCase() + ".default", defaulted);
 
         if (defaulted)
-           setDefaultChannel(name);
+            setDefaultChannel(name);
 
         try {
             plugin.channels.save(plugin.channelsF);
@@ -104,28 +104,25 @@ public class ChannelManager {
      */
     public void saveChannels() {
         for (Channel channel : channels)
-            saveChannel(channel.getName());
+            saveChannel(channel);
     }
 
     /**
      * Saves a Channel from Memory to config.
-     * @param name Name of Channel being saved.
+     * @param channel Channel being saved.
      */
-    public void saveChannel(String name) {
-        for (Channel channel : channels)
-            if (channel.getName().equalsIgnoreCase(name)) {
-                plugin.channels.set(name.toLowerCase() + ".type", channel.getType().getName().toLowerCase());
-                plugin.channels.set(name.toLowerCase() + ".prefix", channel.getPrefix());
-                plugin.channels.set(name.toLowerCase() + ".suffix", channel.getSuffix());
-                plugin.channels.set(name.toLowerCase() + ".passworded", channel.isPassworded());
-                plugin.channels.set(name.toLowerCase() + ".password", channel.getPassword());
-                plugin.channels.set(name.toLowerCase() + ".distance", channel.getDistance());
-                plugin.channels.set(name.toLowerCase() + ".default", channel.isDefault());
+    public void saveChannel(Channel channel) {
+        plugin.channels.set(channel.getName().toLowerCase() + ".type", channel.getType().getName().toLowerCase());
+        plugin.channels.set(channel.getName().toLowerCase() + ".prefix", channel.getPrefix());
+        plugin.channels.set(channel.getName().toLowerCase() + ".suffix", channel.getSuffix());
+        plugin.channels.set(channel.getName().toLowerCase() + ".passworded", channel.isPassworded());
+        plugin.channels.set(channel.getName().toLowerCase() + ".password", channel.getPassword());
+        plugin.channels.set(channel.getName().toLowerCase() + ".distance", channel.getDistance());
+        plugin.channels.set(channel.getName().toLowerCase() + ".default", channel.isDefault());
 
-                try {
-                    plugin.channels.save(plugin.channelsF);
-                } catch (Exception ignored) {}
-            }
+        try {
+            plugin.channels.save(plugin.channelsF);
+        } catch (Exception ignored) {}
     }
 
     /**
@@ -209,7 +206,7 @@ public class ChannelManager {
             else if (type.getName().equalsIgnoreCase("Type"))
                 channel.setType((ChannelType) option);
 
-            saveChannel(channel.getName());
+            saveChannel(channel);
         }
     }
 }

@@ -51,7 +51,8 @@ public class ReplyCommand implements CommandExecutor {
                     return true;
                 }
 
-                final String senderName = plugin.getAPI().ParsePlayerName(pName, world);
+                String senderName = plugin.getAPI().ParsePlayerName(pName, world);
+
                 player.sendMessage(formatPMSend(rName, message));
 
                 plugin.lastPMd.put(rName, pName);

@@ -98,7 +98,7 @@ commands:
         aliases: [mchann, mchan]
 permissions:
     mchat.*:
-        default: false
+        default: true
         description: Allows full use of mChat.
         children:
             mchat.reload.*: true

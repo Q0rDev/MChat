@@ -1,5 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.channel;
 
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.Bukkit;
@@ -164,11 +165,16 @@ public class Channel {
         this.defaulted = defaulted;
     }
 
-    public void broadcastToChannel(Player player, String message) {
+    public void sendMessageFrom(Player player, String message) {
         if (player == null || message == null)
             return;
 
-        String msg = Messanger.addColour(prefix + name + suffix) + message;
+        mChatSuite plugin = (mChatSuite) Bukkit.getPluginManager().getPlugin("mChatSuite");
+
+        if (plugin == null)
+            return;
+
+        String msg = plugin.getAPI().ParseChatMessage(player.getName(), player.getWorld().getName(), prefix + name + suffix + " " + message);
 
         for (String names : occupants.keySet()) {
             Player playerz = Bukkit.getServer().getPlayer(names);
@@ -190,6 +196,24 @@ public class Channel {
                         && playerz.getLocation().getChunk() == player.getLocation().getChunk())
                     playerz.sendMessage(msg);
             }
+        }
+
+        Messanger.log(msg);
+    }
+
+    public void broadcastMessage(String message) {
+        if (message == null)
+            return;
+
+        String msg = Messanger.addColour(prefix + name + suffix+ " " + message);
+
+        for (String names : occupants.keySet()) {
+            Player playerz = Bukkit.getServer().getPlayer(names);
+
+            if (playerz == null)
+                continue;
+
+            playerz.sendMessage(msg);
         }
 
         Messanger.log(msg);

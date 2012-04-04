@@ -7,9 +7,6 @@ import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
-import java.io.File;
-import java.io.IOException;
-
 public class ChannelConfig {
     mChatSuite plugin;
     YamlConfiguration config;
@@ -32,8 +29,8 @@ public class ChannelConfig {
 
     public void save() {
         try {
-            plugin.info = config;
-            plugin.info.save(plugin.infoF);
+            plugin.channels = config;
+            plugin.channels.save(plugin.channelsF);
 
             Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "channels.yml"));
         } catch (Exception ignored) {}

@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.api.EventType;
+import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
@@ -157,9 +158,17 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final String world = player.getWorld().getName();
+
         String pName = player.getName();
         String mPName = player.getName();
         String msg = event.getJoinMessage();
+
+        Channel dChannel = plugin.getChannelManager().getDefaultChannel();
+
+        if (dChannel != null) {
+            dChannel.addOccupant(pName, true);
+            dChannel.broadcastMessage(plugin.getAPI().ParsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
+        }
 
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null)

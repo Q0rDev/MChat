@@ -124,12 +124,15 @@ public class MChannelCommand implements CommandExecutor {
                 ChannelEditType edit = ChannelEditType.fromName(args[2]);
                 Channel channel = plugin.getChannelManager().getChannel(args[1]);
                 Object option = null;
-                
+
                 try {
-                    if (edit.getName().equalsIgnoreCase("Name"))
-                        option = args[3];
-                    else if (edit.getName().equalsIgnoreCase("Default"))
+                    if (edit.getName().equalsIgnoreCase("Default")) {
                         plugin.getChannelManager().setDefaultChannel(channel.getName());
+                        Messanger.sendMessage(sender, "You have successfully edited '" + args[1].toLowerCase() + "'.");
+
+                        return true;
+                    } else if (edit.getName().equalsIgnoreCase("Name"))
+                        option = args[3];
                     else if (edit.getName().equalsIgnoreCase("Distance"))
                         option = Integer.valueOf(args[3]);
                     else if (edit.getName().equalsIgnoreCase("Password"))

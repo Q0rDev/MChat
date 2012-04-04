@@ -283,14 +283,33 @@ public class mChatSuite extends JavaPlugin {
     }
 
     public void onDisable() {
+        // Shutdown Timer
+        String shutdown = "";
+        sTime1 = new Date().getTime();
+
         getServer().getScheduler().cancelTasks(this);
+
+        // 2nd Shutdown Timer
+        sTime2 = new Date().getTime();
+        sDiff = (sTime2 - sTime1);
+        shutdown = "[Sched: " + sDiff + "ms, ";
 
         if (eBroadcast && bMessage != null)
             bMessage.disconnect();
 
-        getChannelManager().saveChannels();
+        // 2st Shutdown Timer
+        sTime1 = new Date().getTime();
+        sDiff = (sTime1 - sTime2);
+        shutdown += "Ext Msg: " + sDiff + "ms, ";
 
-        Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!");
+        channelManager.saveChannels();
+
+        // 3st Shutdown Timer
+        sTime2 = new Date().getTime();
+        sDiff = (sTime2 - sTime1);
+        shutdown += "Ch Save: " + sDiff + "ms]";
+
+        Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!" + shutdown);
     }
 
     void registerEvents() {
