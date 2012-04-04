@@ -29,6 +29,12 @@ public class AcceptCommand implements CommandExecutor {
 
         if (cmd.equalsIgnoreCase("pmchataccept")) {
             String rName = plugin.getInvite.get(pName);
+
+            if (rName == null) {
+                player.sendMessage(formatPMessage(Messanger.addColour("No pending Convo request.")));
+                return true;
+            }
+
             Player recipient = plugin.getServer().getPlayer(rName);
             String rWorld = recipient.getWorld().getName();
 
