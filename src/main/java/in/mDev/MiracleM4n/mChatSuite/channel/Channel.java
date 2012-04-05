@@ -195,7 +195,8 @@ public class Channel {
                 if (playerz.getWorld().getName().equals(player.getWorld().getName())
                         && playerz.getLocation().getChunk() == player.getLocation().getChunk())
                     playerz.sendMessage(msg);
-            }
+            } else
+                playerz.sendMessage(msg);
         }
 
         Messanger.log(msg);
@@ -207,7 +208,7 @@ public class Channel {
 
         String msg = Messanger.addColour(prefix + name + suffix+ " " + message);
 
-        for (String names : occupants.keySet()) {
+        for (String names : getActiveOccupants()) {
             Player playerz = Bukkit.getServer().getPlayer(names);
 
             if (playerz == null)

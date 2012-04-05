@@ -55,6 +55,11 @@ public class mChatSuite extends JavaPlugin {
     public File infoF;
     public File localeF;
 
+    // External Class Relays
+    mChatAPI api;
+    InfoWriter writer;
+    InfoReader reader;
+
     // External Messaging
     public BroadcastMessage bMessage;
 
@@ -284,7 +289,7 @@ public class mChatSuite extends JavaPlugin {
 
     public void onDisable() {
         // Shutdown Timer
-        String shutdown = "";
+        String shutdown;
         sTime1 = new Date().getTime();
 
         getServer().getScheduler().cancelTasks(this);
@@ -544,6 +549,13 @@ public class mChatSuite extends JavaPlugin {
             getCommand(command).setExecutor(executor);
     }
 
+    void initializeClasses() {
+        api = new mChatAPI(this);
+        reader = new InfoReader(this);
+        writer = new InfoWriter(this);
+    }
+
+
     // Main Config (config.yml)
     public MainConfig getMainConfig() {
         return new MainConfig(this);
@@ -571,17 +583,17 @@ public class mChatSuite extends JavaPlugin {
 
     // API
     public mChatAPI getAPI() {
-        return new mChatAPI(this);
+        return api;
     }
 
     // InfoReader
     public InfoReader getReader() {
-        return new InfoReader(this);
+        return reader;
     }
 
     // InfoWriter
     public InfoWriter getWriter() {
-        return new InfoWriter(this);
+        return writer;
     }
 
     // ChannelManager
