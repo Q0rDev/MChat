@@ -131,10 +131,13 @@ public class ChannelManager {
      */
     public void setDefaultChannel(String name) {
         for (Channel channel : channels)
-            if (channel.getName().equalsIgnoreCase(name))
+            if (channel.getName().equalsIgnoreCase(name)) {
                 channel.setDefault(true);
-            else
+                saveChannel(channel);
+            } else if (channel.isDefault()) {
                 channel.setDefault(false);
+                saveChannel(channel);
+            }
     }
 
     /**

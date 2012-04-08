@@ -305,14 +305,7 @@ public class mChatSuite extends JavaPlugin {
         // 2st Shutdown Timer
         sTime1 = new Date().getTime();
         sDiff = (sTime1 - sTime2);
-        shutdown += "Ext Msg: " + sDiff + "ms, ";
-
-        channelManager.saveChannels();
-
-        // 3st Shutdown Timer
-        sTime2 = new Date().getTime();
-        sDiff = (sTime2 - sTime1);
-        shutdown += "Ch Save: " + sDiff + "ms]";
+        shutdown += "Ext Msg: " + sDiff + "ms]";
 
         Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!" + shutdown);
     }

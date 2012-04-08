@@ -71,7 +71,7 @@ public class ReplyCommand implements CommandExecutor {
                             };
 
                             sRecipient.sendNotification("[PM] From:", player.getName(), Material.PAPER);
-                            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 2 * 20);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 2 * 20);
                             return true;
                         }
                     }

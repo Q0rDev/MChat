@@ -136,7 +136,7 @@ public class PlayerListener implements Listener {
 
             plugin.chatt.put(player.getName(), false);
 
-            plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
 
@@ -190,7 +190,7 @@ public class PlayerListener implements Listener {
             if (plugin.info.get("users." + pName) == null)
                 plugin.getWriter().addBase(pName, plugin.mIDefaultGroup);
 
-        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 // For Cruxsky
                 if (plugin.getAPI().ParseTabbedList(rPName, world).length() > 15) {

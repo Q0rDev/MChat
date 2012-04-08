@@ -159,14 +159,14 @@ public class EntityListener implements Listener {
                         }
                     }
 
-                    plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, timeRunnable, 20);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, timeRunnable, 20);
                     messageTimeout = false;
                 }
 
                 if (plugin.spoutB) {
                     SpoutPlayer sPlayer = (SpoutPlayer) player;
 
-                    plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 4 * 20);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 4 * 20);
 
                     sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
 

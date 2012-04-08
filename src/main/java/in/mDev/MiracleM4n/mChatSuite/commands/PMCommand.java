@@ -75,7 +75,7 @@ public class PMCommand implements CommandExecutor {
 
                         plugin.lastPMd.put(rName, pName);
                         sRecipient.sendNotification("[pmChat] From:", player.getName(), Material.PAPER);
-                        plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, runnable, 2 * 20);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 2 * 20);
                         return true;
                     }
                 }
