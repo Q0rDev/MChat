@@ -597,13 +597,13 @@ public class mChatSuite extends JavaPlugin {
 
     // MInfoReader
     @Deprecated
-    public MInfoReader getInfoReader() {
-        return new MInfoReader(this);
+    public InfoReader getInfoReader() {
+        return reader;
     }
 
     // MInfoWriter
     @Deprecated
-    public MInfoWriter getInfoWriter() {
-        return new MInfoWriter(this);
+    public InfoWriter getInfoWriter() {
+        return writer;
     }
 }
