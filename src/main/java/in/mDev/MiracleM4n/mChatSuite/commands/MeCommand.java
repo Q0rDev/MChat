@@ -34,7 +34,7 @@ public class MeCommand implements CommandExecutor {
                     World world = player.getWorld();
 
                     if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.me"))
-                        plugin.getServer().broadcastMessage(plugin.getAPI().ParseMe(player.getName(), world.getName(), message));
+                        plugin.getServer().broadcastMessage(plugin.getParser().parseMe(player.getName(), world.getName(), message));
                     else
                         Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.me"));
 

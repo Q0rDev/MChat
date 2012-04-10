@@ -33,6 +33,8 @@ public class InfoConfig {
             plugin.info = config;
             plugin.info.save(plugin.infoF);
 
+            hasChanged = false;
+
             Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "info.yml"));
         } catch (Exception ignored) {}
     }
@@ -63,7 +65,7 @@ public class InfoConfig {
         config.set("mname.MiracleM4n", "M1r4c13M4n");
         config.set("mname.Jessica_RS", "M1r4c13M4n's Woman");
 
-        save();
+        hasChanged = true;
     }
 
     public void load() {

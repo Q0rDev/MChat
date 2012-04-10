@@ -1,8 +1,8 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
-import in.mDev.MiracleM4n.mChatSuite.channel.ChannelEditType;
-import in.mDev.MiracleM4n.mChatSuite.channel.ChannelType;
+import in.mDev.MiracleM4n.mChatSuite.types.ChannelEditType;
+import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 

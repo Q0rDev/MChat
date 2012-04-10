@@ -57,25 +57,25 @@ public class AFKOtherCommand implements CommandExecutor {
                         if (sPlayers.isSpoutCraftEnabled())
                             sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", ""), Material.PAPER);
                         else
-                            players.sendMessage(plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())));
+                            players.sendMessage(plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())));
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
+                    sPlayer.setTitle(plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())));
+                    plugin.getServer().broadcastMessage(plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())));
 
                 afkTarget.setSleepingIgnored(false);
                 plugin.isAFK.put(afkTarget.getName(), false);
 
                 if (plugin.useAFKList)
-                    if (plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()).length() > 15) {
-                        String pLName = plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName());
+                    if (plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()).length() > 15) {
+                        String pLName = plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName());
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
+                        afkTarget.setPlayerListName(plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
 
                 return true;
             } else {
@@ -86,26 +86,26 @@ public class AFKOtherCommand implements CommandExecutor {
                         if (sPlayers.isSpoutCraftEnabled())
                             sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", ""), Material.PAPER);
                         else
-                            players.sendMessage(plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
+                            players.sendMessage(plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
                     }
 
                     SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- AFK -" + '\n' + plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- AFK -" + '\n' + plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
                 } else
-                    plugin.getServer().broadcastMessage(plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", plugin.getAPI().ParsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
+                    plugin.getServer().broadcastMessage(plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
 
                 afkTarget.setSleepingIgnored(true);
                 plugin.isAFK.put(afkTarget.getName(), true);
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if ((Messanger.addColour("<gold>[AFK] " + plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()))).length() > 15) {
-                        String pLName = Messanger.addColour("[<gold>AFK] " + plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
+                    if ((Messanger.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()))).length() > 15) {
+                        String pLName = Messanger.addColour("[<gold>AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(Messanger.addColour("<gold>[AFK] " + plugin.getAPI().ParseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName())));
+                        afkTarget.setPlayerListName(Messanger.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName())));
 
                 return true;
             }

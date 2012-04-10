@@ -47,10 +47,10 @@ public class InviteCommand implements CommandExecutor {
 
             if (plugin.getInvite.get(rName) == null) {
                 plugin.getInvite.put(rName, pName);
-                player.sendMessage(formatPMessage(Messanger.addColour("You have invited &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.")));
-                recipient.sendMessage(formatPMessage(Messanger.addColour("You have been invited to a Convo by &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You have invited &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.")));
+                recipient.sendMessage(formatPMessage(Messanger.addColour("You have been invited to a Convo by &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.")));
             } else
-                player.sendMessage(formatPMessage(Messanger.addColour("&5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("&5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.")));
 
             return true;
         }

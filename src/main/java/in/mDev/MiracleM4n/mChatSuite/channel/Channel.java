@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.channel;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.bukkit.Bukkit;
@@ -174,7 +175,7 @@ public class Channel {
         if (plugin == null)
             return;
 
-        String msg = plugin.getAPI().ParseChatMessage(player.getName(), player.getWorld().getName(), prefix + name + suffix + " " + message);
+        String msg = plugin.getParser().parseChatMessage(player.getName(), player.getWorld().getName(), prefix + name + suffix + " " + message);
 
         for (String names : occupants.keySet()) {
             Player playerz = Bukkit.getServer().getPlayer(names);

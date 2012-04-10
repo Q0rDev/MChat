@@ -56,9 +56,10 @@ public class mChatSuite extends JavaPlugin {
     public File localeF;
 
     // External Class Relays
-    mChatAPI api;
-    InfoWriter writer;
-    InfoReader reader;
+    API api;
+    Parser parser;
+    Writer writer;
+    Reader reader;
 
     // External Messaging
     public BroadcastMessage bMessage;
@@ -270,7 +271,7 @@ public class mChatSuite extends JavaPlugin {
 
                 if (spoutB) {
                     SpoutPlayer sPlayers = (SpoutPlayer) players;
-                    sPlayers.setTitle(getAPI().ParsePlayerName(players.getName(), players.getWorld().getName()));
+                    sPlayers.setTitle(getParser().parsePlayerName(players.getName(), players.getWorld().getName()));
                 }
             }
         }
@@ -543,9 +544,10 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void initializeClasses() {
-        api = new mChatAPI(this);
-        reader = new InfoReader(this);
-        writer = new InfoWriter(this);
+        api = new API(this);
+        parser = new Parser(this);
+        reader = new Reader(this);
+        writer = new Writer(this);
     }
 
 
@@ -575,35 +577,27 @@ public class mChatSuite extends JavaPlugin {
     }
 
     // API
-    public mChatAPI getAPI() {
+    public API getAPI() {
         return api;
     }
 
-    // InfoReader
-    public InfoReader getReader() {
+    // Parser
+    public Parser getParser() {
+        return parser;
+    }
+
+    // Reader
+    public Reader getReader() {
         return reader;
     }
 
-    // InfoWriter
-    public InfoWriter getWriter() {
+    // Writer
+    public Writer getWriter() {
         return writer;
     }
 
     // ChannelManager
     public ChannelManager getChannelManager() {
         return channelManager;
-    }
-
-
-    // MInfoReader
-    @Deprecated
-    public InfoReader getInfoReader() {
-        return reader;
-    }
-
-    // MInfoWriter
-    @Deprecated
-    public InfoWriter getInfoWriter() {
-        return writer;
     }
 }

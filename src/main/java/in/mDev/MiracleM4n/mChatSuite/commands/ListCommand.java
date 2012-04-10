@@ -1,6 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
-import in.mDev.MiracleM4n.mChatSuite.api.InfoType;
+import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
@@ -53,7 +53,7 @@ public class ListCommand implements CommandExecutor {
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
             String iVar = plugin.getReader().getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), plugin.listVar);
-            String mName = plugin.getAPI().ParseListCmd(players.getName(), players.getWorld().getName());
+            String mName = plugin.getParser().parseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;
 

@@ -51,7 +51,7 @@ public class ReplyCommand implements CommandExecutor {
                     return true;
                 }
 
-                String senderName = plugin.getAPI().ParsePlayerName(pName, world);
+                String senderName = plugin.getParser().parsePlayerName(pName, world);
 
                 player.sendMessage(formatPMSend(rName, message));
 
@@ -113,6 +113,6 @@ public class ReplyCommand implements CommandExecutor {
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return (Messanger.addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
+        return (Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
     }
 }

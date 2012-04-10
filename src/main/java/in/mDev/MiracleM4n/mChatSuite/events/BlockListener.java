@@ -22,6 +22,6 @@ public class BlockListener implements Listener {
         if (event.getLine(0).equals("[mChat]"))
             if (plugin.getServer().getPlayer(event.getLine(2)) != null)
                 if (event.getLine(3) != null)
-                    event.setLine(1, Messanger.addColour("&f" + (plugin.getAPI().ParseMessage(event.getLine(2), event.getBlock().getWorld().getName(), "", event.getLine(3)))));
+                    event.setLine(1, Messanger.addColour("&f" + (plugin.getParser().parseMessage(event.getLine(2), event.getBlock().getWorld().getName(), "", event.getLine(3)))));
     }
 }

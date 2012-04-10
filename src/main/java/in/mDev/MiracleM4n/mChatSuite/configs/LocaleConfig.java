@@ -57,6 +57,8 @@ public class LocaleConfig {
             plugin.locale = config;
             plugin.locale.save(plugin.localeF);
 
+            hasChanged = false;
+
             Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "locale.yml"));
         } catch (Exception ignored) {}
     }

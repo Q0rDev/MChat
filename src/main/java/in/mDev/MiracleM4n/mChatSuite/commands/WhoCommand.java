@@ -44,7 +44,7 @@ public class WhoCommand implements CommandExecutor {
     }
 
     void formatWho(CommandSender sender, Player recipient) {
-        String recipientName = plugin.getAPI().ParsePlayerName(recipient.getName(), recipient.getWorld().getName());
+        String recipientName = plugin.getParser().parsePlayerName(recipient.getName(), recipient.getWorld().getName());
         Integer locX = (int) recipient.getLocation().getX();
         Integer locY = (int) recipient.getLocation().getY();
         Integer locZ = (int) recipient.getLocation().getZ();
@@ -56,7 +56,7 @@ public class WhoCommand implements CommandExecutor {
         Messanger.sendColouredMessage(sender, "Formatted Name: " + recipientName);
         Messanger.sendColouredMessage(sender, "Player's Location: [ " + loc + " ]");
         Messanger.sendColouredMessage(sender, "Player's World: " + world);
-        Messanger.sendColouredMessage(sender, "Player's Health: " + plugin.getAPI().healthBar(recipient) + " " + recipient.getHealth() + "/20");
+        Messanger.sendColouredMessage(sender, "Player's Health: " + plugin.getAPI().createHealthBar(recipient) + " " + recipient.getHealth() + "/20");
         Messanger.sendColouredMessage(sender, "Player's IP: " + recipient.getAddress().getHostString());
         Messanger.sendColouredMessage(sender, "Current Item: " + recipient.getItemInHand().getType().name());
         Messanger.sendColouredMessage(sender, "Entity ID: #" + recipient.getEntityId());

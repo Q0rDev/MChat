@@ -1,6 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
-import in.mDev.MiracleM4n.mChatSuite.api.EventType;
+import in.mDev.MiracleM4n.mChatSuite.types.EventType;
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
@@ -67,9 +67,9 @@ public class PlayerListener implements Listener {
 
         String world = player.getWorld().getName();
         String mPName = player.getName();
-        String pLName = plugin.getAPI().ParseTabbedList(pName, world);
+        String pLName = plugin.getParser().parseTabbedList(pName, world);
         String msg = event.getMessage();
-        String eventFormat = plugin.getAPI().ParseChatMessage(pName, world, msg);
+        String eventFormat = plugin.getParser().parseChatMessage(pName, world, msg);
 
         if (msg == null)
             return;
@@ -94,8 +94,8 @@ public class PlayerListener implements Listener {
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null) {
                 mPName = MobDisguise.p2p.get(pName);
-                pLName = plugin.getAPI().ParseTabbedList(mPName, world);
-                eventFormat = plugin.getAPI().ParseChatMessage(mPName, world, msg);
+                pLName = plugin.getParser().parseTabbedList(mPName, world);
+                eventFormat = plugin.getParser().parseChatMessage(mPName, world, msg);
             }
 
         // For Cruxsky
@@ -132,7 +132,7 @@ public class PlayerListener implements Listener {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + Messanger.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(mPName, world));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + Messanger.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getParser().parsePlayerName(mPName, world));
 
             plugin.chatt.put(player.getName(), false);
 
@@ -141,7 +141,7 @@ public class PlayerListener implements Listener {
                     SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
 
                     if (sPlayer != null)
-                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(sPlayer.getName(), sPlayer.getWorld().getName()));
+                        sPlayer.setTitle(plugin.getParser().parsePlayerName(sPlayer.getName(), sPlayer.getWorld().getName()));
                 }
             }, 7 * 20);
         }
@@ -167,7 +167,7 @@ public class PlayerListener implements Listener {
 
         if (dChannel != null) {
             dChannel.addOccupant(pName, true);
-            dChannel.broadcastMessage(plugin.getAPI().ParsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
+            dChannel.broadcastMessage(plugin.getParser().parsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
         }
 
         if (plugin.mobD)
@@ -193,26 +193,26 @@ public class PlayerListener implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 // For Cruxsky
-                if (plugin.getAPI().ParseTabbedList(rPName, world).length() > 15) {
-                    String pLName = plugin.getAPI().ParseTabbedList(rPName, world);
+                if (plugin.getParser().parseTabbedList(rPName, world).length() > 15) {
+                    String pLName = plugin.getParser().parseTabbedList(rPName, world);
                     pLName = pLName.substring(0, 16);
                     setListName(player, pLName);
                 } else
-                    setListName(player, plugin.getAPI().ParseTabbedList(rPName, world));
+                    setListName(player, plugin.getParser().parseTabbedList(rPName, world));
             }
         }, 20L);
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
-            sPlayer.setTitle(plugin.getAPI().ParsePlayerName(mPName, world));
+            sPlayer.setTitle(plugin.getParser().parsePlayerName(mPName, world));
         }
 
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
-                suppressEventMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
+                suppressEventMessage(plugin.getParser().parseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
                 event.setJoinMessage("");
             } else
-                event.setJoinMessage(plugin.getAPI().ParseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN));
+                event.setJoinMessage(plugin.getParser().parseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -237,10 +237,10 @@ public class PlayerListener implements Listener {
             return;
 
         if (plugin.sKickB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick",plugin.sKickI);
+            suppressEventMessage(plugin.getParser().parseEventName(pName, world) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick",plugin.sKickI);
             event.setLeaveMessage("");
         } else
-            event.setLeaveMessage(plugin.getAPI().ParseEventName(pName, world) + " " + kickMsg);
+            event.setLeaveMessage(plugin.getParser().parseEventName(pName, world) + " " + kickMsg);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -256,10 +256,10 @@ public class PlayerListener implements Listener {
             return;
 
         if (plugin.sQuitB) {
-            suppressEventMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
+            suppressEventMessage(plugin.getParser().parseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
             event.setQuitMessage("");
         } else
-            event.setQuitMessage(plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT));
+            event.setQuitMessage(plugin.getParser().parseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT));
     }
 
     @EventHandler
@@ -274,7 +274,7 @@ public class PlayerListener implements Listener {
             if (sign.getLine(0).equals("[mChat]"))
                 if (plugin.getServer().getPlayer(sign.getLine(2)) != null)
                     if (sign.getLine(3) != null) {
-                        sign.setLine(1, Messanger.addColour("&f" + (plugin.getAPI().ParseMessage(sign.getLine(2), block.getWorld().getName(), "", sign.getLine(3)))));
+                        sign.setLine(1, Messanger.addColour("&f" + (plugin.getParser().parseMessage(sign.getLine(2), block.getWorld().getName(), "", sign.getLine(3)))));
                         sign.update(true);
                     }
         }

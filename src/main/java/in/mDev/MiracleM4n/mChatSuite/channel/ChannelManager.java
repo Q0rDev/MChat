@@ -1,6 +1,8 @@
 package in.mDev.MiracleM4n.mChatSuite.channel;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.ChannelEditType;
+import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
 
 import java.util.*;
 

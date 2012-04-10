@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.api;
+package in.mDev.MiracleM4n.mChatSuite.types;
 
 public enum EventType {
     JOIN("join"),

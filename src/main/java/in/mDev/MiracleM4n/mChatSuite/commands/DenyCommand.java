@@ -36,8 +36,8 @@ public class DenyCommand implements CommandExecutor {
                 plugin.getInvite.remove(pName);
                 plugin.isConv.put(pName, false);
                 plugin.isConv.put(rName, false);
-                player.sendMessage(formatPMessage(Messanger.addColour("You have denied a Convo request from &5'&4" + plugin.getAPI().ParsePlayerName(rName, rWorld) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(Messanger.addColour("Convo request with &5'&4" + plugin.getAPI().ParsePlayerName(pName, world) + "&5'&4 has been denied.")));
+                player.sendMessage(formatPMessage(Messanger.addColour("You have denied a Convo request from &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(Messanger.addColour("Convo request with &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 has been denied.")));
             } else
                 player.sendMessage(formatPMessage(Messanger.addColour("No pending Convo request.")));
 

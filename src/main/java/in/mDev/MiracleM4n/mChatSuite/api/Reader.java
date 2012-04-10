@@ -7,20 +7,24 @@ import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.EventType;
+import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 
-import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.*;
 
-public class InfoReader {
+public class Reader {
     mChatSuite plugin;
+    YamlConfiguration config;
 
-    public InfoReader(mChatSuite instance) {
+    public Reader(mChatSuite instance) {
         plugin = instance;
+
+        config = plugin.info;
     }
 
     //Info Stuff
@@ -41,7 +45,7 @@ public class InfoReader {
             return getBukkitInfo(name, world, info);
 
         if (plugin.useNewInfo)
-            return getmChatInfo(name, type, world, info);
+            return getMChatInfo(name, type, world, info);
 
         if (plugin.gmPermissionsB)
             return getGroupManagerInfo(name, type, world, info);
@@ -52,85 +56,7 @@ public class InfoReader {
         if (plugin.bPermB)
             return getbPermInfo(name, type, world, info);
 
-        return getmChatInfo(name, type, world, info);
-    }
-
-    /**
-     * Raw Prefix Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @return Raw Prefix.
-     */
-    @Deprecated
-    public Object getRawPrefix(Player player, World world) {
-        return getRawInfo(player.getName(), InfoType.USER, world.getName(), "prefix");
-    }
-
-    /**
-     * Raw Suffix Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @return Raw Suffix.
-     */
-    @Deprecated
-    public Object getRawSuffix(Player player, World world) {
-        return getRawInfo(player.getName(), InfoType.USER, world.getName(), "suffix");
-    }
-
-    /**
-     * Raw Group Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @return Raw Group.
-     */
-    @Deprecated
-    public Object getRawGroup(Player player, World world) {
-        return getRawInfo(player.getName(), InfoType.USER, world.getName(), "group");
-    }
-
-    /**
-     * Formatted Info Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @param info Info Variable being resolved.
-     * @return Formatted Info.
-     */
-    @Deprecated
-    public String getInfo(Player player, World world, String info) {
-        return Messanger.addColour(getRawInfo(player.getName(), InfoType.USER, world.getName(), info).toString());
-    }
-
-    /**
-     * Formatted Prefix Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @return Formatted Prefix.
-     */
-    @Deprecated
-    public String getPrefix(Player player, World world) {
-        return getInfo(player.getName(), InfoType.USER, world.getName(), "prefix");
-    }
-
-    /**
-     * Formatted Suffix Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @return Formatted Suffix.
-     */
-    @Deprecated
-    public String getSuffix(Player player, World world) {
-        return getInfo(player.getName(), InfoType.USER, world.getName(), "suffix");
-    }
-
-    /**
-     * Formatted Group Resolving
-     * @param player Player being reflected upon.
-     * @param world Player's World.
-     * @return Formatted Group.
-     */
-    @Deprecated
-    public String getGroup(Player player, World world) {
-        return getInfo(player.getName(), InfoType.USER, world.getName(), "group");
+        return getMChatInfo(name, type, world, info);
     }
 
     /**
@@ -211,26 +137,26 @@ public class InfoReader {
     }
 
     /*
-     * mChatSuite Stuff
+     * MChat Stuff
      */
-    Object getmChatInfo(String name, InfoType type, String world, String info) {
+    Object getMChatInfo(String name, InfoType type, String world, String info) {
         if (info.equals("group"))
-            return getmChatGroup(name);
+            return getMChatGroup(name);
 
         String iType = type.getName();
 
-        if (plugin.info.isSet(iType + "." + name + ".info." + info))
-            return plugin.info.get(iType + "." + name + ".info." + info);
+        if (config.isSet(iType + "." + name + ".info." + info))
+            return config.get(iType + "." + name + ".info." + info);
 
-        else if (plugin.info.isSet(iType + "." + name + ".worlds." + world + "." + info))
-            return plugin.info.get(iType + "." + name + ".worlds." + world + "." + info);
+        else if (config.isSet(iType + "." + name + ".worlds." + world + "." + info))
+            return config.get(iType + "." + name + ".worlds." + world + "." + info);
 
         return "";
     }
 
-    Object getmChatGroup(String name) {
-        if (plugin.info.isSet("users." + name + ".group"))
-            return plugin.info.get("users." + name + ".group");
+    Object getMChatGroup(String name) {
+        if (config.isSet("users." + name + ".group"))
+            return config.get("users." + name + ".group");
 
         return "";
     }
@@ -245,22 +171,22 @@ public class InfoReader {
             if (info.equals("group"))
                 return getPermBukkitGroup(name);
 
-        if (!plugin.info.isSet("mchat." + info))
+        if (!config.isSet("mchat." + info))
             return "";
 
-        if (!plugin.info.isSet("rank." + info))
+        if (!config.isSet("rank." + info))
             return getBukkitInfo(name, world, info);
 
-        for (Map.Entry<String, Object> entry : plugin.info.getValues(true).entrySet()) {
+        for (Map.Entry<String, Object> entry : config.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
                 if (plugin.getAPI().checkPermissions(name, world, entry.getKey())) {
                     String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
 
-                    if (!plugin.info.isSet(rVal))
+                    if (!config.isSet(rVal))
                         continue;
 
                     try {
-                        iMap.put(plugin.info.getInt(rVal), entry.getValue().toString());
+                        iMap.put(config.getInt(rVal), entry.getValue().toString());
                     } catch (NumberFormatException ignored) {}
                 }
         }
@@ -281,10 +207,10 @@ public class InfoReader {
             if (info.equals("group"))
                 return getPermBukkitGroup(name);
 
-        if (!plugin.info.isSet("mchat." + info))
+        if (!config.isSet("mchat." + info))
             return "";
 
-        for (Map.Entry<String, Object> entry : plugin.info.getValues(true).entrySet()) {
+        for (Map.Entry<String, Object> entry : config.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + "."))
                 if (plugin.getAPI().checkPermissions(name, world, entry.getKey())) {
                     Object infoResolve = entry.getValue();
@@ -424,8 +350,8 @@ public class InfoReader {
         if (group.isEmpty())
             return "";
 
-        if (plugin.info.isSet("groupnames." + group))
-            return plugin.info.getString("groupnames." + group);
+        if (config.isSet("groupnames." + group))
+            return config.getString("groupnames." + group);
 
         return group;
     }
@@ -439,8 +365,8 @@ public class InfoReader {
         if (world.isEmpty())
             return "";
 
-        if (plugin.info.isSet("worldnames." + world))
-            return plugin.info.getString("worldnames." + world);
+        if (config.isSet("worldnames." + world))
+            return config.getString("worldnames." + world);
 
         return world;
     }
@@ -448,12 +374,12 @@ public class InfoReader {
     /**
      * Player Name Resolver
      * @param name Name of Player to be Resolved.
-     * @return Player Name's mChat Alias.
+     * @return Player Name's MChat Alias.
      */
-    public String getmName(String name) {
-        if (plugin.info.isSet("mname." + name))
-            if (!(plugin.info.getString("mname." + name).isEmpty()))
-                return plugin.info.getString("mname." + name);
+    public String getMName(String name) {
+        if (config.isSet("mname." + name))
+            if (!(config.getString("mname." + name).isEmpty()))
+                return config.getString("mname." + name);
 
         return name;
     }
@@ -476,31 +402,5 @@ public class InfoReader {
             event = plugin.leaveMessage;
 
         return Messanger.addColour(event);
-    }
-
-    @Deprecated
-    public String getEventMessage(String type) {
-        String event = "";
-
-        if (type.equalsIgnoreCase("join"))
-            event = plugin.joinMessage;
-
-        else if (type.equalsIgnoreCase("kick"))
-            event = plugin.kickMessage;
-
-        else if (type.equalsIgnoreCase("quit"))
-            event = plugin.leaveMessage;
-
-        return Messanger.addColour(event);
-    }
-
-    @Deprecated
-    public String getRawPrefix(String name, String world) {
-        return getRawInfo(name, InfoType.USER, world, "prefix").toString();
-    }
-
-    @Deprecated
-    public String getRawSuffix(String name, String world) {
-        return getRawInfo(name, InfoType.USER, world, "suffix").toString();
     }
 }

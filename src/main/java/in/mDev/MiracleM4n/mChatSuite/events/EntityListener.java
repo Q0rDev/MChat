@@ -50,7 +50,7 @@ public class EntityListener implements Listener {
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) dEvent;
 
             if (damageEvent.getDamager() instanceof Player) {
-                pCause = plugin.getAPI().ParsePlayerName(player.getKiller().getName(), player.getKiller().getWorld().getName());
+                pCause = plugin.getParser().parsePlayerName(player.getKiller().getName(), player.getKiller().getWorld().getName());
                 isPlayer = true;
             } else if (damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) damageEvent.getDamager();
@@ -113,7 +113,7 @@ public class EntityListener implements Listener {
                 Runnable runnable = new Runnable() {
                     public void run() {
                         SpoutPlayer sPlayer = (SpoutPlayer) player;
-                        sPlayer.setTitle(plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
+                        sPlayer.setTitle(plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
                     }
                 };
 
@@ -135,9 +135,9 @@ public class EntityListener implements Listener {
                             }
 
                             if ((player.getHealth() - event.getDamage()) < 1)
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DIED).replace("%player%", plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName())));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DIED).replace("%player%", plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName())));
                             else
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DAMAGED).replace("%player%", plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName())).replace("%health&", "" + (player.getHealth() - event.getDamage())));
+                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DAMAGED).replace("%player%", plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName())).replace("%health&", "" + (player.getHealth() - event.getDamage())));
                         } else {
                             if (plugin.spoutB) {
                                 SpoutPlayer sPlayer = (SpoutPlayer) player;
@@ -168,7 +168,7 @@ public class EntityListener implements Listener {
 
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 4 * 20);
 
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
+                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
 
                     plugin.chatt.put(player.getName(), false);
                 }
@@ -233,10 +233,10 @@ public class EntityListener implements Listener {
 
     String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
         if (isPlayer)
-            return plugin.getAPI().ParseEventName(pName, world) + " " + plugin.getAPI().ParseMessage(pName, world, "", msg)
-                    .replace(plugin.varIndicator + "killer", plugin.getAPI().ParseEventName(pCause, world));
+            return plugin.getParser().parseEventName(pName, world) + " " + plugin.getParser().parseMessage(pName, world, "", msg)
+                    .replace(plugin.varIndicator + "killer", plugin.getParser().parseEventName(pCause, world));
 
-        return Messanger.addColour(plugin.getAPI().ParseEventName(pName, world) + " " +  plugin.getAPI().ParseMessage(pName, world, "", msg)
+        return Messanger.addColour(plugin.getParser().parseEventName(pName, world) + " " +  plugin.getParser().parseMessage(pName, world, "", msg)
                 .replace(plugin.varIndicator + "killer", plugin.deathMobFormat)
                 .replace(plugin.varIndicator + "killer", pCause));
     }

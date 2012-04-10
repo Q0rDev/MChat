@@ -52,7 +52,7 @@ public class PMCommand implements CommandExecutor {
 
             Player recipient = plugin.getServer().getPlayer(args[0]);
             String rName = recipient.getName();
-            String senderName = plugin.getAPI().ParsePlayerName(pName, world);
+            String senderName = plugin.getParser().parsePlayerName(pName, world);
 
             player.sendMessage(formatPMSend(rName, recipient.getWorld().getName(), message));
 
@@ -114,10 +114,10 @@ public class PMCommand implements CommandExecutor {
     }
 
     String formatPMSend(String recipient, String world, String message) {
-        return (Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getAPI().ParsePlayerName(recipient, world) + "&f: " + message));
+        return (Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getParser().parsePlayerName(recipient, world) + "&f: " + message));
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return (Messanger.addColour(plugin.getAPI().ParsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
+        return (Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
     }
 }

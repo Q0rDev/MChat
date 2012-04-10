@@ -1,4 +1,4 @@
-package in.mDev.MiracleM4n.mChatSuite.channel;
+package in.mDev.MiracleM4n.mChatSuite.types;
 
 import java.util.HashMap;
 

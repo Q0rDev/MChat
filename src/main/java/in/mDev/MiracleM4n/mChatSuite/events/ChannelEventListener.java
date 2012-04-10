@@ -36,7 +36,7 @@ public class ChannelEventListener implements Listener {
 
         for (Channel channel : channels)
             channel.sendMessageFrom(player,
-                    plugin.getAPI().ParseChatMessage(player.getName(), player.getWorld().getName(), event.getMessage()));
+                    plugin.getParser().parseChatMessage(player.getName(), player.getWorld().getName(), event.getMessage()));
 
         event.setCancelled(true);
     }

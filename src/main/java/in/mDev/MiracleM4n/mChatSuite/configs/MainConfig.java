@@ -53,6 +53,8 @@ public class MainConfig {
             plugin.config = config;
             plugin.config.save(plugin.configF);
 
+            hasChanged = false;
+
             Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "config.yml"));
         } catch (Exception ignored) {}
     }

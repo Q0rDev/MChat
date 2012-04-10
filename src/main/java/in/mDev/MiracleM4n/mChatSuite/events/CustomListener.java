@@ -34,7 +34,7 @@ public class CustomListener implements Listener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + Messanger.addColour(plugin.getLocale().getOption(LocaleType.SPOUT_TYPING)) + '\n' + plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
+            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + Messanger.addColour(plugin.getLocale().getOption(LocaleType.SPOUT_TYPING)) + '\n' + plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
             plugin.chatt.put(player.getName(), true);
         }
 
@@ -43,7 +43,7 @@ public class CustomListener implements Listener {
                     (key.equals(backwardKey)) ||
                     (key.equals(leftKey)) ||
                     (key.equals(rightKey))) {
-                player.setTitle(plugin.getAPI().ParsePlayerName(player.getName(), player.getWorld().getName()));
+                player.setTitle(plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
                 plugin.chatt.put(player.getName(), false);
             }
         }
