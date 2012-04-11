@@ -232,6 +232,9 @@ public class mChatSuite extends JavaPlugin {
         // ChannelManager
         channelManager = new ChannelManager(this);
 
+        // Initialize Class Relays
+        initializeClasses();
+
         // Setup Configs
         setupConfigs();
 
