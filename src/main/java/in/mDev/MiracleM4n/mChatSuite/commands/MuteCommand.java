@@ -23,16 +23,21 @@ public class MuteCommand implements CommandExecutor {
                     Messanger.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.mute"));
                     return true;
                 }
-                
+
                 String target = args[0];
-                
-                if (plugin.getServer().getPlayer(args[0]) != null) {
+
+                if (plugin.getServer().getPlayer(args[0]) != null)
                     target = plugin.getServer().getPlayer(args[0]).getName();
+
+                if (plugin.isMuted.get(target) != null && plugin.isMuted.get(target)) {
+                    plugin.isMuted.put(target, false);
+
+                    Messanger.sendMessage(sender, "Target '" + target  + "' successfully unmuted. To mute use this command again.");
+                } else {
+                    plugin.isMuted.put(target, true);
+
+                    Messanger.sendMessage(sender, "Target '" + target  + "' successfully muted. To unmute use this command again.");
                 }
-
-                plugin.isMuted.put(target, true);
-
-                Messanger.sendMessage(sender, "Target '" + target  + "' successfully muted. To unmute use this command again.");
 
                 return true;
             }

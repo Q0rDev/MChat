@@ -25,6 +25,8 @@ public class ShoutCommand implements CommandExecutor {
             for (String arg : args)
                 message += " " + arg;
 
+            message = message.trim();
+
             if (!(sender instanceof Player)) {
                 Messanger.log(Messanger.format("Console's can't shout."));
                 return true;
@@ -34,6 +36,11 @@ public class ShoutCommand implements CommandExecutor {
 
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.shout")) {
                 Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.shout"));
+                return true;
+            }
+
+            if (message.length() < 1) {
+                sender.sendMessage("You can't shout nothing!");
                 return true;
             }
 
