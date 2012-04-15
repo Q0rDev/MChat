@@ -53,7 +53,7 @@ public class ReplyCommand implements CommandExecutor {
 
                 String senderName = plugin.getParser().parsePlayerName(pName, world);
 
-                player.sendMessage(formatPMSend(rName, message));
+                player.sendMessage(formatPMSend(rName, recipient.getWorld().getName(), message));
 
                 plugin.lastPMd.put(rName, pName);
                 if (plugin.spoutB) {
@@ -105,14 +105,14 @@ public class ReplyCommand implements CommandExecutor {
     }
 
     String formatPMessage(String message) {
-        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message);
     }
 
-    String formatPMSend(String recipient, String message) {
-        return (Messanger.addColour("&fMe &1-&2-&3-&4> &f" + recipient + "&f: " + message));
+    String formatPMSend(String recipient, String world, String message) {
+        return Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getParser().parsePlayerName(recipient, world) + "&f: " + message);
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return (Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
+        return Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message);
     }
 }

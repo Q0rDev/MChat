@@ -24,7 +24,7 @@ public class PMCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
+            Messanger.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
 
@@ -34,7 +34,7 @@ public class PMCommand implements CommandExecutor {
 
         if (cmd.equalsIgnoreCase("pmchat")) {
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.pm")) {
-                player.sendMessage(formatPMessage(Messanger.addColour("You are not allowed to use PM functions.")));
+                Messanger.sendMessage(sender, "You are not allowed to use PM functions.");
                 return true;
             }
 
@@ -105,19 +105,15 @@ public class PMCommand implements CommandExecutor {
         return message.substring(start, finish);
     }
 
-    String formatPMessage(String message) {
-        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
-    }
-
     String formatPNF(String playerNotFound) {
-        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
+        return Messanger.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
     }
 
     String formatPMSend(String recipient, String world, String message) {
-        return (Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getParser().parsePlayerName(recipient, world) + "&f: " + message));
+        return Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getParser().parsePlayerName(recipient, world) + "&f: " + message);
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return (Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message));
+        return Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message);
     }
 }
