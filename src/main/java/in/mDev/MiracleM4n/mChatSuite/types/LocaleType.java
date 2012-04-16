@@ -15,6 +15,7 @@ public enum LocaleType {
     FORMAT_SPY("format.spy"),
     FORMAT_LOCAL("format.local"),
     FORMAT_SHOUT("format.shout"),
+    FORMAT_FORWARD("format.forward"),
     CONFIG_RELOADED("message.config.reloaded"),
     CONFIG_UPDATED("message.config.updated");
 

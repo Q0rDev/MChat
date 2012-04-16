@@ -79,18 +79,7 @@ public class PlayerListener implements Listener {
                 && !plugin.mPrefix.get(pName).isEmpty())
             msg = plugin.mPrefix.get(pName) + msg;
 
-        // For Dragonslife
-        if (plugin.chatDistance > 0)
-            for (Player players : plugin.getServer().getOnlinePlayers()) {
-                if (players.getWorld() != player.getWorld()) {
-                    if (!isSpy(players.getName(), players.getWorld().getName()))
-                        event.getRecipients().remove(players);
-                } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
-                    if (!isSpy(players.getName(), players.getWorld().getName()))
-                        event.getRecipients().remove(players);
-            }
-
-        // For Obama?
+        // Broken MobDisguise Support
         if (plugin.mobD)
             if (MobDisguise.p2p.get(pName) != null) {
                 mPName = MobDisguise.p2p.get(pName);
@@ -98,7 +87,7 @@ public class PlayerListener implements Listener {
                 eventFormat = plugin.getParser().parseChatMessage(mPName, world, msg);
             }
 
-        // For Cruxsky
+        // Fix for Too long List Names
         if (pLName.length() > 15) {
             pLName = pLName.substring(0, 16);
             setListName(player, pLName);
@@ -145,6 +134,17 @@ public class PlayerListener implements Listener {
                 }
             }, 7 * 20);
         }
+
+        // Chat Distance Stuff
+        if (plugin.chatDistance > 0)
+            for (Player players : plugin.getServer().getOnlinePlayers()) {
+                if (isSpy(players.getName(), players.getWorld().getName()))
+                    player.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
+                else if (players.getWorld() != player.getWorld())
+                    event.getRecipients().remove(players);
+                else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
+                    event.getRecipients().remove(players);
+            }
 
         event.setFormat(eventFormat);
 

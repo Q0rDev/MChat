@@ -37,6 +37,7 @@ public class LocaleConfig {
     String sayFormat = "&6[Server]&e";
     String shoutFormat = "[Shout]";
     String localFormat = "[L]";
+    String forwardFormat = "[F]";
     String spyFormat = "[Spy]";
 
     public String getOption(LocaleType option) {
@@ -80,6 +81,7 @@ public class LocaleConfig {
         config.set("format.shout", shoutFormat);
         config.set("format.spy", spyFormat);
         config.set("format.local", localFormat);
+        config.set("format.forward", forwardFormat);
 
         hasChanged = true;
     }
@@ -104,6 +106,7 @@ public class LocaleConfig {
         checkOption("format.shout", shoutFormat);
         checkOption("format.spy", spyFormat);
         checkOption("format.local", localFormat);
+        checkOption("format.forward", forwardFormat);
 
         if (hasChanged) {
             configO.header("Locale file.");
