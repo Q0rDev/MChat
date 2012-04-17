@@ -255,8 +255,8 @@ public class Parser {
 
         formatAll = replaceCustVars(pName, formatAll);
 
-        formatAll = replaceVars(formatAll, fVarMap.descendingMap(), true);
-        formatAll = replaceVars(formatAll, rVarMap.descendingMap(), true);
+        formatAll = Messanger.addColour(replaceVars(formatAll, fVarMap.descendingMap(), true));
+        formatAll = Messanger.addColour(replaceVars(formatAll, rVarMap.descendingMap(), true));
         formatAll = replaceVars(formatAll, lVarMap.descendingMap(), false);
 
         return formatAll;
