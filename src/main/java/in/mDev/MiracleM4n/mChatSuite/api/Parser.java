@@ -376,11 +376,14 @@ public class Parser {
     }
 
     private String replaceVars(String format, Map<String, Object> map, Boolean doColour) {
-        for (Map.Entry<String, Object> entry : map.entrySet())
-            format = format.replace(entry.getKey(), entry.getValue().toString());
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String value = entry.getValue().toString();
 
-        if (doColour)
-            Messanger.addColour(format);
+            if (doColour)
+                value = Messanger.addColour(value);
+
+            format = format.replace(entry.getKey(), value);
+        }
 
         return format;
     }
