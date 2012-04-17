@@ -201,8 +201,8 @@ public class Parser {
         if (formatAll == null)
             return msg;
 
-        if (!plugin.getAPI().checkPermissions(pName, world, "mchat.coloredchat"))
-            msg = Messanger.removeColour(msg);
+        if (plugin.getAPI().checkPermissions(pName, world, "mchat.coloredchat"))
+            msg = Messanger.addColour(msg);
 
         if (!plugin.getAPI().checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
@@ -255,9 +255,9 @@ public class Parser {
 
         formatAll = replaceCustVars(pName, formatAll);
 
-        formatAll = replaceVars(formatAll, fVarMap.descendingMap());
-        formatAll = replaceVars(formatAll, rVarMap.descendingMap());
-        formatAll = replaceVars(formatAll, lVarMap.descendingMap());
+        formatAll = replaceVars(formatAll, fVarMap.descendingMap(), true);
+        formatAll = replaceVars(formatAll, rVarMap.descendingMap(), true);
+        formatAll = replaceVars(formatAll, lVarMap.descendingMap(), false);
 
         return formatAll;
     }
@@ -375,11 +375,14 @@ public class Parser {
         return sb.toString();
     }
 
-    private String replaceVars(String format, Map<String, Object> map) {
+    private String replaceVars(String format, Map<String, Object> map, Boolean doColour) {
         for (Map.Entry<String, Object> entry : map.entrySet())
             format = format.replace(entry.getKey(), entry.getValue().toString());
 
-        return Messanger.addColour(format);
+        if (doColour)
+            Messanger.addColour(format);
+
+        return format;
     }
 
     private String replaceCustVars(String pName, String format) {
@@ -390,7 +393,7 @@ public class Parser {
             String value = entry.getValue();
 
             if (format.contains(pKey))
-                format = format.replace(pKey, value);
+                format = format.replace(pKey, Messanger.addColour(value));
         }
 
         for (Map.Entry<String, String> entry : varMap.entrySet()) {
@@ -398,7 +401,7 @@ public class Parser {
             String value = entry.getValue();
 
             if (format.contains(gKey))
-                format = format.replace(gKey, value);
+                format = format.replace(gKey, Messanger.addColour(value));
         }
 
         return format;
