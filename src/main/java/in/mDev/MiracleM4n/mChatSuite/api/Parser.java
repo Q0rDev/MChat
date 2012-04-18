@@ -195,6 +195,8 @@ public class Parser {
 
         formatAll = formatAll.replaceAll("%", "%%");
 
+        formatAll = Messanger.addColour(formatAll);
+
         if (plugin.cLockRange > 0)
             msg = fixCaps(msg, plugin.cLockRange);
 
@@ -255,8 +257,8 @@ public class Parser {
 
         formatAll = replaceCustVars(pName, formatAll);
 
-        formatAll = Messanger.addColour(replaceVars(formatAll, fVarMap.descendingMap(), true));
-        formatAll = Messanger.addColour(replaceVars(formatAll, rVarMap.descendingMap(), true));
+        formatAll = replaceVars(formatAll, fVarMap.descendingMap(), true);
+        formatAll = replaceVars(formatAll, rVarMap.descendingMap(), true);
         formatAll = replaceVars(formatAll, lVarMap.descendingMap(), false);
 
         return formatAll;
