@@ -205,7 +205,7 @@ public class PlayerListener implements Listener {
         if (plugin.alterEvents)
             if (plugin.sJoinB) {
                 suppressEventMessage(plugin.getParser().parseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", plugin.sJoinI);
-                event.setJoinMessage("");
+                event.setJoinMessage(null);
             } else
                 event.setJoinMessage(plugin.getParser().parseEventName(mPName, world) + " " + plugin.getReader().getEventMessage(EventType.JOIN));
     }
@@ -233,7 +233,7 @@ public class PlayerListener implements Listener {
 
         if (plugin.sKickB) {
             suppressEventMessage(plugin.getParser().parseEventName(pName, world) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick",plugin.sKickI);
-            event.setLeaveMessage("");
+            event.setLeaveMessage(null);
         } else
             event.setLeaveMessage(plugin.getParser().parseEventName(pName, world) + " " + kickMsg);
     }
@@ -252,7 +252,7 @@ public class PlayerListener implements Listener {
 
         if (plugin.sQuitB) {
             suppressEventMessage(plugin.getParser().parseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", plugin.sQuitI);
-            event.setQuitMessage("");
+            event.setQuitMessage(null);
         } else
             event.setQuitMessage(plugin.getParser().parseEventName(pName, world) + " " + plugin.getReader().getEventMessage(EventType.QUIT));
     }
