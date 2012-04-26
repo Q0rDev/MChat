@@ -139,7 +139,7 @@ public class PlayerListener implements Listener {
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 if (isSpy(players.getName(), players.getWorld().getName()))
-                    player.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
+                    players.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
                 else if (players.getWorld() != player.getWorld())
                     event.getRecipients().remove(players);
                 else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
@@ -147,11 +147,6 @@ public class PlayerListener implements Listener {
             }
 
         event.setFormat(eventFormat);
-
-        if (plugin.eBroadcast) {
-            plugin.bMessage.checkState();
-            plugin.bMessage.sendMessage(eventFormat);
-        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -316,11 +311,6 @@ public class PlayerListener implements Listener {
             if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), permNode))
                     player.sendMessage(format);
-        }
-
-        if (plugin.eBroadcast) {
-            plugin.bMessage.checkState();
-            plugin.bMessage.sendMessage(format);
         }
 
         Messanger.log(format);

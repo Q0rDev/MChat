@@ -275,10 +275,5 @@ public class EntityListener implements Listener {
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death"))
                     player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
         }
-
-        if (plugin.eBroadcast) {
-            plugin.bMessage.checkState();
-            plugin.bMessage.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
-        }
     }
 }

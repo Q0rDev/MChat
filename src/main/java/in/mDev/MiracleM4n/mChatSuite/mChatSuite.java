@@ -8,7 +8,6 @@ import in.mDev.MiracleM4n.mChatSuite.api.*;
 import in.mDev.MiracleM4n.mChatSuite.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.events.*;
-import in.mDev.MiracleM4n.mChatSuite.external.*;
 import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 
 import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
@@ -60,9 +59,6 @@ public class mChatSuite extends JavaPlugin {
     Parser parser;
     Writer writer;
     Reader reader;
-
-    // External Messaging
-    public BroadcastMessage bMessage;
 
     // GroupManager
     public WorldsHolder gmPermissionsWH;
@@ -253,13 +249,6 @@ public class mChatSuite extends JavaPlugin {
         // Setup Commands
         setupCommands();
 
-        // External Messaging
-        bMessage = new BroadcastMessage(this);
-
-        if (eBroadcast)
-            if (bMessage.connect())
-                bMessage.startListeners();
-
         // Add All Players To Info.yml
         if (useAddDefault)
             for (Player players : getServer().getOnlinePlayers())
@@ -301,15 +290,7 @@ public class mChatSuite extends JavaPlugin {
         // 2nd Shutdown Timer
         sTime2 = new Date().getTime();
         sDiff = (sTime2 - sTime1);
-        shutdown = "[Sched: " + sDiff + "ms, ";
-
-        if (eBroadcast && bMessage != null)
-            bMessage.disconnect();
-
-        // 2st Shutdown Timer
-        sTime1 = new Date().getTime();
-        sDiff = (sTime1 - sTime2);
-        shutdown += "Ext Msg: " + sDiff + "ms]";
+        shutdown = "[Sched: " + sDiff + "ms]";
 
         Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!" + shutdown);
     }

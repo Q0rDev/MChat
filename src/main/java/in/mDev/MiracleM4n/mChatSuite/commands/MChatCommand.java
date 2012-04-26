@@ -437,13 +437,9 @@ public class MChatCommand implements CommandExecutor {
     String stringArgs(String[] args, Integer startingPoint) {
         String argString = "";
 
-        for (int i = startingPoint; i < args.length; ++i) {
-            if (i == args.length - 1) {
-                argString += args[i];
-            } else
-                argString += args[i] + " ";
-        }
+        for (int i = startingPoint; i < args.length; ++i)
+            argString += args[i] + " ";
 
-        return argString;
+        return argString.trim();
     }
 }
