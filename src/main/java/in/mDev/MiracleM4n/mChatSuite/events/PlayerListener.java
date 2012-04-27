@@ -138,12 +138,17 @@ public class PlayerListener implements Listener {
         // Chat Distance Stuff
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
-                if (isSpy(players.getName(), players.getWorld().getName()))
-                    players.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
-                else if (players.getWorld() != player.getWorld())
+                if (players.getWorld() != player.getWorld()) {
+                    if (isSpy(players.getName(), players.getWorld().getName()))
+                        players.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
+
                     event.getRecipients().remove(players);
-                else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance)
+                } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance) {
+                    if (isSpy(players.getName(), players.getWorld().getName()))
+                        players.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
+
                     event.getRecipients().remove(players);
+                }
             }
 
         event.setFormat(eventFormat);
