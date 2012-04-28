@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,7 +36,7 @@ public class AFKOtherCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.other")) {
-                    Messanger.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.other"));
+                    MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.other"));
                     return true;
                 }
             }
@@ -100,12 +100,12 @@ public class AFKOtherCommand implements CommandExecutor {
                 plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
                 if (plugin.useAFKList)
-                    if ((Messanger.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()))).length() > 15) {
-                        String pLName = Messanger.addColour("[<gold>AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
+                    if ((MessageUtil.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()))).length() > 15) {
+                        String pLName = MessageUtil.addColour("[<gold>AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
                         pLName = pLName.substring(0, 16);
                         afkTarget.setPlayerListName(pLName);
                     } else
-                        afkTarget.setPlayerListName(Messanger.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName())));
+                        afkTarget.setPlayerListName(MessageUtil.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName())));
 
                 return true;
             }
@@ -115,6 +115,6 @@ public class AFKOtherCommand implements CommandExecutor {
     }
 
     String formatPNF(String playerNotFound) {
-        return Messanger.format("&4Player &e'" + playerNotFound + "'&4 Not found.");
+        return MessageUtil.format("&4Player &e'" + playerNotFound + "'&4 Not found.");
     }
 }

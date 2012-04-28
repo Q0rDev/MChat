@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,7 +32,7 @@ public class SayCommand implements CommandExecutor {
                     Player player = (Player) sender;
 
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.say")) {
-                        Messanger.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.say"));
+                        MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.say"));
                         return true;
                     }
                 }

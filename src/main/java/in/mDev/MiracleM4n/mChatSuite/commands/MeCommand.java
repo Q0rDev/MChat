@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -36,13 +36,13 @@ public class MeCommand implements CommandExecutor {
                     if (plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.me"))
                         plugin.getServer().broadcastMessage(plugin.getParser().parseMe(player.getName(), world.getName(), message));
                     else
-                        Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.me"));
+                        MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.me"));
 
                     return true;
                 } else {
                     String senderName = "Console";
                     plugin.getServer().broadcastMessage("* " + senderName + " " + message);
-                    Messanger.log("* " + senderName + " " + message);
+                    MessageUtil.log("* " + senderName + " " + message);
                     return true;
                 }
             }

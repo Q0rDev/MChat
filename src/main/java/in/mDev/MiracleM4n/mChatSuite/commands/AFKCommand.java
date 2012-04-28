@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +30,7 @@ public class AFKCommand implements CommandExecutor {
             }
 
             if (!(sender instanceof Player)) {
-                Messanger.sendMessage(sender, "Console's can't be AFK.");
+                MessageUtil.sendMessage(sender, "Console's can't be AFK.");
                 return true;
             }
 
@@ -43,7 +43,7 @@ public class AFKCommand implements CommandExecutor {
                 }
 
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.self")) {
-                Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.self"));
+                MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.self"));
                 return true;
             }
 

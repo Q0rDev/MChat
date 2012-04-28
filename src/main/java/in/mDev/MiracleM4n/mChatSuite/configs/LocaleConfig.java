@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.configs;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
@@ -42,7 +42,7 @@ public class LocaleConfig {
 
     public String getOption(LocaleType option) {
         if (config.isSet(option.getOption()))
-            return Messanger.addColour(config.getString(option.getOption()));
+            return MessageUtil.addColour(config.getString(option.getOption()));
 
         return "";
     }
@@ -60,7 +60,7 @@ public class LocaleConfig {
 
             hasChanged = false;
 
-            Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "locale.yml"));
+            MessageUtil.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "locale.yml"));
         } catch (Exception ignored) {}
     }
 

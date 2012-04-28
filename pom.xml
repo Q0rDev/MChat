@@ -169,5 +169,12 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.palmergames</groupId>
+            <artifactId>Towny</artifactId>
+            <version>0.80.0.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

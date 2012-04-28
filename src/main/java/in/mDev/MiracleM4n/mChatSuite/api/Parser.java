@@ -4,10 +4,16 @@ import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
 
+import com.palmergames.bukkit.towny.NotRegisteredException;
+import com.palmergames.bukkit.towny.TownyFormatter;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+
+import com.palmergames.bukkit.towny.object.Town;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.entity.Player;
 
@@ -65,6 +71,19 @@ public class Parser {
         String hSExp = "";
         String hEBar = "";
         String hSEBar = "";
+
+        // Towny Vars
+        String tTown = "";
+        String tTownName = "";
+        String tTitle = "";
+        String tSurname = "";
+        String tResidentName = "";
+        String tPrefix = "";
+        String tNamePrefix = "";
+        String tPostfix = "";
+        String tNamePostfix = "";
+        String tNation = "";
+        String tNationName = "";
 
         // Location
         Double locX = (double) randomNumber(-100, 100);
@@ -148,7 +167,7 @@ public class Parser {
             dName = player.getDisplayName();
 
             // Initialize Heroes Vars
-            if (plugin.heroesB) {
+            if (plugin.heroesB)             {
                 Hero hero = plugin.heroes.getCharacterManager().getHero(player);
                 HeroClass heroClass = hero.getHeroClass();
                 HeroClass heroSClass = hero.getSecondClass();
@@ -187,6 +206,35 @@ public class Parser {
                 else
                     hMastered = plugin.hMasterF;
             }
+
+            if (plugin.townyB) {
+                try {
+                    Resident resident = new Resident(pName);
+
+                    if (resident.hasTown()) {
+                        Town town = resident.getTown();
+
+                        tTown = town.getName();
+                        tTownName = TownyFormatter.getFormattedTownName(town);
+
+                        tTitle = resident.getTitle();
+                        tSurname = resident.getSurname();
+                        tResidentName = resident.getFormattedName();
+
+                        tPrefix = resident.hasTitle() ? resident.getTitle() : TownyFormatter.getNamePrefix(resident);
+                        tNamePrefix = TownyFormatter.getNamePrefix(resident);
+                        tPostfix = resident.hasSurname() ? resident.getSurname() : TownyFormatter.getNamePostfix(resident);
+                        tNamePostfix = TownyFormatter.getNamePostfix(resident);
+
+                        if (resident.hasNation()) {
+                            Nation nation = town.getNation();
+
+                            tNation = nation.getTag();
+                            tNationName = TownyFormatter.getFormattedNationName(nation);
+                        }
+                    }
+                } catch (NotRegisteredException ignored) {}
+            }
         }
 
         String formatAll = parseVars(format, pName, world);
@@ -195,7 +243,7 @@ public class Parser {
 
         formatAll = formatAll.replaceAll("%", "%%");
 
-        formatAll = Messanger.addColour(formatAll);
+        formatAll = MessageUtil.addColour(formatAll);
 
         if (plugin.cLockRange > 0)
             msg = fixCaps(msg, plugin.cLockRange);
@@ -204,7 +252,7 @@ public class Parser {
             return msg;
 
         if (plugin.getAPI().checkPermissions(pName, world, "mchat.coloredchat"))
-            msg = Messanger.addColour(msg);
+            msg = MessageUtil.addColour(msg);
 
         if (!plugin.getAPI().checkPermissions(pName, world, "mchat.censorbypass"))
             msg = replaceCensoredWords(msg);
@@ -251,6 +299,19 @@ public class Parser {
         addVar(rVarMap, vI + "HSecExp," + vI + "HSEx", hSExp);
         addVar(rVarMap, vI + "HSecEBar," + vI + "HSEb", hSEBar);
         addVar(rVarMap, vI + "HSecLevel," + vI + "HSL", hSLevel);
+
+        addVar(rVarMap, vI + "town", tTown);
+        addVar(rVarMap, vI + "townname", tTownName);
+        addVar(rVarMap, vI + "townysurname", tSurname);
+        addVar(rVarMap, vI + "townytitle", tTitle);
+        addVar(rVarMap, vI + "townyresidentname", tResidentName);
+        addVar(rVarMap, vI + "townyprefix", tPrefix);
+        addVar(rVarMap, vI + "townynameprefix", tNamePrefix);
+        addVar(rVarMap, vI + "townypostfix", tPostfix);
+        addVar(rVarMap, vI + "townynamepostfix", tNamePostfix);
+        addVar(rVarMap, vI + "townynation", tNation);
+        addVar(rVarMap, vI + "townynationname", tNationName);
+
         addVar(rVarMap, vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getReader().getWorldName(pWorld));
 
         addVar(lVarMap, vI + "message," + vI + "msg," + vI + "m", msg);
@@ -382,7 +443,7 @@ public class Parser {
             String value = entry.getValue().toString();
 
             if (doColour)
-                value = Messanger.addColour(value);
+                value = MessageUtil.addColour(value);
 
             format = format.replace(entry.getKey(), value);
         }
@@ -398,7 +459,7 @@ public class Parser {
             String value = entry.getValue();
 
             if (format.contains(pKey))
-                format = format.replace(pKey, Messanger.addColour(value));
+                format = format.replace(pKey, MessageUtil.addColour(value));
         }
 
         for (Map.Entry<String, String> entry : varMap.entrySet()) {
@@ -406,7 +467,7 @@ public class Parser {
             String value = entry.getValue();
 
             if (format.contains(gKey))
-                format = format.replace(gKey, Messanger.addColour(value));
+                format = format.replace(gKey, MessageUtil.addColour(value));
         }
 
         return format;

@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -236,7 +236,7 @@ public class EntityListener implements Listener {
             return plugin.getParser().parseEventName(pName, world) + " " + plugin.getParser().parseMessage(pName, world, "", msg)
                     .replace(plugin.varIndicator + "killer", plugin.getParser().parseEventName(pCause, world));
 
-        return Messanger.addColour(plugin.getParser().parseEventName(pName, world) + " " +  plugin.getParser().parseMessage(pName, world, "", msg)
+        return MessageUtil.addColour(plugin.getParser().parseEventName(pName, world) + " " + plugin.getParser().parseMessage(pName, world, "", msg)
                 .replace(plugin.varIndicator + "killer", plugin.deathMobFormat)
                 .replace(plugin.varIndicator + "killer", pCause));
     }

@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.util;
 
 import org.bukkit.command.CommandSender;
 
-public class Messanger {
+public class MessageUtil {
 
     public static void sendRawMessage(CommandSender sender, String message) {
         sender.sendMessage(message);

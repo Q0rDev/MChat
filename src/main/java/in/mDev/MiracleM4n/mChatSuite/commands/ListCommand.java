@@ -3,7 +3,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,16 +27,16 @@ public class ListCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
-                    Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.list"));
+                    MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.list"));
                     return true;
                 }
             }
 
             // My Way
-            // sender.sendMessage(Messanger.addColour("&4" + plugin.getLocale().pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
+            // sender.sendMessage(MessageUtil.addColour("&4" + plugin.getLocale().pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
 
             // Waxdt's Way
-            sender.sendMessage(Messanger.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
+            sender.sendMessage(MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
             formatList(sender);
             return true;
         }
@@ -101,18 +101,18 @@ public class ListCommand implements CommandExecutor {
 
 
                 for (String arg : msgS)
-                    sender.sendMessage(Messanger.addColour(arg));
+                    sender.sendMessage(MessageUtil.addColour(arg));
             } else {
-                msg = Messanger.addColour(msg.replace("" + '\n', "&5 | &f"));
+                msg = MessageUtil.addColour(msg.replace("" + '\n', "&5 | &f"));
 
                 sender.sendMessage(msg);
             }
         } else
-            sender.sendMessage(Messanger.addColour(msg));
+            sender.sendMessage(MessageUtil.addColour(msg));
 
-        for (int i = 20; i < Messanger.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --").length(); i++)
+        for (int i = 20; i < MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --").length(); i++)
             line += "-";
 
-        sender.sendMessage(Messanger.addColour("&6" + line));
+        sender.sendMessage(MessageUtil.addColour("&6" + line));
     }
 }

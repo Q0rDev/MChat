@@ -1,7 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +19,7 @@ public class AcceptCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(Messanger.addColour("Console's can't send PM's.")));
+            sender.sendMessage(formatPMessage(MessageUtil.addColour("Console's can't send PM's.")));
             return true;
         }
 
@@ -31,7 +31,7 @@ public class AcceptCommand implements CommandExecutor {
             String rName = plugin.getInvite.get(pName);
 
             if (rName == null) {
-                player.sendMessage(formatPMessage(Messanger.addColour("No pending Convo request.")));
+                player.sendMessage(formatPMessage(MessageUtil.addColour("No pending Convo request.")));
                 return true;
             }
 
@@ -44,10 +44,10 @@ public class AcceptCommand implements CommandExecutor {
                 plugin.isConv.put(rName, true);
                 plugin.chatPartner.put(rName, pName);
                 plugin.chatPartner.put(pName, rName);
-                player.sendMessage(formatPMessage(Messanger.addColour("You have started a Convo with &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(Messanger.addColour("Convo request with &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 has been accepted.")));
+                player.sendMessage(formatPMessage(MessageUtil.addColour("You have started a Convo with &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4.")));
+                recipient.sendMessage(formatPMessage(MessageUtil.addColour("Convo request with &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 has been accepted.")));
             } else
-                player.sendMessage(formatPMessage(Messanger.addColour("No pending Convo request.")));
+                player.sendMessage(formatPMessage(MessageUtil.addColour("No pending Convo request.")));
 
             return true;
         }
@@ -56,6 +56,6 @@ public class AcceptCommand implements CommandExecutor {
     }
 
     String formatPMessage(String message) {
-        return (Messanger.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        return (MessageUtil.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
     }
 }

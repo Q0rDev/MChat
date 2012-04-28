@@ -3,12 +3,9 @@ package in.mDev.MiracleM4n.mChatSuite.configs;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
-
-import java.io.File;
-import java.io.IOException;
 
 public class CensorConfig {
     mChatSuite plugin;
@@ -35,7 +32,7 @@ public class CensorConfig {
             plugin.censor = config;
             plugin.censor.save(plugin.censorF);
 
-            Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "censor.yml"));
+            MessageUtil.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "censor.yml"));
         } catch (Exception ignored) {}
     }
 

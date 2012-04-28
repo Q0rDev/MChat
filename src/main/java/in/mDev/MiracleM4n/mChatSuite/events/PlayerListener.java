@@ -5,7 +5,7 @@ import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 import me.desmin88.mobdisguise.MobDisguise;
 
 import org.bukkit.ChatColor;
@@ -32,22 +32,23 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+        String pName = player.getName();
 
         if (!plugin.mChatEB)
             return;
 
-        plugin.lastMove.put(player.getName(), new Date().getTime());
+        plugin.lastMove.put(pName, new Date().getTime());
 
         for (String aliases : plugin.getCommand("mchatafk").getAliases())
             if (event.getMessage().contains("/" + aliases) ||
                     event.getMessage().contains("/mchatafk"))
                 return;
 
-        if (plugin.isAFK.get(player.getName()) == null)
+        if (plugin.isAFK.get(pName) == null)
             return;
 
-        if (plugin.isAFK.get(player.getName()))
-            player.performCommand("mafk");
+        if (plugin.isAFK.get(pName))
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + pName);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -101,9 +102,9 @@ public class PlayerListener implements Listener {
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                recipient.sendMessage(Messanger.addColour("&4[Convo] " + eventFormat));
-                player.sendMessage(Messanger.addColour("&4[Convo] " + eventFormat));
-                Messanger.log(Messanger.addColour("&4[Convo] " + eventFormat));
+                recipient.sendMessage(MessageUtil.addColour("&4[Convo] " + eventFormat));
+                player.sendMessage(MessageUtil.addColour("&4[Convo] " + eventFormat));
+                MessageUtil.log(MessageUtil.addColour("&4[Convo] " + eventFormat));
                 event.setCancelled(true);
             }
         }
@@ -121,7 +122,7 @@ public class PlayerListener implements Listener {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + Messanger.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getParser().parsePlayerName(mPName, world));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getParser().parsePlayerName(mPName, world));
 
             plugin.chatt.put(player.getName(), false);
 
@@ -231,7 +232,7 @@ public class PlayerListener implements Listener {
 
         String kickMsg = plugin.getReader().getEventMessage(EventType.KICK);
 
-        kickMsg = Messanger.addColour(kickMsg.replace(plugin.varIndicator + "reason", reason).replace(plugin.varIndicator + "r", reason));
+        kickMsg = MessageUtil.addColour(kickMsg.replace(plugin.varIndicator + "reason", reason).replace(plugin.varIndicator + "r", reason));
 
         if (msg == null)
             return;
@@ -274,7 +275,7 @@ public class PlayerListener implements Listener {
             if (sign.getLine(0).equals("[mChat]"))
                 if (plugin.getServer().getPlayer(sign.getLine(2)) != null)
                     if (sign.getLine(3) != null) {
-                        sign.setLine(1, Messanger.addColour("&f" + (plugin.getParser().parseMessage(sign.getLine(2), block.getWorld().getName(), "", sign.getLine(3)))));
+                        sign.setLine(1, MessageUtil.addColour("&f" + (plugin.getParser().parseMessage(sign.getLine(2), block.getWorld().getName(), "", sign.getLine(3)))));
                         sign.update(true);
                     }
         }
@@ -301,7 +302,7 @@ public class PlayerListener implements Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                Messanger.sendMessage(player, plugin.getLocale().getOption(LocaleType.PLAYER_STILL_AFK));
+                MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.PLAYER_STILL_AFK));
             } else
                 player.performCommand("mafk");
     }
@@ -318,7 +319,7 @@ public class PlayerListener implements Listener {
                     player.sendMessage(format);
         }
 
-        Messanger.log(format);
+        MessageUtil.log(format);
     }
 
     Boolean isSpy(String player, String world) {

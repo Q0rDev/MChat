@@ -8,7 +8,7 @@ import in.mDev.MiracleM4n.mChatSuite.api.*;
 import in.mDev.MiracleM4n.mChatSuite.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.events.*;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
 import net.milkbowl.vault.permission.Permission;
@@ -87,6 +87,9 @@ public class mChatSuite extends JavaPlugin {
     // Vault
     public Permission vPerm;
     public Boolean vaultB = false;
+
+    // Towny
+    public Boolean townyB = false;
 
     // ChannelManager
     public ChannelManager channelManager;
@@ -277,7 +280,7 @@ public class mChatSuite extends JavaPlugin {
         // Calculate Startup Timer
         sDiff = (sTime2 - sTime1);
 
-        Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "ms]");
+        MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "ms]");
     }
 
     public void onDisable() {
@@ -292,7 +295,7 @@ public class mChatSuite extends JavaPlugin {
         sDiff = (sTime2 - sTime1);
         shutdown = "[Sched: " + sDiff + "ms]";
 
-        Messanger.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!" + shutdown);
+        MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!" + shutdown);
     }
 
     void registerEvents() {
@@ -318,14 +321,14 @@ public class mChatSuite extends JavaPlugin {
         permTest = pm.getPlugin("PermissionsBukkit");
         if (permTest != null) {
             PermissionBuB = true;
-            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
         permTest = pm.getPlugin("bPermissions");
         if (permTest != null) {
             bPermB = true;
-            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
@@ -333,7 +336,7 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             pexPermissions = PermissionsEx.getPermissionManager();
             PEXB = true;
-            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
@@ -341,18 +344,18 @@ public class mChatSuite extends JavaPlugin {
         if (permTest != null) {
             gmPermissionsB = true;
             gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
-            Messanger.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
             return;
         }
 
-        Messanger.log("[" + pdfFile.getName() + "] <Permissions> SuperPerms hooked!.");
+        MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> SuperPerms hooked!.");
     }
 
     Boolean setupPlugin(String pluginName) {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {
-            Messanger.log("[" + pdfFile.getName() + "] <Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[" + pdfFile.getName() + "] <Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
             return true;
         }
 
@@ -375,6 +378,8 @@ public class mChatSuite extends JavaPlugin {
         spoutB = setupPlugin("Spout");
 
         vaultB = setupPlugin("Vault");
+
+        townyB = setupPlugin("Towny");
 
         if (vaultB) {
             RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);

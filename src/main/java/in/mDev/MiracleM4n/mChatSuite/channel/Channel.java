@@ -1,7 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.channel;
 
 import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -169,7 +169,7 @@ public class Channel {
         if (player == null || message == null)
             return;
 
-        String msg = Messanger.addColour(prefix + name + suffix) + " " + message;
+        String msg = MessageUtil.addColour(prefix + name + suffix) + " " + message;
 
         for (String names : getActiveOccupants()) {
             Player playerz = Bukkit.getServer().getPlayer(names);
@@ -194,14 +194,14 @@ public class Channel {
                 playerz.sendMessage(msg);
         }
 
-        Messanger.log(msg);
+        MessageUtil.log(msg);
     }
 
     public void broadcastMessage(String message) {
         if (message == null)
             return;
 
-        String msg = Messanger.addColour(prefix + name + suffix+ " " + message);
+        String msg = MessageUtil.addColour(prefix + name + suffix + " " + message);
 
         for (String names : getActiveOccupants()) {
             Player playerz = Bukkit.getServer().getPlayer(names);
@@ -212,6 +212,6 @@ public class Channel {
             playerz.sendMessage(msg);
         }
 
-        Messanger.log(msg);
+        MessageUtil.log(msg);
     }
 }

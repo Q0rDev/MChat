@@ -3,7 +3,7 @@ package in.mDev.MiracleM4n.mChatSuite.configs;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConfigurationOptions;
 
@@ -55,7 +55,7 @@ public class MainConfig {
 
             hasChanged = false;
 
-            Messanger.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "config.yml"));
+            MessageUtil.log(plugin.getLocale().getOption(LocaleType.CONFIG_UPDATED).replace("%config%", "config.yml"));
         } catch (Exception ignored) {}
     }
 

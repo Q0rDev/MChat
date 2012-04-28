@@ -2,7 +2,7 @@ package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,7 +24,7 @@ public class WhoCommand implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.who")) {
-                        Messanger.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.who"));
+                        MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.who"));
                         return true;
                     }
                 }
@@ -51,18 +51,18 @@ public class WhoCommand implements CommandExecutor {
         String loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
         String world = recipient.getWorld().getName();
 
-        Messanger.sendColouredMessage(sender, "Player Name: " + recipient.getName());
-        Messanger.sendColouredMessage(sender, "Display Name: " + recipient.getDisplayName());
-        Messanger.sendColouredMessage(sender, "Formatted Name: " + recipientName);
-        Messanger.sendColouredMessage(sender, "Player's Location: [ " + loc + " ]");
-        Messanger.sendColouredMessage(sender, "Player's World: " + world);
-        Messanger.sendColouredMessage(sender, "Player's Health: " + plugin.getAPI().createHealthBar(recipient) + " " + recipient.getHealth() + "/20");
-        Messanger.sendColouredMessage(sender, "Player's IP: " + recipient.getAddress().getHostString());
-        Messanger.sendColouredMessage(sender, "Current Item: " + recipient.getItemInHand().getType().name());
-        Messanger.sendColouredMessage(sender, "Entity ID: #" + recipient.getEntityId());
+        MessageUtil.sendColouredMessage(sender, "Player Name: " + recipient.getName());
+        MessageUtil.sendColouredMessage(sender, "Display Name: " + recipient.getDisplayName());
+        MessageUtil.sendColouredMessage(sender, "Formatted Name: " + recipientName);
+        MessageUtil.sendColouredMessage(sender, "Player's Location: [ " + loc + " ]");
+        MessageUtil.sendColouredMessage(sender, "Player's World: " + world);
+        MessageUtil.sendColouredMessage(sender, "Player's Health: " + plugin.getAPI().createHealthBar(recipient) + " " + recipient.getHealth() + "/20");
+        MessageUtil.sendColouredMessage(sender, "Player's IP: " + recipient.getAddress().getHostString());
+        MessageUtil.sendColouredMessage(sender, "Current Item: " + recipient.getItemInHand().getType().name());
+        MessageUtil.sendColouredMessage(sender, "Entity ID: #" + recipient.getEntityId());
     }
 
     String formatPNF(String playerNotFound) {
-        return Messanger.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
+        return MessageUtil.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
     }
 }

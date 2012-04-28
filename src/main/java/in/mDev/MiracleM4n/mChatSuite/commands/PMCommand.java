@@ -1,7 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -24,7 +24,7 @@ public class PMCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
-            Messanger.sendMessage(sender, "Console's can't send PM's.");
+            MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
 
@@ -34,7 +34,7 @@ public class PMCommand implements CommandExecutor {
 
         if (cmd.equalsIgnoreCase("pmchat")) {
             if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.pm")) {
-                Messanger.sendMessage(sender, "You are not allowed to use PM functions.");
+                MessageUtil.sendMessage(sender, "You are not allowed to use PM functions.");
                 return true;
             }
 
@@ -82,7 +82,7 @@ public class PMCommand implements CommandExecutor {
             }
 
             plugin.lastPMd.put(rName, pName);
-            Messanger.log(formatPMRecieve(senderName, world, message));
+            MessageUtil.log(formatPMRecieve(senderName, world, message));
             recipient.sendMessage(formatPMRecieve(senderName, world, message));
             return true;
         }
@@ -106,14 +106,14 @@ public class PMCommand implements CommandExecutor {
     }
 
     String formatPNF(String playerNotFound) {
-        return Messanger.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
+        return MessageUtil.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
     }
 
     String formatPMSend(String recipient, String world, String message) {
-        return Messanger.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getParser().parsePlayerName(recipient, world) + "&f: " + message);
+        return MessageUtil.addColour("&fMe &1-&2-&3-&4> &f" + plugin.getParser().parsePlayerName(recipient, world) + "&f: " + message);
     }
 
     String formatPMRecieve(String sender, String world, String message) {
-        return Messanger.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message);
+        return MessageUtil.addColour(plugin.getParser().parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message);
     }
 }

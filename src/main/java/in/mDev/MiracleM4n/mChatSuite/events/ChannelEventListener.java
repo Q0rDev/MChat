@@ -3,7 +3,6 @@ package in.mDev.MiracleM4n.mChatSuite.events;
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 
-import in.mDev.MiracleM4n.mChatSuite.util.Messanger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
