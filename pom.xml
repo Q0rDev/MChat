@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>in.mDev</groupId>
     <artifactId>mChatSuite</artifactId>
-    <version>DEV</version>
+    <version>${m.version}-${p.version}</version>
     <name>mChatSuite</name>
     <url>http://mDev.in/</url>
     <description>Full mChat Suite</description>
@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.5</m.version>
-        <p.version>R3_10</p.version>
+        <p.version>R3_11</p.version>
     </properties>
 
     <!-- Source code -->
