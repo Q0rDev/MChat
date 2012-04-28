@@ -85,6 +85,7 @@ public class Parser {
         String tNamePostfix = "";
         String tNation = "";
         String tNationName = "";
+        String tNationTag = "";
 
         // Location
         Double locX = (double) randomNumber(-100, 100);
@@ -230,8 +231,9 @@ public class Parser {
                         if (resident.hasNation()) {
                             Nation nation = town.getNation();
 
-                            tNation = nation.getTag();
-                            tNationName = TownyFormatter.getFormattedNationName(nation);
+                            tNation = nation.getName();
+                            tNationName = nation.getFormattedName();
+                            tNationTag = nation.getTag();
                         }
                     }
                 } catch (NotRegisteredException ignored) {}
@@ -312,6 +314,7 @@ public class Parser {
         addVar(rVarMap, vI + "townynamepostfix", tNamePostfix);
         addVar(rVarMap, vI + "townynation", tNation);
         addVar(rVarMap, vI + "townynationname", tNationName);
+        addVar(rVarMap, vI + "townynationtag", tNationTag);
 
         addVar(rVarMap, vI + "Worldname," + vI + "Wname," + vI + "W", plugin.getReader().getWorldName(pWorld));
 
