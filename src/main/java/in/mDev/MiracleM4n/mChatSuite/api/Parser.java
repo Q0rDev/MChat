@@ -4,13 +4,12 @@ import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
 
-import com.palmergames.bukkit.towny.NotRegisteredException;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
@@ -211,7 +210,7 @@ public class Parser {
 
             if (plugin.townyB) {
                 try {
-                    Resident resident = ((Towny) plugin.pm.getPlugin("Towny")).getTownyUniverse().getResident(pName);
+                    Resident resident = TownyUniverse.getDataSource().getResident(pName);
 
                     if (resident.hasTown()) {
                         Town town = resident.getTown();
@@ -236,7 +235,7 @@ public class Parser {
                             tNationTag = nation.getTag();
                         }
                     }
-                } catch (NotRegisteredException ignored) {}
+                } catch (Exception ignored) {}
             }
         }
 
