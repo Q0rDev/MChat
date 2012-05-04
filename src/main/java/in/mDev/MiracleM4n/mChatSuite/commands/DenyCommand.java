@@ -19,35 +19,38 @@ public class DenyCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(MessageUtil.addColour("Console's can't send PM's.")));
+            MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
+
+        if (!cmd.equalsIgnoreCase("pmchatdeny"))
+            return false;
 
         Player player = (Player) sender;
         String pName = player.getName();
-        String world = player.getWorld().getName();
+        String pWorld = player.getWorld().getName();
 
-        if (cmd.equalsIgnoreCase("pmchatdeny")) {
-            String rName = plugin.getInvite.get(pName);
-            Player recipient = plugin.getServer().getPlayer(rName);
-            String rWorld = recipient.getWorld().getName();
+        String rName = plugin.getInvite.get(pName);
 
-            if (rName != null && recipient != null) {
-                plugin.getInvite.remove(pName);
-                plugin.isConv.put(pName, false);
-                plugin.isConv.put(rName, false);
-                player.sendMessage(formatPMessage(MessageUtil.addColour("You have denied a Convo request from &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4.")));
-                recipient.sendMessage(formatPMessage(MessageUtil.addColour("Convo request with &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 has been denied.")));
-            } else
-                player.sendMessage(formatPMessage(MessageUtil.addColour("No pending Convo request.")));
-
+        if (rName == null) {
+            MessageUtil.sendMessage(sender, MessageUtil.addColour("No pending Convo request."));
             return true;
         }
 
-        return false;
-    }
+        Player recipient = plugin.getServer().getPlayer(rName);
+        String rWorld = recipient.getWorld().getName();
 
-    String formatPMessage(String message) {
-        return (MessageUtil.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+        if (recipient != null) {
+            plugin.getInvite.remove(pName);
+
+            plugin.isConv.put(pName, false);
+            plugin.isConv.put(rName, false);
+
+            MessageUtil.sendMessage(player, "You have denied a Convo request from &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4.");
+            MessageUtil.sendMessage(recipient, "Convo request with &5'&4" + plugin.getParser().parsePlayerName(pName, pWorld) + "&5'&4 has been denied.");
+        } else
+            MessageUtil.sendMessage(player, "Player: '" + rName + "' is not currently online.");
+
+        return true;
     }
 }

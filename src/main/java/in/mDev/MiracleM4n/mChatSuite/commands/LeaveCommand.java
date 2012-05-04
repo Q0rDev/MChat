@@ -19,39 +19,44 @@ public class LeaveCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(MessageUtil.addColour("Console's can't send PM's.")));
+            MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
+
+        if (!cmd.equalsIgnoreCase("pmchatleave"))
+            return false;
 
         Player player = (Player) sender;
         String pName = player.getName();
 
-        if (cmd.equalsIgnoreCase("pmchatleave")) {
-            String rName = plugin.chatPartner.get(pName);
-            Player recipient = null;
+        String rName = plugin.chatPartner.get(pName);
 
-            if (rName != null)
-                recipient = plugin.getServer().getPlayer(rName);
+        Boolean isConv = plugin.isConv.get(pName);
 
-            if (plugin.isConv.get(pName) == null)
-                player.sendMessage(formatPMessage(MessageUtil.addColour("You are not currently in a Convo.")));
-            else if (plugin.isConv.get(pName)) {
-                player.sendMessage(formatPMessage(MessageUtil.addColour("You have left the convo.")));
-                recipient.sendMessage(formatPMessage(MessageUtil.addColour("Conversation has been ended.")));
-                plugin.isConv.put(pName, false);
-                plugin.isConv.put(rName, false);
-                plugin.chatPartner.remove(rName);
-                plugin.chatPartner.remove(pName);
-            } else
-                player.sendMessage(formatPMessage(MessageUtil.addColour("You are not currently in a Convo.")));
+        if (rName == null || isConv == null) {
+
+            plugin.isConv.put(pName, false);
+            plugin.chatPartner.remove(pName);
 
             return true;
         }
 
-        return false;
-    }
+        if (isConv) {
+            MessageUtil.sendMessage(player, "You have left the convo.");
 
-    String formatPMessage(String message) {
-        return (MessageUtil.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
+            Player recipient = plugin.getServer().getPlayer(rName);
+
+            if (recipient != null)
+                MessageUtil.sendMessage(recipient, "Conversation has ended.");
+
+            plugin.isConv.put(pName, false);
+            plugin.isConv.put(rName, false);
+
+            plugin.chatPartner.remove(rName);
+            plugin.chatPartner.remove(pName);
+        } else
+            MessageUtil.sendMessage(player, "You are not currently in a Convo.");
+
+        return true;
     }
 }

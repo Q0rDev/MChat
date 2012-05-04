@@ -1,6 +1,7 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 import org.bukkit.command.Command;
@@ -19,50 +20,42 @@ public class InviteCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(formatPMessage(MessageUtil.addColour("Console's can't send PM's.")));
+            MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
+
+        if (!cmd.equalsIgnoreCase("pmchatinvite"))
+            return false;
 
         Player player = (Player) sender;
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        if (cmd.equalsIgnoreCase("pmchatinvite")) {
-            if (args.length < 1)
-                return false;
+        if (args.length < 1)
+            return false;
 
-            if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.pm.invite")) {
-                player.sendMessage(formatPMessage(MessageUtil.addColour("You are not allowed to use Invite functions.")));
-                return true;
-            }
-
-            Player recipient = plugin.getServer().getPlayer(args[0]);
-            String rName = recipient.getName();
-            String rWorld = recipient.getWorld().getName();
-
-            if (recipient == null) {
-                player.sendMessage(formatPNF(args[0]));
-                return true;
-            }
-
-            if (plugin.getInvite.get(rName) == null) {
-                plugin.getInvite.put(rName, pName);
-                player.sendMessage(formatPMessage(MessageUtil.addColour("You have invited &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.")));
-                recipient.sendMessage(formatPMessage(MessageUtil.addColour("You have been invited to a Convo by &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.")));
-            } else
-                player.sendMessage(formatPMessage(MessageUtil.addColour("&5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.")));
-
+        if (!plugin.getAPI().checkPermissions(sender, "mchat.pm.invite")) {
+            MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.pm.invite"));
             return true;
         }
 
-        return false;
-    }
+        Player recipient = plugin.getServer().getPlayer(args[0]);
+        String rName = recipient.getName();
+        String rWorld = recipient.getWorld().getName();
 
-    String formatPMessage(String message) {
-        return (MessageUtil.addColour("&4[" + (plugin.pdfFile.getName()) + "] " + message));
-    }
+        if (recipient == null) {
+            MessageUtil.sendMessage(player, "&4Player &e'" + args[0] + "'&4 not Found.");
+            return true;
+        }
 
-    String formatPNF(String playerNotFound) {
-        return (MessageUtil.addColour("&4[" + (plugin.pdfFile.getName()) + "]" + " Player &e" + playerNotFound + " &4not found."));
+        if (plugin.getInvite.get(rName) == null) {
+            plugin.getInvite.put(rName, pName);
+
+            MessageUtil.sendMessage(player, "You have invited &5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.");
+            MessageUtil.sendMessage(recipient, "You have been invited to a Convo by &5'&4" + plugin.getParser().parsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.");
+        } else
+            MessageUtil.sendMessage(player, "&5'&4" + plugin.getParser().parsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.");
+
+        return true;
     }
 }

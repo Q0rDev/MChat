@@ -302,8 +302,6 @@ public class mChatSuite extends JavaPlugin {
         if (!mAPIOnly) {
             pm.registerEvents(new PlayerListener(this), this);
 
-            pm.registerEvents(new BlockListener(this), this);
-
             pm.registerEvents(new EntityListener(this), this);
 
             pm.registerEvents(new ChannelEventListener(this), this);

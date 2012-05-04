@@ -23,98 +23,79 @@ public class AFKOtherCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String cmd = command.getName();
 
-        if (cmd.equalsIgnoreCase("mchatafkother")) {
-            String message = " Away From Keyboard";
+        if (cmd.equalsIgnoreCase("mchatafkother"))
+            return false;
 
-            if (args.length > 1) {
-                message = "";
-
-                for (int i = 1; i < args.length; ++i)
-                    message += " " + args[i];
-            }
-
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.other")) {
-                    MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.other"));
-                    return true;
-                }
-            }
-
-            if (plugin.getServer().getPlayer(args[0]) == null) {
-                sender.sendMessage(formatPNF(args[0]));
-                return true;
-            }
-
-            Player afkTarget = plugin.getServer().getPlayer(args[0]);
-
-            if (plugin.isAFK.get(afkTarget.getName()) != null &&
-                    plugin.isAFK.get(afkTarget.getName())) {
-                if (plugin.spoutB) {
-                    for (Player players : plugin.getServer().getOnlinePlayers()) {
-                        SpoutPlayer sPlayers = (SpoutPlayer) players;
-
-                        if (sPlayers.isSpoutCraftEnabled())
-                            sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", ""), Material.PAPER);
-                        else
-                            players.sendMessage(plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())));
-                    }
-
-                    SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
-
-                    sPlayer.setTitle(plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
-                } else
-                    plugin.getServer().broadcastMessage(plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())));
-
-                afkTarget.setSleepingIgnored(false);
-                plugin.isAFK.put(afkTarget.getName(), false);
-
-                if (plugin.useAFKList)
-                    if (plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()).length() > 15) {
-                        String pLName = plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName());
-                        pLName = pLName.substring(0, 16);
-                        afkTarget.setPlayerListName(pLName);
-                    } else
-                        afkTarget.setPlayerListName(plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
-
-                return true;
-            } else {
-                if (plugin.spoutB) {
-                    for (Player players : plugin.getServer().getOnlinePlayers()) {
-                        SpoutPlayer sPlayers = (SpoutPlayer) players;
-
-                        if (sPlayers.isSpoutCraftEnabled())
-                            sPlayers.sendNotification(afkTarget.getName(), plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", ""), Material.PAPER);
-                        else
-                            players.sendMessage(plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
-                    }
-
-                    SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
-
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- AFK -" + '\n' + plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
-                } else
-                    plugin.getServer().broadcastMessage(plugin.getLocale().getOption(LocaleType.PLAYER_AFK).replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
-
-                afkTarget.setSleepingIgnored(true);
-                plugin.isAFK.put(afkTarget.getName(), true);
-                plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
-
-                if (plugin.useAFKList)
-                    if ((MessageUtil.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()))).length() > 15) {
-                        String pLName = MessageUtil.addColour("[<gold>AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName()));
-                        pLName = pLName.substring(0, 16);
-                        afkTarget.setPlayerListName(pLName);
-                    } else
-                        afkTarget.setPlayerListName(MessageUtil.addColour("<gold>[AFK] " + plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName())));
-
-                return true;
-            }
+        if (!plugin.getAPI().checkPermissions(sender, "mchat.afk.other")) {
+            MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.other"));
+            return true;
         }
 
-        return false;
-    }
+        Player afkTarget = plugin.getServer().getPlayer(args[0]);
 
-    String formatPNF(String playerNotFound) {
-        return MessageUtil.format("&4Player &e'" + playerNotFound + "'&4 Not found.");
+        if (afkTarget == null) {
+            MessageUtil.sendMessage(sender, "&4Player &e'" + args[0] + "'&4 Not found.");
+            return true;
+        }
+
+        Boolean isAfk = plugin.isAFK.get(afkTarget.getName()) != null &&
+                plugin.isAFK.get(afkTarget.getName());
+
+        String notification = plugin.getLocale().getOption(LocaleType.PLAYER_AFK);
+
+        String message = "";
+
+        String title = plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName());
+
+
+        if (!isAfk) {
+            if (args.length > 0) {
+                for (int i = 1; i < args.length; ++i)
+                    message += " " + args[i];
+
+                message = message.trim();
+            } else
+                message = "Away From Keyboard";
+
+            notification = plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK);
+
+            title = ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- AFK -" + '\n' + title;
+        }
+
+        if (plugin.spoutB) {
+            for (Player players : plugin.getServer().getOnlinePlayers()) {
+                SpoutPlayer sPlayers = (SpoutPlayer) players;
+
+                if (sPlayers.isSpoutCraftEnabled())
+                    sPlayers.sendNotification(afkTarget.getName(), notification.replace("%player%", ""), Material.PAPER);
+                else
+                    players.sendMessage(notification.replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
+            }
+
+            SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
+
+            sPlayer.setTitle(title);
+        } else
+            plugin.getServer().broadcastMessage(notification.replace("%player%", plugin.getParser().parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
+
+        afkTarget.setSleepingIgnored(!isAfk);
+        plugin.isAFK.put(afkTarget.getName(), !isAfk);
+
+        String pLName = plugin.getParser().parseTabbedList(afkTarget.getName(), afkTarget.getWorld().getName());
+
+        if (!isAfk) {
+            plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
+
+            pLName = MessageUtil.addColour("<gold>[AFK] ") + pLName;
+        }
+
+        if (plugin.useAFKList)
+            if (pLName.length() > 15) {
+                pLName = pLName.substring(0, 16);
+                afkTarget.setPlayerListName(pLName);
+            } else
+                afkTarget.setPlayerListName(pLName);
+
+        return true;
     }
 }

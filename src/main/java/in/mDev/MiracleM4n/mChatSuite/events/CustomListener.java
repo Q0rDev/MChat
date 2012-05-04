@@ -21,6 +21,9 @@ public class CustomListener implements Listener {
     @EventHandler
     public void onKeyPressedEvent(KeyPressedEvent event) {
         SpoutPlayer player = event.getPlayer();
+
+        String pName = player.getName();
+
         Keyboard key = event.getKey();
         Keyboard chatKey = player.getChatKey();
         Keyboard forwardKey = player.getForwardKey();
@@ -28,13 +31,13 @@ public class CustomListener implements Listener {
         Keyboard leftKey = player.getLeftKey();
         Keyboard rightKey = player.getRightKey();
 
-        if (plugin.chatt.get(player.getName()) == null)
-            plugin.chatt.put(player.getName(), false);
+        if (plugin.chatt.get(pName) == null)
+            plugin.chatt.put(pName, false);
 
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + MessageUtil.addColour(plugin.getLocale().getOption(LocaleType.SPOUT_TYPING)) + '\n' + plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
+            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + MessageUtil.addColour(plugin.getLocale().getOption(LocaleType.SPOUT_TYPING)) + '\n' + plugin.getParser().parsePlayerName(pName, player.getWorld().getName()));
             plugin.chatt.put(player.getName(), true);
         }
 
@@ -43,8 +46,8 @@ public class CustomListener implements Listener {
                     (key.equals(backwardKey)) ||
                     (key.equals(leftKey)) ||
                     (key.equals(rightKey))) {
-                player.setTitle(plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
-                plugin.chatt.put(player.getName(), false);
+                player.setTitle(plugin.getParser().parsePlayerName(pName, player.getWorld().getName()));
+                plugin.chatt.put(pName, false);
             }
         }
     }

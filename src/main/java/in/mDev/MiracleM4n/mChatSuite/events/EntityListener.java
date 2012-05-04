@@ -1,19 +1,15 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
-
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class EntityListener implements Listener {
     mChatSuite plugin;
@@ -25,7 +21,7 @@ public class EntityListener implements Listener {
     Boolean messageTimeout = true;
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent event) {
+    public void onEntityDeath(PlayerDeathEvent event) {
         if (!plugin.alterDMessages)
             return;
 
@@ -35,7 +31,7 @@ public class EntityListener implements Listener {
         if (!(event instanceof PlayerDeathEvent))
             return;
 
-        Player player = (Player) event.getEntity();
+        Player player = event.getEntity();
 
         String pName = player.getName();
         String pCause = "";
@@ -43,7 +39,6 @@ public class EntityListener implements Listener {
 
         Boolean isPlayer = false;
 
-        PlayerDeathEvent subEvent = (PlayerDeathEvent) event;
         EntityDamageEvent dEvent = event.getEntity().getLastDamageCause();
 
         if (dEvent instanceof EntityDamageByEntityEvent) {
@@ -55,17 +50,26 @@ public class EntityListener implements Listener {
             } else if (damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) damageEvent.getDamager();
 
-                pCause = projectile.getShooter().getType().getName();
+                LivingEntity shooter = projectile.getShooter();
+
+                if (shooter == null) {
+                    pCause = "Unknown";
+                } else if (shooter instanceof Player) {
+                    Player pShooter = (Player) shooter;
+
+                    pCause = plugin.getParser().parsePlayerName(pShooter.getName(), pShooter.getWorld().getName());
+                } else
+                    pCause = shooter.getType().getName();
             } else
                 pCause = damageEvent.getDamager().getType().getName();
         }
 
         if (plugin.alterEvents)
             if (plugin.sDeathB) {
-                suppressDeathMessage(pName, pCause, world, subEvent.getDeathMessage(), plugin.sDeathI, isPlayer);
-                subEvent.setDeathMessage("");
+                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), plugin.sDeathI, isPlayer);
+                event.setDeathMessage(null);
             } else
-                subEvent.setDeathMessage(handlePlayerDeath(pName, pCause, world, subEvent.getDeathMessage(), isPlayer));
+                event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage(), isPlayer));
     }
 
     @EventHandler
@@ -95,84 +99,11 @@ public class EntityListener implements Listener {
         }
 
         if (event.getEntity() instanceof Player) {
-            final Player player = (Player) event.getEntity();
+            Player player = (Player) event.getEntity();
 
             if (plugin.isAFK.get(player.getName()) != null)
-                if (plugin.isAFK.get(player.getName())) {
+                if (plugin.isAFK.get(player.getName()))
                     event.setCancelled(true);
-                    return;
-                }
-
-            if (plugin.healthNotify) {
-                Runnable timeRunnable = new Runnable() {
-                    public void run() {
-                        messageTimeout = true;
-                    }
-                };
-
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        SpoutPlayer sPlayer = (SpoutPlayer) player;
-                        sPlayer.setTitle(plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
-                    }
-                };
-
-                if (messageTimeout) {
-                    for (Player players : plugin.getServer().getOnlinePlayers()) {
-                        if (players != player) {
-                            if (plugin.spoutB) {
-                                SpoutPlayer sPlayers = (SpoutPlayer) players;
-                                if (plugin.healthAchievement) {
-                                    if (sPlayers.isSpoutCraftEnabled()) {
-                                        if (player.getName().length() >= 25)
-                                            sPlayers.sendNotification(healthBarDamage(player, event.getDamage()), player.getName().substring(0, 24), Material.LAVA);
-                                        else
-                                            sPlayers.sendNotification(healthBarDamage(player, event.getDamage()), player.getName(), Material.LAVA);
-
-                                        continue;
-                                    }
-                                }
-                            }
-
-                            if ((player.getHealth() - event.getDamage()) < 1)
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DIED).replace("%player%", plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName())));
-                            else
-                                players.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.PLAYER_DAMAGED).replace("%player%", plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName())).replace("%health&", "" + (player.getHealth() - event.getDamage())));
-                        } else {
-                            if (plugin.spoutB) {
-                                SpoutPlayer sPlayer = (SpoutPlayer) player;
-                                if (plugin.healthAchievement) {
-                                    if (sPlayer.isSpoutCraftEnabled()) {
-                                        if ((player.getHealth() - event.getDamage()) < 1) {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption(LocaleType.YOU_DIED), Material.LAVA);
-                                        } else {
-                                            sPlayer.sendNotification(healthBarDamage(player, event.getDamage()), plugin.getLocale().getOption(LocaleType.YOU_DAMAGED).replace("%health&", "" + (player.getHealth() - event.getDamage())), Material.LAVA);
-                                        }
-                                    }
-                                }
-                            }
-
-                            if ((player.getHealth() - event.getDamage()) < 1)
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.YOU_DIED));
-                            else
-                                player.sendMessage(healthBarDamage(player, event.getDamage()) + " " + plugin.getLocale().getOption(LocaleType.YOU_DAMAGED).replace("%health&", "" + (player.getHealth() - event.getDamage())));
-                        }
-                    }
-
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, timeRunnable, 20);
-                    messageTimeout = false;
-                }
-
-                if (plugin.spoutB) {
-                    SpoutPlayer sPlayer = (SpoutPlayer) player;
-
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 4 * 20);
-
-                    sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + healthBarDamage(player, event.getDamage()) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getParser().parsePlayerName(player.getName(), player.getWorld().getName()));
-
-                    plugin.chatt.put(player.getName(), false);
-                }
-            }
         }
     }
 

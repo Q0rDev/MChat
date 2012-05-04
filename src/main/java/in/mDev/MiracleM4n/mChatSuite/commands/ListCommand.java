@@ -23,25 +23,21 @@ public class ListCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String cmd = command.getName();
 
-        if (cmd.equalsIgnoreCase("mchatlist")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if (!plugin.getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.list")) {
-                    MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.list"));
-                    return true;
-                }
-            }
+        if (!cmd.equalsIgnoreCase("mchatlist"))
+            return false;
 
-            // My Way
-            // sender.sendMessage(MessageUtil.addColour("&4" + plugin.getLocale().pOffline + ": &8" + plugin.getServer().getOnlinePlayers().length + "/" + plugin.getServer().getMaxPlayers()));
+        if (!(sender instanceof Player))
+            return false;
 
-            // Waxdt's Way
-            sender.sendMessage(MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
-            formatList(sender);
+        if (!plugin.getAPI().checkPermissions(sender, "mchat.list")) {
+            MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.list"));
             return true;
         }
 
-        return false;
+        sender.sendMessage(MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
+        formatList(sender);
+
+        return true;
     }
 
     void formatList(CommandSender sender) {

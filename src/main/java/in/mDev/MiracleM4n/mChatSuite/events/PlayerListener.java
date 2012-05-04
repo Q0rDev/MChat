@@ -3,12 +3,13 @@ package in.mDev.MiracleM4n.mChatSuite.events;
 import in.mDev.MiracleM4n.mChatSuite.types.EventType;
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
 import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
+
 import me.desmin88.mobdisguise.MobDisguise;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -111,27 +112,29 @@ public class PlayerListener implements Listener {
 
         // MChatEssentials
         if (plugin.mChatEB) {
-            if (plugin.isAFK.get(player.getName()) != null)
-                if (plugin.isAFK.get(player.getName()))
+            if (plugin.isAFK.get(pName) != null)
+                if (plugin.isAFK.get(pName))
                     player.performCommand("mafk");
 
-            plugin.lastMove.put(player.getName(), new Date().getTime());
+            plugin.lastMove.put(pName, new Date().getTime());
         }
 
         if (plugin.spoutB) {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = mPName;
 
-            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + " -" + '\n' + plugin.getParser().parsePlayerName(mPName, world));
+            sPlayer.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase())
+                    + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase())
+                    + " -" + '\n' + plugin.getParser().parsePlayerName(mPName, world));
 
-            plugin.chatt.put(player.getName(), false);
+            plugin.chatt.put(pName, false);
 
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
                     SpoutPlayer sPlayer = (SpoutPlayer) plugin.getServer().getPlayer(sPName);
 
                     if (sPlayer != null)
-                        sPlayer.setTitle(plugin.getParser().parsePlayerName(sPlayer.getName(), sPlayer.getWorld().getName()));
+                        sPlayer.setTitle(plugin.getParser().parsePlayerName(sPName, sPlayer.getWorld().getName()));
                 }
             }, 7 * 20);
         }
@@ -139,12 +142,8 @@ public class PlayerListener implements Listener {
         // Chat Distance Stuff
         if (plugin.chatDistance > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
-                if (players.getWorld() != player.getWorld()) {
-                    if (isSpy(players.getName(), players.getWorld().getName()))
-                        players.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
-
-                    event.getRecipients().remove(players);
-                } else if (players.getLocation().distance(player.getLocation()) > plugin.chatDistance) {
+                if (players.getWorld() != player.getWorld()
+                        || players.getLocation().distance(player.getLocation()) > plugin.chatDistance) {
                     if (isSpy(players.getName(), players.getWorld().getName()))
                         players.sendMessage(eventFormat.replace(plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL), plugin.getLocale().getOption(LocaleType.FORMAT_FORWARD)));
 
@@ -165,15 +164,12 @@ public class PlayerListener implements Listener {
         String msg = event.getJoinMessage();
 
         Channel dChannel = plugin.getChannelManager().getDefaultChannel();
+        Channel cChannel = plugin.getChannelManager().getChannel(pName);
 
-        if (dChannel != null) {
+        if (dChannel != null && cChannel == null) {
             dChannel.addOccupant(pName, true);
             dChannel.broadcastMessage(plugin.getParser().parsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
         }
-
-        if (plugin.mobD)
-            if (MobDisguise.p2p.get(pName) != null)
-                mPName = MobDisguise.p2p.get(pName);
 
         final String rPName = mPName;
 
@@ -272,7 +268,7 @@ public class PlayerListener implements Listener {
 
         if (block.getTypeId() == 63) {
             Sign sign = (Sign) block;
-            if (sign.getLine(0).equals("[mChat]"))
+            if (sign.getLine(0).equals("[MChat]"))
                 if (plugin.getServer().getPlayer(sign.getLine(2)) != null)
                     if (sign.getLine(3) != null) {
                         sign.setLine(1, MessageUtil.addColour("&f" + (plugin.getParser().parseMessage(sign.getLine(2), block.getWorld().getName(), "", sign.getLine(3)))));
@@ -283,8 +279,25 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (event.getTo().getBlock()
-                == event.getFrom().getBlock())
+        Location from = event.getFrom();
+        Location to = event.getTo();
+
+        Integer fromX = from.getBlockX();
+        Integer fromY = from.getBlockY();
+        Integer fromZ = from.getBlockZ();
+
+        Integer toX = to.getBlockX();
+        Integer toY = to.getBlockY();
+        Integer toZ = to.getBlockZ();
+
+
+        String fromLoc = from.getWorld().getName() + "|" + fromX + "|" + fromY + "|" + fromZ;
+        String toLoc = to.getWorld().getName() + "|" + toX + "|" + toY + "|" + toZ;
+
+        if (fromLoc.equalsIgnoreCase(toLoc))
+            return;
+
+        if (event.isCancelled())
             return;
 
         Player player = event.getPlayer();
