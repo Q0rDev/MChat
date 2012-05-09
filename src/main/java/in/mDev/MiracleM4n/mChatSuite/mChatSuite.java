@@ -181,7 +181,7 @@ public class mChatSuite extends JavaPlugin {
 
             pm.registerEvents(new EntityListener(this), this);
 
-            pm.registerEvents(new ChannelEventListener(this), this);
+            pm.registerEvents(new ChannelListener(this), this);
 
             pm.registerEvents(new CommandListener(this), this);
 

@@ -11,10 +11,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import java.util.Set;
 
-public class ChannelEventListener implements Listener {
+public class ChannelListener implements Listener {
     mChatSuite plugin;
 
-    public ChannelEventListener(mChatSuite instance) {
+    public ChannelListener(mChatSuite instance) {
         plugin = instance;
     }
 
