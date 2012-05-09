@@ -43,7 +43,7 @@ commands:
         ~permissions: mchat.say
     mchatafk:
         usage: |
-            /<command> [REASON] - Displays you as AFK (REASON is optional).
+            /<command> [REASON] - Displays you as AFK(REASON is optional).
         aliases: [mafk, maway]
         ~permissions: mchat.afk.self
     mchatafkother:

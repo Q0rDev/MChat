@@ -106,4 +106,8 @@ public enum ConfigType {
 
         return new ConfigObject(value);
     }
+
+    public String getValue() {
+        return option;
+    }
 }

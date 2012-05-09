@@ -22,7 +22,7 @@ public class AFKOtherCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String cmd = command.getName();
 
-        if (cmd.equalsIgnoreCase("mchatafkother"))
+        if (!cmd.equalsIgnoreCase("mchatafkother"))
             return false;
 
         if (!plugin.getAPI().checkPermissions(sender, "mchat.afk.other")) {
@@ -40,7 +40,7 @@ public class AFKOtherCommand implements CommandExecutor {
         Boolean isAfk = plugin.isAFK.get(afkTarget.getName()) != null &&
                 plugin.isAFK.get(afkTarget.getName());
 
-        String notification = LocaleType.PLAYER_AFK.getValue();
+        String notification = LocaleType.PLAYER_NOT_AFK.getValue();
 
         String message = "";
 
@@ -56,7 +56,7 @@ public class AFKOtherCommand implements CommandExecutor {
             } else
                 message = "Away From Keyboard";
 
-            notification = LocaleType.PLAYER_NOT_AFK.getValue();
+            notification = LocaleType.PLAYER_AFK.getValue();
 
             title = ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase()) + "- AFK -" + '\n' + title;
         }

@@ -23,7 +23,7 @@ public class AFKCommand implements CommandExecutor {
             return true;
         }
 
-        if (cmd.equalsIgnoreCase("mchatafk"))
+        if (!cmd.equalsIgnoreCase("mchatafk"))
             return false;
 
         String message = "";
@@ -38,8 +38,7 @@ public class AFKCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (plugin.isAFK.get(player.getName()) != null
-                && plugin.isAFK.get(player.getName())) {
+        if (isAfk(player.getName())) {
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + player.getName());
             return true;
         }
@@ -51,5 +50,10 @@ public class AFKCommand implements CommandExecutor {
 
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + sender.getName() + " " + message);
         return true;
+    }
+
+    Boolean isAfk(String player) {
+        return plugin.isAFK.get(player) != null
+                && plugin.isAFK.get(player);
     }
 }
