@@ -1,15 +1,17 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class EntityListener implements Listener {
     mChatSuite plugin;
@@ -22,7 +24,7 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
-        if (!plugin.alterDMessages)
+        if (!ConfigType.MCHAT_ALTER_DEATH.getObject().toBoolean())
             return;
 
         if (!(event.getEntity() instanceof Player))
@@ -64,9 +66,9 @@ public class EntityListener implements Listener {
                 pCause = damageEvent.getDamager().getType().getName();
         }
 
-        if (plugin.alterEvents)
-            if (plugin.sDeathB) {
-                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), plugin.sDeathI, isPlayer);
+        if (ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
+            if (ConfigType.SUPPRESS_USE_DEATH.getObject().toBoolean()) {
+                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), ConfigType.SUPPRESS_MAX_DEATH.getObject().toInteger(), isPlayer);
                 event.setDeathMessage(null);
             } else
                 event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage(), isPlayer));
@@ -74,7 +76,7 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        if (!plugin.mChatEB)
+        if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
             return;
 
         if (event.isCancelled())
@@ -112,52 +114,52 @@ public class EntityListener implements Listener {
             return dMsg;
 
         if (dMsg.contains("went up in flames"))
-            return deathMessage(pName, world, pCause, plugin.deathInFire, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_IN_FIRE.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("burned to death"))
-            return deathMessage(pName, world, pCause, plugin.deathOnFire, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_ON_FIRE.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("tried to swim in lava"))
-            return deathMessage(pName, world, pCause, plugin.deathLava, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_LAVA.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("suffocated in a wall"))
-            return deathMessage(pName, world, pCause, plugin.deathInWall, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_IN_WALL.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("drowned"))
-            return deathMessage(pName, world, pCause, plugin.deathDrown, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_DROWN.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("starved to death"))
-            return deathMessage(pName, world, pCause, plugin.deathStarve, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_STARVE.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("was pricked to death"))
-            return deathMessage(pName, world, pCause, plugin.deathCactus, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_CACTUS.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("hit the ground too hard"))
-            return deathMessage(pName, world, pCause, plugin.deathFall, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_FALL.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("fell out of the world"))
-            return deathMessage(pName, world, pCause, plugin.deathOutOfWorld, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_OUT_OF_WORLD.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("died"))
-            return deathMessage(pName, world, pCause, plugin.deathGeneric, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_GENERIC.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("blew up"))
-            return deathMessage(pName, world, pCause, plugin.deathExplosion, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_EXPLOSION.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("was killed by"))
-            return deathMessage(pName, world, pCause, plugin.deathMagic, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_MAGIC.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("was slain by"))
-            return deathMessage(pName, world, pCause, plugin.deathEntity, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_ENTITY.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("was shot by"))
-            return deathMessage(pName, world, pCause, plugin.deathArrow, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_ARROW.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("was fireballed by"))
-            return deathMessage(pName, world, pCause, plugin.deathFireball, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_FIREBALL.getObject().toString(), isPlayer);
 
         else if (dMsg.contains("was pummeled by"))
-            return deathMessage(pName, world, pCause, plugin.deathThrown, isPlayer);
+            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_THROWN.getObject().toString(), isPlayer);
 
         return dMsg;
     }
@@ -165,34 +167,11 @@ public class EntityListener implements Listener {
     String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
         if (isPlayer)
             return plugin.getParser().parseEventName(pName, world) + " " + plugin.getParser().parseMessage(pName, world, "", msg)
-                    .replace(plugin.varIndicator + "killer", plugin.getParser().parseEventName(pCause, world));
+                    .replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "killer", plugin.getParser().parseEventName(pCause, world));
 
         return MessageUtil.addColour(plugin.getParser().parseEventName(pName, world) + " " + plugin.getParser().parseMessage(pName, world, "", msg)
-                .replace(plugin.varIndicator + "killer", plugin.deathMobFormat)
-                .replace(plugin.varIndicator + "killer", pCause));
-    }
-
-    String healthBarDamage(Player player, Integer damage) {
-        float maxHealth = 20;
-        float barLength = 10;
-        float health = player.getHealth();
-        int fill = Math.round(((health - damage) / maxHealth) * barLength);
-
-        String barColor = (fill <= (barLength / 4)) ? "&4" : (fill <= (barLength / 7)) ? "&e" : "&2";
-
-        StringBuilder out = new StringBuilder();
-        out.append(barColor);
-
-        for (int i = 0; i < barLength; i++) {
-            if (i == fill)
-                out.append("&8");
-
-            out.append("|");
-        }
-
-        out.append("&f");
-
-        return out.toString().replaceAll("(&([A-Fa-f0-9]))", "\u00A7$2");
+                .replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "killer", ConfigType.MESSAGE_DEATH_MOB_FORMAT.getObject().toString())
+                .replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "killer", pCause));
     }
 
     void suppressDeathMessage(String pName, String pCause, String world, String dMsg, Integer max, Boolean isPlayer) {

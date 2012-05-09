@@ -2,7 +2,8 @@ package in.mDev.MiracleM4n.mChatSuite.types;
 
 public enum EventType {
     JOIN("join"),
-    QUIT("quit"),
+    QUIT("leave"),
+    LEAVE("leave"),
     KICK("kick");
 
     private final String name;

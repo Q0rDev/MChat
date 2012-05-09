@@ -1,9 +1,8 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,7 +34,7 @@ public class InviteCommand implements CommandExecutor {
             return false;
 
         if (!plugin.getAPI().checkPermissions(sender, "mchat.pm.invite")) {
-            MessageUtil.sendMessage(player, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.pm.invite"));
+            MessageUtil.sendMessage(player, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.pm.invite"));
             return true;
         }
 

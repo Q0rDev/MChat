@@ -1,9 +1,8 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,7 +36,7 @@ public class CustomListener implements Listener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + MessageUtil.addColour(plugin.getLocale().getOption(LocaleType.SPOUT_TYPING)) + '\n' + plugin.getParser().parsePlayerName(pName, player.getWorld().getName()));
+            player.setTitle(ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase()) + MessageUtil.addColour(LocaleType.SPOUT_TYPING.getValue()) + '\n' + plugin.getParser().parsePlayerName(pName, player.getWorld().getName()));
             plugin.chatt.put(player.getName(), true);
         }
 

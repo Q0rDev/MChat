@@ -1,16 +1,15 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class AFKOtherCommand implements CommandExecutor {
@@ -27,7 +26,7 @@ public class AFKOtherCommand implements CommandExecutor {
             return false;
 
         if (!plugin.getAPI().checkPermissions(sender, "mchat.afk.other")) {
-            MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.afk.other"));
+            MessageUtil.sendMessage(sender, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.afk.other"));
             return true;
         }
 
@@ -41,7 +40,7 @@ public class AFKOtherCommand implements CommandExecutor {
         Boolean isAfk = plugin.isAFK.get(afkTarget.getName()) != null &&
                 plugin.isAFK.get(afkTarget.getName());
 
-        String notification = plugin.getLocale().getOption(LocaleType.PLAYER_AFK);
+        String notification = LocaleType.PLAYER_AFK.getValue();
 
         String message = "";
 
@@ -57,9 +56,9 @@ public class AFKOtherCommand implements CommandExecutor {
             } else
                 message = "Away From Keyboard";
 
-            notification = plugin.getLocale().getOption(LocaleType.PLAYER_NOT_AFK);
+            notification = LocaleType.PLAYER_NOT_AFK.getValue();
 
-            title = ChatColor.valueOf(plugin.getLocale().getOption(LocaleType.SPOUT_COLOUR).toUpperCase()) + "- AFK -" + '\n' + title;
+            title = ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase()) + "- AFK -" + '\n' + title;
         }
 
         if (plugin.spoutB) {
@@ -89,7 +88,7 @@ public class AFKOtherCommand implements CommandExecutor {
             pLName = MessageUtil.addColour("<gold>[AFK] ") + pLName;
         }
 
-        if (plugin.useAFKList)
+        if (ConfigType.MCHATE_USE_AFK_LIST.getObject().toBoolean())
             if (pLName.length() > 15) {
                 pLName = pLName.substring(0, 16);
                 afkTarget.setPlayerListName(pLName);

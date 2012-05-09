@@ -1,39 +1,39 @@
 package in.mDev.MiracleM4n.mChatSuite.channel;
 
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.configs.ConfigUtil;
 import in.mDev.MiracleM4n.mChatSuite.types.ChannelEditType;
 import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ChannelManager {
-    mChatSuite plugin;
-    Set<Channel> channels;
+    static Set<Channel> channels = new HashSet<Channel>();
 
-    public ChannelManager(mChatSuite instance) {
-        plugin = instance;
+    public static void initialize() {
+        channels = new HashSet<Channel>();
 
-        this.channels = new HashSet<Channel>();
+        loadChannels();
     }
 
-    public Set<Channel> getChannels() {
+    public static Set<Channel> getChannels() {
         loadChannels();
 
         return channels;
     }
 
     /**
-     * Loads Channels from Config to Memory.
+     * Loads Channels from ConfigUtil to Memory.
      */
-    public void loadChannels() {
-        for (String key : plugin.channels.getKeys(false)) {
-            ChannelType type = ChannelType.fromName(plugin.channels.getString(key + ".type"));
-            String prefix = plugin.channels.getString(key + ".prefix", "[");
-            String suffix = plugin.channels.getString(key + ".suffix", "]");
-            Boolean passworded = plugin.channels.getBoolean(key + ".passworded", false);
-            String password = plugin.channels.getString(key + ".password");
-            Integer distance = plugin.channels.getInt(key + ".distance", -1);
-            Boolean defaulted = plugin.channels.getBoolean(key + ".default", false);
+    public static void loadChannels() {
+        for (String key : ConfigUtil.getConfig().getKeys(false)) {
+            ChannelType type = ChannelType.fromName(ConfigUtil.getConfig().getString(key + ".type"));
+            String prefix = ConfigUtil.getConfig().getString(key + ".prefix", "[");
+            String suffix = ConfigUtil.getConfig().getString(key + ".suffix", "]");
+            Boolean passworded = ConfigUtil.getConfig().getBoolean(key + ".passworded", false);
+            String password = ConfigUtil.getConfig().getString(key + ".password");
+            Integer distance = ConfigUtil.getConfig().getInt(key + ".distance", -1);
+            Boolean defaulted = ConfigUtil.getConfig().getBoolean(key + ".default", false);
 
             if (type == null)
                 type = ChannelType.GLOBAL;
@@ -43,7 +43,7 @@ public class ChannelManager {
     }
 
     /**
-     * Loads Channels from Config to Memory.
+     * Loads Channels from ConfigUtil to Memory.
      * @param name Name of Channel being created.
      * @param type Type of Channel being created.
      * @param prefix Prefix of Channel being created.
@@ -53,39 +53,35 @@ public class ChannelManager {
      * @param distance Distance used if Type is local.
      * @param defaulted Is Channel the Default channel.
      */
-    public void createChannel(String name, ChannelType type, String prefix, String suffix, Boolean passworded, String password, Integer distance, Boolean defaulted) {
+    public static void createChannel(String name, ChannelType type, String prefix, String suffix, Boolean passworded, String password, Integer distance, Boolean defaulted) {
         channels.add(new Channel(name.toLowerCase(), type, prefix, suffix, passworded, password, distance, defaulted));
 
-        plugin.channels.set(name.toLowerCase() + ".type", type.getName());
-        plugin.channels.set(name.toLowerCase() + ".prefix", prefix);
-        plugin.channels.set(name.toLowerCase() + ".suffix", suffix);
-        plugin.channels.set(name.toLowerCase() + ".passworded", passworded);
-        plugin.channels.set(name.toLowerCase() + ".password", password);
-        plugin.channels.set(name.toLowerCase() + ".distance", distance);
-        plugin.channels.set(name.toLowerCase() + ".default", defaulted);
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".type", type.getName());
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".prefix", prefix);
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".suffix", suffix);
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".passworded", passworded);
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".password", password);
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".distance", distance);
+        ConfigUtil.getConfig().set(name.toLowerCase() + ".default", defaulted);
 
         if (defaulted)
             setDefaultChannel(name);
 
-        try {
-            plugin.channels.save(plugin.channelsF);
-        } catch (Exception ignored) {}
+        ConfigUtil.save();
     }
 
     /**
-     * Removes a Channel from Config/Memory.
+     * Removes a Channel from ConfigUtil/Memory.
      * @param name Name of Channel being removed.
      */
-    public void removeChannel(String name) {
+    public static void removeChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name))
                 channels.remove(channel);
 
-        plugin.channels.set(name, null);
+        ConfigUtil.getConfig().set(name, null);
 
-        try {
-            plugin.channels.save(plugin.channelsF);
-        } catch (Exception ignored) {}
+        ConfigUtil.save();
     }
 
     /**
@@ -93,7 +89,7 @@ public class ChannelManager {
      * @param name Name of Channel being sought after.
      * @return Channel being sought after or null.
      */
-    public Channel getChannel(String name) {
+    public static Channel getChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name))
                 return channel;
@@ -102,9 +98,9 @@ public class ChannelManager {
     }
 
     /**
-     * Saves all Channels in Memory to Config.
+     * Saves all Channels in Memory to ConfigUtil.
      */
-    public void saveChannels() {
+    public static void saveChannels() {
         for (Channel channel : channels)
             saveChannel(channel);
     }
@@ -113,25 +109,23 @@ public class ChannelManager {
      * Saves a Channel from Memory to config.
      * @param channel Channel being saved.
      */
-    public void saveChannel(Channel channel) {
-        plugin.channels.set(channel.getName().toLowerCase() + ".type", channel.getType().getName().toLowerCase());
-        plugin.channels.set(channel.getName().toLowerCase() + ".prefix", channel.getPrefix());
-        plugin.channels.set(channel.getName().toLowerCase() + ".suffix", channel.getSuffix());
-        plugin.channels.set(channel.getName().toLowerCase() + ".passworded", channel.isPassworded());
-        plugin.channels.set(channel.getName().toLowerCase() + ".password", channel.getPassword());
-        plugin.channels.set(channel.getName().toLowerCase() + ".distance", channel.getDistance());
-        plugin.channels.set(channel.getName().toLowerCase() + ".default", channel.isDefault());
+    public static void saveChannel(Channel channel) {
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".type", channel.getType().getName().toLowerCase());
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".prefix", channel.getPrefix());
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".suffix", channel.getSuffix());
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".passworded", channel.isPassworded());
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".password", channel.getPassword());
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".distance", channel.getDistance());
+        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".default", channel.isDefault());
 
-        try {
-            plugin.channels.save(plugin.channelsF);
-        } catch (Exception ignored) {}
+        ConfigUtil.save();
     }
 
     /**
      * Makes a Channel the Default Channel.
      * @param name Name of Channel being defaulted.
      */
-    public void setDefaultChannel(String name) {
+    public static void setDefaultChannel(String name) {
         for (Channel channel : channels)
             if (channel.getName().equalsIgnoreCase(name)) {
                 channel.setDefault(true);
@@ -146,7 +140,7 @@ public class ChannelManager {
      * Reads Default Channel from Memory.
      * @return Default Channel or null.
      */
-    public Channel getDefaultChannel() {
+    public static Channel getDefaultChannel() {
         for (Channel channel : channels)
             if (channel.isDefault())
                 return channel;
@@ -159,10 +153,10 @@ public class ChannelManager {
      * @param player Player's name being sought.
      * @return Set containing all Channels the Player is Active in.
      */
-    public Set<Channel> getPlayersActiveChannels(String player) {
+    public static Set<Channel> getPlayersActiveChannels(String player) {
         Set<Channel> channels = new HashSet<Channel>();
 
-        for (Channel channelz : plugin.getChannelManager().getChannels())
+        for (Channel channelz : getChannels())
             if (channelz.getActiveOccupants().contains(player))
                 channels.add(channelz);
 
@@ -174,10 +168,10 @@ public class ChannelManager {
      * @param player Player's name being sought.
      * @return Set containing all Channels the Player is in.
      */
-    public Set<Channel> getPlayersChannels(String player) {
+    public static Set<Channel> getPlayersChannels(String player) {
         Set<Channel> channels = new HashSet<Channel>();
 
-        for (Channel channelz : plugin.getChannelManager().getChannels())
+        for (Channel channelz : getChannels())
             if (channelz.getOccupants().contains(player))
                 channels.add(channelz);
 
@@ -185,15 +179,15 @@ public class ChannelManager {
     }
 
     /**
-     * Loads Channels from Config to Memory.
+     * Loads Channels from ConfigUtil to Memory.
      * @param channel Name of Channel being edited.
      * @param type EditType being used.
      * @param option Option being used.
      */
-    public void editChannel(Channel channel, ChannelEditType type, Object option) {
+    public static void editChannel(Channel channel, ChannelEditType type, Object option) {
         if (option.getClass() == type.getOptionClass()) {
             if (type.getName().equalsIgnoreCase("Name")) {
-                plugin.channels.set(channel.getName(), null);
+                ConfigUtil.getConfig().set(channel.getName(), null);
 
                 channel.setName((String) option);
             } else if (type.getName().equalsIgnoreCase("Default"))

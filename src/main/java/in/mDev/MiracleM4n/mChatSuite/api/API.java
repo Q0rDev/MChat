@@ -1,7 +1,6 @@
 package in.mDev.MiracleM4n.mChatSuite.api;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

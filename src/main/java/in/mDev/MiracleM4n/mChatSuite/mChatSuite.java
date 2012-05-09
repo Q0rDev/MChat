@@ -1,58 +1,37 @@
 package in.mDev.MiracleM4n.mChatSuite;
 
 import com.herocraftonline.heroes.Heroes;
-
 import com.massivecraft.factions.Conf;
-
 import in.mDev.MiracleM4n.mChatSuite.api.*;
+import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
 import in.mDev.MiracleM4n.mChatSuite.commands.*;
 import in.mDev.MiracleM4n.mChatSuite.configs.*;
 import in.mDev.MiracleM4n.mChatSuite.events.*;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
-import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
 import net.milkbowl.vault.permission.Permission;
-
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
-
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import org.getspout.spoutapi.player.SpoutPlayer;
-
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-import java.io.File;
-import java.net.Socket;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 public class mChatSuite extends JavaPlugin {
     // Default Plugin Data
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
-
-    // Configs
-    public YamlConfiguration censor;
-    public YamlConfiguration channels;
-    public YamlConfiguration config;
-    public YamlConfiguration info;
-    public YamlConfiguration locale;
-
-    // Files
-    public File censorF;
-    public File channelsF;
-    public File configF;
-    public File infoF;
-    public File localeF;
 
     // External Class Relays
     API api;
@@ -91,101 +70,11 @@ public class mChatSuite extends JavaPlugin {
     // Towny
     public Boolean townyB = false;
 
+    // Spout
+    public Boolean spoutB = false;
+
     // ChannelManager
     public ChannelManager channelManager;
-
-    // Optional mChatSuite only Info Support
-    public Boolean useNewInfo = false;
-
-    // Optional Old Nodular Style Formatting
-    public Boolean useOldNodes = false;
-
-    // Optional Leveled Nodes
-    public Boolean useLeveledNodes = false;
-
-    // API Only Boolean
-    public Boolean mAPIOnly = false;
-
-    // Alter Event Messages Boolean
-    public Boolean alterEvents = true;
-    public Boolean alterDMessages = true;
-
-    // Add New Players Boolean
-    public Boolean useAddDefault = false;
-
-    // Info Related Variables
-    public String mIDefaultGroup = "default";
-
-    // Formatting
-    public String varIndicator = "+";
-    public String cusVarIndicator = "-";
-    public String tabbedListFormat = "+p+dn+s";
-    public String listCmdFormat = "+p+dn+s";
-    public String chatFormat = "+p+dn+s&f: +m";
-    public String nameFormat = "+p+dn+s&e";
-    public String eventFormat = "+p+dn+s&e";
-    public String meFormat = "* +p+dn+s&e +m";
-    public String dateFormat = "HH:mm:ss";
-
-    // Messages
-    public String joinMessage = "has joined the game.";
-    public String leaveMessage = "has left the game.";
-    public String kickMessage = "has been kicked from the game. [ +r ]";
-    public String deathInFire = "went up in flames.";
-    public String deathOnFire = "burned to death.";
-    public String deathLava = "tried to swim in lava.";
-    public String deathInWall = "suffocated in a wall.";
-    public String deathDrown = "drowned.";
-    public String deathStarve = "starved to death.";
-    public String deathCactus = "was pricked to death.";
-    public String deathFall = "hit the ground too hard.";
-    public String deathOutOfWorld = "fell out of the world.";
-    public String deathGeneric = "died.";
-    public String deathExplosion = "blew up.";
-    public String deathMagic = "was killed by magic.";
-    public String deathEntity = "was slain by +killer.";
-    public String deathMobFormat = "a +killer";
-    public String deathArrow = "was shot by +killer.";
-    public String deathFireball = "was fireballed by +killer.";
-    public String deathThrown = "was pummeled by +killer.";
-    public String hMasterT = "The Great";
-    public String hMasterF = "The Squire";
-
-    // Strings
-    public String eBroadcastIP = "ANY";
-
-    // Booleans
-    public Boolean spoutEnabled = true;
-    public Boolean healthNotify = false;
-    public Boolean healthAchievement = true;
-    public Boolean spoutB = false;
-    public Boolean mAFKHQ = true;
-    public Boolean mChatEB = false;
-    public Boolean useAFKList = false;
-    public Boolean mChatPB = false;
-    public Boolean spoutPM = false;
-    public Boolean sJoinB = false;
-    public Boolean sDeathB = false;
-    public Boolean sQuitB = false;
-    public Boolean sKickB = false;
-    public Boolean useIPRestrict = true;
-    public Boolean useGroupedList = true;
-    public Boolean eBroadcast = false;
-
-    // Numbers
-    public Integer AFKTimer = 30;
-    public Integer AFKKickTimer = 120;
-    public Integer sJoinI = 30;
-    public Integer sDeathI = 30;
-    public Integer sQuitI = 30;
-    public Integer sKickI = 30;
-    public Integer eBroadcastPort = 1940;
-    public Integer cLockRange = 3;
-
-    // Other Config Stuff
-    public Double chatDistance = -1.0;
-    public String cLVars = "default,Default";
-    public String listVar = "group";
 
     // Timers
     long sTime1;
@@ -211,9 +100,6 @@ public class mChatSuite extends JavaPlugin {
 
     public TreeMap<String, String> cVarMap = new TreeMap<String, String>();
 
-    // Lists
-    public ArrayList<Socket> queryList = new ArrayList<Socket>();
-
     public void onEnable() {
         // 1st Startup Timer
         sTime1 = new Date().getTime();
@@ -222,20 +108,11 @@ public class mChatSuite extends JavaPlugin {
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
 
-        // Initialize Configs
-        initializeConfigs();
-
         // First we kill EssentialsChat
         killEss();
 
-        // ChannelManager
-        channelManager = new ChannelManager(this);
-
-        // Initialize Class Relays
+        // Initialize Classes
         initializeClasses();
-
-        // Setup Configs
-        setupConfigs();
 
         // Setup Plugins
         setupPlugins();
@@ -253,12 +130,12 @@ public class mChatSuite extends JavaPlugin {
         setupCommands();
 
         // Add All Players To Info.yml
-        if (useAddDefault)
+        if (ConfigType.INFO_ADD_NEW_PLAYERS.getObject().toBoolean())
             for (Player players : getServer().getOnlinePlayers())
-                if (info.get("users." + players.getName()) == null)
-                    getWriter().addBase(players.getName(), mIDefaultGroup);
+                if (in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil.getConfig().get("users." + players.getName()) == null)
+                    getWriter().addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
 
-        if (mChatEB) {
+        if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
                 isAFK.put(players.getName(), false);
                 chatt.put(players.getName(), false);
@@ -299,7 +176,7 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void registerEvents() {
-        if (!mAPIOnly) {
+        if (!ConfigType.MCHAT_API_ONLY.getObject().toBoolean()) {
             pm.registerEvents(new PlayerListener(this), this);
 
             pm.registerEvents(new EntityListener(this), this);
@@ -388,7 +265,7 @@ public class mChatSuite extends JavaPlugin {
             vaultB = vPerm != null;
         }
 
-        if (!spoutEnabled)
+        if (!ConfigType.MCHAT_SPOUT.getObject().toBoolean())
             spoutB = false;
     }
 
@@ -405,60 +282,36 @@ public class mChatSuite extends JavaPlugin {
             pm.disablePlugin(plugin);
     }
 
-    void initializeConfigs() {
-        censorF = new File(getDataFolder(), "censor.yml");
-        channelsF = new File(getDataFolder(), "channels.yml");
-        configF = new File(getDataFolder(), "config.yml");
-        infoF = new File(getDataFolder(), "info.yml");
-        localeF = new File(getDataFolder(), "locale.yml");
-
-        censor = YamlConfiguration.loadConfiguration(censorF);
-        channels = YamlConfiguration.loadConfiguration(channelsF);
-        config = YamlConfiguration.loadConfiguration(configF);
-        info = YamlConfiguration.loadConfiguration(infoF);
-        locale = YamlConfiguration.loadConfiguration(localeF);
-
-        censor.options().indent(4);
-        channels.options().indent(4);
-        config.options().indent(4);
-        info.options().indent(4);
-        locale.options().indent(4);
-    }
-
     public void setupConfigs() {
-        getMainConfig().load();
-
-        getInfoConfig().load();
-
-        getCensorConfig().load();
-
-        getLocale().load();
-
-        getChannelConfig().load();
+        ConfigUtil.initialize();
+        InfoUtil.initialize();
+        CensorUtil.initialize();
+        LocaleUtil.initialize();
+        ChannelUtil.initialize();
     }
 
     public void reloadConfigs() {
-        getMainConfig().reload();
+        ConfigUtil.initialize();
 
-        getInfoConfig().reload();
+        InfoUtil.initialize();
 
-        getCensorConfig().reload();
+        CensorUtil.initialize();
 
-        getLocale().reload();
+        LocaleUtil.initialize();
 
-        getChannelConfig().reload();
+        ChannelUtil.initialize();
     }
 
     void setupTasks() {
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (!mChatEB)
+                if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
                     return;
 
-                if (AFKTimer < 1)
+                if (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() < 1)
                     return;
 
-                getMainConfig().reload();
+                ConfigUtil.initialize();
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (isAFK.get(player.getName()) == null)
@@ -469,7 +322,7 @@ public class mChatSuite extends JavaPlugin {
                             getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
                         continue;
 
-                    if (new Date().getTime() - (AFKTimer * 1000) > lastMove.get(player.getName())) {
+                    if (new Date().getTime() - (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName())) {
                         getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " AutoAfk");
                     } else
                         isAFK.put(player.getName(), false);
@@ -479,13 +332,13 @@ public class mChatSuite extends JavaPlugin {
 
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (!mChatEB)
+                if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
                     return;
 
-                if (AFKKickTimer < 1)
+                if (ConfigType.MCHATE_AFK_KICK_TIMER.getObject().toInteger() < 1)
                     return;
 
-                getMainConfig().reload();
+                ConfigUtil.initialize();
 
                 for (Player player : getServer().getOnlinePlayers()) {
                     if (getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afkkick"))
@@ -494,7 +347,7 @@ public class mChatSuite extends JavaPlugin {
                     if (!isAFK.get(player.getName()))
                         continue;
 
-                    if (new Date().getTime() - (AFKKickTimer * 1000) > lastMove.get(player.getName()))
+                    if (new Date().getTime() - (ConfigType.MCHATE_AFK_KICK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName()))
                         player.kickPlayer("mAFK Kick");
                 }
             }
@@ -524,43 +377,21 @@ public class mChatSuite extends JavaPlugin {
 
         regCommands("mchannel", new MChannelCommand(this));
     }
-    
+
     void regCommands(String command, CommandExecutor executor) {
         if (getCommand(command) != null)
             getCommand(command).setExecutor(executor);
     }
 
     void initializeClasses() {
+        setupConfigs();
+
+        ChannelManager.initialize();
+
         api = new API(this);
         parser = new Parser(this);
         reader = new Reader(this);
         writer = new Writer(this);
-    }
-
-
-    // Main Config (config.yml)
-    public MainConfig getMainConfig() {
-        return new MainConfig(this);
-    }
-
-    // Info Config (info.yml)
-    public InfoConfig getInfoConfig() {
-        return new InfoConfig(this);
-    }
-
-    // Censor Config (censor.yml)
-    public CensorConfig getCensorConfig() {
-        return new CensorConfig(this);
-    }
-
-    // Channel Config (channels.yml)
-    public ChannelConfig getChannelConfig() {
-        return new ChannelConfig(this);
-    }
-
-    // Language Config
-    public LocaleConfig getLocale() {
-        return new LocaleConfig(this);
     }
 
     // API
@@ -581,10 +412,5 @@ public class mChatSuite extends JavaPlugin {
     // Writer
     public Writer getWriter() {
         return writer;
-    }
-
-    // ChannelManager
-    public ChannelManager getChannelManager() {
-        return channelManager;
     }
 }

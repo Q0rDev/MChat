@@ -1,15 +1,15 @@
 package in.mDev.MiracleM4n.mChatSuite.events;
 
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
+import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
-import java.util.*;
+import java.util.Set;
 
 public class ChannelEventListener implements Listener {
     mChatSuite plugin;
@@ -25,7 +25,7 @@ public class ChannelEventListener implements Listener {
 
         Player player = event.getPlayer();
 
-        Set<Channel> channels = plugin.getChannelManager().getPlayersActiveChannels(player.getName());
+        Set<Channel> channels = ChannelManager.getPlayersActiveChannels(player.getName());
 
         if (channels.size() < 1)
             return;

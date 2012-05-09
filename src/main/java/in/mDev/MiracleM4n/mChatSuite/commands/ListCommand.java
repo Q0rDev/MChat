@@ -1,10 +1,10 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,7 +30,7 @@ public class ListCommand implements CommandExecutor {
             return false;
 
         if (!plugin.getAPI().checkPermissions(sender, "mchat.list")) {
-            MessageUtil.sendMessage(sender, plugin.getLocale().getOption(LocaleType.NO_PERMS).replace("%permission%", "mchat.list"));
+            MessageUtil.sendMessage(sender, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.list"));
             return true;
         }
 
@@ -48,7 +48,7 @@ public class ListCommand implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
-            String iVar = plugin.getReader().getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), plugin.listVar);
+            String iVar = plugin.getReader().getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), ConfigType.MCHATE_LIST_VAR.getObject().toString());
             String mName = plugin.getParser().parseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;
@@ -56,7 +56,7 @@ public class ListCommand implements CommandExecutor {
             if (iVar.isEmpty())
                 iVar = "Default";
 
-            for (String string : plugin.cLVars.split(",")) {
+            for (String string : ConfigType.MCHATE_COLLAPSED_LIST_VAR.getObject().toString().split(",")) {
                 if (!iVar.equals(string))
                     continue;
 
@@ -92,7 +92,7 @@ public class ListCommand implements CommandExecutor {
             msg += (entry.getKey() + ": &f" + entry.getValue() + '\n');
 
         if (msg.contains("" + '\n')) {
-            if (plugin.useGroupedList) {
+            if (ConfigType.MCHATE_USE_GROUPED_LIST.getObject().toBoolean()) {
                 msgS = msg.split("" + '\n');
 
 

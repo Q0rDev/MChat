@@ -1,9 +1,12 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import in.mDev.MiracleM4n.mChatSuite.configs.CensorUtil;
+import in.mDev.MiracleM4n.mChatSuite.configs.ConfigUtil;
+import in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil;
+import in.mDev.MiracleM4n.mChatSuite.configs.LocaleUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,8 +65,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.getMainConfig().reload();
-                        plugin.getMainConfig().load();
+                        ConfigUtil.initialize();
                         MessageUtil.sendMessage(sender, "Config Reloaded.");
                         return true;
                     } else if (args[1].equalsIgnoreCase("info")
@@ -74,8 +76,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.getInfoConfig().reload();
-                        plugin.getInfoConfig().load();
+                        InfoUtil.initialize();
                         MessageUtil.sendMessage(sender, "Info Reloaded.");
                         return true;
                     } else if (args[1].equalsIgnoreCase("censor")
@@ -86,8 +87,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.getCensorConfig().reload();
-                        plugin.getCensorConfig().load();
+                        CensorUtil.initialize();
                         MessageUtil.sendMessage(sender, "Censor Reloaded.");
                         return true;
                     } else if (args[1].equalsIgnoreCase("locale")
@@ -98,7 +98,7 @@ public class MChatCommand implements CommandExecutor {
                                 return true;
                             }
 
-                        plugin.getLocale().reload();
+                        LocaleUtil.initialize();
                         MessageUtil.sendMessage(sender, "Censor Reloaded.");
                         return true;
                     } else if (args[1].equalsIgnoreCase("all")

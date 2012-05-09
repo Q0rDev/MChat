@@ -2,7 +2,6 @@ package in.mDev.MiracleM4n.mChatSuite.channel;
 
 import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

@@ -2,20 +2,20 @@ package in.mDev.MiracleM4n.mChatSuite.api;
 
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
-
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
-
+import in.mDev.MiracleM4n.mChatSuite.configs.ConfigUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.EventType;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
-
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Reader {
     mChatSuite plugin;
@@ -24,7 +24,7 @@ public class Reader {
     public Reader(mChatSuite instance) {
         plugin = instance;
 
-        config = plugin.info;
+        config = ConfigUtil.getConfig();
     }
 
     //Info Stuff
@@ -38,13 +38,13 @@ public class Reader {
      * @return Raw Info.
      */
     public Object getRawInfo(String name, InfoType type, String world, String info) {
-        if (plugin.useLeveledNodes)
+        if (ConfigType.INFO_USE_LEVELED_NODES.getObject().toBoolean())
             return getLeveledInfo(name, world, info);
 
-        if (plugin.useOldNodes)
+        if (ConfigType.INFO_USE_OLD_NODES.getObject().toBoolean())
             return getBukkitInfo(name, world, info);
 
-        if (plugin.useNewInfo)
+        if (ConfigType.INFO_USE_NEW_INFO.getObject().toBoolean())
             return getMChatInfo(name, type, world, info);
 
         if (plugin.gmPermissionsB)
@@ -393,13 +393,13 @@ public class Reader {
         String event = "";
 
         if (type.getName().equalsIgnoreCase("join"))
-            event = plugin.joinMessage;
+            event = ConfigType.MESSAGE_JOIN.getObject().toString();
 
         else if (type.getName().equalsIgnoreCase("kick"))
-            event = plugin.kickMessage;
+            event = ConfigType.MESSAGE_KICK.getObject().toString();
 
-        else if (type.getName().equalsIgnoreCase("quit"))
-            event = plugin.leaveMessage;
+        else if (type.getName().equalsIgnoreCase("leave"))
+            event = ConfigType.MESSAGE_LEAVE.getObject().toString();
 
         return MessageUtil.addColour(event);
     }

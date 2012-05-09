@@ -1,8 +1,9 @@
 package in.mDev.MiracleM4n.mChatSuite.api;
 
+import in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
-
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Writer {
@@ -12,7 +13,7 @@ public class Writer {
     public Writer(mChatSuite instance) {
         plugin = instance;
 
-        config = plugin.info;
+        config = in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil.getConfig();
     }
 
     /**
@@ -24,7 +25,7 @@ public class Writer {
         String base = type.getName();
 
         if (type.equals(InfoType.USER))
-            config.set(base + "." + name + ".group", plugin.mIDefaultGroup);
+            config.set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
 
         config.set(base + "." + name + ".info.prefix", "");
         config.set(base + "." + name + ".info.suffix", "");
@@ -32,7 +33,7 @@ public class Writer {
         save();
 
         if (type.equals(InfoType.USER))
-            setDGroup(plugin.mIDefaultGroup);
+            setDGroup(ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
     }
 
     /**
@@ -195,9 +196,6 @@ public class Writer {
     }
 
     void save() {
-        try {
-            plugin.info = config;
-            plugin.info.save(plugin.infoF);
-        } catch (Exception ignored) {}
+        InfoUtil.save();
     }
 }

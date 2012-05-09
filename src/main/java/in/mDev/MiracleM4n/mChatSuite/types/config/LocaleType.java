@@ -1,4 +1,7 @@
-package in.mDev.MiracleM4n.mChatSuite.types;
+package in.mDev.MiracleM4n.mChatSuite.types.config;
+
+import in.mDev.MiracleM4n.mChatSuite.configs.LocaleUtil;
+import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
 
 public enum LocaleType {
     PLAYER_DIED("message.player.damaged"),
@@ -19,13 +22,16 @@ public enum LocaleType {
     CONFIG_RELOADED("message.config.reloaded"),
     CONFIG_UPDATED("message.config.updated");
 
-    private final String name;
+    private final String option;
 
-    LocaleType(String name) {
-        this.name = name;
+    LocaleType(String option) {
+        this.option = option;
     }
 
-    public String getOption() {
-        return name;
+    public String getValue() {
+        if (LocaleUtil.getConfig().isSet(option))
+            return MessageUtil.addColour(LocaleUtil.getConfig().getString(option));
+
+        return "";
     }
 }

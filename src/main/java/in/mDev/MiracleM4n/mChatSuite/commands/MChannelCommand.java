@@ -1,11 +1,11 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.channel.Channel;
+import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.ChannelEditType;
 import in.mDev.MiracleM4n.mChatSuite.types.ChannelType;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -86,7 +86,7 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
 
-                plugin.getChannelManager().createChannel(args[1], ChannelType.fromName(args[2]), "[", "]", false, "", -1, false);
+                ChannelManager.createChannel(args[1], ChannelType.fromName(args[2]), "[", "]", false, "", -1, false);
                 MessageUtil.sendMessage(sender, "You have successfully created Channel '" + args[1].toLowerCase() + "'.");
 
                 return true;
@@ -101,7 +101,7 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
 
-                plugin.getChannelManager().removeChannel(args[1]);
+                ChannelManager.removeChannel(args[1]);
                 MessageUtil.sendMessage(sender, "You have successfully removed Channel '" + args[1].toLowerCase() + "'.");
 
                 return true;
@@ -111,7 +111,7 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
 
-                if (plugin.getChannelManager().getChannel(args[1]) == null) {
+                if (ChannelManager.getChannel(args[1]) == null) {
                     MessageUtil.sendMessage(sender, "'" + args[1] + "' is not a valid channel.");
                     return true;
                 }
@@ -122,12 +122,12 @@ public class MChannelCommand implements CommandExecutor {
                 }
                 
                 ChannelEditType edit = ChannelEditType.fromName(args[2]);
-                Channel channel = plugin.getChannelManager().getChannel(args[1]);
+                Channel channel = ChannelManager.getChannel(args[1]);
                 Object option = null;
 
                 try {
                     if (edit.getName().equalsIgnoreCase("Default")) {
-                        plugin.getChannelManager().setDefaultChannel(channel.getName());
+                        ChannelManager.setDefaultChannel(channel.getName());
                         MessageUtil.sendMessage(sender, "You have successfully edited '" + args[1].toLowerCase() + "'.");
 
                         return true;
@@ -155,7 +155,7 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
 
-                plugin.getChannelManager().editChannel(channel, edit, option);
+                ChannelManager.editChannel(channel, edit, option);
                 MessageUtil.sendMessage(sender, "You have successfully edited '" + args[1].toLowerCase() + "'.");
 
                 return true;
@@ -177,7 +177,7 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
                 
-                Channel channel = plugin.getChannelManager().getChannel(args[1]);
+                Channel channel = ChannelManager.getChannel(args[1]);
 
                 if (channel == null)
                     MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
@@ -191,7 +191,7 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
 
-                plugin.getChannelManager().getChannel(args[1]).addOccupant(sender.getName(), true);
+                ChannelManager.getChannel(args[1]).addOccupant(sender.getName(), true);
                 MessageUtil.sendMessage(sender, "You have successfully joined '" + args[1].toLowerCase() + "'.");
 
                 return true;
@@ -206,10 +206,10 @@ public class MChannelCommand implements CommandExecutor {
                     return true;
                 }
 
-                if (plugin.getChannelManager().getChannel(args[1]) == null)
+                if (ChannelManager.getChannel(args[1]) == null)
                     MessageUtil.sendMessage(sender, "No Channel by the name of '" + "mchannel.leave." + args[1].toLowerCase() + "' could be found.");
 
-                plugin.getChannelManager().getChannel(args[1]).removeOccupant(sender.getName());
+                ChannelManager.getChannel(args[1]).removeOccupant(sender.getName());
                 MessageUtil.sendMessage(sender, "You have successfully left '" + args[1].toLowerCase() + "'.");
 
                 return true;

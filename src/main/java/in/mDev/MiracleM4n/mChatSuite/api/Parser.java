@@ -3,18 +3,17 @@ package in.mDev.MiracleM4n.mChatSuite.api;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
-
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
-
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
+import in.mDev.MiracleM4n.mChatSuite.configs.CensorUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
-import in.mDev.MiracleM4n.mChatSuite.types.LocaleType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
+import in.mDev.MiracleM4n.mChatSuite.types.config.LocaleType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +41,7 @@ public class Parser {
         Object suffix = plugin.getReader().getRawSuffix(pName, InfoType.USER, world);
         Object group = plugin.getReader().getRawGroup(pName, InfoType.USER, world);
 
-        String vI = plugin.varIndicator;
+        String vI = ConfigType.MCHAT_VAR_INDICATOR.getObject().toString();
 
         if (msg == null)
             msg = "";
@@ -111,7 +110,7 @@ public class Parser {
 
         // Time Var
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(plugin.dateFormat);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(ConfigType.FORMAT_DATE.getObject().toString());
         String time = dateFormat.format(now);
 
         // Display Name
@@ -122,9 +121,9 @@ public class Parser {
 
         if (plugin.isShouting.get(pName) != null
                 && plugin.isShouting.get(pName)) {
-            dType = plugin.getLocale().getOption(LocaleType.FORMAT_SHOUT);
-        } else if (plugin.chatDistance > 0) {
-            dType = plugin.getLocale().getOption(LocaleType.FORMAT_LOCAL);
+            dType = LocaleType.FORMAT_SHOUT.getValue();
+        } else if (ConfigType.MCHAT_CHAT_DISTANCE.getObject().toDouble() > 0) {
+            dType = LocaleType.FORMAT_LOCAL.getValue();
         }
 
         // Chat Distance Type
@@ -132,7 +131,7 @@ public class Parser {
 
         if (plugin.isSpying.get(pName) != null
                 && plugin.isSpying.get(pName))
-            sType = plugin.getLocale().getOption(LocaleType.FORMAT_SPY);
+            sType = LocaleType.FORMAT_SPY.getValue();
 
         // Player Object Stuff
         if (plugin.getServer().getPlayer(pName) != null)  {
@@ -203,9 +202,9 @@ public class Parser {
 
                 if ((hero.isMaster(heroClass))
                         && (heroSClass == null || hero.isMaster(heroSClass)))
-                    hMastered = plugin.hMasterT;
+                    hMastered = ConfigType.MESSAGE_HEROES_TRUE.getObject().toString();
                 else
-                    hMastered = plugin.hMasterF;
+                    hMastered = ConfigType.MESSAGE_HEROES_FALSE.getObject().toString();
             }
 
             if (plugin.townyB) {
@@ -247,8 +246,8 @@ public class Parser {
 
         formatAll = MessageUtil.addColour(formatAll);
 
-        if (plugin.cLockRange > 0)
-            msg = fixCaps(msg, plugin.cLockRange);
+        if (ConfigType.MCHAT_CAPS_LOCK_RANGE.getObject().toInteger() > 0)
+            msg = fixCaps(msg, ConfigType.MCHAT_CAPS_LOCK_RANGE.getObject().toInteger());
 
         if (formatAll == null)
             return msg;
@@ -264,7 +263,7 @@ public class Parser {
         TreeMap<String, Object> rVarMap = new TreeMap<String, Object>();
         TreeMap<String, Object> lVarMap = new TreeMap<String, Object>();
 
-        addVar(fVarMap, vI + "mnameformat," + vI + "mnf", plugin.nameFormat);
+        addVar(fVarMap, vI + "mnameformat," + vI + "mnf", ConfigType.FORMAT_NAME.getObject().toString());
         addVar(fVarMap, vI + "healthbar," + vI + "hb", healthbar);
 
         addVar(rVarMap, vI + "distancetype," + vI + "dtype", dType);
@@ -336,7 +335,7 @@ public class Parser {
      * @return Formatted Chat Message.
      */
     public String parseChatMessage(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, plugin.chatFormat);
+        return parseMessage(pName, world, msg, ConfigType.FORMAT_CHAT.getObject().toString());
     }
 
     /**
@@ -346,7 +345,7 @@ public class Parser {
      * @return Formatted Player Name.
      */
     public String parsePlayerName(String pName, String world) {
-        return parseMessage(pName, world, "", plugin.nameFormat);
+        return parseMessage(pName, world, "", ConfigType.FORMAT_NAME.getObject().toString());
     }
 
     /**
@@ -356,7 +355,7 @@ public class Parser {
      * @return Formatted Event Message.
      */
     public String parseEventName(String pName, String world) {
-        return parseMessage(pName, world, "", plugin.eventFormat);
+        return parseMessage(pName, world, "", ConfigType.FORMAT_EVENT.getObject().toString());
     }
 
     /**
@@ -366,7 +365,7 @@ public class Parser {
      * @return Formatted TabbedList Name.
      */
     public String parseTabbedList(String pName, String world) {
-        return parseMessage(pName, world, "", plugin.tabbedListFormat);
+        return parseMessage(pName, world, "", ConfigType.FORMAT_TABBED_LIST.getObject().toString());
     }
 
     /**
@@ -376,7 +375,7 @@ public class Parser {
      * @return Formatted ListCommand Name.
      */
     public String parseListCmd(String pName, String world) {
-        return parseMessage(pName, world, "", plugin.listCmdFormat);
+        return parseMessage(pName, world, "", ConfigType.FORMAT_LIST_CMD.getObject().toString());
     }
 
     /**
@@ -387,7 +386,7 @@ public class Parser {
      * @return Formatted Me Message.
      */
     public String parseMe(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, plugin.meFormat);
+        return parseMessage(pName, world, msg, ConfigType.FORMAT_ME.getObject().toString());
     }
 
 
@@ -426,7 +425,7 @@ public class Parser {
     }
 
     private String parseVars(String format, String pName, String world) {
-        String vI = "\\" + plugin.varIndicator;
+        String vI = "\\" + ConfigType.MCHAT_VAR_INDICATOR.getObject().toString();
         Pattern pattern = Pattern.compile(vI + "<(.*?)>");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
@@ -458,7 +457,7 @@ public class Parser {
         SortedMap<String, String> varMap = plugin.cVarMap.descendingMap();
 
         for (Map.Entry<String, String> entry : varMap.entrySet()) {
-            String pKey = plugin.cusVarIndicator + entry.getKey().replace(pName + "|", "");
+            String pKey = ConfigType.MCHAT_CUS_VAR_INDICATOR.getObject().toString() + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
             if (format.contains(pKey))
@@ -466,7 +465,7 @@ public class Parser {
         }
 
         for (Map.Entry<String, String> entry : varMap.entrySet()) {
-            String gKey = plugin.cusVarIndicator + entry.getKey().replace("%^global^%|", "");
+            String gKey = ConfigType.MCHAT_CUS_VAR_INDICATOR.getObject().toString() + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 
             if (format.contains(gKey))
@@ -477,10 +476,10 @@ public class Parser {
     }
 
     private String replaceCensoredWords(String msg) {
-        if (plugin.useIPRestrict)
+        if (ConfigType.MCHAT_IP_CENSOR.getObject().toBoolean())
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
 
-        for (Map.Entry<String, Object> entry : plugin.censor.getValues(false).entrySet()) {
+        for (Map.Entry<String, Object> entry : CensorUtil.getConfig().getValues(false).entrySet()) {
             String val = entry.getValue().toString();
 
             msg = replacer(msg, "(?i)" + entry.getKey(), val);

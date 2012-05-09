@@ -1,14 +1,13 @@
 package in.mDev.MiracleM4n.mChatSuite.commands;
 
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
 import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class ReplyCommand implements CommandExecutor {
@@ -57,7 +56,7 @@ public class ReplyCommand implements CommandExecutor {
 
                 plugin.lastPMd.put(rName, pName);
                 if (plugin.spoutB) {
-                    if (plugin.spoutPM) {
+                    if (ConfigType.MCHAT_SPOUT.getObject().toBoolean()) {
                         final SpoutPlayer sRecipient = (SpoutPlayer) recipient;
 
                         if (sRecipient.isSpoutCraftEnabled()) {
