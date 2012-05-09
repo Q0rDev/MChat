@@ -13,7 +13,7 @@ public class Writer {
     public Writer(mChatSuite instance) {
         plugin = instance;
 
-        config = in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil.getConfig();
+        config = InfoUtil.getConfig();
     }
 
     /**

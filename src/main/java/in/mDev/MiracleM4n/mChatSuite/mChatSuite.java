@@ -181,6 +181,8 @@ public class mChatSuite extends JavaPlugin {
 
             pm.registerEvents(new EntityListener(this), this);
 
+            pm.registerEvents(new ChatListener(this), this);
+
             pm.registerEvents(new ChannelListener(this), this);
 
             pm.registerEvents(new CommandListener(this), this);
@@ -292,13 +294,9 @@ public class mChatSuite extends JavaPlugin {
 
     public void reloadConfigs() {
         ConfigUtil.initialize();
-
         InfoUtil.initialize();
-
         CensorUtil.initialize();
-
         LocaleUtil.initialize();
-
         ChannelUtil.initialize();
     }
 

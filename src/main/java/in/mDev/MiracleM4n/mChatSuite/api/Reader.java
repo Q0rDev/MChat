@@ -4,7 +4,7 @@ import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
-import in.mDev.MiracleM4n.mChatSuite.configs.ConfigUtil;
+import in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.EventType;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
@@ -24,7 +24,7 @@ public class Reader {
     public Reader(mChatSuite instance) {
         plugin = instance;
 
-        config = ConfigUtil.getConfig();
+        config = InfoUtil.getConfig();
     }
 
     //Info Stuff
