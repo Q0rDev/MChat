@@ -2,31 +2,24 @@ package in.mDev.MiracleM4n.mChatSuite;
 
 import com.herocraftonline.heroes.Heroes;
 import com.massivecraft.factions.Conf;
+import com.miraclem4n.mchat.channels.ChannelManager;
+import com.miraclem4n.mchat.commands.*;
+import com.miraclem4n.mchat.configs.*;
+import com.miraclem4n.mchat.events.*;
+import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.util.MessageUtil;
 import in.mDev.MiracleM4n.mChatSuite.api.*;
-import in.mDev.MiracleM4n.mChatSuite.channel.ChannelManager;
-import in.mDev.MiracleM4n.mChatSuite.commands.*;
-import in.mDev.MiracleM4n.mChatSuite.configs.*;
-import in.mDev.MiracleM4n.mChatSuite.events.*;
-import in.mDev.MiracleM4n.mChatSuite.types.config.ConfigType;
-import in.mDev.MiracleM4n.mChatSuite.util.MessageUtil;
-import net.milkbowl.vault.permission.Permission;
-import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getspout.spoutapi.player.SpoutPlayer;
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 public class mChatSuite extends JavaPlugin {
     // Default Plugin Data
@@ -39,33 +32,12 @@ public class mChatSuite extends JavaPlugin {
     Writer writer;
     Reader reader;
 
-    // GroupManager
-    public WorldsHolder gmPermissionsWH;
-    public Boolean gmPermissionsB = false;
-
-    // PermissionsEX
-    public PermissionManager pexPermissions;
-    public Boolean PEXB = false;
-
-    // PermissionsBukkit
-    public Boolean PermissionBuB = false;
-
-    // bPermissions
-    public Boolean bPermB = false;
-
-    // MobDisguise
-    public Boolean mobD = false;
-
     // Factions
     public Boolean factionsB = false;
 
     // Heroes
     public Heroes heroes;
     public Boolean heroesB = false;
-
-    // Vault
-    public Permission vPerm;
-    public Boolean vaultB = false;
 
     // Towny
     public Boolean townyB = false;
@@ -87,9 +59,10 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
-    public HashMap<String, Boolean> isShouting = new HashMap<String, Boolean>();
-    public HashMap<String, Boolean> isSpying = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isMuted = new HashMap<String, Boolean>();
+
+    public static HashMap<String, Boolean> isShouting;
+    public static HashMap<String, Boolean> isSpying;
 
     public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
@@ -97,8 +70,6 @@ public class mChatSuite extends JavaPlugin {
     public HashMap<String, String> mPrefix = new HashMap<String, String>();
 
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
-
-    public TreeMap<String, String> cVarMap = new TreeMap<String, String>();
 
     public void onEnable() {
         // 1st Startup Timer
@@ -111,14 +82,18 @@ public class mChatSuite extends JavaPlugin {
         // First we kill EssentialsChat
         killEss();
 
-        // Initialize Classes
-        initializeClasses();
+        // Setup Static Variables
+        isShouting = new HashMap<String, Boolean>();
+        isSpying = new HashMap<String, Boolean>();
+
+        // Initialize Configs
+        initializeConfigs();
 
         // Setup Plugins
         setupPlugins();
 
-        // Setup Permissions
-        setupPerms();
+        // Initialize Classes
+        initializeClasses();
 
         // Register Events
         registerEvents();
@@ -132,8 +107,8 @@ public class mChatSuite extends JavaPlugin {
         // Add All Players To Info.yml
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getObject().toBoolean())
             for (Player players : getServer().getOnlinePlayers())
-                if (in.mDev.MiracleM4n.mChatSuite.configs.InfoUtil.getConfig().get("users." + players.getName()) == null)
-                    getWriter().addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
+                if (InfoUtil.getConfig().get("users." + players.getName()) == null)
+                    com.miraclem4n.mchat.api.Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
 
         if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
@@ -143,13 +118,10 @@ public class mChatSuite extends JavaPlugin {
 
                 if (spoutB) {
                     SpoutPlayer sPlayers = (SpoutPlayer) players;
-                    sPlayers.setTitle(getParser().parsePlayerName(players.getName(), players.getWorld().getName()));
+                    sPlayers.setTitle(com.miraclem4n.mchat.api.Parser.parsePlayerName(players.getName(), players.getWorld().getName()));
                 }
             }
         }
-
-        // Check for Automatic Factions Support
-        setupFactions();
 
         // 2nd Startup Timer
         sTime2 = new Date().getTime();
@@ -166,6 +138,10 @@ public class mChatSuite extends JavaPlugin {
         sTime1 = new Date().getTime();
 
         getServer().getScheduler().cancelTasks(this);
+
+        // Kill Static Variables
+        isShouting = null;
+        isSpying = null;
 
         // 2nd Shutdown Timer
         sTime2 = new Date().getTime();
@@ -192,42 +168,6 @@ public class mChatSuite extends JavaPlugin {
         }
     }
 
-    void setupPerms() {
-        Plugin permTest;
-
-        permTest = pm.getPlugin("PermissionsBukkit");
-        if (permTest != null) {
-            PermissionBuB = true;
-            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
-            return;
-        }
-
-        permTest = pm.getPlugin("bPermissions");
-        if (permTest != null) {
-            bPermB = true;
-            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
-            return;
-        }
-
-        permTest = pm.getPlugin("PermissionsEx");
-        if (permTest != null) {
-            pexPermissions = PermissionsEx.getPermissionManager();
-            PEXB = true;
-            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
-            return;
-        }
-
-        permTest = pm.getPlugin("GroupManager");
-        if (permTest != null) {
-            gmPermissionsB = true;
-            gmPermissionsWH = ((GroupManager) permTest).getWorldsHolder();
-            MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> " + permTest.getDescription().getName() + " v" + permTest.getDescription().getVersion() + " hooked!.");
-            return;
-        }
-
-        MessageUtil.log("[" + pdfFile.getName() + "] <Permissions> SuperPerms hooked!.");
-    }
-
     Boolean setupPlugin(String pluginName) {
         Plugin plugin = pm.getPlugin(pluginName);
 
@@ -240,11 +180,11 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void setupPlugins() {
-        // Setup MobDisguise
-        mobD = setupPlugin("MobDisguise");
-
-        // Setup Factions
+       // Setup Factions
         factionsB = setupPlugin("Factions");
+
+        if (factionsB)
+            setupFactions();
 
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
@@ -254,27 +194,15 @@ public class mChatSuite extends JavaPlugin {
 
         spoutB = setupPlugin("Spout");
 
-        vaultB = setupPlugin("Vault");
-
         townyB = setupPlugin("Towny");
-
-        if (vaultB) {
-            RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
-
-            if (permissionProvider != null)
-                vPerm = permissionProvider.getProvider();
-
-            vaultB = vPerm != null;
-        }
 
         if (!ConfigType.MCHAT_SPOUT.getObject().toBoolean())
             spoutB = false;
     }
 
     void setupFactions() {
-        if (factionsB)
-            if (!(Conf.chatTagInsertIndex == 0))
-                getServer().dispatchCommand(getServer().getConsoleSender(), "f config chatTagInsertIndex 0");
+        if (!(Conf.chatTagInsertIndex == 0))
+            getServer().dispatchCommand(getServer().getConsoleSender(), "f config chatTagInsertIndex 0");
     }
 
     void killEss() {
@@ -284,7 +212,7 @@ public class mChatSuite extends JavaPlugin {
             pm.disablePlugin(plugin);
     }
 
-    public void setupConfigs() {
+    public void initializeConfigs() {
         ConfigUtil.initialize();
         InfoUtil.initialize();
         CensorUtil.initialize();
@@ -317,7 +245,7 @@ public class mChatSuite extends JavaPlugin {
 
                     if (isAFK.get(player.getName()) ||
                             lastMove.get(player.getName()) == null ||
-                            getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
+                            com.miraclem4n.mchat.api.API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
                         continue;
 
                     if (new Date().getTime() - (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName())) {
@@ -339,7 +267,7 @@ public class mChatSuite extends JavaPlugin {
                 ConfigUtil.initialize();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (getAPI().checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afkkick"))
+                    if (com.miraclem4n.mchat.api.API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afkkick"))
                         continue;
 
                     if (!isAFK.get(player.getName()))
@@ -382,32 +310,37 @@ public class mChatSuite extends JavaPlugin {
     }
 
     void initializeClasses() {
-        setupConfigs();
-
         ChannelManager.initialize();
 
-        api = new API(this);
-        parser = new Parser(this);
-        reader = new Reader(this);
-        writer = new Writer(this);
+        com.miraclem4n.mchat.api.API.initialize();
+        com.miraclem4n.mchat.api.Parser.initialize(this);
+
+        api = new API();
+        parser = new Parser();
+        reader = new Reader();
+        writer = new Writer();
     }
 
     // API
+    @Deprecated
     public API getAPI() {
         return api;
     }
 
     // Parser
+    @Deprecated
     public Parser getParser() {
         return parser;
     }
 
     // Reader
+    @Deprecated
     public Reader getReader() {
         return reader;
     }
 
     // Writer
+    @Deprecated
     public Writer getWriter() {
         return writer;
     }
