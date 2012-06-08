@@ -54,7 +54,7 @@ public class ListCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                if (player.canSee(players))
+                if (!player.canSee(players))
                     continue;
             }
 
