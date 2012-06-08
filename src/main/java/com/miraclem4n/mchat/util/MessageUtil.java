@@ -2,6 +2,9 @@ package com.miraclem4n.mchat.util;
 
 import org.bukkit.command.CommandSender;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MessageUtil {
 
     public static void sendRawMessage(CommandSender sender, String message) {
@@ -22,6 +25,14 @@ public class MessageUtil {
      */
     public static void log(Object message) {
         System.out.println(message);
+    }
+
+    /**
+     * Logger
+     * @param message Object being Logged.
+     */
+    public static void log(Level level, Object message) {
+        Logger.getLogger("Minecraft").log(level, message.toString());
     }
 
     /**

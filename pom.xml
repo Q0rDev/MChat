@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.5</m.version>
-        <p.version>R3_21</p.version>
+        <p.version>R3_22</p.version>
     </properties>
 
     <!-- Source code -->
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.2.5-R1.3</version>
+            <version>1.2.5-R3.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

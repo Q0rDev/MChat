@@ -51,6 +51,13 @@ public class ListCommand implements CommandExecutor {
         String[] msgS;
 
         for (Player players : plugin.getServer().getOnlinePlayers()) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+
+                if (player.canSee(players))
+                    continue;
+            }
+
             String iVar = Reader.getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), ConfigType.MCHATE_LIST_VAR.getObject().toString());
             String mName = Parser.parseListCmd(players.getName(), players.getWorld().getName());
 
