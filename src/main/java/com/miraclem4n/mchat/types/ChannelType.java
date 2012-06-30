@@ -3,12 +3,12 @@ package com.miraclem4n.mchat.types;
 import java.util.HashMap;
 
 public enum ChannelType {
-    GLOBAL("Global"),
-    LOCAL("Local"),
-    PRIVATE("Private"),
-    PASSWORD("Password"),
-    WORLD("World"),
-    CHUNK("Chunk");
+    GLOBAL("global"),
+    LOCAL("local"),
+    PRIVATE("private"),
+    PASSWORD("password"),
+    WORLD("world"),
+    CHUNK("chunk");
 
     private final String name;
 

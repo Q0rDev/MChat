@@ -1,6 +1,6 @@
 package com.miraclem4n.mchat.channels;
 
-import com.miraclem4n.mchat.configs.ConfigUtil;
+import com.miraclem4n.mchat.configs.ChannelUtil;
 import com.miraclem4n.mchat.types.ChannelEditType;
 import com.miraclem4n.mchat.types.ChannelType;
 
@@ -23,17 +23,17 @@ public class ChannelManager {
     }
 
     /**
-     * Loads Channels from ConfigUtil to Memory.
+     * Loads Channels from ChannelUtil to Memory.
      */
     public static void loadChannels() {
-        for (String key : ConfigUtil.getConfig().getKeys(false)) {
-            ChannelType type = ChannelType.fromName(ConfigUtil.getConfig().getString(key + ".type"));
-            String prefix = ConfigUtil.getConfig().getString(key + ".prefix", "[");
-            String suffix = ConfigUtil.getConfig().getString(key + ".suffix", "]");
-            Boolean passworded = ConfigUtil.getConfig().getBoolean(key + ".passworded", false);
-            String password = ConfigUtil.getConfig().getString(key + ".password");
-            Integer distance = ConfigUtil.getConfig().getInt(key + ".distance", -1);
-            Boolean defaulted = ConfigUtil.getConfig().getBoolean(key + ".default", false);
+        for (String key : ChannelUtil.getConfig().getKeys(false)) {
+            ChannelType type = ChannelType.fromName(ChannelUtil.getConfig().getString(key + ".type"));
+            String prefix = ChannelUtil.getConfig().getString(key + ".prefix", "[");
+            String suffix = ChannelUtil.getConfig().getString(key + ".suffix", "]");
+            Boolean passworded = ChannelUtil.getConfig().getBoolean(key + ".passworded", false);
+            String password = ChannelUtil.getConfig().getString(key + ".password");
+            Integer distance = ChannelUtil.getConfig().getInt(key + ".distance", -1);
+            Boolean defaulted = ChannelUtil.getConfig().getBoolean(key + ".default", false);
 
             if (type == null)
                 type = ChannelType.GLOBAL;
@@ -43,7 +43,7 @@ public class ChannelManager {
     }
 
     /**
-     * Loads Channels from ConfigUtil to Memory.
+     * Loads Channels from ChannelUtil to Memory.
      * @param name Name of Channel being created.
      * @param type Type of Channel being created.
      * @param prefix Prefix of Channel being created.
@@ -56,22 +56,22 @@ public class ChannelManager {
     public static void createChannel(String name, ChannelType type, String prefix, String suffix, Boolean passworded, String password, Integer distance, Boolean defaulted) {
         channels.add(new Channel(name.toLowerCase(), type, prefix, suffix, passworded, password, distance, defaulted));
 
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".type", type.getName());
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".prefix", prefix);
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".suffix", suffix);
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".passworded", passworded);
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".password", password);
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".distance", distance);
-        ConfigUtil.getConfig().set(name.toLowerCase() + ".default", defaulted);
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".type", type.getName());
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".prefix", prefix);
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".suffix", suffix);
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".passworded", passworded);
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".password", password);
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".distance", distance);
+        ChannelUtil.getConfig().set(name.toLowerCase() + ".default", defaulted);
 
         if (defaulted)
             setDefaultChannel(name);
 
-        ConfigUtil.save();
+        ChannelUtil.save();
     }
 
     /**
-     * Removes a Channel from ConfigUtil/Memory.
+     * Removes a Channel from ChannelUtil/Memory.
      * @param name Name of Channel being removed.
      */
     public static void removeChannel(String name) {
@@ -79,9 +79,9 @@ public class ChannelManager {
             if (channel.getName().equalsIgnoreCase(name))
                 channels.remove(channel);
 
-        ConfigUtil.getConfig().set(name, null);
+        ChannelUtil.getConfig().set(name, null);
 
-        ConfigUtil.save();
+        ChannelUtil.save();
     }
 
     /**
@@ -98,7 +98,7 @@ public class ChannelManager {
     }
 
     /**
-     * Saves all Channels in Memory to ConfigUtil.
+     * Saves all Channels in Memory to ChannelUtil.
      */
     public static void saveChannels() {
         for (Channel channel : channels)
@@ -110,15 +110,15 @@ public class ChannelManager {
      * @param channel Channel being saved.
      */
     public static void saveChannel(Channel channel) {
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".type", channel.getType().getName().toLowerCase());
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".prefix", channel.getPrefix());
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".suffix", channel.getSuffix());
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".passworded", channel.isPassworded());
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".password", channel.getPassword());
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".distance", channel.getDistance());
-        ConfigUtil.getConfig().set(channel.getName().toLowerCase() + ".default", channel.isDefault());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".type", channel.getType().getName().toLowerCase());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".prefix", channel.getPrefix());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".suffix", channel.getSuffix());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".passworded", channel.isPassworded());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".password", channel.getPassword());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".distance", channel.getDistance());
+        ChannelUtil.getConfig().set(channel.getName().toLowerCase() + ".default", channel.isDefault());
 
-        ConfigUtil.save();
+        ChannelUtil.save();
     }
 
     /**
@@ -179,7 +179,7 @@ public class ChannelManager {
     }
 
     /**
-     * Loads Channels from ConfigUtil to Memory.
+     * Loads Channels from ChannelUtil to Memory.
      * @param channel Name of Channel being edited.
      * @param type EditType being used.
      * @param option Option being used.
@@ -187,7 +187,7 @@ public class ChannelManager {
     public static void editChannel(Channel channel, ChannelEditType type, Object option) {
         if (option.getClass() == type.getOptionClass()) {
             if (type.getName().equalsIgnoreCase("Name")) {
-                ConfigUtil.getConfig().set(channel.getName(), null);
+                ChannelUtil.getConfig().set(channel.getName(), null);
 
                 channel.setName((String) option);
             } else if (type.getName().equalsIgnoreCase("Default"))
