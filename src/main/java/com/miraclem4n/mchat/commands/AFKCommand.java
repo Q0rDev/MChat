@@ -1,9 +1,8 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.api.API;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +24,10 @@ public class AFKCommand implements CommandExecutor {
         }
 
         if (!cmd.equalsIgnoreCase("mchatafk"))
-            return false;
+            return true;
+
+        if (!MiscUtil.hasCommandPerm(sender, "mchat.afk.self"))
+            return true;
 
         String message = "";
 
@@ -41,11 +43,6 @@ public class AFKCommand implements CommandExecutor {
 
         if (isAfk(player.getName())) {
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + player.getName());
-            return true;
-        }
-
-        if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.afk.self")) {
-            MessageUtil.sendMessage(player, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.afk.self"));
             return true;
         }
 

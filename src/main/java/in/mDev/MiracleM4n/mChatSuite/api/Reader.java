@@ -2,7 +2,6 @@ package in.mDev.MiracleM4n.mChatSuite.api;
 
 import in.mDev.MiracleM4n.mChatSuite.types.EventType;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
-import com.miraclem4n.mchat.util.MessageUtil;
 
 public class Reader {
     public Reader() {}

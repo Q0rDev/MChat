@@ -84,6 +84,6 @@ public class MessageUtil {
      * @return Message appended to [mChatSuite]
      */
     public static String format(String message) {
-        return addColour("&4[mChatSuite] " + message);
+        return addColour("&2[&4m&8ChatSuite&2] &6" + message);
     }
 }

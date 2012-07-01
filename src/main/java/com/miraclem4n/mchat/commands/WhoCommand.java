@@ -2,9 +2,9 @@ package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,24 +20,20 @@ public class WhoCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String cmd = command.getName();
 
-        if (cmd.equalsIgnoreCase("mchatwho")) {
-            if (args.length > 0) {
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.who")) {
-                        MessageUtil.sendMessage(sender, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.who"));
-                        return true;
-                    }
-                }
+        if (!cmd.equalsIgnoreCase("mchatwho"))
+            return true;
 
-                if (plugin.getServer().getPlayer(args[0]) == null) {
-                    sender.sendMessage(formatPNF(args[0]));
-                    return true;
-                } else {
-                    Player receiver = plugin.getServer().getPlayer(args[0]);
-                    formatWho(sender, receiver);
-                    return true;
-                }
+        if (!MiscUtil.hasCommandPerm(sender, "mchat.who"))
+            return true;
+
+        if (args.length > 0) {
+            if (plugin.getServer().getPlayer(args[0]) == null) {
+                sender.sendMessage(formatPNF(args[0]));
+                return true;
+            } else {
+                Player receiver = plugin.getServer().getPlayer(args[0]);
+                formatWho(sender, receiver);
+                return true;
             }
         }
 

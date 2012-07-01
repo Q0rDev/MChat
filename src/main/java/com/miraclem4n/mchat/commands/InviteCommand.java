@@ -1,10 +1,9 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,7 +25,10 @@ public class InviteCommand implements CommandExecutor {
         }
 
         if (!cmd.equalsIgnoreCase("pmchatinvite"))
-            return false;
+            return true;
+
+        if (!MiscUtil.hasCommandPerm(sender, "mchat.pm.invite"))
+            return true;
 
         Player player = (Player) sender;
         String pName = player.getName();
@@ -34,11 +36,6 @@ public class InviteCommand implements CommandExecutor {
 
         if (args.length < 1)
             return false;
-
-        if (!API.checkPermissions(sender, "mchat.pm.invite")) {
-            MessageUtil.sendMessage(player, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.pm.invite"));
-            return true;
-        }
 
         Player recipient = plugin.getServer().getPlayer(args[0]);
         String rName = recipient.getName();

@@ -1,7 +1,7 @@
 package com.miraclem4n.mchat.commands;
 
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import com.miraclem4n.mchat.util.MessageUtil;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,7 +23,7 @@ public class LeaveCommand implements CommandExecutor {
         }
 
         if (!cmd.equalsIgnoreCase("pmchatleave"))
-            return false;
+            return true;
 
         Player player = (Player) sender;
         String pName = player.getName();

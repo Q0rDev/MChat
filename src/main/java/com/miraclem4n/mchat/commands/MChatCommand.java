@@ -6,9 +6,10 @@ import com.miraclem4n.mchat.configs.CensorUtil;
 import com.miraclem4n.mchat.configs.ConfigUtil;
 import com.miraclem4n.mchat.configs.InfoUtil;
 import com.miraclem4n.mchat.configs.LocaleUtil;
+import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
-import com.miraclem4n.mchat.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,19 +35,14 @@ public class MChatCommand implements CommandExecutor {
 
         if (cmd.equalsIgnoreCase("mchat")) {
             if (args[0].equalsIgnoreCase("version")) {
-                if (sender instanceof Player) {
-                    if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.version")) {
-                        MessageUtil.sendMessage(sender, "You are not to view the version of mChatSuite.");
-                        return true;
-                    }
-
-                }
+                if (!MiscUtil.hasCommandPerm(sender, "mchat.version"))
+                    return true;
 
                 String cVersion = "&6MineCraft Version: &2" + plugin.pdfFile.getVersion();
 
-                cVersion = cVersion.replaceFirst("-", "^*^&6Jenkins Build&5#&5: &2");
+                cVersion = cVersion.replaceFirst("-", "^*^&6Jenkins Build &5#&5: &2");
                 cVersion = cVersion.replaceFirst("-", "^*^&6Release Version: &2");
-                cVersion = cVersion.replaceFirst("_", "^*^&6Fix&5#&5: &2");
+                cVersion = cVersion.replaceFirst("_", "^*^&6Fix &5#&5: &2");
 
                 String[] vArray = cVersion.split("\\^\\*\\^");
 
@@ -61,22 +57,16 @@ public class MChatCommand implements CommandExecutor {
                 if (args.length > 1)
                     if (args[1].equalsIgnoreCase("config")
                             || args[1].equalsIgnoreCase("co")) {
-                        if (sender instanceof Player)
-                            if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.reload.config")) {
-                                MessageUtil.sendMessage(sender, "You are not allowed to reload mChat.");
-                                return true;
-                            }
+                        if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.config"))
+                            return true;
 
                         ConfigUtil.initialize();
                         MessageUtil.sendMessage(sender, "Config Reloaded.");
                         return true;
                     } else if (args[1].equalsIgnoreCase("info")
                             || args[1].equalsIgnoreCase("i")) {
-                        if (sender instanceof Player)
-                            if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.reload.info")) {
-                                MessageUtil.sendMessage(sender, "You are not allowed to reload mChat.");
-                                return true;
-                            }
+                        if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.info"))
+                            return true;
 
                         InfoUtil.initialize();
                         MessageUtil.sendMessage(sender, "Info Reloaded.");
@@ -94,22 +84,16 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     } else if (args[1].equalsIgnoreCase("locale")
                             || args[1].equalsIgnoreCase("l")) {
-                        if (sender instanceof Player)
-                            if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.reload.locale")) {
-                                MessageUtil.sendMessage(sender, "You are not allowed to reload mChat.");
-                                return true;
-                            }
+                        if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.locale"))
+                            return true;
 
                         LocaleUtil.initialize();
-                        MessageUtil.sendMessage(sender, "Censor Reloaded.");
+                        MessageUtil.sendMessage(sender, "Locale Reloaded.");
                         return true;
                     } else if (args[1].equalsIgnoreCase("all")
                             || args[1].equalsIgnoreCase("a")) {
-                        if (sender instanceof Player)
-                            if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.reload.all")) {
-                                MessageUtil.sendMessage(sender, "You are not allowed to reload mChat.");
-                                return true;
-                            }
+                        if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.all"))
+                            return true;
 
                         plugin.reloadConfigs();
                         plugin.initializeConfigs();
@@ -132,11 +116,9 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     } else if (args[2].equalsIgnoreCase("p")
                             || args[2].equalsIgnoreCase("player")) {
-                        if (sender instanceof Player)
-                            if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.user.add.player")) {
-                                MessageUtil.sendMessage(sender, "You don't have Permission to do that.");
-                                return true;
-                            }
+                        if (!MiscUtil.hasCommandPerm(sender, "mchat.user.add.player"))
+                            return true;
+
                         try {
                             Writer.addBase(args[3], args[4]);
                             MessageUtil.sendMessage(sender, "Info Addition Successful.");

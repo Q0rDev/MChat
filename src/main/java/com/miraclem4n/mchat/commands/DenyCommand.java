@@ -1,8 +1,8 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Parser;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import com.miraclem4n.mchat.util.MessageUtil;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +24,7 @@ public class DenyCommand implements CommandExecutor {
         }
 
         if (!cmd.equalsIgnoreCase("pmchatdeny"))
-            return false;
+            return true;
 
         Player player = (Player) sender;
         String pName = player.getName();

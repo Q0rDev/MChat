@@ -1,9 +1,7 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.api.API;
+import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import com.miraclem4n.mchat.types.config.LocaleType;
-import com.miraclem4n.mchat.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,29 +16,28 @@ public class MessagePrefixCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String cmd = command.getName();
 
-        if (cmd.equalsIgnoreCase("mchatmessageprefix")) {
-            if (args.length > 0) {
-                if (args[0].equalsIgnoreCase("set")) {
-                    if (!API.checkPermissions(sender, "mchat.messageprefix")) {
-                        MessageUtil.sendMessage(sender, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.messageprefix"));
-                        return true;
-                    }
+        if (!cmd.equalsIgnoreCase("mchatmessageprefix"))
+            return true;
 
-                    String message = "";
+        if (!MiscUtil.hasCommandPerm(sender, "mchat.messageprefix"))
+            return true;
 
-                    for (String arg : args)
-                        message += " " + arg;
+        if (args.length > 0) {
+            if (args[0].equalsIgnoreCase("set")) {
+                String message = "";
 
-                    message = message.trim();
+                for (String arg : args)
+                    message += " " + arg;
 
-                    plugin.mPrefix.put(sender.getName(), message);
+                message = message.trim();
 
-                    return true;
-                } else if (args[0].equalsIgnoreCase("remove")) {
-                    plugin.mPrefix.put(sender.getName(), "");
+                plugin.mPrefix.put(sender.getName(), message);
 
-                    return true;
-                }
+                return true;
+            } else if (args[0].equalsIgnoreCase("remove")) {
+                plugin.mPrefix.put(sender.getName(), "");
+
+                return true;
             }
         }
 

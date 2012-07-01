@@ -1,13 +1,12 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Reader;
+import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
-import com.miraclem4n.mchat.types.config.ConfigType;
-import com.miraclem4n.mchat.types.config.LocaleType;
-import com.miraclem4n.mchat.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,15 +26,10 @@ public class ListCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!cmd.equalsIgnoreCase("mchatlist"))
-            return false;
-
-        if (!(sender instanceof Player))
-            return false;
-
-        if (!API.checkPermissions(sender, "mchat.list")) {
-            MessageUtil.sendMessage(sender, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.list"));
             return true;
-        }
+
+        if (!MiscUtil.hasCommandPerm(sender, "mchat.list"))
+            return true;
 
         sender.sendMessage(MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
         formatList(sender);

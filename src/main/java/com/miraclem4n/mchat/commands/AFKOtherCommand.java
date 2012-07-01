@@ -1,11 +1,11 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
+import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -25,12 +25,10 @@ public class AFKOtherCommand implements CommandExecutor {
         String cmd = command.getName();
 
         if (!cmd.equalsIgnoreCase("mchatafkother"))
-            return false;
-
-        if (!API.checkPermissions(sender, "mchat.afk.other")) {
-            MessageUtil.sendMessage(sender, LocaleType.NO_PERMS.getValue().replace("%permission%", "mchat.afk.other"));
             return true;
-        }
+
+        if (!MiscUtil.hasCommandPerm(sender, "mchat.afk.other"))
+            return true;
 
         Player afkTarget = plugin.getServer().getPlayer(args[0]);
 
