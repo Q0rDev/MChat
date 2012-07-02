@@ -12,17 +12,17 @@ import java.nio.channels.ReadableByteChannel;
 public class LibLoader {
     static URLClassLoader loader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 
-    public static Boolean include(String directory, String filename, String url) {
-        if (!download(directory, filename, url))
+    public static Boolean include(String filename, String url) {
+        if (!download(filename, url))
             return false;
 
-        File file = getFile(directory, filename);
+        File file = getFile(filename);
 
         return load(file) != null;
     }
 
-    public static Boolean download(String directory, String filename, String url) {
-        File file = getFile(directory, filename);
+    public static Boolean download(String filename, String url) {
+        File file = getFile(filename);
 
         if (!file.exists()) {
             MessageUtil.log("Downloading library " + filename);
@@ -36,18 +36,19 @@ public class LibLoader {
         return true;
     }
 
-    static File getFile(String directory, String filename) {
-        if (directory == null || directory.isEmpty())
-            return  new File("./lib/" + filename);
+    private static File getFile(String filename) {
+        Boolean dirCreated = false;
 
-        return new File(directory, filename);
-    }
+        if (!new File("./lib").exists())
+            dirCreated = new File("./lib").mkdirs();
 
-    static File getFile(String filename) {
+        if (dirCreated)
+            MessageUtil.log("Lib Directory Created.");
+
         return  new File("./lib/" + filename);
     }
 
-    static Boolean downloadUrl(String url, File file) {
+    private static Boolean downloadUrl(String url, File file) {
         try {
             URL urlz = new URL(url);
             ReadableByteChannel ch = Channels.newChannel(urlz.openStream());
@@ -62,7 +63,7 @@ public class LibLoader {
         }
     }
 
-    public static Object load(File file) {
+    private static Object load(File file) {
         try {
             return load(file.toURI().toURL());
         } catch (MalformedURLException e) {
@@ -70,7 +71,7 @@ public class LibLoader {
         }
     }
 
-    public static Object load(URL url) {
+    private static Object load(URL url) {
         for (URL otherUrl : loader.getURLs())
             if (otherUrl.sameFile(url))
                 return null;

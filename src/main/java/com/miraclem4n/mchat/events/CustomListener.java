@@ -37,7 +37,7 @@ public class CustomListener implements Listener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase()) + MessageUtil.addColour(LocaleType.SPOUT_TYPING.getValue()) + '\n' + Parser.parsePlayerName(pName, player.getWorld().getName()));
+            player.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase()) + MessageUtil.addColour(LocaleType.MESSAGE_SPOUT_TYPING.getValue()) + '\n' + Parser.parsePlayerName(pName, player.getWorld().getName()));
             plugin.chatt.put(player.getName(), true);
         }
 

@@ -18,23 +18,15 @@ public class WhoCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatwho"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.who"))
+        if (!command.getName().equalsIgnoreCase("mchatwho")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.who"))
             return true;
 
         if (args.length > 0) {
-            if (plugin.getServer().getPlayer(args[0]) == null) {
-                sender.sendMessage(formatPNF(args[0]));
-                return true;
-            } else {
-                Player receiver = plugin.getServer().getPlayer(args[0]);
-                formatWho(sender, receiver);
-                return true;
-            }
+            if (MiscUtil.isOnlineForCommand(sender, args[0]))
+                formatWho(sender, plugin.getServer().getPlayer(args[0]));
+
+            return true;
         }
 
         return false;
@@ -57,9 +49,5 @@ public class WhoCommand implements CommandExecutor {
         MessageUtil.sendColouredMessage(sender, "Player's IP: " + recipient.getAddress().getHostString());
         MessageUtil.sendColouredMessage(sender, "Current Item: " + recipient.getItemInHand().getType().name());
         MessageUtil.sendColouredMessage(sender, "Entity ID: #" + recipient.getEntityId());
-    }
-
-    String formatPNF(String playerNotFound) {
-        return MessageUtil.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
     }
 }

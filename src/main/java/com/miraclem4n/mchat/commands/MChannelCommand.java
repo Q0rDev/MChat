@@ -6,6 +6,7 @@ import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.types.ChannelEditType;
 import com.miraclem4n.mchat.types.ChannelType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -42,10 +43,8 @@ public class MChannelCommand implements CommandExecutor {
         }
 
         if (args[0].equalsIgnoreCase("types")) {
-            if (!API.checkPermissions(sender, "mchannel.types")) {
-                MessageUtil.sendMessage(sender, "You don't have Permissions for: 'mchannel.types'.");
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.types"))
                 return true;
-            }
 
             String types = "";
 
@@ -58,10 +57,8 @@ public class MChannelCommand implements CommandExecutor {
 
             return true;
         } else if (args[0].equalsIgnoreCase("editTypes")) {
-            if (!API.checkPermissions(sender, "mchannel.edittypes")) {
-                MessageUtil.sendMessage(sender, "You don't have Permissions for: 'mchannel.edittypes'.");
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.edittypes"))
                 return true;
-            }
 
             String editTypes = "";
 
@@ -79,10 +76,8 @@ public class MChannelCommand implements CommandExecutor {
                 return true;
             }
 
-            if (!API.checkPermissions(sender, "mchannel.create." + args[1].toLowerCase())) {
-                MessageUtil.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.create." + args[1].toLowerCase() + "'.");
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.create." + args[1].toLowerCase()))
                 return true;
-            }
 
             if (ChannelType.fromName(args[2]) == null) {
                 MessageUtil.sendMessage(sender, "'" + args[2] + "' is not a valid ChannelType. Use '/" + cmd + " types' for more information.");
@@ -99,10 +94,8 @@ public class MChannelCommand implements CommandExecutor {
                 return true;
             }
 
-            if (!API.checkPermissions(sender, "mchannel.remove." + args[1].toLowerCase())) {
-                MessageUtil.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.remove." + args[1].toLowerCase() + "'.");
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.remove." + args[1].toLowerCase()))
                 return true;
-            }
 
             ChannelManager.removeChannel(args[1]);
             MessageUtil.sendMessage(sender, "You have successfully removed Channel '" + args[1].toLowerCase() + "'.");
@@ -113,6 +106,9 @@ public class MChannelCommand implements CommandExecutor {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " edit [ChannelName] [EditType] [Option]'.");
                 return true;
             }
+
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.edit." + args[1].toLowerCase()))
+                return true;
 
             if (ChannelManager.getChannel(args[1]) == null) {
                 MessageUtil.sendMessage(sender, "'" + args[1] + "' is not a valid channel.");
@@ -175,10 +171,8 @@ public class MChannelCommand implements CommandExecutor {
                 return true;
             }
 
-            if (!API.checkPermissions(sender, "mchannel.join." + args[1].toLowerCase())) {
-                MessageUtil.sendMessage(sender, "You don't have Permissions for: '" + "mchannel.join." + args[1].toLowerCase() + "'.");
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.join." + args[1].toLowerCase()))
                 return true;
-            }
 
             Channel channel = ChannelManager.getChannel(args[1]);
 
@@ -204,10 +198,8 @@ public class MChannelCommand implements CommandExecutor {
                 return true;
             }
 
-            if (!API.checkPermissions(sender, "mchannel.leave." + args[1].toLowerCase())) {
-                MessageUtil.sendMessage(sender, "You don't have Permissions for: '" + args[1].toLowerCase() + "'.");
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.leave." + args[1].toLowerCase()))
                 return true;
-            }
 
             if (ChannelManager.getChannel(args[1]) == null)
                 MessageUtil.sendMessage(sender, "No Channel by the name of '" + "mchannel.leave." + args[1].toLowerCase() + "' could be found.");

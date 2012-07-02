@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
@@ -16,18 +17,14 @@ public class AFKCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
+        if (!command.getName().equalsIgnoreCase("mchatafk")
+                || !MiscUtil.hasCommandPerm(sender,"mchat.afk.self"))
+            return true;
 
         if (!(sender instanceof Player)) {
             MessageUtil.sendMessage(sender, "Console's can't be AFK.");
             return true;
         }
-
-        if (!cmd.equalsIgnoreCase("mchatafk"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.afk.self"))
-            return true;
 
         String message = "";
 
@@ -37,7 +34,7 @@ public class AFKCommand implements CommandExecutor {
 
             message = message.trim();
         } else
-            message = "Away From Keyboard";
+            message = LocaleType.MESSAGE_AFK_DEFAULT.getValue();
 
         Player player = (Player) sender;
 

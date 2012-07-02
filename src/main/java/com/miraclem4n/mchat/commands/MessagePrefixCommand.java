@@ -14,12 +14,8 @@ public class MessagePrefixCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatmessageprefix"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.messageprefix"))
+        if (!command.getName().equalsIgnoreCase("mchatmessageprefix")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.messageprefix"))
             return true;
 
         if (args.length > 0) {

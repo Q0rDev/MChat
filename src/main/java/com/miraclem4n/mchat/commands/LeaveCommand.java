@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
@@ -15,15 +16,14 @@ public class LeaveCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
+        if (!command.getName().equalsIgnoreCase("pmchatleave"))
+            return true;
 
+        //TODO Allow Console's to PM
         if (!(sender instanceof Player)) {
             MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
-
-        if (!cmd.equalsIgnoreCase("pmchatleave"))
-            return true;
 
         Player player = (Player) sender;
         String pName = player.getName();
@@ -41,12 +41,12 @@ public class LeaveCommand implements CommandExecutor {
         }
 
         if (isConv) {
-            MessageUtil.sendMessage(player, "You have left the convo.");
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_LEFT.getValue().replace("%player%", rName));
 
             Player recipient = plugin.getServer().getPlayer(rName);
 
             if (recipient != null)
-                MessageUtil.sendMessage(recipient, "Conversation has ended.");
+                MessageUtil.sendMessage(recipient, LocaleType.MESSAGE_CONVERSATION_ENDED.getValue().replace("%player%", pName));
 
             plugin.isConv.put(pName, false);
             plugin.isConv.put(rName, false);
@@ -54,7 +54,7 @@ public class LeaveCommand implements CommandExecutor {
             plugin.chatPartner.remove(rName);
             plugin.chatPartner.remove(pName);
         } else
-            MessageUtil.sendMessage(player, "You are not currently in a Convo.");
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_NOT_IN.getValue());
 
         return true;
     }

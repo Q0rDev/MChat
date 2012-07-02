@@ -194,9 +194,9 @@ public class PlayerListener implements Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                MessageUtil.sendMessage(player, LocaleType.PLAYER_STILL_AFK.getValue());
+                MessageUtil.sendMessage(player, LocaleType.MESSAGE_PLAYER_STILL_AFK.getValue());
             } else
-                player.performCommand("mafk");
+                player.performCommand("mchatafk");
     }
 
     void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {

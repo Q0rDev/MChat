@@ -7,6 +7,7 @@ import com.miraclem4n.mchat.commands.*;
 import com.miraclem4n.mchat.configs.*;
 import com.miraclem4n.mchat.events.*;
 import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import in.mDev.MiracleM4n.mChatSuite.api.API;
 import in.mDev.MiracleM4n.mChatSuite.api.Parser;
@@ -50,6 +51,9 @@ public class mChatSuite extends JavaPlugin {
 
     // ChannelManager
     public ChannelManager channelManager;
+
+    // Debug
+    Boolean debug = false;
 
     // Timers
     long sTime1;
@@ -169,6 +173,9 @@ public class mChatSuite extends JavaPlugin {
             if (spoutB)
                 pm.registerEvents(new CustomListener(this), this);
         }
+
+        if (debug)
+            pm.registerEvents(new DebugListener(), this);
     }
 
     Boolean setupPlugin(String pluginName) {
@@ -252,7 +259,7 @@ public class mChatSuite extends JavaPlugin {
                         continue;
 
                     if (new Date().getTime() - (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName())) {
-                        getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " AutoAfk");
+                        getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " " + LocaleType.MESSAGE_AFK_DEFAULT.getValue());
                     } else
                         isAFK.put(player.getName(), false);
                 }
@@ -277,7 +284,7 @@ public class mChatSuite extends JavaPlugin {
                         continue;
 
                     if (new Date().getTime() - (ConfigType.MCHATE_AFK_KICK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName()))
-                        player.kickPlayer("mAFK Kick");
+                        player.kickPlayer(LocaleType.MESSAGE_AFK_DEFAULT.getValue());
                 }
             }
         }, 20L * 10, 20L * 10);

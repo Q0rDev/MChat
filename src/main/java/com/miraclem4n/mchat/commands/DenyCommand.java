@@ -1,7 +1,9 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,15 +18,14 @@ public class DenyCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
+        if (!command.getName().equalsIgnoreCase("pmchatdeny"))
+            return true;
 
+        //TODO Allow Console's to PM
         if (!(sender instanceof Player)) {
             MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
-
-        if (!cmd.equalsIgnoreCase("pmchatdeny"))
-            return true;
 
         Player player = (Player) sender;
         String pName = player.getName();
@@ -33,23 +34,22 @@ public class DenyCommand implements CommandExecutor {
         String rName = plugin.getInvite.get(pName);
 
         if (rName == null) {
-            MessageUtil.sendMessage(sender, MessageUtil.addColour("No pending Convo request."));
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_NO_PENDING.getValue());
             return true;
         }
 
         Player recipient = plugin.getServer().getPlayer(rName);
         String rWorld = recipient.getWorld().getName();
 
-        if (recipient != null) {
+        if (!MiscUtil.isOnlineForCommand(sender, recipient)) {
             plugin.getInvite.remove(pName);
 
             plugin.isConv.put(pName, false);
             plugin.isConv.put(rName, false);
 
-            MessageUtil.sendMessage(player, "You have denied a Convo request from &5'&4" + Parser.parsePlayerName(rName, rWorld) + "&5'&4.");
-            MessageUtil.sendMessage(recipient, "Convo request with &5'&4" + Parser.parsePlayerName(pName, pWorld) + "&5'&4 has been denied.");
-        } else
-            MessageUtil.sendMessage(player, "Player: '" + rName + "' is not currently online.");
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_DENIED.getValue().replace("%player%", Parser.parsePlayerName(rName, rWorld)));
+            MessageUtil.sendMessage(recipient, LocaleType.MESSAGE_CONVERSATION_NOT_STARTED.getValue().replace("%player%", Parser.parsePlayerName(pName, pWorld)));
+        }
 
         return true;
     }

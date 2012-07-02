@@ -59,16 +59,16 @@ public class ChatListener implements Listener {
         } else
             setListName(player, pLName);
 
-        // PMChat
+        // Conversation
         if (ConfigType.PMCHAT_ENABLE.getObject().toBoolean()) {
             if (plugin.isConv.get(pName) == null)
                 plugin.isConv.put(pName, false);
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                recipient.sendMessage(MessageUtil.addColour("&4[Convo] " + eventFormat));
-                player.sendMessage(MessageUtil.addColour("&4[Convo] " + eventFormat));
-                MessageUtil.log(MessageUtil.addColour("&4[Convo] " + eventFormat));
+                recipient.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getValue() + eventFormat));
+                player.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getValue() + eventFormat));
+                MessageUtil.log(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getValue() + eventFormat));
                 event.setCancelled(true);
             }
         }
@@ -77,7 +77,7 @@ public class ChatListener implements Listener {
         if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
             if (plugin.isAFK.get(pName) != null)
                 if (plugin.isAFK.get(pName))
-                    player.performCommand("mafk");
+                    player.performCommand("mchatafk");
 
             plugin.lastMove.put(pName, new Date().getTime());
         }
@@ -86,8 +86,8 @@ public class ChatListener implements Listener {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = pName;
 
-            sPlayer.setTitle(ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase())
-                    + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase())
+            sPlayer.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase())
+                    + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase())
                     + " -" + '\n' + Parser.parsePlayerName(pName, world));
 
             plugin.chatt.put(pName, false);

@@ -15,12 +15,8 @@ public class SayCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatsay"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.say"))
+        if (!command.getName().equalsIgnoreCase("mchatsay")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.say"))
             return true;
 
         if (args.length > 0) {

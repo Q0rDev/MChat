@@ -18,12 +18,8 @@ public class MeCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatme"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.me"))
+        if (!command.getName().equalsIgnoreCase("mchatme")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.me"))
             return true;
 
         if (args.length > 0) {

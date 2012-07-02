@@ -3,6 +3,7 @@ package com.miraclem4n.mchat.commands;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Reader;
 import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
@@ -23,15 +24,11 @@ public class ListCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatlist"))
+        if (!command.getName().equalsIgnoreCase("mchatlist")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.list"))
             return true;
 
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.list"))
-            return true;
-
-        sender.sendMessage(MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --"));
+        sender.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_LIST_HEADER.getValue().replace("%players%", String.valueOf(plugin.getServer().getOnlinePlayers().length)).replace("%max%", String.valueOf(plugin.getServer().getMaxPlayers()))));
         formatList(sender);
 
         return true;
@@ -79,9 +76,9 @@ public class ListCommand implements CommandExecutor {
 
             if (plugin.isAFK.get(players.getName()) != null && plugin.isAFK.get(players.getName()))
                 if (msg.contains(iVar + ": &f"))
-                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[AFK]" + mName + "&f, &f");
+                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + LocaleType.MESSAGE_AFK_AFK.getValue() + "]" + mName + "&f, &f");
                 else
-                    msg += (iVar + ": &f&4[AFK]" + mName + "&f, &f" + '\n');
+                    msg += (iVar + ": &f&4[" + LocaleType.MESSAGE_AFK_AFK.getValue() + "]" + mName + "&f, &f" + '\n');
             else
             if (msg.contains(iVar + ": &f"))
                 msg = msg.replace(iVar + ": &f", iVar + ": &f" + mName + "&f, &f");
@@ -110,7 +107,7 @@ public class ListCommand implements CommandExecutor {
         } else
             sender.sendMessage(MessageUtil.addColour(msg));
 
-        for (int i = 20; i < MessageUtil.addColour("&6-- There are &8" + plugin.getServer().getOnlinePlayers().length + "&6 out of the maximum of &8" + plugin.getServer().getMaxPlayers() + "&6 Players online. --").length(); i++)
+        for (int i = 20; i < MessageUtil.addColour(LocaleType.MESSAGE_LIST_HEADER.getValue().replace("%players%", String.valueOf(plugin.getServer().getOnlinePlayers().length)).replace("%max%", String.valueOf(plugin.getServer().getMaxPlayers()))).length(); i++)
             line += "-";
 
         sender.sendMessage(MessageUtil.addColour("&6" + line));

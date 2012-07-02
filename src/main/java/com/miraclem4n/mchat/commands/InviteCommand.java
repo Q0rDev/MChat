@@ -1,6 +1,7 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
@@ -17,22 +18,19 @@ public class InviteCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
+        if (!command.getName().equalsIgnoreCase("pmchatinvite")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.pm.invite"))
+            return true;
 
+        //TODO Allow Console's to PM
         if (!(sender instanceof Player)) {
             MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
 
-        if (!cmd.equalsIgnoreCase("pmchatinvite"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.pm.invite"))
-            return true;
-
         Player player = (Player) sender;
         String pName = player.getName();
-        String world = player.getWorld().getName();
+        String pWorld = player.getWorld().getName();
 
         if (args.length < 1)
             return false;
@@ -41,18 +39,16 @@ public class InviteCommand implements CommandExecutor {
         String rName = recipient.getName();
         String rWorld = recipient.getWorld().getName();
 
-        if (recipient == null) {
-            MessageUtil.sendMessage(player, "&4Player &e'" + args[0] + "'&4 not Found.");
+        if (!MiscUtil.isOnlineForCommand(sender, recipient))
             return true;
-        }
 
         if (plugin.getInvite.get(rName) == null) {
             plugin.getInvite.put(rName, pName);
 
-            MessageUtil.sendMessage(player, "You have invited &5'&4" + Parser.parsePlayerName(rName, rWorld) + "&5'&4 to have a Convo.");
-            MessageUtil.sendMessage(recipient, "You have been invited to a Convo by &5'&4" + Parser.parsePlayerName(pName, world) + "&5'&4 use /pmchataccept to accept.");
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_INVITE_SENT.getValue().replace("%player%", Parser.parsePlayerName(rName, rWorld)));
+            MessageUtil.sendMessage(recipient, LocaleType.MESSAGE_CONVERSATION_INVITED.getValue().replace("%player%", Parser.parsePlayerName(pName, pWorld)));
         } else
-            MessageUtil.sendMessage(player, "&5'&4" + Parser.parsePlayerName(rName, rWorld) + "&5'&4 Already has a Convo request.");
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_HAS_REQUEST.getValue().replace("%player%", Parser.parsePlayerName(rName, rWorld)));
 
         return true;
     }

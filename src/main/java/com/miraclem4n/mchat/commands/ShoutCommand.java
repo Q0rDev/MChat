@@ -1,6 +1,8 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.config.LocaleType;
+import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
@@ -16,12 +18,8 @@ public class ShoutCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatshout"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.shout"))
+        if (!command.getName().equalsIgnoreCase("mchatshout")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.shout"))
             return true;
 
         String message = "";
@@ -37,7 +35,7 @@ public class ShoutCommand implements CommandExecutor {
         }
 
         if (message.length() < 1) {
-            sender.sendMessage("You can't shout nothing!");
+            MessageUtil.sendMessage(sender, LocaleType.MESSAGE_SHOUT_NO_INPUT.getValue());
             return true;
         }
 

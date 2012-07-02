@@ -22,25 +22,19 @@ public class AFKOtherCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
-
-        if (!cmd.equalsIgnoreCase("mchatafkother"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.afk.other"))
+        if (!command.getName().equalsIgnoreCase("mchatafkother")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.afk.other"))
             return true;
 
         Player afkTarget = plugin.getServer().getPlayer(args[0]);
 
-        if (afkTarget == null) {
-            MessageUtil.sendMessage(sender, "&4Player &e'" + args[0] + "'&4 Not found.");
+        if (!MiscUtil.isOnlineForCommand(sender, afkTarget))
             return true;
-        }
 
         Boolean isAfk = plugin.isAFK.get(afkTarget.getName()) != null &&
                 plugin.isAFK.get(afkTarget.getName());
 
-        String notification = LocaleType.PLAYER_NOT_AFK.getValue();
+        String notification = LocaleType.MESSAGE_PLAYER_NOT_AFK.getValue();
 
         String message = "";
 
@@ -56,9 +50,9 @@ public class AFKOtherCommand implements CommandExecutor {
             } else
                 message = "Away From Keyboard";
 
-            notification = LocaleType.PLAYER_AFK.getValue();
+            notification = LocaleType.MESSAGE_PLAYER_AFK.getValue();
 
-            title = ChatColor.valueOf(LocaleType.SPOUT_COLOUR.getValue().toUpperCase()) + "- AFK -" + '\n' + title;
+            title = ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase()) + "- AFK -" + '\n' + title;
         }
 
         if (plugin.spoutB) {
@@ -85,7 +79,7 @@ public class AFKOtherCommand implements CommandExecutor {
         if (!isAfk) {
             plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
-            pLName = MessageUtil.addColour("<gold>[AFK] ") + pLName;
+            pLName = MessageUtil.addColour("<gold>[" + LocaleType.MESSAGE_AFK_AFK.getValue() + "] ") + pLName;
         }
 
         if (ConfigType.MCHATE_USE_AFK_LIST.getObject().toBoolean())

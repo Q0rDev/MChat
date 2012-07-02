@@ -2,6 +2,7 @@ package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
@@ -22,18 +23,15 @@ public class PMCommand implements CommandExecutor {
     String message = "";
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String cmd = command.getName();
+        if (!command.getName().equalsIgnoreCase("pmchat")
+                || !MiscUtil.hasCommandPerm(sender, "mchat.pm.pm"))
+            return true;
 
+        //TODO Allow Console's to PM
         if (!(sender instanceof Player)) {
             MessageUtil.sendMessage(sender, "Console's can't send PM's.");
             return true;
         }
-
-        if (!cmd.equalsIgnoreCase("pmchat"))
-            return true;
-
-        if (!MiscUtil.hasCommandPerm(sender, "mchat.pm.pm"))
-            return true;
 
         Player player = (Player) sender;
         String pName = player.getName();
@@ -46,27 +44,22 @@ public class PMCommand implements CommandExecutor {
         for (int i = 1; i < args.length; ++i)
             message += " " + args[i];
 
-        if (plugin.getServer().getPlayer(args[0]) == null) {
-            player.sendMessage(formatPNF(args[0]));
+        if (!MiscUtil.isOnlineForCommand(sender, args[0]))
             return true;
-        }
 
         Player recipient = plugin.getServer().getPlayer(args[0]);
         String rName = recipient.getName();
         String senderName = Parser.parsePlayerName(pName, world);
 
-        player.sendMessage(formatPMSend(rName, recipient.getWorld().getName(), message));
+        player.sendMessage(LocaleType.FORMAT_PM_SENT.getValue().replace("%recipient%", Parser.parsePlayerName(rName, recipient.getWorld().getName())).replace("%message%", message));
 
         if (plugin.spoutB) {
             if (ConfigType.MCHAT_SPOUT.getObject().toBoolean()) {
                 final SpoutPlayer sRecipient = (SpoutPlayer) recipient;
 
                 if (sRecipient.isSpoutCraftEnabled()) {
-                    if (plugin.lastPMd != null)
-                        plugin.lastPMd.remove(rName);
-
                     plugin.lastPMd.put(rName, pName);
-                    sRecipient.sendNotification("[pmChat] From:", player.getName(), Material.PAPER);
+
 
                     Runnable runnable = new Runnable() {
                         public void run() {
@@ -77,6 +70,7 @@ public class PMCommand implements CommandExecutor {
                         }
                     };
 
+                    sRecipient.sendNotification(LocaleType.MESSAGE_SPOUT_PM.getValue(), player.getName(), Material.PAPER);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 2 * 20);
                     return true;
                 }
@@ -84,8 +78,8 @@ public class PMCommand implements CommandExecutor {
         }
 
         plugin.lastPMd.put(rName, pName);
-        MessageUtil.log(formatPMRecieve(senderName, world, message));
-        recipient.sendMessage(formatPMRecieve(senderName, world, message));
+        recipient.sendMessage(LocaleType.FORMAT_PM_RECEIVED.getValue().replace("%sender%", Parser.parsePlayerName(senderName, world)).replace("%message%", message));
+        MessageUtil.log(LocaleType.FORMAT_PM_RECEIVED.getValue().replace("%sender%", Parser.parsePlayerName(senderName, world)).replace("%message%", message));
         return true;
     }
 
@@ -100,19 +94,7 @@ public class PMCommand implements CommandExecutor {
     }
 
     String formatPM(String message, Integer start, Integer finish) {
-        while (message.length() < finish) message += " ";
+        while (message.length() <= finish) message += " ";
         return message.substring(start, finish);
-    }
-
-    String formatPNF(String playerNotFound) {
-        return MessageUtil.format("&4Player &e'" + playerNotFound + "'&4 not Found.");
-    }
-
-    String formatPMSend(String recipient, String world, String message) {
-        return MessageUtil.addColour("&fMe &1-&2-&3-&4> &f" + Parser.parsePlayerName(recipient, world) + "&f: " + message);
-    }
-
-    String formatPMRecieve(String sender, String world, String message) {
-        return MessageUtil.addColour(Parser.parsePlayerName(sender, world) + " &1-&2-&3-&4> &fMe: " + message);
     }
 }
