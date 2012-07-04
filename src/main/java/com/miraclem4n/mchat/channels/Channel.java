@@ -44,7 +44,7 @@ public class Channel {
 
     public void setType(ChannelType type) {
         if (type == null)
-            return;
+            type = ChannelType.GLOBAL;
 
         this.type = type;
     }

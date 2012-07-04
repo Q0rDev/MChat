@@ -1,6 +1,5 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.channels.Channel;
 import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.types.ChannelEditType;
@@ -72,20 +71,48 @@ public class MChannelCommand implements CommandExecutor {
             return true;
         } else if (args[0].equalsIgnoreCase("create")) {
             if (!(args.length > 2)) {
-                MessageUtil.sendMessage(sender, "Please use'/" + cmd + " create [ChannelName] [ChannelType]'.");
+                MessageUtil.sendMessage(sender, "Please use'/" + cmd + " create [ChannelName] [ChannelType] <Password/Distance>'.");
                 return true;
             }
 
             if (!MiscUtil.hasCommandPerm(sender, "mchannel.create." + args[1].toLowerCase()))
                 return true;
 
-            if (ChannelType.fromName(args[2]) == null) {
+            ChannelType type = ChannelType.fromName(args[2]);
+
+            if (type == null) {
                 MessageUtil.sendMessage(sender, "'" + args[2] + "' is not a valid ChannelType. Use '/" + cmd + " types' for more information.");
                 return true;
             }
 
-            ChannelManager.createChannel(args[1], ChannelType.fromName(args[2]), "[", "]", false, "", -1, false);
-            MessageUtil.sendMessage(sender, "You have successfully created Channel '" + args[1].toLowerCase() + "'.");
+            Boolean passworded = false;
+            String password = "";
+            Integer distance = -1;
+
+            if (type == ChannelType.PASSWORD) {
+                if (args.length < 4) {
+                    MessageUtil.sendMessage(sender, "'" + args[2] + "' ChannelType cannot be created with only 3 arguments. Use '/" + cmd + " create' for more information.");
+                    return true;
+                } else {
+                    passworded = true;
+                    password = args[3];
+                }
+            } else if (type == ChannelType.LOCAL) {
+                if (args.length < 4) {
+                    MessageUtil.sendMessage(sender, "'" + args[2] + "' ChannelType cannot be created with only 3 arguments. Use '/" + cmd + " create' for more information.");
+                    return true;
+                } else {
+                    distance = Integer.parseInt(args[3]);
+                }
+            }
+
+            if (ChannelManager.getChannel(args[1]) != null) {
+                MessageUtil.sendMessage(sender, "'" + args[1] + "' has already been created.");
+                return true;
+            }
+
+            ChannelManager.createChannel(args[1], type, "[", "]", passworded, password, distance, false);
+            MessageUtil.sendMessage(sender, "You have successfully created Channel '" + args[1].toLowerCase() + "' of type '" + args[2] + "'.");
 
             return true;
         } else if (args[0].equalsIgnoreCase("remove")) {
@@ -96,6 +123,11 @@ public class MChannelCommand implements CommandExecutor {
 
             if (!MiscUtil.hasCommandPerm(sender, "mchannel.remove." + args[1].toLowerCase()))
                 return true;
+
+            if (ChannelManager.getChannel(args[1]) == null) {
+                MessageUtil.sendMessage(sender, "'" + args[1] + "' is not a valid channel.");
+                return true;
+            }
 
             ChannelManager.removeChannel(args[1]);
             MessageUtil.sendMessage(sender, "You have successfully removed Channel '" + args[1].toLowerCase() + "'.");
@@ -179,16 +211,20 @@ public class MChannelCommand implements CommandExecutor {
             if (channel == null)
                 MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
 
-            if (channel.isPassworded() && !(args.length > 2)) {
-                if (!(args.length > 2))
-                    MessageUtil.sendMessage(sender, "'" + args[1] + "' is a Passworded channel. Please use '/" + cmd + " join [ChannelName] [Password]' to enter.");
-                else if (!args[2].equalsIgnoreCase(channel.getPassword()))
-                    MessageUtil.sendMessage(sender, "Password entered for channel '" + args[1] + "' is invalid.");
-
+            if (channel.getOccupants().contains(sender.getName())) {
+                MessageUtil.sendMessage(sender, "You are already in channel '" + args[1] + "'.");
                 return true;
             }
 
-            ChannelManager.getChannel(args[1]).addOccupant(sender.getName(), true);
+            if (channel.isPassworded()) {
+                if (!(args.length > 2)) {
+                    MessageUtil.sendMessage(sender, "'" + args[1] + "' is a Passworded channel. Please use '/" + cmd + " join [ChannelName] [Password]' to enter.");
+                    return true;
+                } else if (!args[2].equalsIgnoreCase(channel.getPassword()))
+                    MessageUtil.sendMessage(sender, "Password entered for channel '" + args[1].toLowerCase() + "' is invalid.");
+            }
+
+            channel.addOccupant(sender.getName(), true);
             MessageUtil.sendMessage(sender, "You have successfully joined '" + args[1].toLowerCase() + "'.");
 
             return true;
@@ -201,10 +237,17 @@ public class MChannelCommand implements CommandExecutor {
             if (!MiscUtil.hasCommandPerm(sender, "mchannel.leave." + args[1].toLowerCase()))
                 return true;
 
-            if (ChannelManager.getChannel(args[1]) == null)
-                MessageUtil.sendMessage(sender, "No Channel by the name of '" + "mchannel.leave." + args[1].toLowerCase() + "' could be found.");
+            Channel channel = ChannelManager.getChannel(args[1]);
 
-            ChannelManager.getChannel(args[1]).removeOccupant(sender.getName());
+            if (channel == null)
+                MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
+
+            if (!channel.getOccupants().contains(sender.getName())) {
+                MessageUtil.sendMessage(sender, "You are not in channel '" + args[1] + "'.");
+                return true;
+            }
+
+            channel.removeOccupant(sender.getName());
             MessageUtil.sendMessage(sender, "You have successfully left '" + args[1].toLowerCase() + "'.");
 
             return true;

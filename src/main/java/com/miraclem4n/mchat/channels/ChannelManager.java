@@ -43,6 +43,43 @@ public class ChannelManager {
     }
 
     /**
+     * Loads a Channel from the config.
+     */
+    public static void loadChannel(String name) {
+        ChannelType type = ChannelType.fromName(ChannelUtil.getConfig().getString(name + ".type"));
+        String prefix = ChannelUtil.getConfig().getString(name + ".prefix", "[");
+        String suffix = ChannelUtil.getConfig().getString(name + ".suffix", "]");
+        Boolean passworded = ChannelUtil.getConfig().getBoolean(name + ".passworded", false);
+        String password = ChannelUtil.getConfig().getString(name + ".password");
+        Integer distance = ChannelUtil.getConfig().getInt(name + ".distance", -1);
+        Boolean defaulted = ChannelUtil.getConfig().getBoolean(name + ".default", false);
+
+        channels.add(new Channel(name.toLowerCase(), type, prefix, suffix, passworded, password, distance, defaulted));
+    }
+
+
+    /**
+     * Reloads Channels from ChannelUtil to Memory.
+     */
+    public static void reloadChannels() {
+        for (String key : ChannelUtil.getConfig().getKeys(false)) {
+            if (getChannel(key) != null) {
+                Channel channel = getChannel(key);
+
+                channel.setType(ChannelType.fromName(ChannelUtil.getConfig().getString(key + ".type")));
+                channel.setPrefix(ChannelUtil.getConfig().getString(key + ".prefix", "["));
+                channel.setSuffix(ChannelUtil.getConfig().getString(key + ".suffix", "]"));
+                channel.setPassword(ChannelUtil.getConfig().getString(key + ".password"));
+                channel.setPassworded(ChannelUtil.getConfig().getBoolean(key + ".passworded", false), channel.getPassword());
+                channel.setDistance(ChannelUtil.getConfig().getInt(key + ".distance", -1));
+                channel.setDefault(ChannelUtil.getConfig().getBoolean(key + ".default", false));
+            } else {
+                loadChannel(key);
+            }
+        }
+    }
+
+    /**
      * Loads Channels from ChannelUtil to Memory.
      * @param name Name of Channel being created.
      * @param type Type of Channel being created.
@@ -75,13 +112,21 @@ public class ChannelManager {
      * @param name Name of Channel being removed.
      */
     public static void removeChannel(String name) {
+        Boolean isReal = false;
+
         for (Channel channel : channels)
-            if (channel.getName().equalsIgnoreCase(name))
-                channels.remove(channel);
+            if (channel.getName().equalsIgnoreCase(name)) {
+                isReal = true;
+                break;
+            }
 
-        ChannelUtil.getConfig().set(name, null);
+        if (isReal) {
+            channels.remove(getChannel(name));
 
-        ChannelUtil.save();
+            ChannelUtil.getConfig().set(name, null);
+
+            ChannelUtil.save();
+        }
     }
 
     /**
@@ -126,14 +171,17 @@ public class ChannelManager {
      * @param name Name of Channel being defaulted.
      */
     public static void setDefaultChannel(String name) {
-        for (Channel channel : channels)
+        Boolean hasDefaulted = false;
+        for (Channel channel : channels) {
             if (channel.getName().equalsIgnoreCase(name)) {
                 channel.setDefault(true);
                 saveChannel(channel);
-            } else if (channel.isDefault()) {
+                hasDefaulted = true;
+            } else if (channel.isDefault() && hasDefaulted) {
                 channel.setDefault(false);
                 saveChannel(channel);
             }
+        }
     }
 
     /**

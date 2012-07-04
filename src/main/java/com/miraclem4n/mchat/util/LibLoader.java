@@ -18,7 +18,7 @@ public class LibLoader {
 
         File file = getFile(filename);
 
-        return load(file) != null;
+        return load(file);
     }
 
     public static Boolean download(String filename, String url) {
@@ -63,25 +63,27 @@ public class LibLoader {
         }
     }
 
-    private static Object load(File file) {
+    private static Boolean load(File file) {
         try {
             return load(file.toURI().toURL());
         } catch (MalformedURLException e) {
-            return null;
+            return false;
         }
     }
 
-    private static Object load(URL url) {
+    private static Boolean load(URL url) {
         for (URL otherUrl : loader.getURLs())
             if (otherUrl.sameFile(url))
-                return null;
+                return true;
 
         try {
             Method addURLMethod = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             addURLMethod.setAccessible(true);
-            return addURLMethod.invoke(loader, url);
+            addURLMethod.invoke(loader, url);
         } catch (Exception e) {
-            return null;
+            return false;
         }
+
+        return true;
     }
 }

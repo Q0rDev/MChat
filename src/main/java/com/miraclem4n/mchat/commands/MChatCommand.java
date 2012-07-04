@@ -1,6 +1,7 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Writer;
+import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.configs.CensorUtil;
 import com.miraclem4n.mchat.configs.ConfigUtil;
 import com.miraclem4n.mchat.configs.InfoUtil;
@@ -65,6 +66,14 @@ public class MChatCommand implements CommandExecutor {
                     InfoUtil.initialize();
                     MessageUtil.sendMessage(sender, "Info Reloaded.");
                     return true;
+                } else if (args[1].equalsIgnoreCase("channels")
+                        || args[1].equalsIgnoreCase("ch")) {
+                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.channels"))
+                        return true;
+
+                    ChannelManager.reloadChannels();
+                    MessageUtil.sendMessage(sender, "Channels Reloaded.");
+                    return true;
                 } else if (args[1].equalsIgnoreCase("censor")
                         || args[1].equalsIgnoreCase("ce")) {
                     if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.censor"))
@@ -88,6 +97,7 @@ public class MChatCommand implements CommandExecutor {
 
                     plugin.reloadConfigs();
                     plugin.initializeConfigs();
+                    ChannelManager.reloadChannels();
                     MessageUtil.sendMessage(sender, "All Config's Reloaded.");
                     return true;
                 }

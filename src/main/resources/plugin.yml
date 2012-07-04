@@ -14,6 +14,7 @@ commands:
             - /<command> reload config = Reload Config.
             - /<command> reload info = Reload Info.
             - /<command> reload censor = Reload Censor.
+            - /<command> reload channels = Reload Channels.
             - /<command> reload locale = Reload Locale.
             - /<command> reload all = Reload All Configs.
             - /<command> user = Show Info User Help.
@@ -125,6 +126,7 @@ permissions:
             mchat.reload.config: true
             mchat.reload.info: true
             mchat.reload.censor: true
+            mchat.reload.channels: true
             mchat.reload.locale: true
             mchat.reload.all: true
     mchat.suppress.*:
@@ -225,6 +227,9 @@ permissions:
     mchat.reload.locale:
         default: false
         description: Allow usage of /mchat reload locale
+    mchat.reload.channels:
+        default: false
+        description: Allow usage of /mchat reload channels
     mchat.reload.all:
         default: false
         description: Allow usage of /mchat reload all
