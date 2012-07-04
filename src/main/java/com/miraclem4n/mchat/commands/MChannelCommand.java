@@ -208,8 +208,10 @@ public class MChannelCommand implements CommandExecutor {
 
             Channel channel = ChannelManager.getChannel(args[1]);
 
-            if (channel == null)
+            if (channel == null) {
                 MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
+                return true;
+            }
 
             if (channel.getOccupants().contains(sender.getName())) {
                 MessageUtil.sendMessage(sender, "You are already in channel '" + args[1] + "'.");
@@ -239,8 +241,10 @@ public class MChannelCommand implements CommandExecutor {
 
             Channel channel = ChannelManager.getChannel(args[1]);
 
-            if (channel == null)
+            if (channel == null) {
                 MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
+                return true;
+            }
 
             if (!channel.getOccupants().contains(sender.getName())) {
                 MessageUtil.sendMessage(sender, "You are not in channel '" + args[1] + "'.");
