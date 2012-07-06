@@ -31,6 +31,20 @@ public class Channel {
         this.occupants = new HashMap<String, Boolean>();
     }
 
+    public Channel(String name) {
+        this.name = name.toLowerCase();
+        this.type = ChannelType.GLOBAL;
+
+        this.prefix = "[";
+        this.suffix = "]";
+        this.passworded = false;
+        this.password = "";
+        this.distance = -1;
+        this.defaulted = false;
+
+        this.occupants = new HashMap<String, Boolean>();
+    }
+
     public void setName(String name) {
         if (name == null)
             return;
@@ -67,8 +81,15 @@ public class Channel {
         return set;
     }
 
+    public void addOccupant(String occupant) {
+        if (occupant == null || occupants.get(occupant) != null)
+            return;
+
+        occupants.put(occupant, true);
+    }
+
     public void addOccupant(String occupant, Boolean state) {
-        if (occupant == null || state == null)
+        if (occupant == null || state == null || occupants.get(occupant) != null)
             return;
 
         occupants.put(occupant, state);
