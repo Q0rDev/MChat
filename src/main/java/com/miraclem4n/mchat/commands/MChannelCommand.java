@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.channels.Channel;
 import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.types.ChannelEditType;
@@ -197,6 +198,8 @@ public class MChannelCommand implements CommandExecutor {
             return true;
         }
 
+        Player player = (Player) sender;
+
         if (args[0].equalsIgnoreCase("join")) {
             if (args.length < 2) {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " join [ChannelName]'.");
@@ -278,7 +281,7 @@ public class MChannelCommand implements CommandExecutor {
 
             channel.setOccupantAvailability(sender.getName(), false);
             MessageUtil.sendMessage(sender, "You are now marked as away in channel '" + args[1].toLowerCase() + "'.");
-            channel.broadcastMessage(sender.getName() + " is now away!");
+            channel.broadcastMessage(Parser.parsePlayerName(player.getName(), player.getWorld().getName()) + " is now away!");
 
             return true;
         }  else if (args[0].equalsIgnoreCase("back")
@@ -305,7 +308,7 @@ public class MChannelCommand implements CommandExecutor {
 
             channel.setOccupantAvailability(sender.getName(), true);
             MessageUtil.sendMessage(sender, "You are now marked as available in channel '" + args[1].toLowerCase() + "'.");
-            channel.broadcastMessage(sender.getName() + " is now available!");
+            channel.broadcastMessage(Parser.parsePlayerName(player.getName(), player.getWorld().getName()) + " is now available!");
 
             return true;
         }

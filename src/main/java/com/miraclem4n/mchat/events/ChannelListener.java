@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Set;
 
@@ -40,5 +41,19 @@ public class ChannelListener implements Listener {
                         Parser.parseChatMessage(player.getName(), player.getWorld().getName(), event.getMessage()));
 
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        String pName = event.getPlayer().getName();
+        String world = event.getPlayer().getWorld().getName();
+
+        Channel dChannel = ChannelManager.getDefaultChannel();
+        Set<Channel> cChannel = ChannelManager.getPlayersActiveChannels(pName);
+
+        if (cChannel.size() < 1 && dChannel != null && !dChannel.getOccupants().contains(pName)) {
+            dChannel.addOccupant(pName, true);
+            dChannel.broadcastMessage(Parser.parsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
+        }
     }
 }

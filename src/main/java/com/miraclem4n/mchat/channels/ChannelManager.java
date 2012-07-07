@@ -31,7 +31,7 @@ public class ChannelManager {
             String prefix = ChannelUtil.getConfig().getString(key + ".prefix", "[");
             String suffix = ChannelUtil.getConfig().getString(key + ".suffix", "]");
             Boolean passworded = ChannelUtil.getConfig().getBoolean(key + ".passworded", false);
-            String password = ChannelUtil.getConfig().getString(key + ".password");
+            String password = ChannelUtil.getConfig().getString(key + ".password", "");
             Integer distance = ChannelUtil.getConfig().getInt(key + ".distance", -1);
             Boolean defaulted = ChannelUtil.getConfig().getBoolean(key + ".default", false);
 
@@ -50,7 +50,7 @@ public class ChannelManager {
         String prefix = ChannelUtil.getConfig().getString(name + ".prefix", "[");
         String suffix = ChannelUtil.getConfig().getString(name + ".suffix", "]");
         Boolean passworded = ChannelUtil.getConfig().getBoolean(name + ".passworded", false);
-        String password = ChannelUtil.getConfig().getString(name + ".password");
+        String password = ChannelUtil.getConfig().getString(name + ".password", "");
         Integer distance = ChannelUtil.getConfig().getInt(name + ".distance", -1);
         Boolean defaulted = ChannelUtil.getConfig().getBoolean(name + ".default", false);
 
@@ -69,7 +69,7 @@ public class ChannelManager {
                 channel.setType(ChannelType.fromName(ChannelUtil.getConfig().getString(key + ".type")));
                 channel.setPrefix(ChannelUtil.getConfig().getString(key + ".prefix", "["));
                 channel.setSuffix(ChannelUtil.getConfig().getString(key + ".suffix", "]"));
-                channel.setPassword(ChannelUtil.getConfig().getString(key + ".password"));
+                channel.setPassword(ChannelUtil.getConfig().getString(key + ".password", ""));
                 channel.setPassworded(ChannelUtil.getConfig().getBoolean(key + ".passworded", false), channel.getPassword());
                 channel.setDistance(ChannelUtil.getConfig().getInt(key + ".distance", -1));
                 channel.setDefault(ChannelUtil.getConfig().getBoolean(key + ".default", false));
