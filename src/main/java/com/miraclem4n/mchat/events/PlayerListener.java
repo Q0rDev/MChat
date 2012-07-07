@@ -20,7 +20,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 public class PlayerListener implements Listener {
     mChatSuite plugin;
@@ -61,9 +63,9 @@ public class PlayerListener implements Listener {
         String msg = event.getJoinMessage();
 
         Channel dChannel = ChannelManager.getDefaultChannel();
-        Channel cChannel = ChannelManager.getChannel(pName);
+        Set<Channel> cChannel = ChannelManager.getPlayersActiveChannels(pName);
 
-        if (dChannel != null && cChannel == null) {
+        if (cChannel.size() < 1 && dChannel != null) {
             dChannel.addOccupant(pName, true);
             dChannel.broadcastMessage(Parser.parsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
         }
