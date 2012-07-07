@@ -35,8 +35,9 @@ public class ChannelListener implements Listener {
             return;
 
         for (Channel channel : channels)
-            channel.sendMessageFrom(player,
-                    Parser.parseChatMessage(player.getName(), player.getWorld().getName(), event.getMessage()));
+            if (channel.getOccupantAvailability(player.getName()))
+                channel.sendMessageFrom(player,
+                        Parser.parseChatMessage(player.getName(), player.getWorld().getName(), event.getMessage()));
 
         event.setCancelled(true);
     }

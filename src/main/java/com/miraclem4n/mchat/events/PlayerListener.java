@@ -65,7 +65,7 @@ public class PlayerListener implements Listener {
         Channel dChannel = ChannelManager.getDefaultChannel();
         Set<Channel> cChannel = ChannelManager.getPlayersActiveChannels(pName);
 
-        if (cChannel.size() < 1 && dChannel != null) {
+        if (cChannel.size() < 1 && dChannel != null && !dChannel.getOccupants().contains(pName)) {
             dChannel.addOccupant(pName, true);
             dChannel.broadcastMessage(Parser.parsePlayerName(pName, world) + " has joined channel " + dChannel.getName() + "!");
         }

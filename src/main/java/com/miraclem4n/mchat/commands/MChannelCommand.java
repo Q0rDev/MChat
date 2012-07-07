@@ -25,7 +25,7 @@ public class MChannelCommand implements CommandExecutor {
         if (!cmd.equalsIgnoreCase("mchannel"))
             return true;
 
-        if (!(args.length > 0)) {
+        if (args.length < 1) {
             String[] message = new String[] {
                     MessageUtil.format("'/" + cmd + " types' for more information."),
                     MessageUtil.format("'/" + cmd + " edittypes' for more information."),
@@ -70,7 +70,7 @@ public class MChannelCommand implements CommandExecutor {
 
             return true;
         } else if (args[0].equalsIgnoreCase("create")) {
-            if (!(args.length > 2)) {
+            if (args.length < 3) {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " create [ChannelName] [ChannelType] <Password/Distance>'.");
                 return true;
             }
@@ -116,7 +116,7 @@ public class MChannelCommand implements CommandExecutor {
 
             return true;
         } else if (args[0].equalsIgnoreCase("remove")) {
-            if (!(args.length > 1)) {
+            if (args.length < 2) {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " remove [ChannelName]'.");
                 return true;
             }
@@ -134,7 +134,7 @@ public class MChannelCommand implements CommandExecutor {
 
             return true;
         } else if (args[0].equalsIgnoreCase("edit")) {
-            if (!(args.length > 3)) {
+            if (args.length < 4) {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " edit [ChannelName] [EditType] [Option]'.");
                 return true;
             }
@@ -198,7 +198,7 @@ public class MChannelCommand implements CommandExecutor {
         }
 
         if (args[0].equalsIgnoreCase("join")) {
-            if (!(args.length > 1)) {
+            if (args.length < 2) {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " join [ChannelName]'.");
                 return true;
             }
@@ -219,7 +219,7 @@ public class MChannelCommand implements CommandExecutor {
             }
 
             if (channel.isPassworded()) {
-                if (!(args.length > 2)) {
+                if (args.length < 3) {
                     MessageUtil.sendMessage(sender, "'" + args[1] + "' is a Passworded channel. Please use '/" + cmd + " join [ChannelName] [Password]' to enter.");
                     return true;
                 } else if (!args[2].equalsIgnoreCase(channel.getPassword()))
@@ -231,7 +231,7 @@ public class MChannelCommand implements CommandExecutor {
 
             return true;
         } else if (args[0].equalsIgnoreCase("leave")) {
-            if (!(args.length > 1)) {
+            if (args.length < 2) {
                 MessageUtil.sendMessage(sender, "Please use'/" + cmd + " leave [ChannelName]'.");
                 return true;
             }
@@ -253,6 +253,59 @@ public class MChannelCommand implements CommandExecutor {
 
             channel.removeOccupant(sender.getName());
             MessageUtil.sendMessage(sender, "You have successfully left '" + args[1].toLowerCase() + "'.");
+
+            return true;
+        }  else if (args[0].equalsIgnoreCase("away")) {
+            if (args.length < 2) {
+                MessageUtil.sendMessage(sender, "Please use'/" + cmd + " away [ChannelName]'.");
+                return true;
+            }
+
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.away." + args[1].toLowerCase()))
+                return true;
+
+            Channel channel = ChannelManager.getChannel(args[1]);
+
+            if (channel == null) {
+                MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
+                return true;
+            }
+
+            if (!channel.getOccupants().contains(sender.getName())) {
+                MessageUtil.sendMessage(sender, "You are not in channel '" + args[1] + "'.");
+                return true;
+            }
+
+            channel.setOccupantAvailability(sender.getName(), false);
+            MessageUtil.sendMessage(sender, "You are now marked as away in channel '" + args[1].toLowerCase() + "'.");
+            channel.broadcastMessage(sender.getName() + " is now away!");
+
+            return true;
+        }  else if (args[0].equalsIgnoreCase("back")
+                || args[0].equalsIgnoreCase("available")) {
+            if (args.length < 2) {
+                MessageUtil.sendMessage(sender, "Please use'/" + cmd + " back [ChannelName]'.");
+                return true;
+            }
+
+            if (!MiscUtil.hasCommandPerm(sender, "mchannel.back." + args[1].toLowerCase()))
+                return true;
+
+            Channel channel = ChannelManager.getChannel(args[1]);
+
+            if (channel == null) {
+                MessageUtil.sendMessage(sender, "No Channel by the name of '" + args[1].toLowerCase() + "' could be found.");
+                return true;
+            }
+
+            if (!channel.getOccupants().contains(sender.getName())) {
+                MessageUtil.sendMessage(sender, "You are not in channel '" + args[1] + "'.");
+                return true;
+            }
+
+            channel.setOccupantAvailability(sender.getName(), true);
+            MessageUtil.sendMessage(sender, "You are now marked as available in channel '" + args[1].toLowerCase() + "'.");
+            channel.broadcastMessage(sender.getName() + " is now available!");
 
             return true;
         }

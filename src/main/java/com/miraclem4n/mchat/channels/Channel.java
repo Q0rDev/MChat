@@ -82,10 +82,7 @@ public class Channel {
     }
 
     public void addOccupant(String occupant) {
-        if (occupant == null || occupants.get(occupant) != null)
-            return;
-
-        occupants.put(occupant, true);
+        addOccupant(occupant, true);
     }
 
     public void addOccupant(String occupant, Boolean state) {
@@ -197,7 +194,8 @@ public class Channel {
             if (playerz == null)
                 continue;
 
-            if (getType() == ChannelType.PASSWORD || getType() == ChannelType.PRIVATE) {
+            if (getType() == ChannelType.PASSWORD
+                    || getType() == ChannelType.PRIVATE || getType() == ChannelType.GLOBAL) {
                 playerz.sendMessage(msg);
             } else if (getType() == ChannelType.LOCAL) {
                 if (playerz.getWorld().getName().equals(player.getWorld().getName())
@@ -210,8 +208,7 @@ public class Channel {
                 if (playerz.getWorld().getName().equals(player.getWorld().getName())
                         && playerz.getLocation().getChunk() == player.getLocation().getChunk())
                     playerz.sendMessage(msg);
-            } else
-                playerz.sendMessage(msg);
+            }
         }
 
         MessageUtil.log(msg);
