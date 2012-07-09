@@ -1,19 +1,21 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DenyCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public DenyCommand(mChatSuite instance) {
+    public DenyCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -34,7 +36,7 @@ public class DenyCommand implements CommandExecutor {
         String rName = plugin.getInvite.get(pName);
 
         if (rName == null) {
-            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_NO_PENDING.getValue());
+            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_NO_PENDING.getVal());
             return true;
         }
 
@@ -47,8 +49,8 @@ public class DenyCommand implements CommandExecutor {
             plugin.isConv.put(pName, false);
             plugin.isConv.put(rName, false);
 
-            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_DENIED.getValue().replace("%player%", Parser.parsePlayerName(rName, rWorld)));
-            MessageUtil.sendMessage(recipient, LocaleType.MESSAGE_CONVERSATION_NOT_STARTED.getValue().replace("%player%", Parser.parsePlayerName(pName, pWorld)));
+            MessageUtil.sendMessage(player, API.replace(LocaleType.MESSAGE_CONVERSATION_DENIED.getVal(), "player", Parser.parsePlayerName(rName, rWorld), IndicatorType.LOCALE_VAR));
+            MessageUtil.sendMessage(recipient, API.replace(LocaleType.MESSAGE_CONVERSATION_NOT_STARTED.getVal(), "player", Parser.parsePlayerName(pName, pWorld), IndicatorType.LOCALE_VAR));
         }
 
         return true;

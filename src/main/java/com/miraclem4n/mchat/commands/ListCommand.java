@@ -1,13 +1,15 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Reader;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.types.InfoType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,9 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ListCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public ListCommand(mChatSuite instance) {
+    public ListCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -28,13 +30,13 @@ public class ListCommand implements CommandExecutor {
                 || !MiscUtil.hasCommandPerm(sender, "mchat.list"))
             return true;
 
-        sender.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_LIST_HEADER.getValue().replace("%players%", String.valueOf(plugin.getServer().getOnlinePlayers().length)).replace("%max%", String.valueOf(plugin.getServer().getMaxPlayers()))));
-        formatList(sender);
+        HashMap<String, String> rMap = new HashMap<String, String>();
 
-        return true;
-    }
+        rMap.put("max", String.valueOf(plugin.getServer().getMaxPlayers()));
+        rMap.put("players", String.valueOf(plugin.getServer().getOnlinePlayers().length));
 
-    void formatList(CommandSender sender) {
+        sender.sendMessage(MessageUtil.addColour(API.replace(LocaleType.MESSAGE_LIST_HEADER.getVal(), rMap, IndicatorType.LOCALE_VAR)));
+
         HashMap<String, Integer> cLMap = new HashMap<String, Integer>();
 
         String msg = "";
@@ -76,9 +78,9 @@ public class ListCommand implements CommandExecutor {
 
             if (plugin.isAFK.get(players.getName()) != null && plugin.isAFK.get(players.getName()))
                 if (msg.contains(iVar + ": &f"))
-                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + LocaleType.MESSAGE_AFK_AFK.getValue() + "]" + mName + "&f, &f");
+                    msg = msg.replace(iVar + ": &f", iVar + ": &f&4[" + LocaleType.MESSAGE_AFK_AFK.getVal() + "]" + mName + "&f, &f");
                 else
-                    msg += (iVar + ": &f&4[" + LocaleType.MESSAGE_AFK_AFK.getValue() + "]" + mName + "&f, &f" + '\n');
+                    msg += (iVar + ": &f&4[" + LocaleType.MESSAGE_AFK_AFK.getVal() + "]" + mName + "&f, &f" + '\n');
             else
             if (msg.contains(iVar + ": &f"))
                 msg = msg.replace(iVar + ": &f", iVar + ": &f" + mName + "&f, &f");
@@ -107,9 +109,11 @@ public class ListCommand implements CommandExecutor {
         } else
             sender.sendMessage(MessageUtil.addColour(msg));
 
-        for (int i = 20; i < MessageUtil.addColour(LocaleType.MESSAGE_LIST_HEADER.getValue().replace("%players%", String.valueOf(plugin.getServer().getOnlinePlayers().length)).replace("%max%", String.valueOf(plugin.getServer().getMaxPlayers()))).length(); i++)
+        for (int i = 20; i < MessageUtil.addColour(API.replace(LocaleType.MESSAGE_LIST_HEADER.getVal(), rMap, IndicatorType.LOCALE_VAR)).length(); i++)
             line += "-";
 
         sender.sendMessage(MessageUtil.addColour("&6" + line));
+
+        return true;
     }
 }

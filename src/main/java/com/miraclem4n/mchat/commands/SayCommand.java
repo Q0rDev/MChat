@@ -1,16 +1,18 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.api.API;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class SayCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public SayCommand(mChatSuite instance) {
+    public SayCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -27,7 +29,7 @@ public class SayCommand implements CommandExecutor {
 
             message = message.trim();
 
-            plugin.getServer().broadcastMessage(LocaleType.FORMAT_SAY.getValue() + " " +  message);
+            plugin.getServer().broadcastMessage(API.replace(LocaleType.FORMAT_SAY.getVal(), "msg", message, IndicatorType.LOCALE_VAR));
             return true;
         }
 

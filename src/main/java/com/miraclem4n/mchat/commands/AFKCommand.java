@@ -1,18 +1,18 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class AFKCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public AFKCommand(mChatSuite instance) {
+    public AFKCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -34,7 +34,7 @@ public class AFKCommand implements CommandExecutor {
 
             message = message.trim();
         } else
-            message = LocaleType.MESSAGE_AFK_DEFAULT.getValue();
+            message = LocaleType.MESSAGE_AFK_DEFAULT.getVal();
 
         Player player = (Player) sender;
 

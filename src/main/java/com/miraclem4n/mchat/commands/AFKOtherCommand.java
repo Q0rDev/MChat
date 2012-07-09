@@ -1,11 +1,13 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -14,10 +16,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class AFKOtherCommand implements CommandExecutor {
-    mChatSuite plugin;
+import java.util.HashMap;
 
-    public AFKOtherCommand(mChatSuite instance) {
+public class AFKOtherCommand implements CommandExecutor {
+    MChat plugin;
+
+    public AFKOtherCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -34,7 +38,7 @@ public class AFKOtherCommand implements CommandExecutor {
         Boolean isAfk = plugin.isAFK.get(afkTarget.getName()) != null &&
                 plugin.isAFK.get(afkTarget.getName());
 
-        String notification = LocaleType.MESSAGE_PLAYER_NOT_AFK.getValue();
+        String notification = LocaleType.MESSAGE_PLAYER_NOT_AFK.getVal();
 
         String message = "";
 
@@ -42,7 +46,7 @@ public class AFKOtherCommand implements CommandExecutor {
 
 
         if (!isAfk) {
-            if (args.length > 0) {
+            if (args.length > 1) {
                 for (int i = 1; i < args.length; ++i)
                     message += " " + args[i];
 
@@ -50,26 +54,33 @@ public class AFKOtherCommand implements CommandExecutor {
             } else
                 message = "Away From Keyboard";
 
-            notification = LocaleType.MESSAGE_PLAYER_AFK.getValue();
+            notification = LocaleType.MESSAGE_PLAYER_AFK.getVal();
 
-            title = ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase()) + "- AFK -" + '\n' + title;
+            title = ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getRaw().toUpperCase()) + "- AFK -" + '\n' + title;
         }
+
+        HashMap<String, String> rMap = new HashMap<String, String>();
+
+        rMap.put("player", Parser.parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName()));
+        rMap.put("reason", message);
+        rMap.put("r", message);
 
         if (plugin.spoutB) {
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 SpoutPlayer sPlayers = (SpoutPlayer) players;
 
-                if (sPlayers.isSpoutCraftEnabled())
-                    sPlayers.sendNotification(afkTarget.getName(), notification.replace("%player%", ""), Material.PAPER);
-                else
-                    players.sendMessage(notification.replace("%player%", Parser.parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
+                if (sPlayers.isSpoutCraftEnabled()) {
+                    sPlayers.sendNotification(afkTarget.getName(), API.replace(notification, "player", "", IndicatorType.LOCALE_VAR), Material.PAPER);
+                } else {
+                    players.sendMessage(API.replace(notification, rMap, IndicatorType.LOCALE_VAR));
+                }
             }
 
             SpoutPlayer sPlayer = (SpoutPlayer) afkTarget;
 
             sPlayer.setTitle(title);
         } else
-            plugin.getServer().broadcastMessage(notification.replace("%player%", Parser.parsePlayerName(afkTarget.getName(), afkTarget.getWorld().getName())).replace("%reason%" , message));
+            plugin.getServer().broadcastMessage(API.replace(notification, rMap, IndicatorType.LOCALE_VAR));
 
         afkTarget.setSleepingIgnored(!isAfk);
         plugin.isAFK.put(afkTarget.getName(), !isAfk);
@@ -79,7 +90,7 @@ public class AFKOtherCommand implements CommandExecutor {
         if (!isAfk) {
             plugin.AFKLoc.put(afkTarget.getName(), afkTarget.getLocation());
 
-            pLName = MessageUtil.addColour("<gold>[" + LocaleType.MESSAGE_AFK_AFK.getValue() + "] ") + pLName;
+            pLName = MessageUtil.addColour("<gold>[" + LocaleType.MESSAGE_AFK_AFK.getVal() + "] ") + pLName;
         }
 
         if (ConfigType.MCHATE_USE_AFK_LIST.getObject().toBoolean())

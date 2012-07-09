@@ -1,11 +1,13 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,10 +15,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class PMCommand implements CommandExecutor {
-    mChatSuite plugin;
+import java.util.HashMap;
 
-    public PMCommand(mChatSuite instance) {
+public class PMCommand implements CommandExecutor {
+    MChat plugin;
+
+    public PMCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -51,7 +55,13 @@ public class PMCommand implements CommandExecutor {
         String rName = recipient.getName();
         String senderName = Parser.parsePlayerName(pName, world);
 
-        player.sendMessage(LocaleType.FORMAT_PM_SENT.getValue().replace("%recipient%", Parser.parsePlayerName(rName, recipient.getWorld().getName())).replace("%message%", message));
+        HashMap<String, String> rMap = new HashMap<String, String>();
+
+        rMap.put("recipient", Parser.parsePlayerName(rName, recipient.getWorld().getName()));
+        rMap.put("sender", Parser.parsePlayerName(senderName, world));
+        rMap.put("msg", message);
+
+        player.sendMessage(API.replace(LocaleType.FORMAT_PM_SENT.getVal(), rMap, IndicatorType.LOCALE_VAR));
 
         if (plugin.spoutB) {
             if (ConfigType.MCHAT_SPOUT.getObject().toBoolean()) {
@@ -70,7 +80,7 @@ public class PMCommand implements CommandExecutor {
                         }
                     };
 
-                    sRecipient.sendNotification(LocaleType.MESSAGE_SPOUT_PM.getValue(), player.getName(), Material.PAPER);
+                    sRecipient.sendNotification(LocaleType.MESSAGE_SPOUT_PM.getVal(), player.getName(), Material.PAPER);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 2 * 20);
                     return true;
                 }
@@ -78,8 +88,10 @@ public class PMCommand implements CommandExecutor {
         }
 
         plugin.lastPMd.put(rName, pName);
-        recipient.sendMessage(LocaleType.FORMAT_PM_RECEIVED.getValue().replace("%sender%", Parser.parsePlayerName(senderName, world)).replace("%message%", message));
-        MessageUtil.log(LocaleType.FORMAT_PM_RECEIVED.getValue().replace("%sender%", Parser.parsePlayerName(senderName, world)).replace("%message%", message));
+
+        recipient.sendMessage(API.replace(LocaleType.FORMAT_PM_RECEIVED.getVal(), rMap, IndicatorType.LOCALE_VAR));
+        MessageUtil.log(API.replace(LocaleType.FORMAT_PM_RECEIVED.getVal(), rMap, IndicatorType.LOCALE_VAR));
+
         return true;
     }
 

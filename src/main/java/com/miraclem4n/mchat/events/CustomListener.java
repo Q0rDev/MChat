@@ -3,7 +3,7 @@ package com.miraclem4n.mchat.events;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,9 +12,9 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class CustomListener implements Listener {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public CustomListener(mChatSuite instance) {
+    public CustomListener(MChat instance) {
         plugin = instance;
     }
 
@@ -37,7 +37,7 @@ public class CustomListener implements Listener {
         if (key == null) return;
 
         if (key.equals(chatKey)) {
-            player.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase()) + MessageUtil.addColour(LocaleType.MESSAGE_SPOUT_TYPING.getValue()) + '\n' + Parser.parsePlayerName(pName, player.getWorld().getName()));
+            player.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getRaw().toUpperCase()) + MessageUtil.addColour(LocaleType.MESSAGE_SPOUT_TYPING.getVal()) + '\n' + Parser.parsePlayerName(pName, player.getWorld().getName()));
             plugin.chatt.put(player.getName(), true);
         }
 

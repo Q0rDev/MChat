@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.channels.Channel;
 import com.miraclem4n.mchat.channels.ChannelManager;
@@ -7,16 +8,15 @@ import com.miraclem4n.mchat.types.ChannelEditType;
 import com.miraclem4n.mchat.types.ChannelType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MChannelCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public MChannelCommand(mChatSuite instance) {
+    public MChannelCommand(MChat instance) {
         plugin = instance;
     }
 

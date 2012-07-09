@@ -18,7 +18,7 @@ public class ChannelUtil {
         config = YamlConfiguration.loadConfiguration(file);
 
         config.options().indent(4);
-        config.options().header("mChatSuite Channels");
+        config.options().header("MChat Channels");
 
         if (!file.exists())
             loadDefaults();

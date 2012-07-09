@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.Writer;
 import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.configs.CensorUtil;
@@ -9,16 +10,15 @@ import com.miraclem4n.mchat.configs.LocaleUtil;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import com.miraclem4n.mchat.types.InfoType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class MChatCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public MChatCommand(mChatSuite instance) {
+    public MChatCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -122,7 +122,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.addBase(args[3], args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user add player Player DefaultGroup");
@@ -135,7 +135,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.setInfoVar(args[3], InfoType.USER, args[4], stringArgs(args, 5));
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user add ivar Player InfoVariable InfoValue");
@@ -148,7 +148,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.addWorld(args[3], InfoType.USER, args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user add world Player World");
@@ -161,7 +161,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.setWorldVar(args[3], InfoType.USER, args[4], args[5], stringArgs(args, 6));
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user add world Player World InfoVariable InfoValue");
@@ -181,7 +181,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.setGroup(args[3], args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user set group Player NewGroup");
@@ -204,7 +204,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeBase(args[3], InfoType.USER);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user remove Player");
@@ -217,7 +217,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeInfoVar(args[3], InfoType.USER, args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user remove Player InfoVariable");
@@ -230,7 +230,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeWorld(args[3], InfoType.USER, args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user remove Player World");
@@ -243,7 +243,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeWorldVar(args[3], InfoType.USER, args[4], args[5]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat user remove Player World InfoVariable");
@@ -272,7 +272,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.addBase(args[3], InfoType.GROUP);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group add group Group");
@@ -285,7 +285,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.setInfoVar(args[3], InfoType.GROUP, args[4], stringArgs(args, 5));
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group add ivar Group InfoVariable InfoValue");
@@ -298,7 +298,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.addWorld(args[3], InfoType.GROUP, args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group add world Group World");
@@ -311,7 +311,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.setWorldVar(args[3], InfoType.GROUP, args[4], args[5], stringArgs(args, 6));
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group add wvar Group World InfoVariable InfoValue");
@@ -334,7 +334,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeBase(args[3], InfoType.GROUP);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group remove group Group");
@@ -347,7 +347,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeInfoVar(args[3], InfoType.GROUP, args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group remove ivar Group InfoVariable");
@@ -360,7 +360,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeWorld(args[3], InfoType.GROUP, args[4]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group remove world Group World");
@@ -373,7 +373,7 @@ public class MChatCommand implements CommandExecutor {
 
                     try {
                         Writer.removeWorldVar(args[3], InfoType.GROUP, args[4], args[5]);
-                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getValue());
+                        MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                         return true;
                     } catch (ArrayIndexOutOfBoundsException er) {
                         MessageUtil.sendMessage(sender, "/mchat group remove wvar Group World InfoVariable");

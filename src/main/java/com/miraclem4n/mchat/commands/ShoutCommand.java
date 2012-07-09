@@ -4,16 +4,16 @@ import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ShoutCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public ShoutCommand(mChatSuite instance) {
+    public ShoutCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -35,17 +35,17 @@ public class ShoutCommand implements CommandExecutor {
         }
 
         if (message.length() < 1) {
-            MessageUtil.sendMessage(sender, LocaleType.MESSAGE_SHOUT_NO_INPUT.getValue());
+            MessageUtil.sendMessage(sender, LocaleType.MESSAGE_SHOUT_NO_INPUT.getVal());
             return true;
         }
 
         Player player = (Player) sender;
 
-        mChatSuite.isShouting.put(sender.getName(), true);
+        MChat.isShouting.put(sender.getName(), true);
 
         plugin.getServer().broadcastMessage(Parser.parseChatMessage(player.getName(), player.getWorld().getName(), message));
 
-        mChatSuite.isShouting.put(sender.getName(), false);
+        MChat.isShouting.put(sender.getName(), false);
 
         return true;
     }

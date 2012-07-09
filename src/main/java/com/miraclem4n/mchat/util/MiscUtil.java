@@ -1,15 +1,18 @@
 package com.miraclem4n.mchat.util;
 
 import com.miraclem4n.mchat.api.API;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 public class MiscUtil {
     public static Boolean hasCommandPerm(CommandSender sender, String permission) {
         if (!API.checkPermissions(sender, permission)) {
-            MessageUtil.sendMessage(sender, LocaleType.MESSAGE_NO_PERMS.getValue().replace("%permission%", permission));
+            MessageUtil.sendMessage(sender, API.replace(LocaleType.MESSAGE_NO_PERMS.getVal(), "permission", permission, IndicatorType.LOCALE_VAR));
             return false;
         }
 

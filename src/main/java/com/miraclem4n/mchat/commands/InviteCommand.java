@@ -1,19 +1,21 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class InviteCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public InviteCommand(mChatSuite instance) {
+    public InviteCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -45,10 +47,10 @@ public class InviteCommand implements CommandExecutor {
         if (plugin.getInvite.get(rName) == null) {
             plugin.getInvite.put(rName, pName);
 
-            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_INVITE_SENT.getValue().replace("%player%", Parser.parsePlayerName(rName, rWorld)));
-            MessageUtil.sendMessage(recipient, LocaleType.MESSAGE_CONVERSATION_INVITED.getValue().replace("%player%", Parser.parsePlayerName(pName, pWorld)));
+            MessageUtil.sendMessage(player, API.replace(LocaleType.MESSAGE_CONVERSATION_INVITE_SENT.getVal(), "player", Parser.parsePlayerName(rName, rWorld), IndicatorType.LOCALE_VAR));
+            MessageUtil.sendMessage(recipient, API.replace(LocaleType.MESSAGE_CONVERSATION_INVITED.getVal(), "player", Parser.parsePlayerName(pName, pWorld), IndicatorType.LOCALE_VAR));
         } else
-            MessageUtil.sendMessage(player, LocaleType.MESSAGE_CONVERSATION_HAS_REQUEST.getValue().replace("%player%", Parser.parsePlayerName(rName, rWorld)));
+            MessageUtil.sendMessage(player, API.replace(LocaleType.MESSAGE_CONVERSATION_HAS_REQUEST.getVal(), "player", Parser.parsePlayerName(rName, rWorld), IndicatorType.LOCALE_VAR));
 
         return true;
     }

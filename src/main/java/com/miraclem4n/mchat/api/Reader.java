@@ -2,13 +2,14 @@ package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.configs.InfoUtil;
 import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
-import in.mDev.MiracleM4n.mChatSuite.types.EventType;
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import com.miraclem4n.mchat.types.EventType;
+import com.miraclem4n.mchat.types.InfoType;
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 import org.bukkit.Bukkit;
 
@@ -364,7 +365,7 @@ public class Reader {
     /**
      * Player Name Resolver
      * @param name Name of Player to be Resolved.
-     * @return Player Name's MChat Alias.
+     * @return Player Name's mChat Alias.
      */
     public static String getMName(String name) {
         if (InfoUtil.getConfig().isSet("mname." + name))
@@ -380,18 +381,15 @@ public class Reader {
      * @return Event Message.
      */
     public static String getEventMessage(EventType type) {
-        String event = "";
-
         if (type.getName().equalsIgnoreCase("join"))
-            event = ConfigType.MESSAGE_JOIN.getObject().toString();
+            return LocaleType.MESSAGE_EVENT_JOIN.getRaw();
 
         else if (type.getName().equalsIgnoreCase("kick"))
-            event = ConfigType.MESSAGE_KICK.getObject().toString();
+            return LocaleType.MESSAGE_EVENT_KICK.getRaw();
 
         else if (type.getName().equalsIgnoreCase("leave"))
-            event = ConfigType.MESSAGE_LEAVE.getObject().toString();
+            return LocaleType.MESSAGE_EVENT_LEAVE.getRaw();
 
-        return MessageUtil.addColour(event);
+        return "";
     }
 }
-

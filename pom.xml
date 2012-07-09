@@ -2,18 +2,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Project information -->
-    <groupId>in.mDev</groupId>
-    <artifactId>mChatSuite</artifactId>
+    <groupId>com.miraclem4n</groupId>
+    <artifactId>MChat</artifactId>
     <version>${m.version}-${p.version}</version>
     <name>mChatSuite</name>
     <url>http://mDev.in/</url>
-    <description>Full mChat Suite</description>
+    <description>Full MChat Suite</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.5</m.version>
-        <p.version>R3_32</p.version>
+        <p.version>R3_33</p.version>
     </properties>
 
     <!-- Source code -->

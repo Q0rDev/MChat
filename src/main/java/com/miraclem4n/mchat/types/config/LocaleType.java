@@ -11,6 +11,11 @@ public enum LocaleType {
     FORMAT_SAY("format.say"),
     FORMAT_SHOUT("format.shout"),
     FORMAT_SPY("format.spy"),
+    FORMAT_DATE("format.date"),
+    FORMAT_NAME("format.name"),
+    FORMAT_TABBED_LIST("format.tabbedList"),
+    FORMAT_LIST_CMD("format.listCmd"),
+    FORMAT_ME("format.me"),
 
     MESSAGE_AFK_AFK("message.afk.afk"),
     MESSAGE_AFK_DEFAULT("message.afk.default"),
@@ -46,6 +51,27 @@ public enum LocaleType {
     MESSAGE_SPOUT_TYPING("message.spout.typing"),
     MESSAGE_YOU_DAMAGED("message.you.damaged"),
     MESSAGE_YOU_DIED("message.you.died"),
+    MESSAGE_EVENT_JOIN("message.event.join"),
+    MESSAGE_EVENT_LEAVE("message.event.leave"),
+    MESSAGE_EVENT_KICK("message.event.kick"),
+    MESSAGE_DEATH_IN_FIRE("message.death.inFire"),
+    MESSAGE_DEATH_ON_FIRE("message.death.onFire"),
+    MESSAGE_DEATH_LAVA("message.death.lava"),
+    MESSAGE_DEATH_IN_WALL("message.death.inWall"),
+    MESSAGE_DEATH_DROWN("message.death.drown"),
+    MESSAGE_DEATH_STARVE("message.death.starve"),
+    MESSAGE_DEATH_CACTUS("message.death.cactus"),
+    MESSAGE_DEATH_FALL("message.death.fall"),
+    MESSAGE_DEATH_OUT_OF_WORLD("message.death.OutOfWorld"),
+    MESSAGE_DEATH_GENERIC("message.death.Generic"),
+    MESSAGE_DEATH_EXPLOSION("message.death.Explosion"),
+    MESSAGE_DEATH_MAGIC("message.death.Magic"),
+    MESSAGE_DEATH_ENTITY("message.death.Entity"),
+    MESSAGE_DEATH_ARROW("message.death.Arrow"),
+    MESSAGE_DEATH_FIREBALL("message.death.Fireball"),
+    MESSAGE_DEATH_THROWN("message.death.Thrown"),
+    MESSAGE_HEROES_TRUE("message.heroes.isMaster"),
+    MESSAGE_HEROES_FALSE("message.heroes.notMaster"),
 
     PLAYER_NOT_FOUND("message.player.notOnline"),
     PLAYER_NOT_ONLINE("message.player.notFound");
@@ -56,9 +82,16 @@ public enum LocaleType {
         this.option = option;
     }
 
-    public String getValue() {
+    public String getVal() {
         if (LocaleUtil.getConfig().isSet(option))
             return MessageUtil.addColour(LocaleUtil.getConfig().getString(option));
+
+        return "Locale Option '" + option + "' not found!";
+    }
+
+    public String getRaw() {
+        if (LocaleUtil.getConfig().isSet(option))
+            return LocaleUtil.getConfig().getString(option);
 
         return "Locale Option '" + option + "' not found!";
     }

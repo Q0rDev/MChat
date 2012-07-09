@@ -40,7 +40,7 @@ public class ConfigUtil {
         config = YamlConfiguration.loadConfiguration(file);
 
         config.options().indent(4);
-        config.options().header("mChatSuite Config");
+        config.options().header("MChat Config");
 
         loadDefaults();
     }
@@ -55,14 +55,7 @@ public class ConfigUtil {
 
         removeOption("mchat.enableList");
 
-        editOption("mchat-date-format", "format.date");
         editOption("mchat-message-format", "format.chat");
-        editOption("mchat-name-format", "format.name");
-        editOption("mchat-playerEvent-format", "format.event");
-        editOption("mchat-playerList-format", "format.list");
-        editOption("mchat-join-message", "message.join");
-        editOption("mchat-leave-message", "message.leave");
-        editOption("mchat-kick-message", "message.kick");
         editOption("mchat-API-only", "mchat.apiOnly");
         editOption("mchat-format-events", "mchat.formatEvents");
         editOption("mchat-chat-distance", "mchat.chatDistance");
@@ -70,44 +63,12 @@ public class ConfigUtil {
         editOption("mchat-oldNodes-only", "info.useOldNodes");
         editOption("mchat-add-info-players", "info.addNewPlayers");
 
-        editOption("format.list", "format.tabbedList");
-
-        editOption("mchat.formatEvents", "mchat.alterEvents");
+        editOption("mchat.formatEvents", "mchat.alter.events");
 
         editOption("mchat.alterEvents", "mchat.alter.events");
         editOption("mchat.alterDeathMessages", "mchat.alter.death");
 
-
-        checkOption("format.date", "HH:mm:ss");
         checkOption("format.chat", "+p+dn+s&f: +m");
-        checkOption("format.name", "+p+dn+s&e");
-        checkOption("format.event", "+p+dn+s&e");
-        checkOption("format.tabbedList", "+p+dn+s");
-        checkOption("format.listCmd", "+p+dn+s");
-        checkOption("format.me", "* +p+dn+s&e +m");
-
-        checkOption("message.join", "has joined the game.");
-        checkOption("message.leave", "has left the game.");
-        checkOption("message.kick", "has been kicked from the game. [ +r ]");
-        checkOption("message.deathInFire", "went up in flames.");
-        checkOption("message.deathOnFire", "burned to death.");
-        checkOption("message.deathLava", "tried to swim in lava.");
-        checkOption("message.deathInWall", "suffocated in a wall.");
-        checkOption("message.deathDrown", "drowned.");
-        checkOption("message.deathStarve", "starved to death.");
-        checkOption("message.deathCactus", "was pricked to death.");
-        checkOption("message.deathFall", "hit the ground too hard.");
-        checkOption("message.deathOutOfWorld", "fell out of the world.");
-        checkOption("message.deathGeneric", "died.");
-        checkOption("message.deathExplosion", "blew up.");
-        checkOption("message.deathMagic", "was killed by magic.");
-        checkOption("message.deathEntity", "was slain by +killer.");
-        checkOption("message.deathMobFormat", "a +killer");
-        checkOption("message.deathArrow", "was shot by +killer.");
-        checkOption("message.deathFireball", "was fireballed by +killer.");
-        checkOption("message.deathThrown", "was pummeled by +killer.");
-        checkOption("message.heroesMasterT", "The Great");
-        checkOption("message.heroesMasterF", "The Squire");
 
         checkOption("mchat.apiOnly", false);
         checkOption("mchat.alter.events", true);
@@ -115,6 +76,7 @@ public class ConfigUtil {
         checkOption("mchat.chatDistance", -1.0);
         checkOption("mchat.varIndicator", "+");
         checkOption("mchat.cusVarIndicator", "-");
+        checkOption("mchat.localeVarIndicator", "%");
         checkOption("mchat.spout", true);
         checkOption("mchat.IPCensor", true);
         checkOption("mchat.cLockRange", 3);
@@ -165,22 +127,6 @@ public class ConfigUtil {
         checkOption("aliases.mchannel", mChannelAliases);
 
         unloadAliases();
-
-        editValue("message.deathInFire", config.getString("message.deathInFire").replace("+CName", "+killer"));
-        editValue("message.deathOnFire", config.getString("message.deathOnFire").replace("+CName", "+killer"));
-        editValue("message.deathLava", config.getString("message.deathLava").replace("+CName", "+killer"));
-        editValue("message.deathInWall", config.getString("message.deathInWall").replace("+CName", "+killer"));
-        editValue("message.deathStarve", config.getString("message.deathStarve").replace("+CName", "+killer"));
-        editValue("message.deathCactus", config.getString("message.deathCactus").replace("+CName", "+killer"));
-        editValue("message.deathFall", config.getString("message.deathFall").replace("+CName", "+killer"));
-        editValue("message.deathOutOfWorld", config.getString("message.deathOutOfWorld").replace("+CName", "+killer"));
-        editValue("message.deathGeneric", config.getString("message.deathGeneric").replace("+CName", "+killer"));
-        editValue("message.deathExplosion", config.getString("message.deathExplosion").replace("+CName", "+killer"));
-        editValue("message.deathMagic", config.getString("message.deathMagic").replace("+CName", "+killer"));
-        editValue("message.deathEntity", config.getString("message.deathEntity").replace("+CName", "+killer"));
-        editValue("message.deathArrow", config.getString("message.deathArrow").replace("+CName", "+killer"));
-        editValue("message.deathFireball", config.getString("message.deathFireball").replace("+CName", "+killer"));
-        editValue("message.deathThrown", config.getString("message.deathThrown").replace("+CName", "+killer"));
     }
 
     public static void set(String key, Object obj) {
@@ -217,12 +163,6 @@ public class ConfigUtil {
     private static void removeOption(String option) {
         if (config.isSet(option))
             set(option, null);
-    }
-
-    private static void editValue(String option, Object newValue) {
-        if (config.isSet(option))
-            if (config.get(option) != newValue)
-                set(option, newValue);
     }
 
     private static void loadAliases() {

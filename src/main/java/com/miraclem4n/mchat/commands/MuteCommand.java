@@ -1,18 +1,22 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.api.API;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MuteCommand implements CommandExecutor {
-    mChatSuite plugin;
+import java.util.HashMap;
 
-    public MuteCommand(mChatSuite instance) {
+public class MuteCommand implements CommandExecutor {
+    MChat plugin;
+
+    public MuteCommand(MChat instance) {
         plugin = instance;
     }
 
@@ -21,26 +25,35 @@ public class MuteCommand implements CommandExecutor {
                 || !MiscUtil.hasCommandPerm(sender, "mchat.mute"))
             return true;
 
-        if (args.length > 0) {
-            String target = args[0];
-            Player player = plugin.getServer().getPlayer(args[0]);
+        if (args.length < 1)
+            return false;
 
-            if (player != null)
-                target = player.getName();
+        String target = args[0];
+        Player player = plugin.getServer().getPlayer(args[0]);
 
-            if (plugin.isMuted.get(target) != null && plugin.isMuted.get(target)) {
-                plugin.isMuted.put(target, false);
+        if (player != null)
+            target = player.getName();
 
-                MessageUtil.sendMessage(sender, LocaleType.MESSAGE_MUTE_MISC.getValue().replace("%player%", target).replace("%muted%", "unmuted").replace("%mute%", "mute"));
-            } else {
-                plugin.isMuted.put(target, true);
+        HashMap<String, String> rMap = new HashMap<String, String>();
 
-                MessageUtil.sendMessage(sender, LocaleType.MESSAGE_MUTE_MISC.getValue().replace("%player%", target).replace("%muted%", "muted").replace("%mute%", "unmute"));
-            }
+        rMap.put("player", target);
 
-            return true;
+        if (plugin.isMuted.get(target) != null && plugin.isMuted.get(target)) {
+            plugin.isMuted.put(target, false);
+
+            rMap.put("muted", "unmuted");
+            rMap.put("mute", "mute");
+
+            MessageUtil.sendMessage(sender, API.replace(LocaleType.MESSAGE_MUTE_MISC.getVal(), rMap, IndicatorType.LOCALE_VAR));
+        } else {
+            plugin.isMuted.put(target, true);
+
+            rMap.put("muted", "muted");
+            rMap.put("mute", "unmute");
+
+            MessageUtil.sendMessage(sender, API.replace(LocaleType.MESSAGE_MUTE_MISC.getVal(), rMap, IndicatorType.LOCALE_VAR));
         }
 
-        return false;
+        return true;
     }
 }

@@ -18,7 +18,7 @@ public class InfoUtil {
         config = YamlConfiguration.loadConfiguration(file);
 
         config.options().indent(4);
-        config.options().header("mChatSuite Info");
+        config.options().header("MChat Info");
 
         loadDefaults();
     }

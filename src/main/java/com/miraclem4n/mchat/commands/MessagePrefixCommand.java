@@ -1,15 +1,15 @@
 package com.miraclem4n.mchat.commands;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class MessagePrefixCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public MessagePrefixCommand(mChatSuite instance) {
+    public MessagePrefixCommand(MChat instance) {
         plugin = instance;
     }
 

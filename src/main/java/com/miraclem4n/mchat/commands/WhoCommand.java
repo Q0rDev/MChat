@@ -4,16 +4,16 @@ import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class WhoCommand implements CommandExecutor {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public WhoCommand(mChatSuite instance) {
+    public WhoCommand(MChat instance) {
         plugin = instance;
     }
 

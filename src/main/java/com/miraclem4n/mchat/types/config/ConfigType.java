@@ -5,42 +5,14 @@ import com.miraclem4n.mchat.configs.objects.ConfigObject;
 import com.miraclem4n.mchat.util.MessageUtil;
 
 public enum ConfigType {
-    FORMAT_DATE("format.date"),
     FORMAT_CHAT("format.chat"),
-    FORMAT_NAME("format.name"),
-    FORMAT_EVENT("format.event"),
-    FORMAT_TABBED_LIST("format.tabbedList"),
-    FORMAT_LIST_CMD("format.listCmd"),
-    FORMAT_ME("format.me"),
-
-    MESSAGE_JOIN("message.join"),
-    MESSAGE_LEAVE("message.leave"),
-    MESSAGE_KICK("message.kick"),
-    MESSAGE_DEATH_IN_FIRE("message.deathInFire"),
-    MESSAGE_DEATH_ON_FIRE("message.deathOnFire"),
-    MESSAGE_DEATH_LAVA("message.deathLava"),
-    MESSAGE_DEATH_IN_WALL("message.deathInWall"),
-    MESSAGE_DEATH_DROWN("message.deathDrown"),
-    MESSAGE_DEATH_STARVE("message.deathStarve"),
-    MESSAGE_DEATH_CACTUS("message.deathCactus"),
-    MESSAGE_DEATH_FALL("message.deathFall"),
-    MESSAGE_DEATH_OUT_OF_WORLD("message.deathOutOfWorld"),
-    MESSAGE_DEATH_GENERIC("message.deathGeneric"),
-    MESSAGE_DEATH_EXPLOSION("message.deathExplosion"),
-    MESSAGE_DEATH_MAGIC("message.deathMagic"),
-    MESSAGE_DEATH_ENTITY("message.deathEntity"),
-    MESSAGE_DEATH_MOB_FORMAT("message.deathMobFormat"),
-    MESSAGE_DEATH_ARROW("message.deathArrow"),
-    MESSAGE_DEATH_FIREBALL("message.deathFireball"),
-    MESSAGE_DEATH_THROWN("message.deathThrown"),
-    MESSAGE_HEROES_TRUE("message.deathMasterT"),
-    MESSAGE_HEROES_FALSE("message.deathMasterF"),
 
     MCHAT_API_ONLY("mchat.apiOnly"),
     MCHAT_ALTER_EVENTS("mchat.alter.events"),
     MCHAT_ALTER_DEATH("mchat.alter.death"),
     MCHAT_CHAT_DISTANCE("mchat.chatDistance"),
     MCHAT_VAR_INDICATOR("mchat.varIndicator"),
+    MCHAT_LOCALE_VAR_INDICATOR("mchat.localeVarIndicator"),
     MCHAT_CUS_VAR_INDICATOR("mchat.cusVarIndicator"),
     MCHAT_SPOUT("mchat.spout"),
     MCHAT_IP_CENSOR("mchat.IPCensor"),
@@ -105,9 +77,5 @@ public enum ConfigType {
         }
 
         return new ConfigObject(value);
-    }
-
-    public String getValue() {
-        return option;
     }
 }

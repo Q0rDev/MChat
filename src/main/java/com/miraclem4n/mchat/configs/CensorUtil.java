@@ -18,7 +18,7 @@ public class CensorUtil {
         config = YamlConfiguration.loadConfiguration(file);
 
         config.options().indent(4);
-        config.options().header("mChatSuite Censor");
+        config.options().header("MChat Censor");
 
         if (!file.exists())
             loadDefaults();

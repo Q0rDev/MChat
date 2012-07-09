@@ -2,7 +2,7 @@ package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.configs.InfoUtil;
 import com.miraclem4n.mchat.types.config.ConfigType;
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import com.miraclem4n.mchat.types.InfoType;
 
 public class Writer {
     /**

@@ -1,17 +1,14 @@
 package com.miraclem4n.mchat.events;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
-import com.miraclem4n.mchat.api.Reader;
 import com.miraclem4n.mchat.api.Writer;
-import com.miraclem4n.mchat.channels.Channel;
-import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.configs.InfoUtil;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.EventType;
+import com.miraclem4n.mchat.types.EventType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,14 +17,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 
 public class PlayerListener implements Listener {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public PlayerListener(mChatSuite instance) {
+    public PlayerListener(MChat instance) {
         plugin = instance;
     }
 
@@ -97,10 +92,10 @@ public class PlayerListener implements Listener {
 
         if (ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
             if (ConfigType.SUPPRESS_USE_JOIN.getObject().toBoolean()) {
-                suppressEventMessage(Parser.parseEventName(mPName, world) + " " + Reader.getEventMessage(EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getObject().toInteger());
+                suppressEventMessage(Parser.parseEvent(pName, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getObject().toInteger());
                 event.setJoinMessage(null);
             } else
-                event.setJoinMessage(Parser.parseEventName(mPName, world) + " " + Reader.getEventMessage(EventType.JOIN));
+                event.setJoinMessage(Parser.parseEvent(pName, world, EventType.JOIN));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -120,15 +115,13 @@ public class PlayerListener implements Listener {
 
         String reason = event.getReason();
 
-        String kickMsg = Reader.getEventMessage(EventType.KICK);
-
-        kickMsg = MessageUtil.addColour(kickMsg.replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "reason", reason).replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "r", reason));
+        String kickMsg = Parser.parseEvent(pName, world, EventType.KICK).replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "reason", reason).replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "r", reason);
 
         if (ConfigType.SUPPRESS_USE_KICK.getObject().toBoolean()) {
-            suppressEventMessage(Parser.parseEventName(pName, world) + " " + kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getObject().toInteger());
+            suppressEventMessage(kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getObject().toInteger());
             event.setLeaveMessage(null);
         } else
-            event.setLeaveMessage(Parser.parseEventName(pName, world) + " " + kickMsg);
+            event.setLeaveMessage(kickMsg);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -144,10 +137,10 @@ public class PlayerListener implements Listener {
             return;
 
         if (ConfigType.SUPPRESS_USE_QUIT.getObject().toBoolean()) {
-            suppressEventMessage(Parser.parseEventName(pName, world) + " " + Reader.getEventMessage(EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getObject().toInteger());
+            suppressEventMessage(Parser.parseEvent(pName, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getObject().toInteger());
             event.setQuitMessage(null);
         } else
-            event.setQuitMessage(Parser.parseEventName(pName, world) + " " + Reader.getEventMessage(EventType.QUIT));
+            event.setQuitMessage(Parser.parseEvent(pName, world, EventType.QUIT));
     }
 
     @EventHandler
@@ -188,7 +181,7 @@ public class PlayerListener implements Listener {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 
-                MessageUtil.sendMessage(player, LocaleType.MESSAGE_PLAYER_STILL_AFK.getValue());
+                MessageUtil.sendMessage(player, LocaleType.MESSAGE_PLAYER_STILL_AFK.getVal());
             } else
                 player.performCommand("mchatafk");
     }

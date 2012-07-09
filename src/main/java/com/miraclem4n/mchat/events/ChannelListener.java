@@ -3,7 +3,7 @@ package com.miraclem4n.mchat.events;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.channels.Channel;
 import com.miraclem4n.mchat.channels.ChannelManager;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.MChat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,9 +14,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.Set;
 
 public class ChannelListener implements Listener {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public ChannelListener(mChatSuite instance) {
+    public ChannelListener(MChat instance) {
         plugin = instance;
     }
 

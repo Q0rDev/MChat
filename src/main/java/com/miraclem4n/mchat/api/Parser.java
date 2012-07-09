@@ -5,6 +5,7 @@ import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
 import com.miraclem4n.mchat.configs.CensorUtil;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
@@ -13,8 +14,9 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
-import in.mDev.MiracleM4n.mChatSuite.types.InfoType;
+import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.types.EventType;
+import com.miraclem4n.mchat.types.InfoType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -31,7 +33,7 @@ public class Parser {
     // Towny
     public static Boolean townyB;
 
-    public static void initialize(mChatSuite instance) {
+    public static void initialize(MChat instance) {
         heroesB = instance.heroesB;
         heroes = instance.heroes;
         townyB = instance.townyB;
@@ -119,7 +121,7 @@ public class Parser {
 
         // Time Var
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(ConfigType.FORMAT_DATE.getObject().toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(LocaleType.FORMAT_DATE.getRaw());
         String time = dateFormat.format(now);
 
         // Display Name
@@ -128,19 +130,19 @@ public class Parser {
         // Chat Distance Type
         String dType = "";
 
-        if (mChatSuite.isShouting.get(pName) != null
-                && mChatSuite.isShouting.get(pName)) {
-            dType = LocaleType.FORMAT_SHOUT.getValue();
+        if (MChat.isShouting.get(pName) != null
+                && MChat.isShouting.get(pName)) {
+            dType = LocaleType.FORMAT_SHOUT.getVal();
         } else if (ConfigType.MCHAT_CHAT_DISTANCE.getObject().toDouble() > 0) {
-            dType = LocaleType.FORMAT_LOCAL.getValue();
+            dType = LocaleType.FORMAT_LOCAL.getVal();
         }
 
         // Chat Distance Type
         String sType = "";
 
-        if (mChatSuite.isSpying.get(pName) != null
-                && mChatSuite.isSpying.get(pName))
-            sType = LocaleType.FORMAT_SPY.getValue();
+        if (MChat.isSpying.get(pName) != null
+                && MChat.isSpying.get(pName))
+            sType = LocaleType.FORMAT_SPY.getVal();
 
         // Player Object Stuff
         if (Bukkit.getServer().getPlayer(pName) != null)  {
@@ -211,9 +213,9 @@ public class Parser {
 
                 if ((hero.isMaster(heroClass))
                         && (heroSClass == null || hero.isMaster(heroSClass)))
-                    hMastered = ConfigType.MESSAGE_HEROES_TRUE.getObject().toString();
+                    hMastered = LocaleType.MESSAGE_HEROES_TRUE.getVal();
                 else
-                    hMastered = ConfigType.MESSAGE_HEROES_FALSE.getObject().toString();
+                    hMastered = LocaleType.MESSAGE_HEROES_FALSE.getVal();
             }
 
             if (townyB) {
@@ -272,7 +274,7 @@ public class Parser {
         TreeMap<String, Object> rVarMap = new TreeMap<String, Object>();
         TreeMap<String, Object> lVarMap = new TreeMap<String, Object>();
 
-        addVar(fVarMap, vI + "mnameformat," + vI + "mnf", ConfigType.FORMAT_NAME.getObject().toString());
+        addVar(fVarMap, vI + "mnameformat," + vI + "mnf", LocaleType.FORMAT_NAME.getVal());
         addVar(fVarMap, vI + "healthbar," + vI + "hb", healthbar);
 
         addVar(rVarMap, vI + "distancetype," + vI + "dtype", dType);
@@ -354,7 +356,7 @@ public class Parser {
      * @return Formatted Player Name.
      */
     public static String parsePlayerName(String pName, String world) {
-        return parseMessage(pName, world, "", ConfigType.FORMAT_NAME.getObject().toString());
+        return parseMessage(pName, world, "", LocaleType.FORMAT_NAME.getRaw());
     }
 
     /**
@@ -363,8 +365,8 @@ public class Parser {
      * @param world Name of Player's World.
      * @return Formatted Event Message.
      */
-    public static String parseEventName(String pName, String world) {
-        return parseMessage(pName, world, "", ConfigType.FORMAT_EVENT.getObject().toString());
+    public static String parseEvent(String pName, String world, EventType type) {
+        return parseMessage(pName, world, "", API.replace(Reader.getEventMessage(type), "player", parsePlayerName(pName, world), IndicatorType.LOCALE_VAR));
     }
 
     /**
@@ -374,7 +376,7 @@ public class Parser {
      * @return Formatted TabbedList Name.
      */
     public static String parseTabbedList(String pName, String world) {
-        return parseMessage(pName, world, "", ConfigType.FORMAT_TABBED_LIST.getObject().toString());
+        return parseMessage(pName, world, "", LocaleType.FORMAT_TABBED_LIST.getRaw());
     }
 
     /**
@@ -384,7 +386,7 @@ public class Parser {
      * @return Formatted ListCommand Name.
      */
     public static String parseListCmd(String pName, String world) {
-        return parseMessage(pName, world, "", ConfigType.FORMAT_LIST_CMD.getObject().toString());
+        return parseMessage(pName, world, "", LocaleType.FORMAT_LIST_CMD.getRaw());
     }
 
     /**
@@ -395,7 +397,7 @@ public class Parser {
      * @return Formatted Me Message.
      */
     public static String parseMe(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, ConfigType.FORMAT_ME.getObject().toString());
+        return parseMessage(pName, world, msg, LocaleType.FORMAT_ME.getRaw());
     }
 
 
@@ -466,7 +468,7 @@ public class Parser {
         SortedMap<String, String> varMap = API.varMap.descendingMap();
 
         for (Map.Entry<String, String> entry : varMap.entrySet()) {
-            String pKey = ConfigType.MCHAT_CUS_VAR_INDICATOR.getObject().toString() + entry.getKey().replace(pName + "|", "");
+            String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
             if (format.contains(pKey))
@@ -474,7 +476,7 @@ public class Parser {
         }
 
         for (Map.Entry<String, String> entry : varMap.entrySet()) {
-            String gKey = ConfigType.MCHAT_CUS_VAR_INDICATOR.getObject().toString() + entry.getKey().replace("%^global^%|", "");
+            String gKey = IndicatorType.MISC_VAR.getValue() + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 
             if (format.contains(gKey))

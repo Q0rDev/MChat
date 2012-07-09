@@ -10,7 +10,7 @@ description: Full mChat Suite
 commands:
     mchat:
         usage: |
-            [mChat] Help Screen
+            [MChat] Help Screen
             - /<command> reload config = Reload Config.
             - /<command> reload info = Reload Info.
             - /<command> reload censor = Reload Censor.

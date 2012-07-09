@@ -6,7 +6,7 @@ public class Writer {
     public Writer() {}
 
     public void addBase(String name, InfoType type) {
-        com.miraclem4n.mchat.api.Writer.addBase(name, type);
+        com.miraclem4n.mchat.api.Writer.addBase(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()));
     }
 
     public void addBase(String player, String group) {
@@ -14,15 +14,15 @@ public class Writer {
     }
 
     public void addWorld(String name, InfoType type, String world) {
-        com.miraclem4n.mchat.api.Writer.addWorld(name, type, world);
+        com.miraclem4n.mchat.api.Writer.addWorld(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()), world);
     }
 
     public void setInfoVar(String name, InfoType type, String var, Object value) {
-        com.miraclem4n.mchat.api.Writer.setInfoVar(name, type, var, value);
+        com.miraclem4n.mchat.api.Writer.setInfoVar(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()), var, value);
     }
 
     public void setWorldVar(String name, InfoType type, String world, String var, Object value) {
-        com.miraclem4n.mchat.api.Writer.setWorldVar(name, type, world, var, value);
+        com.miraclem4n.mchat.api.Writer.setWorldVar(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()), world, var, value);
     }
 
     public void setGroup(String player, String group) {
@@ -30,18 +30,18 @@ public class Writer {
     }
 
     public void removeBase(String name, InfoType type) {
-        com.miraclem4n.mchat.api.Writer.removeBase(name, type);
+        com.miraclem4n.mchat.api.Writer.removeBase(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()));
     }
 
     public void removeInfoVar(String name, InfoType type, String var) {
-        com.miraclem4n.mchat.api.Writer.removeInfoVar(name, type, var);
+        com.miraclem4n.mchat.api.Writer.removeInfoVar(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()), var);
     }
 
     public void removeWorld(String name, InfoType type, String world) {
-        com.miraclem4n.mchat.api.Writer.removeWorld(name, type, world);
+        com.miraclem4n.mchat.api.Writer.removeWorld(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()), world);
     }
 
     public void removeWorldVar(String name, InfoType type, String world, String var) {
-        com.miraclem4n.mchat.api.Writer.removeWorldVar(name, type, world, var);
+        com.miraclem4n.mchat.api.Writer.removeWorldVar(name, com.miraclem4n.mchat.types.InfoType.fromName(type.getName()), world, var);
     }
 }

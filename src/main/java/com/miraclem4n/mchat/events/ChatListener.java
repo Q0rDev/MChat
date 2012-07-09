@@ -1,11 +1,11 @@
 package com.miraclem4n.mchat.events;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +17,9 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 import java.util.Date;
 
 public class ChatListener implements Listener {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public ChatListener(mChatSuite instance) {
+    public ChatListener(MChat instance) {
         plugin = instance;
     }
 
@@ -66,9 +66,10 @@ public class ChatListener implements Listener {
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                recipient.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getValue() + eventFormat));
-                player.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getValue() + eventFormat));
-                MessageUtil.log(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getValue() + eventFormat));
+                System.out.println("WaiNull?");
+                recipient.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getVal() + eventFormat));
+                player.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getVal() + eventFormat));
+                MessageUtil.log(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getVal() + eventFormat));
                 event.setCancelled(true);
             }
         }
@@ -86,8 +87,8 @@ public class ChatListener implements Listener {
             SpoutPlayer sPlayer = (SpoutPlayer) player;
             final String sPName = pName;
 
-            sPlayer.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase())
-                    + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getValue().toUpperCase())
+            sPlayer.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getRaw().toUpperCase())
+                    + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getRaw().toUpperCase())
                     + " -" + '\n' + Parser.parsePlayerName(pName, world));
 
             plugin.chatt.put(pName, false);
@@ -108,7 +109,7 @@ public class ChatListener implements Listener {
                 if (players.getWorld() != player.getWorld()
                         || players.getLocation().distance(player.getLocation()) > ConfigType.MCHAT_CHAT_DISTANCE.getObject().toDouble()) {
                     if (isSpy(players.getName(), players.getWorld().getName()))
-                        players.sendMessage(eventFormat.replace(LocaleType.FORMAT_LOCAL.getValue(), LocaleType.FORMAT_FORWARD.getValue()));
+                        players.sendMessage(eventFormat.replace(LocaleType.FORMAT_LOCAL.getVal(), LocaleType.FORMAT_FORWARD.getVal()));
 
                     event.getRecipients().remove(players);
                 }
@@ -119,11 +120,11 @@ public class ChatListener implements Listener {
 
     Boolean isSpy(String player, String world) {
         if (API.checkPermissions(player, world, "mchat.spy")) {
-            mChatSuite.isSpying.put(player, true);
+            MChat.isSpying.put(player, true);
             return true;
         }
 
-        mChatSuite.isSpying.put(player, false);
+        MChat.isSpying.put(player, false);
         return false;
     }
 

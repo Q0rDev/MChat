@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.api;
 
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 public class API {
@@ -169,6 +171,17 @@ public class API {
         return sender.hasPermission(node);
     }
 
+    public static String replace(String source, Map<String, String> changes, IndicatorType type) {
+        for (Map.Entry<String, String> entry : changes.entrySet())
+            source = source.replace(type.getValue() + entry.getKey(), entry.getValue());
+
+        return source;
+    }
+
+    public static String replace(String source, String search, String replace, IndicatorType type) {
+        return source.replace(type.getValue() + search, replace);
+    }
+
     private static void setupPlugins() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         Plugin pluginTest;
@@ -176,7 +189,7 @@ public class API {
         pluginTest = pm.getPlugin("Vault");
         vaultB = pluginTest != null;
         if (vaultB) {
-            MessageUtil.log("[mChatSuite] <Plugin> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[MChat] <Plugin> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
 
             RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
 
@@ -189,28 +202,28 @@ public class API {
         pluginTest = pm.getPlugin("PermissionsBukkit");
         pBukkitB = pluginTest != null;
         if (pBukkitB)
-            MessageUtil.log("[mChatSuite] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[MChat] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
 
         pluginTest = pm.getPlugin("bPermissions");
         bPermB = pluginTest != null;
         if (bPermB)
-            MessageUtil.log("[mChatSuite] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[MChat] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
 
         pluginTest = pm.getPlugin("PermissionsEx");
         pexB = pluginTest != null;
         if (pexB) {
             pexPermissions = PermissionsEx.getPermissionManager();
-            MessageUtil.log("[mChatSuite] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[MChat] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
         }
 
         pluginTest = pm.getPlugin("GroupManager");
         gmB = pluginTest != null;
         if (gmB) {
             gmWH = ((GroupManager) pluginTest).getWorldsHolder();
-            MessageUtil.log("[mChatSuite] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+            MessageUtil.log("[MChat] <Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
         }
 
         if (!(vaultB || pBukkitB || bPermB || pexB ||gmB))
-            MessageUtil.log("[mChatSuite] <Permissions> SuperPerms hooked!.");
+            MessageUtil.log("[MChat] <Permissions> SuperPerms hooked!.");
     }
 }

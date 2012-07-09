@@ -65,23 +65,21 @@ public class DebugListener implements Listener {
         Bukkit.getServer().dispatchCommand(player, "mchat reload censor");
         MessageUtil.sendMessage(player, "Command: " + "Info Related");
         Bukkit.getServer().dispatchCommand(player, "mchat user add player MiracleM4n Adminz0rz");
-        Bukkit.getServer().dispatchCommand(player, "mchat user add ivar MiracleM4n prefix Noep.zml");
+        Bukkit.getServer().dispatchCommand(player, "mchat user add ivar MiracleM4n prefix Noepzml");
         Bukkit.getServer().dispatchCommand(player, "mchat user add world MiracleM4n DtK");
-        Bukkit.getServer().dispatchCommand(player, "mchat user add wvar MiracleM4n DtK prefix Noep.xml");
+        Bukkit.getServer().dispatchCommand(player, "mchat user add wvar MiracleM4n DtK prefix Noepxml");
         Bukkit.getServer().dispatchCommand(player, "mchat user remove wvar MiracleM4n DtK prefix");
         Bukkit.getServer().dispatchCommand(player, "mchat user remove world MiracleM4n DtK");
         Bukkit.getServer().dispatchCommand(player, "mchat user remove ivar MiracleM4n prefix");
         Bukkit.getServer().dispatchCommand(player, "mchat user remove player MiracleM4n");
         Bukkit.getServer().dispatchCommand(player, "mchat group remove group Adminz0rz");
         Bukkit.getServer().dispatchCommand(player, "mchat group add group Adminz0rz");
-        Bukkit.getServer().dispatchCommand(player, "mchat group add ivar Adminz0rz prefix Noep.zml");
+        Bukkit.getServer().dispatchCommand(player, "mchat group add ivar Adminz0rz prefix Noepzml");
         Bukkit.getServer().dispatchCommand(player, "mchat group add world Adminz0rz DtK");
-        Bukkit.getServer().dispatchCommand(player, "mchat group add wvar Adminz0rz DtK prefix Noep.zml");
+        Bukkit.getServer().dispatchCommand(player, "mchat group add wvar Adminz0rz DtK prefix Noepzml");
         Bukkit.getServer().dispatchCommand(player, "mchat group remove wvar Adminz0rz DtK prefix");
         Bukkit.getServer().dispatchCommand(player, "mchat group remove world Adminz0rz DtK");
         Bukkit.getServer().dispatchCommand(player, "mchat group remove ivar Adminz0rz prefix");
         Bukkit.getServer().dispatchCommand(player, "mchat group remove group Adminz0rz");
-        //MessageUtil.sendMessage(player, "Command: " + "Channel Related");
-        //Bukkit.getServer().dispatchCommand(player, "");
     }
 }

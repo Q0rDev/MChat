@@ -1,7 +1,7 @@
 package com.miraclem4n.mchat.events;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.ConfigUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -10,9 +10,9 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import java.util.TreeSet;
 
 public class CommandListener implements Listener {
-    mChatSuite plugin;
+    MChat plugin;
 
-    public CommandListener(mChatSuite instance) {
+    public CommandListener(MChat instance) {
         plugin = instance;
     }
 

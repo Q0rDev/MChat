@@ -81,7 +81,7 @@ public class MessageUtil {
     /**
      * Plugin Formatting
      * @param message Message being appended.
-     * @return Message appended to [mChatSuite]
+     * @return Message appended to [MChat]
      */
     public static String format(String message) {
         return addColour("&2[&4m&8ChatSuite&2] &6" + message);

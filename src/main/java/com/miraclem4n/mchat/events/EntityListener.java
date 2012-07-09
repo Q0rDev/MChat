@@ -1,10 +1,11 @@
 package com.miraclem4n.mchat.events;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.ConfigType;
-import com.miraclem4n.mchat.util.MessageUtil;
-import in.mDev.MiracleM4n.mChatSuite.mChatSuite;
+import com.miraclem4n.mchat.types.config.DeathType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -15,10 +16,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class EntityListener implements Listener {
-    mChatSuite plugin;
+import java.util.HashMap;
 
-    public EntityListener(mChatSuite instance) {
+public class EntityListener implements Listener {
+    MChat plugin;
+
+    public EntityListener(MChat instance) {
         plugin = instance;
     }
 
@@ -41,24 +44,21 @@ public class EntityListener implements Listener {
         String pCause = "";
         String world = player.getWorld().getName();
 
-        Boolean isPlayer = false;
-
         EntityDamageEvent dEvent = event.getEntity().getLastDamageCause();
 
         if (dEvent instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) dEvent;
 
-            if (damageEvent.getDamager() instanceof Player) {
+            if (damageEvent.getDamager() instanceof Player)
                 pCause = Parser.parsePlayerName(player.getKiller().getName(), player.getKiller().getWorld().getName());
-                isPlayer = true;
-            } else if (damageEvent.getDamager() instanceof Projectile) {
+            else if (damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) damageEvent.getDamager();
 
                 LivingEntity shooter = projectile.getShooter();
 
-                if (shooter == null) {
+                if (shooter == null)
                     pCause = "Unknown";
-                } else if (shooter instanceof Player) {
+                else if (shooter instanceof Player) {
                     Player pShooter = (Player) shooter;
 
                     pCause = Parser.parsePlayerName(pShooter.getName(), pShooter.getWorld().getName());
@@ -70,10 +70,10 @@ public class EntityListener implements Listener {
 
         if (ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
             if (ConfigType.SUPPRESS_USE_DEATH.getObject().toBoolean()) {
-                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), ConfigType.SUPPRESS_MAX_DEATH.getObject().toInteger(), isPlayer);
+                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), ConfigType.SUPPRESS_MAX_DEATH.getObject().toInteger());
                 event.setDeathMessage(null);
             } else
-                event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage(), isPlayer));
+                event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage()));
     }
 
     @EventHandler
@@ -111,81 +111,33 @@ public class EntityListener implements Listener {
         }
     }
 
-    String handlePlayerDeath(String pName, String pCause, String world, String dMsg, Boolean isPlayer) {
+    String handlePlayerDeath(String pName, String pCause, String world, String dMsg) {
         if (dMsg == null)
             return dMsg;
 
-        if (dMsg.contains("went up in flames"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_IN_FIRE.getObject().toString(), isPlayer);
+        HashMap<String, String> map = new HashMap<String, String>();
 
-        else if (dMsg.contains("burned to death"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_ON_FIRE.getObject().toString(), isPlayer);
+        map.put("player", Parser.parsePlayerName(pName, world));
+        map.put("killer", Parser.parsePlayerName(pCause, world));
 
-        else if (dMsg.contains("tried to swim in lava"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_LAVA.getObject().toString(), isPlayer);
+        DeathType type = DeathType.fromMsg(dMsg);
 
-        else if (dMsg.contains("suffocated in a wall"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_IN_WALL.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("drowned"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_DROWN.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("starved to death"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_STARVE.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("was pricked to death"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_CACTUS.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("hit the ground too hard"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_FALL.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("fell out of the world"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_OUT_OF_WORLD.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("died"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_GENERIC.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("blew up"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_EXPLOSION.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("was killed by"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_MAGIC.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("was slain by"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_ENTITY.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("was shot by"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_ARROW.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("was fireballed by"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_FIREBALL.getObject().toString(), isPlayer);
-
-        else if (dMsg.contains("was pummeled by"))
-            return deathMessage(pName, world, pCause, ConfigType.MESSAGE_DEATH_THROWN.getObject().toString(), isPlayer);
+        if (type != null)
+            return API.replace(type.getValue(), map, IndicatorType.LOCALE_VAR);
 
         return dMsg;
     }
 
-    String deathMessage(String pName, String world, String pCause, String msg, Boolean isPlayer) {
-        if (isPlayer)
-            return Parser.parseEventName(pName, world) + " " + Parser.parseMessage(pName, world, "", msg)
-                    .replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "killer", Parser.parseEventName(pCause, world));
-
-        return MessageUtil.addColour(Parser.parseEventName(pName, world) + " " + Parser.parseMessage(pName, world, "", msg)
-                .replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "killer", ConfigType.MESSAGE_DEATH_MOB_FORMAT.getObject().toString())
-                .replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "killer", pCause));
-    }
-
-    void suppressDeathMessage(String pName, String pCause, String world, String dMsg, Integer max, Boolean isPlayer) {
+    void suppressDeathMessage(String pName, String pCause, String world, String dMsg, Integer max) {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.suppress.death")) {
-                player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
+                player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg));
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max))
                 if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death"))
-                    player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg, isPlayer));
+                    player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg));
         }
     }
 }
