@@ -50,7 +50,7 @@ public class EntityListener implements Listener {
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) dEvent;
 
             if (damageEvent.getDamager() instanceof Player)
-                pCause = Parser.parsePlayerName(player.getKiller().getName(), player.getKiller().getWorld().getName());
+                pCause = player.getKiller().getName();
             else if (damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) damageEvent.getDamager();
 
@@ -61,7 +61,7 @@ public class EntityListener implements Listener {
                 else if (shooter instanceof Player) {
                     Player pShooter = (Player) shooter;
 
-                    pCause = Parser.parsePlayerName(pShooter.getName(), pShooter.getWorld().getName());
+                    pCause = pShooter.getName();
                 } else
                     pCause = shooter.getType().getName();
             } else
@@ -125,7 +125,7 @@ public class EntityListener implements Listener {
         if (type != null)
             return API.replace(type.getValue(), map, IndicatorType.LOCALE_VAR);
 
-        return dMsg;
+        return API.replace(dMsg, map, IndicatorType.LOCALE_VAR);
     }
 
     void suppressDeathMessage(String pName, String pCause, String world, String dMsg, Integer max) {
