@@ -1,10 +1,13 @@
 package in.mDev.MiracleM4n.mChatSuite;
 
 import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.metrics.Metrics;
 import in.mDev.MiracleM4n.mChatSuite.api.API;
 import in.mDev.MiracleM4n.mChatSuite.api.Parser;
 import in.mDev.MiracleM4n.mChatSuite.api.Reader;
 import in.mDev.MiracleM4n.mChatSuite.api.Writer;
+
+import java.io.IOException;
 
 public class mChatSuite extends MChat {
     // External Class Relays
@@ -14,6 +17,11 @@ public class mChatSuite extends MChat {
     Reader reader;
 
     public void onEnable() {
+        try {
+            super.metrics = new Metrics(this);
+            super.metrics.start();
+        } catch (IOException ignored) { }
+
         super.onEnable();
         initializeClasses();
     }

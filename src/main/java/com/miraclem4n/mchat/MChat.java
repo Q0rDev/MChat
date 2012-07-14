@@ -8,6 +8,7 @@ import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.commands.*;
 import com.miraclem4n.mchat.configs.*;
 import com.miraclem4n.mchat.events.*;
+import com.miraclem4n.mchat.metrics.Metrics;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
@@ -43,6 +44,9 @@ public class MChat extends JavaPlugin {
 
     // Debug
     Boolean debug = false;
+
+    // Metrics
+    public Metrics metrics;
 
     // Timers
     long sTime1;
