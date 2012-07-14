@@ -4,6 +4,7 @@ import com.herocraftonline.heroes.Heroes;
 import com.massivecraft.factions.Conf;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.api.Writer;
 import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.commands.*;
 import com.miraclem4n.mchat.configs.*;
@@ -108,7 +109,7 @@ public class MChat extends JavaPlugin {
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getObject().toBoolean())
             for (Player players : getServer().getOnlinePlayers())
                 if (InfoUtil.getConfig().get("users." + players.getName()) == null)
-                    com.miraclem4n.mchat.api.Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
+                    Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
 
         if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
@@ -118,7 +119,7 @@ public class MChat extends JavaPlugin {
 
                 if (spoutB) {
                     SpoutPlayer sPlayers = (SpoutPlayer) players;
-                    sPlayers.setTitle(com.miraclem4n.mchat.api.Parser.parsePlayerName(players.getName(), players.getWorld().getName()));
+                    sPlayers.setTitle(Parser.parsePlayerName(players.getName(), players.getWorld().getName()));
                 }
             }
         }
@@ -248,7 +249,7 @@ public class MChat extends JavaPlugin {
 
                     if (isAFK.get(player.getName()) ||
                             lastMove.get(player.getName()) == null ||
-                            com.miraclem4n.mchat.api.API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
+                            API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
                         continue;
 
                     if (new Date().getTime() - (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName())) {
@@ -270,7 +271,7 @@ public class MChat extends JavaPlugin {
                 ConfigUtil.initialize();
 
                 for (Player player : getServer().getOnlinePlayers()) {
-                    if (com.miraclem4n.mchat.api.API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afkkick"))
+                    if (API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afkkick"))
                         continue;
 
                     if (!isAFK.get(player.getName()))
