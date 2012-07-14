@@ -3,6 +3,7 @@ main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
 version: ${m.version}-${build.number}-${p.version}
 MCMAPluginID: 13A44EB7-D013-4AD2-87E0-49CB2DAC6C08
 author: MiracleM4n
+authors: MiracleM4n
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
 softdepend: [GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
