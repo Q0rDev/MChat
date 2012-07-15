@@ -520,4 +520,3 @@ public class Parser {
         return random.nextInt(maxValue - minValue + 1) + minValue;
     }
 }
-

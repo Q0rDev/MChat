@@ -37,7 +37,7 @@ public class LocaleUtil {
         checkOption("format.tabbedList", "+p+dn+s");
         checkOption("format.listCmd", "+p+dn+s");
         checkOption("format.me", "* +p+dn+s&e +m");
-                
+
         checkOption("message.afk.afk", "AFK");
         checkOption("message.afk.default", "Away From Keyboard");
         checkOption("message.config.reloaded", "%config Reloaded.");

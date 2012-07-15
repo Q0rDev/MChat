@@ -184,7 +184,7 @@ public class MChat extends JavaPlugin {
     }
 
     void setupPlugins() {
-       // Setup Factions
+        // Setup Factions
         factionsB = setupPlugin("Factions");
 
         if (factionsB)

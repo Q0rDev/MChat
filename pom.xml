@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.5</m.version>
-        <p.version>R3_37</p.version>
+        <p.version>R3_38</p.version>
     </properties>
 
     <!-- Source code -->
@@ -43,7 +43,7 @@
         </repository>
         <repository>
             <id>spout-repo</id>
-            <url>http://repo.spout.org</url>
+            <url>http://nexus.spout.org/content/groups/public</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>

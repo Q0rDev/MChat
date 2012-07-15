@@ -51,7 +51,7 @@ public class Channel {
 
         this.name = name.toLowerCase();
     }
-    
+
     public String getName() {
         return name;
     }
@@ -73,7 +73,7 @@ public class Channel {
 
     public Set<String> getActiveOccupants() {
         Set<String> set = new HashSet<String>();
-        
+
         for (Map.Entry<String, Boolean> entry : occupants.entrySet())
             if (entry.getValue())
                 set.add(entry.getKey());
@@ -112,7 +112,7 @@ public class Channel {
 
         occupants.put(occupant, state);
     }
-    
+
     public void setPrefix(String prefix) {
         if (prefix == null)
             return;
@@ -134,7 +134,7 @@ public class Channel {
     public String getSuffix() {
         return suffix;
     }
-    
+
     public void setDistance(Integer distance) {
         if (distance == null)
             return;
@@ -145,11 +145,11 @@ public class Channel {
     public Integer getDistance() {
         return distance;
     }
-    
+
     public Boolean isPassworded() {
         return passworded;
     }
-    
+
     public void setPassworded(Boolean passworded, String password) {
         if (passworded == null || password == null)
             return;
@@ -170,7 +170,7 @@ public class Channel {
     public String getPassword() {
         return password;
     }
-    
+
     public Boolean isDefault() {
         return defaulted;
     }

@@ -26,7 +26,7 @@ public enum ChannelType {
     public String getName() {
         return name;
     }
-    
+
     public static ChannelType fromName(String name) {
         if (name == null)
             return null;

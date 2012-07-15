@@ -15,12 +15,12 @@ public enum EventType {
     public String getName() {
         return name;
     }
-    
+
     public static EventType fromName(String name) {
         for (EventType type : EventType.values())
             if (type.name.contains(name))
                 return type;
-        
+
         return null;
     }
 }

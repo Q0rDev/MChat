@@ -207,4 +207,3 @@ public class PlayerListener implements Listener {
         } catch(Exception ignored) {}
     }
 }
-

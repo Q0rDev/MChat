@@ -16,7 +16,7 @@ public class Parser {
     }
 
     public String parseEventName(String pName, String world) {
-        return null;//com.miraclem4n.mchat.api.Parser.parseEventName(pName, world);
+        return null; //com.miraclem4n.mchat.api.Parser.parseEventName(pName, world);
     }
 
     public String parseTabbedList(String pName, String world) {
