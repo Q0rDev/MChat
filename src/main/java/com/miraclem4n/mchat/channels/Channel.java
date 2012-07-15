@@ -211,7 +211,7 @@ public class Channel {
             }
         }
 
-        MessageUtil.log(msg);
+        MessageUtil.log(msg);;
     }
 
     public void broadcastMessage(String message) {
