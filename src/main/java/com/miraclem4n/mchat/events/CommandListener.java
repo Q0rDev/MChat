@@ -25,6 +25,8 @@ public class CommandListener implements Listener {
 
         commands.add("mchat");
         commands.add("mchatme");
+        commands.add("mchatuser");
+        commands.add("mchatgroup");
         commands.add("mchatwho");
         commands.add("mchatlist");
         commands.add("mchatsay");

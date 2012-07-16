@@ -10,6 +10,7 @@ import com.miraclem4n.mchat.commands.*;
 import com.miraclem4n.mchat.configs.*;
 import com.miraclem4n.mchat.events.*;
 import com.miraclem4n.mchat.metrics.Metrics;
+import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
@@ -288,6 +289,9 @@ public class MChat extends JavaPlugin {
         regCommands("mchat", new MChatCommand(this));
         regCommands("mchatafk", new AFKCommand(this));
         regCommands("mchatafkother", new AFKOtherCommand(this));
+
+        regCommands("mchatuser", new InfoAlterCommand(this, "mchatuser", InfoType.USER));
+        regCommands("mchatgroup", new InfoAlterCommand(this, "mchatgroup", InfoType.GROUP));
 
         regCommands("mchatlist", new ListCommand(this));
 

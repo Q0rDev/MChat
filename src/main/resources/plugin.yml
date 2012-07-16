@@ -18,16 +18,24 @@ commands:
             - /<command> reload channels = Reload Channels.
             - /<command> reload locale = Reload Locale.
             - /<command> reload all = Reload All Configs.
-            - /<command> user = Show Info User Help.
-            - /<command> group = Show Info Group Help.
             - /<command> version = Show mChatSuite Version.
         aliases: [mchatsuite]
-        ~permissions: mchat.reload.*, mchat.user.*, mchat.group.*
+        ~permissions: mchat.reload.*
+    mchatuser:
+        usage: |
+            - /<command> = Show Info User Help.
+        aliases: [muser]
+        ~permissions: mchat.user.*
+    mchatgroup:
+        usage: |
+            - /<command> = Show Info Group Help.
+        aliases: [mgroup]
+        ~permissions: mchat.group.*
     mchatme:
         usage: |
             /<command> *Message* - Displays message.
         aliases: [mme]
-        ~permissions: mchat.me
+        ~permissions: mchat.group.*
     mchatwho:
         usage: |
             /<command> *PLAYER* - Displays info about player.
