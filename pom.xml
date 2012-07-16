@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
         <m.version>1.2.5</m.version>
-        <p.version>R3_38</p.version>
+        <p.version>R3_39</p.version>
     </properties>
 
     <!-- Source code -->
