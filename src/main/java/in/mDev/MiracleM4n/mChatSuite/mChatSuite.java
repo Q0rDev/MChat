@@ -22,8 +22,9 @@ public class mChatSuite extends MChat {
             super.metrics.start();
         } catch (IOException ignored) { }
 
-        super.onEnable();
         initializeClasses();
+
+        super.onEnable();
     }
 
     public void onDisable() {
