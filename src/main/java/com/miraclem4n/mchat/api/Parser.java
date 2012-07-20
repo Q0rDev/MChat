@@ -465,9 +465,9 @@ public class Parser {
     }
 
     private static String replaceCustVars(String pName, String format) {
-        SortedMap<String, String> varMap = API.varMap.descendingMap();
+        Set<Map.Entry<String, String>> varSet = API.varMap.entrySet();
 
-        for (Map.Entry<String, String> entry : varMap.entrySet()) {
+        for (Map.Entry<String, String> entry : varSet) {
             String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
@@ -475,8 +475,8 @@ public class Parser {
                 format = format.replace(pKey, MessageUtil.addColour(value));
         }
 
-        for (Map.Entry<String, String> entry : varMap.entrySet()) {
-            String gKey = IndicatorType.MISC_VAR.getValue() + entry.getKey().replace("%^global^%|", "");
+        for (Map.Entry<String, String> entry : varSet) {
+            String gKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 
             if (format.contains(gKey))
