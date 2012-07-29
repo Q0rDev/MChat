@@ -36,6 +36,13 @@ public class MessageUtil {
     }
 
     /**
+     * Logger
+     * @param message Object being Logged.
+     */
+    public static void logFormatted(Object message) {
+        System.out.println(format(message.toString()));
+    }
+    /**
      * Colour Formatting
      * @param string String being Formatted.
      * @return Coloured String.
