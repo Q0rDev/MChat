@@ -137,7 +137,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 if (args.length < editType.getLength())
                     return editType.sendMsg(sender, cmd, type);
 
-                Writer.removeInfoVar(args[3], type, args[4]);
+                Writer.removeInfoVar(args[2], type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
