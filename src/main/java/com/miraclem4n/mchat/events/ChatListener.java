@@ -47,11 +47,6 @@ public class ChatListener implements Listener {
         if (msg == null)
             return;
 
-        // Message Prefix
-        if (plugin.mPrefix.get(pName) != null
-                && !plugin.mPrefix.get(pName).isEmpty())
-            msg = plugin.mPrefix.get(pName) + msg;
-
         // Fix for Too long List Names
         if (pLName.length() > 15) {
             pLName = pLName.substring(0, 16);
@@ -66,7 +61,6 @@ public class ChatListener implements Listener {
 
             if (plugin.isConv.get(pName)) {
                 Player recipient = plugin.getServer().getPlayer(plugin.chatPartner.get(pName));
-                System.out.println("WaiNull?");
                 recipient.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getVal() + eventFormat));
                 player.sendMessage(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getVal() + eventFormat));
                 MessageUtil.log(MessageUtil.addColour(LocaleType.MESSAGE_CONVERSATION_CONVERSATION.getVal() + eventFormat));

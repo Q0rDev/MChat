@@ -69,7 +69,6 @@ public class MChat extends JavaPlugin {
     public HashMap<String, String> lastPMd = new HashMap<String, String>();
     public HashMap<String, String> getInvite = new HashMap<String, String>();
     public HashMap<String, String> chatPartner = new HashMap<String, String>();
-    public HashMap<String, String> mPrefix = new HashMap<String, String>();
 
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
@@ -80,6 +79,8 @@ public class MChat extends JavaPlugin {
         // Initialize Plugin Data
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
+
+        MessageUtil.log(pdfFile.getAuthors().get(0));
 
         // First we kill EssentialsChat
         killEss();
@@ -300,7 +301,6 @@ public class MChat extends JavaPlugin {
         regCommands("mchatwho", new WhoCommand(this));
         regCommands("mchatshout", new ShoutCommand(this));
         regCommands("mchatmute", new MuteCommand(this));
-        regCommands("mchatmessageprefix", new MessagePrefixCommand(this));
 
         regCommands("pmchat", new PMCommand(this));
         regCommands("pmchataccept", new AcceptCommand(this));

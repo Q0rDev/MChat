@@ -71,12 +71,6 @@ commands:
             /<command> [Player] - Mutes a player.
         aliases: [mmute]
         ~permissions: mchat.mute
-    mchatmessageprefix:
-        usage: |
-            /<command> set *Prefix* - Adds a Prefix to chat messages.
-            /<command> remove - Removes the Prefix from chat messages.
-        aliases: [mchatprefix, mmprefix, mprefix]
-        ~permissions: mchat.messageprefix
     pmchat:
         usage: |
             /<command> {player} *Message* - Sends PM to player.
@@ -126,7 +120,6 @@ permissions:
             mchat.version: true
             mchat.shout: true
             mchat.spy: true
-            mchat.messageprefix: true
             mchat.mute: true
     mchat.reload.*:
         default: false
@@ -272,9 +265,6 @@ permissions:
     mchat.spy:
         default: false
         description: Allows player to view all chat messages.
-    mchat.messageprefix:
-        default: false
-        description: Allows player to add a prefix to their message.
     mchat.mute:
         default: false
         description: Allows muting and unmuting of players.
