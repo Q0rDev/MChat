@@ -80,8 +80,6 @@ public class MChat extends JavaPlugin {
         pm = getServer().getPluginManager();
         pdfFile = getDescription();
 
-        MessageUtil.log(pdfFile.getAuthors().get(0));
-
         // First we kill EssentialsChat
         killEss();
 
