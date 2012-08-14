@@ -25,7 +25,7 @@ public class DenyCommand implements CommandExecutor {
 
         //TODO Allow Console's to PM
         if (!(sender instanceof Player)) {
-            MessageUtil.sendMessage(sender, "Console's can't send PM's.");
+            MessageUtil.sendMessage(sender, "Console's can't use conversation commands.");
             return true;
         }
 
@@ -43,7 +43,7 @@ public class DenyCommand implements CommandExecutor {
         Player recipient = plugin.getServer().getPlayer(rName);
         String rWorld = recipient.getWorld().getName();
 
-        if (!MiscUtil.isOnlineForCommand(sender, recipient)) {
+        if (MiscUtil.isOnlineForCommand(sender, recipient)) {
             plugin.getInvite.remove(pName);
 
             plugin.isConv.put(pName, false);
