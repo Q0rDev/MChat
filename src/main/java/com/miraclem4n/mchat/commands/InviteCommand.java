@@ -26,7 +26,7 @@ public class InviteCommand implements CommandExecutor {
 
         //TODO Allow Console's to PM
         if (!(sender instanceof Player)) {
-            MessageUtil.sendMessage(sender, "Console's can't send PM's.");
+            MessageUtil.sendMessage(sender, "Console's can't use conversation commands.");
             return true;
         }
 
