@@ -43,7 +43,7 @@ public class DenyCommand implements CommandExecutor {
         Player recipient = plugin.getServer().getPlayer(rName);
         String rWorld = recipient.getWorld().getName();
 
-        if (!MiscUtil.isOnlineForCommand(sender, recipient)) {
+        if (MiscUtil.isOnlineForCommand(sender, recipient)) {
             plugin.getInvite.remove(pName);
 
             plugin.isConv.put(pName, false);
