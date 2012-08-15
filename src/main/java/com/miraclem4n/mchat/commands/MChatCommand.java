@@ -53,6 +53,7 @@ public class MChatCommand implements CommandExecutor {
                         return true;
 
                     ConfigUtil.initialize();
+                    plugin.reloadAliases();
                     MessageUtil.sendMessage(sender, "Config Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("info")
@@ -94,6 +95,7 @@ public class MChatCommand implements CommandExecutor {
 
                     plugin.reloadConfigs();
                     plugin.initializeConfigs();
+                    plugin.reloadAliases();
                     ChannelManager.reloadChannels();
                     MessageUtil.sendMessage(sender, "All Config's Reloaded.");
                     return true;
