@@ -16,6 +16,7 @@ import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -311,8 +312,41 @@ public class MChat extends JavaPlugin {
     }
 
     void regCommands(String command, CommandExecutor executor) {
-        if (getCommand(command) != null)
+        PluginCommand c = getCommand(command);
+        if (getCommand(command) != null) {
             getCommand(command).setExecutor(executor);
+            setAliases(command);
+        }
+    }
+
+    public void reloadAliases() {
+        setAliases("mchat");
+        setAliases("mchatafk");
+        setAliases("mchatafkother");
+
+        setAliases("mchatuser");
+        setAliases("mchatgroup");
+
+        setAliases("mchatlist");
+
+        setAliases("mchatme");
+        setAliases("mchatsay");
+        setAliases("mchatwho");
+        setAliases("mchatshout");
+        setAliases("mchatmute");
+
+        setAliases("pmchat");
+        setAliases("pmchataccept");
+        setAliases("pmchatdeny");
+        setAliases("pmchatinvite");
+        setAliases("pmchatleave");
+        setAliases("pmchatreply");
+
+        setAliases("mchannel");
+    }
+
+    void setAliases(String command) {
+        getCommand(command).setAliases(ConfigUtil.getConfig().getStringList("aliases." + command));
     }
 
     void initializeClasses() {
