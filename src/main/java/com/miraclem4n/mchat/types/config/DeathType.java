@@ -1,7 +1,5 @@
 package com.miraclem4n.mchat.types.config;
 
-import java.util.HashMap;
-
 public enum DeathType {
     DEATH_IN_FIRE("went up in flames", LocaleType.MESSAGE_DEATH_IN_FIRE),
     DEATH_ON_FIRE("burned to death", LocaleType.MESSAGE_DEATH_ON_FIRE),
