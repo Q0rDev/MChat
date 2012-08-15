@@ -310,7 +310,6 @@ public class MChat extends JavaPlugin {
     }
 
     void regCommands(String command, CommandExecutor executor) {
-        PluginCommand c = getCommand(command);
         if (getCommand(command) != null) {
             getCommand(command).setExecutor(executor);
             setAliases(command);
