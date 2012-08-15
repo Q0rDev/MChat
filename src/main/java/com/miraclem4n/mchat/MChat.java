@@ -163,8 +163,6 @@ public class MChat extends JavaPlugin {
 
             pm.registerEvents(new ChannelListener(this), this);
 
-            pm.registerEvents(new CommandListener(this), this);
-
             if (spoutB)
                 pm.registerEvents(new CustomListener(this), this);
         }
