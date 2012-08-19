@@ -1,6 +1,8 @@
 package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.configs.InfoUtil;
+import com.miraclem4n.mchat.types.EventType;
+import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
@@ -8,8 +10,6 @@ import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
-import com.miraclem4n.mchat.types.EventType;
-import com.miraclem4n.mchat.types.InfoType;
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 import org.bukkit.Bukkit;
 

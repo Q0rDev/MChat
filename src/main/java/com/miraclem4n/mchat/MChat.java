@@ -14,6 +14,7 @@ import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.TimerUtil;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -50,11 +51,6 @@ public class MChat extends JavaPlugin {
     // Metrics
     public Metrics metrics;
 
-    // Timers
-    long sTime1;
-    long sTime2;
-    long sDiff;
-
     // Maps
     public HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
 
@@ -73,8 +69,8 @@ public class MChat extends JavaPlugin {
     public HashMap<String, Long> lastMove = new HashMap<String, Long>();
 
     public void onEnable() {
-        // 1st Startup Timer
-        sTime1 = new Date().getTime();
+        // Initialize and Start the Timer
+        TimerUtil timer = new TimerUtil();
 
         // Initialize Plugin Data
         pm = getServer().getPluginManager();
@@ -124,19 +120,18 @@ public class MChat extends JavaPlugin {
             }
         }
 
-        // 2nd Startup Timer
-        sTime2 = new Date().getTime();
+        // Stop the Timer
+        timer.stop();
 
         // Calculate Startup Timer
-        sDiff = (sTime2 - sTime1);
+        long diff = timer.difference();
 
-        MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + sDiff + "ms]");
+        MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is enabled! [" + diff + "ms]");
     }
 
     public void onDisable() {
-        // Shutdown Timer
-        String shutdown;
-        sTime1 = new Date().getTime();
+        // Initialize and Start the Timer
+        TimerUtil timer = new TimerUtil();
 
         getServer().getScheduler().cancelTasks(this);
 
@@ -144,12 +139,13 @@ public class MChat extends JavaPlugin {
         isShouting = null;
         isSpying = null;
 
-        // 2nd Shutdown Timer
-        sTime2 = new Date().getTime();
-        sDiff = (sTime2 - sTime1);
-        shutdown = "[Sched: " + sDiff + "ms]";
+        // Stop the Timer
+        timer.stop();
 
-        MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled!" + shutdown);
+        // Calculate Shutdown Timer
+        long diff = timer.difference();
+
+        MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled! [" + diff + "ms]");
     }
 
     void registerEvents() {

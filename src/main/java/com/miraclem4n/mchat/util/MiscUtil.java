@@ -7,8 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-
 public class MiscUtil {
     public static Boolean hasCommandPerm(CommandSender sender, String permission) {
         if (!API.checkPermissions(sender, permission)) {

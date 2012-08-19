@@ -1,9 +1,9 @@
 package com.miraclem4n.mchat.events;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.MChat;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

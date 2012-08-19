@@ -2,11 +2,15 @@ package com.miraclem4n.mchat.events;
 
 import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.ConfigUtil;
+import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.TimerUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 public class CommandListener implements Listener {
@@ -14,14 +18,6 @@ public class CommandListener implements Listener {
 
     public CommandListener(MChat instance) {
         plugin = instance;
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        String msg = event.getMessage();
-        String command = msg.split(" ")[0].replace("/", "");
-
-        TreeSet<String> commands = new TreeSet<String>();
 
         commands.add("mchat");
         commands.add("mchatme");
@@ -41,12 +37,28 @@ public class CommandListener implements Listener {
         commands.add("pmchataccept");
         commands.add("pmchatdeny");
         commands.add("mchannel");
+    }
 
-        for (String oCommand : commands.descendingSet())
-            for (String string : ConfigUtil.getConfig().getStringList("aliases." + oCommand))
-                if (command.equalsIgnoreCase(string)) {
-                    event.setMessage(msg.replaceFirst("/" + string, "/" + oCommand));
+    TreeSet<String> commands = new TreeSet<String>();
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        String msg = event.getMessage();
+        String command = msg.split(" ")[0].replace("/", "");
+
+        TimerUtil timer = new TimerUtil();
+        timer.start();
+
+        for (Map.Entry<String, List<String>> entry : ConfigUtil.getAliasMap().entrySet())
+            for (String comm : entry.getValue())
+                if (comm.equalsIgnoreCase(command)) {
+                    event.setMessage(msg.replaceFirst("/" + command, "/" + entry.getKey()));
+                    timer.stop();
+                    MessageUtil.log("Command Process Time: " + timer.difference() + "ms");
                     return;
                 }
+
+        timer.stop();
+        MessageUtil.log("Command Process Time: " + timer.difference() + "ms");
     }
 }

@@ -4,6 +4,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class ConfigUtil {
     static YamlConfiguration config;
@@ -27,6 +30,8 @@ public class ConfigUtil {
     static ArrayList<String> leaveAliases = new ArrayList<String>();
     static ArrayList<String> mChannelAliases = new ArrayList<String>();
 
+    static HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
+
     public static void initialize() {
         load();
     }
@@ -34,6 +39,7 @@ public class ConfigUtil {
     public static void dispose() {
         config = null;
         file = null;
+        aliasMap = null;
     }
 
     public static void load() {
@@ -130,6 +136,8 @@ public class ConfigUtil {
         checkOption("aliases.mchannel", mChannelAliases);
 
         unloadAliases();
+
+        setupAliasMap();
     }
 
     public static void set(String key, Object obj) {
@@ -149,6 +157,10 @@ public class ConfigUtil {
 
     public static YamlConfiguration getConfig() {
         return config;
+    }
+
+    public static HashMap<String, List<String>> getAliasMap() {
+        return aliasMap;
     }
 
     private static void checkOption(String option, Object defValue) {
@@ -251,5 +263,12 @@ public class ConfigUtil {
         leaveAliases.clear();
 
         mChannelAliases.clear();
+    }
+
+    private static void setupAliasMap() {
+        Set<String> keys = config.getConfigurationSection("aliases").getKeys(false);
+
+        for (String key : keys)
+            aliasMap.put(key, config.getStringList("aliases." + key));
     }
 }

@@ -29,27 +29,17 @@
 package com.miraclem4n.mchat.metrics;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -162,7 +152,7 @@ public class Metrics {
      * Construct and create a Graph that can be used to separate specific plotters to their own graphs
      * on the metrics website. Plotters can be added to the graph object returned.
      *
-     * @param name
+     * @param name Name of Graph
      * @return Graph object created. Will never return NULL under normal circumstances unless bad parameters are given
      */
     public Graph createGraph(final String name) {
@@ -183,7 +173,7 @@ public class Metrics {
     /**
      * Add a Graph object to Metrics that represents data for the plugin that should be sent to the backend
      *
-     * @param graph
+     * @param graph Graph to be added to Send queue
      */
     public void addGraph(final Graph graph) {
         if (graph == null) {
@@ -196,7 +186,7 @@ public class Metrics {
     /**
      * Adds a custom data plotter to the default graph
      *
-     * @param plotter
+     * @param plotter Custom Plotter to be Plotted
      */
     public void addCustomData(final Plotter plotter) {
         if (plotter == null) {
@@ -270,7 +260,7 @@ public class Metrics {
     /**
      * Has the server owner denied plugin metrics?
      *
-     * @return
+     * @return Opt Out Status
      */
     public boolean isOptOut() {
         synchronized(optOutLock) {
@@ -372,11 +362,7 @@ public class Metrics {
         // Acquire a lock on the graphs, which lets us make the assumption we also lock everything
         // inside of the graph (e.g plotters)
         synchronized (graphs) {
-            final Iterator<Graph> iter = graphs.iterator();
-
-            while (iter.hasNext()) {
-                final Graph graph = iter.next();
-
+            for (Graph graph : graphs) {
                 for (Plotter plotter : graph.getPlotters()) {
                     // The key name to send to the metrics server
                     // The format is C-GRAPHNAME-PLOTTERNAME where separator - is defined at the top
@@ -428,11 +414,7 @@ public class Metrics {
             // Is this the first update this hour?
             if (response.contains("OK This is your first update this hour")) {
                 synchronized (graphs) {
-                    final Iterator<Graph> iter = graphs.iterator();
-
-                    while (iter.hasNext()) {
-                        final Graph graph = iter.next();
-
+                    for (Graph graph : graphs) {
                         for (Plotter plotter : graph.getPlotters()) {
                             plotter.reset();
                         }
@@ -445,7 +427,7 @@ public class Metrics {
     /**
      * Check if mineshafter is present. If it is, we need to bypass it to send POST requests
      *
-     * @return
+     * @return true if Present false if not.
      */
     private boolean isMineshafterPresent() {
         try {
@@ -465,10 +447,9 @@ public class Metrics {
      * encodeDataPair(data, "version", description.getVersion());
      * </code>
      *
-     * @param buffer
-     * @param key
-     * @param value
-     * @return
+     * @param buffer StringBuffer Encoded data is to be parsed to
+     * @param key Key to be Encoded
+     * @param value Value to be Encoded
      */
     private static void encodeDataPair(final StringBuilder buffer, final String key, final String value) throws UnsupportedEncodingException {
         buffer.append('&').append(encode(key)).append('=').append(encode(value));
@@ -477,8 +458,8 @@ public class Metrics {
     /**
      * Encode text as UTF-8
      *
-     * @param text
-     * @return
+     * @param text Text to Encode
+     * @return Encoded String
      */
     private static String encode(final String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
@@ -507,7 +488,7 @@ public class Metrics {
         /**
          * Gets the graph's name
          *
-         * @return
+         * @return Graphs's name
          */
         public String getName() {
             return name;
@@ -516,7 +497,7 @@ public class Metrics {
         /**
          * Add a plotter to the graph, which will be used to plot entries
          *
-         * @param plotter
+         * @param plotter Plotter to be added to Graph
          */
         public void addPlotter(final Plotter plotter) {
             plotters.add(plotter);
@@ -525,7 +506,7 @@ public class Metrics {
         /**
          * Remove a plotter from the graph
          *
-         * @param plotter
+         * @param plotter Plotter to be removed from the Graph
          */
         public void removePlotter(final Plotter plotter) {
             plotters.remove(plotter);
@@ -534,7 +515,7 @@ public class Metrics {
         /**
          * Gets an <b>unmodifiable</b> set of the plotter objects in the graph
          *
-         * @return
+         * @return Set of Plotters in Graph
          */
         public Set<Plotter> getPlotters() {
             return Collections.unmodifiableSet(plotters);
@@ -582,7 +563,7 @@ public class Metrics {
         /**
          * Construct a plotter with a specific plot name
          *
-         * @param name
+         * @param name Name of Plotter
          */
         public Plotter(final String name) {
             this.name = name;
@@ -591,7 +572,7 @@ public class Metrics {
         /**
          * Get the current value for the plotted point
          *
-         * @return
+         * @return Current value of Plotter point
          */
         public abstract int getValue();
 
