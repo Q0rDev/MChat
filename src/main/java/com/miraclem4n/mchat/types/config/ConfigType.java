@@ -1,8 +1,9 @@
 package com.miraclem4n.mchat.types.config;
 
 import com.miraclem4n.mchat.configs.ConfigUtil;
-import com.miraclem4n.mchat.configs.objects.ConfigObject;
 import com.miraclem4n.mchat.util.MessageUtil;
+
+import java.util.ArrayList;
 
 public enum ConfigType {
     FORMAT_CHAT("format.chat"),
@@ -62,12 +63,14 @@ public enum ConfigType {
     ALIASES_CHANNEL("aliases.mchannel");
 
     private final String option;
+    private final Object object;
 
     ConfigType(String option) {
         this.option = option;
+        this.object = getObject();
     }
 
-    public ConfigObject getObject() {
+    private Object getObject() {
         Object value = ConfigUtil.getConfig().get(option);
 
         if (value instanceof String) {
@@ -76,6 +79,36 @@ public enum ConfigType {
             value = MessageUtil.addColour(val);
         }
 
-        return new ConfigObject(value);
+        return value;
+    }
+
+    public Boolean getBoolean() {
+        return object instanceof Boolean ? (Boolean) object : false;
+    }
+
+    public String getString() {
+        return object != null ? object.toString() : null;
+    }
+
+    public Integer getInteger() {
+        return object instanceof Number ? (Integer) object : 0;
+    }
+
+    public Double getDouble() {
+        return object instanceof Number ? (Double) object : 0;
+    }
+
+    public ArrayList<String> getList() {
+        ArrayList<String> list = new ArrayList<String>();
+
+        if (object instanceof ArrayList) {
+            ArrayList aList = (ArrayList) object;
+
+            for (Object obj : aList)
+                list.add((String) obj);
+
+        }
+
+        return list;
     }
 }

@@ -64,7 +64,7 @@ public class PMCommand implements CommandExecutor {
         player.sendMessage(API.replace(LocaleType.FORMAT_PM_SENT.getVal(), rMap, IndicatorType.LOCALE_VAR));
 
         if (plugin.spoutB) {
-            if (ConfigType.MCHAT_SPOUT.getObject().toBoolean()) {
+            if (ConfigType.MCHAT_SPOUT.getBoolean()) {
                 final SpoutPlayer sRecipient = (SpoutPlayer) recipient;
 
                 if (sRecipient.isSpoutCraftEnabled()) {

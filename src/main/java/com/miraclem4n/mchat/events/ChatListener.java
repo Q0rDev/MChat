@@ -55,7 +55,7 @@ public class ChatListener implements Listener {
             setListName(player, pLName);
 
         // Conversation
-        if (ConfigType.PMCHAT_ENABLE.getObject().toBoolean()) {
+        if (ConfigType.PMCHAT_ENABLE.getBoolean()) {
             if (plugin.isConv.get(pName) == null)
                 plugin.isConv.put(pName, false);
 
@@ -69,7 +69,7 @@ public class ChatListener implements Listener {
         }
 
         // MChatEssentials
-        if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
+        if (ConfigType.MCHATE_ENABLE.getBoolean()) {
             if (plugin.isAFK.get(pName) != null)
                 if (plugin.isAFK.get(pName))
                     player.performCommand("mchatafk");
@@ -98,10 +98,10 @@ public class ChatListener implements Listener {
         }
 
         // Chat Distance Stuff
-        if (ConfigType.MCHAT_CHAT_DISTANCE.getObject().toDouble() > 0)
+        if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0)
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 if (players.getWorld() != player.getWorld()
-                        || players.getLocation().distance(player.getLocation()) > ConfigType.MCHAT_CHAT_DISTANCE.getObject().toDouble()) {
+                        || players.getLocation().distance(player.getLocation()) > ConfigType.MCHAT_CHAT_DISTANCE.getDouble()) {
                     if (isSpy(players.getName(), players.getWorld().getName()))
                         players.sendMessage(eventFormat.replace(LocaleType.FORMAT_LOCAL.getVal(), LocaleType.FORMAT_FORWARD.getVal()));
 

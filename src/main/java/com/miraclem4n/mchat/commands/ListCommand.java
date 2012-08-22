@@ -51,7 +51,7 @@ public class ListCommand implements CommandExecutor {
                     continue;
             }
 
-            String iVar = Reader.getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), ConfigType.MCHATE_LIST_VAR.getObject().toString());
+            String iVar = Reader.getInfo(players.getName(), InfoType.USER, players.getWorld().getName(), ConfigType.MCHATE_LIST_VAR.getString());
             String mName = Parser.parseListCmd(players.getName(), players.getWorld().getName());
 
             Boolean collapsed = false;
@@ -59,7 +59,7 @@ public class ListCommand implements CommandExecutor {
             if (iVar.isEmpty())
                 iVar = "Default";
 
-            for (String string : ConfigType.MCHATE_COLLAPSED_LIST_VAR.getObject().toString().split(",")) {
+            for (String string : ConfigType.MCHATE_COLLAPSED_LIST_VAR.getString().split(",")) {
                 if (!iVar.equals(string))
                     continue;
 
@@ -95,7 +95,7 @@ public class ListCommand implements CommandExecutor {
             msg += (entry.getKey() + ": &f" + entry.getValue() + '\n');
 
         if (msg.contains("" + '\n')) {
-            if (ConfigType.MCHATE_USE_GROUPED_LIST.getObject().toBoolean()) {
+            if (ConfigType.MCHATE_USE_GROUPED_LIST.getBoolean()) {
                 msgS = msg.split("" + '\n');
 
 

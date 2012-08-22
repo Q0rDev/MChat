@@ -29,13 +29,13 @@ public class Reader {
      * @return Raw Info.
      */
     public static Object getRawInfo(String name, InfoType type, String world, String info) {
-        if (ConfigType.INFO_USE_LEVELED_NODES.getObject().toBoolean())
+        if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean())
             return getLeveledInfo(name, world, info);
 
-        if (ConfigType.INFO_USE_OLD_NODES.getObject().toBoolean())
+        if (ConfigType.INFO_USE_OLD_NODES.getBoolean())
             return getBukkitInfo(name, world, info);
 
-        if (ConfigType.INFO_USE_NEW_INFO.getObject().toBoolean())
+        if (ConfigType.INFO_USE_NEW_INFO.getBoolean())
             return getMChatInfo(name, type, world, info);
 
         if (API.gmB)

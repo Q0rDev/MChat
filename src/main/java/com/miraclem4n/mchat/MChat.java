@@ -102,12 +102,14 @@ public class MChat extends JavaPlugin {
         setupCommands();
 
         // Add All Players To Info.yml
-        if (ConfigType.INFO_ADD_NEW_PLAYERS.getObject().toBoolean())
+        if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean())
             for (Player players : getServer().getOnlinePlayers())
                 if (InfoUtil.getConfig().get("users." + players.getName()) == null)
-                    Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
+                    Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getString());
 
-        if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
+        MessageUtil.log(ConfigType.MCHATE_ENABLE.getBoolean());
+
+        if (ConfigType.MCHATE_ENABLE.getBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
                 isAFK.put(players.getName(), false);
                 chatt.put(players.getName(), false);
@@ -149,7 +151,7 @@ public class MChat extends JavaPlugin {
     }
 
     void registerEvents() {
-        if (!ConfigType.MCHAT_API_ONLY.getObject().toBoolean()) {
+        if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
             pm.registerEvents(new PlayerListener(this), this);
 
             pm.registerEvents(new EntityListener(this), this);
@@ -196,7 +198,7 @@ public class MChat extends JavaPlugin {
 
         townyB = setupPlugin("Towny");
 
-        if (!ConfigType.MCHAT_SPOUT.getObject().toBoolean())
+        if (!ConfigType.MCHAT_SPOUT.getBoolean())
             spoutB = false;
     }
 
@@ -231,10 +233,10 @@ public class MChat extends JavaPlugin {
     void setupTasks() {
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
+                if (!ConfigType.MCHATE_ENABLE.getBoolean())
                     return;
 
-                if (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() < 1)
+                if (ConfigType.MCHATE_AFK_TIMER.getInteger() < 1)
                     return;
 
                 ConfigUtil.initialize();
@@ -248,7 +250,7 @@ public class MChat extends JavaPlugin {
                             API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.bypass.afk"))
                         continue;
 
-                    if (new Date().getTime() - (ConfigType.MCHATE_AFK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName())) {
+                    if (new Date().getTime() - (ConfigType.MCHATE_AFK_TIMER.getInteger() * 1000) > lastMove.get(player.getName())) {
                         getServer().dispatchCommand(getServer().getConsoleSender(), "mchatafkother " + player.getName() + " " + LocaleType.MESSAGE_AFK_DEFAULT.getVal());
                     } else
                         isAFK.put(player.getName(), false);
@@ -258,10 +260,10 @@ public class MChat extends JavaPlugin {
 
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public void run() {
-                if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
+                if (!ConfigType.MCHATE_ENABLE.getBoolean())
                     return;
 
-                if (ConfigType.MCHATE_AFK_KICK_TIMER.getObject().toInteger() < 1)
+                if (ConfigType.MCHATE_AFK_KICK_TIMER.getInteger() < 1)
                     return;
 
                 ConfigUtil.initialize();
@@ -273,7 +275,7 @@ public class MChat extends JavaPlugin {
                     if (!isAFK.get(player.getName()))
                         continue;
 
-                    if (new Date().getTime() - (ConfigType.MCHATE_AFK_KICK_TIMER.getObject().toInteger() * 1000) > lastMove.get(player.getName()))
+                    if (new Date().getTime() - (ConfigType.MCHATE_AFK_KICK_TIMER.getInteger() * 1000) > lastMove.get(player.getName()))
                         player.kickPlayer(LocaleType.MESSAGE_AFK_DEFAULT.getVal());
                 }
             }

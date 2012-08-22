@@ -52,7 +52,7 @@ public class Parser {
         Object suffix = Reader.getRawSuffix(pName, InfoType.USER, world);
         Object group = Reader.getRawGroup(pName, InfoType.USER, world);
 
-        String vI = ConfigType.MCHAT_VAR_INDICATOR.getObject().toString();
+        String vI = ConfigType.MCHAT_VAR_INDICATOR.getString();
 
         if (msg == null)
             msg = "";
@@ -133,7 +133,7 @@ public class Parser {
         if (MChat.isShouting.get(pName) != null
                 && MChat.isShouting.get(pName)) {
             dType = LocaleType.FORMAT_SHOUT.getVal();
-        } else if (ConfigType.MCHAT_CHAT_DISTANCE.getObject().toDouble() > 0) {
+        } else if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
             dType = LocaleType.FORMAT_LOCAL.getVal();
         }
 
@@ -257,8 +257,8 @@ public class Parser {
 
         formatAll = MessageUtil.addColour(formatAll);
 
-        if (ConfigType.MCHAT_CAPS_LOCK_RANGE.getObject().toInteger() > 0)
-            msg = fixCaps(msg, ConfigType.MCHAT_CAPS_LOCK_RANGE.getObject().toInteger());
+        if (ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger() > 0)
+            msg = fixCaps(msg, ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger());
 
         if (formatAll == null)
             return msg;
@@ -346,7 +346,7 @@ public class Parser {
      * @return Formatted Chat Message.
      */
     public static String parseChatMessage(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, ConfigType.FORMAT_CHAT.getObject().toString());
+        return parseMessage(pName, world, msg, ConfigType.FORMAT_CHAT.getString());
     }
 
     /**
@@ -436,7 +436,7 @@ public class Parser {
     }
 
     private static String parseVars(String format, String pName, String world) {
-        String vI = "\\" + ConfigType.MCHAT_VAR_INDICATOR.getObject().toString();
+        String vI = "\\" + ConfigType.MCHAT_VAR_INDICATOR.getString();
         Pattern pattern = Pattern.compile(vI + "<(.*?)>");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
@@ -487,7 +487,7 @@ public class Parser {
     }
 
     private static String replaceCensoredWords(String msg) {
-        if (ConfigType.MCHAT_IP_CENSOR.getObject().toBoolean())
+        if (ConfigType.MCHAT_IP_CENSOR.getBoolean())
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
 
         for (Map.Entry<String, Object> entry : CensorUtil.getConfig().getValues(false).entrySet()) {

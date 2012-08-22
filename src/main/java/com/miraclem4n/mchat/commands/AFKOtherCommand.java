@@ -93,7 +93,7 @@ public class AFKOtherCommand implements CommandExecutor {
             pLName = MessageUtil.addColour("<gold>[" + LocaleType.MESSAGE_AFK_AFK.getVal() + "] ") + pLName;
         }
 
-        if (ConfigType.MCHATE_USE_AFK_LIST.getObject().toBoolean())
+        if (ConfigType.MCHATE_USE_AFK_LIST.getBoolean())
             if (pLName.length() > 15) {
                 pLName = pLName.substring(0, 16);
                 afkTarget.setPlayerListName(pLName);

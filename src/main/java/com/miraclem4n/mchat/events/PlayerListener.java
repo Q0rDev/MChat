@@ -31,7 +31,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         String pName = player.getName();
 
-        if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
+        if (!ConfigType.MCHATE_ENABLE.getBoolean())
             return;
 
         plugin.lastMove.put(pName, new Date().getTime());
@@ -62,16 +62,16 @@ public class PlayerListener implements Listener {
         if (msg == null)
             return;
 
-        if (ConfigType.MCHATE_ENABLE.getObject().toBoolean()) {
+        if (ConfigType.MCHATE_ENABLE.getBoolean()) {
             plugin.chatt.put(player.getName(), false);
             plugin.isAFK.put(player.getName(), false);
             plugin.lastMove.put(player.getName(), new Date().getTime());
         }
 
         // For Lazy People
-        if (ConfigType.INFO_ADD_NEW_PLAYERS.getObject().toBoolean())
+        if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean())
             if (InfoUtil.getConfig().get("users." + pName) == null)
-                Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
+                Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString());
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
@@ -90,9 +90,9 @@ public class PlayerListener implements Listener {
             sPlayer.setTitle(Parser.parsePlayerName(mPName, world));
         }
 
-        if (ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
-            if (ConfigType.SUPPRESS_USE_JOIN.getObject().toBoolean()) {
-                suppressEventMessage(Parser.parseEvent(pName, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getObject().toInteger());
+        if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
+            if (ConfigType.SUPPRESS_USE_JOIN.getBoolean()) {
+                suppressEventMessage(Parser.parseEvent(pName, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getInteger());
                 event.setJoinMessage(null);
             } else
                 event.setJoinMessage(Parser.parseEvent(pName, world, EventType.JOIN));
@@ -100,7 +100,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerKick(PlayerKickEvent event) {
-        if (!ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
+        if (!ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
             return;
 
         if (event.isCancelled())
@@ -115,10 +115,10 @@ public class PlayerListener implements Listener {
 
         String reason = event.getReason();
 
-        String kickMsg = Parser.parseEvent(pName, world, EventType.KICK).replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "reason", reason).replace(ConfigType.MCHAT_VAR_INDICATOR.getObject().toString() + "r", reason);
+        String kickMsg = Parser.parseEvent(pName, world, EventType.KICK).replace(ConfigType.MCHAT_VAR_INDICATOR.getString() + "reason", reason).replace(ConfigType.MCHAT_VAR_INDICATOR.getString() + "r", reason);
 
-        if (ConfigType.SUPPRESS_USE_KICK.getObject().toBoolean()) {
-            suppressEventMessage(kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getObject().toInteger());
+        if (ConfigType.SUPPRESS_USE_KICK.getBoolean()) {
+            suppressEventMessage(kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getInteger());
             event.setLeaveMessage(null);
         } else
             event.setLeaveMessage(kickMsg);
@@ -130,14 +130,14 @@ public class PlayerListener implements Listener {
         String world = event.getPlayer().getWorld().getName();
         String msg = event.getQuitMessage();
 
-        if (!ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
+        if (!ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
             return;
 
         if (msg == null)
             return;
 
-        if (ConfigType.SUPPRESS_USE_QUIT.getObject().toBoolean()) {
-            suppressEventMessage(Parser.parseEvent(pName, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getObject().toInteger());
+        if (ConfigType.SUPPRESS_USE_QUIT.getBoolean()) {
+            suppressEventMessage(Parser.parseEvent(pName, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getInteger());
             event.setQuitMessage(null);
         } else
             event.setQuitMessage(Parser.parseEvent(pName, world, EventType.QUIT));
@@ -168,7 +168,7 @@ public class PlayerListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
+        if (!ConfigType.MCHATE_ENABLE.getBoolean())
             return;
 
         plugin.lastMove.put(player.getName(), new Date().getTime());
@@ -177,7 +177,7 @@ public class PlayerListener implements Listener {
             return;
 
         if (plugin.isAFK.get(player.getName()))
-            if (ConfigType.MCHATE_HC_AFK.getObject().toBoolean()) {
+            if (ConfigType.MCHATE_HC_AFK.getBoolean()) {
                 if (plugin.AFKLoc.get(player.getName()) != null)
                     player.teleport(plugin.AFKLoc.get(player.getName()));
 

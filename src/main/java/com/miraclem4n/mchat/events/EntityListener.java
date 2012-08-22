@@ -29,7 +29,7 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
-        if (!ConfigType.MCHAT_ALTER_DEATH.getObject().toBoolean())
+        if (!ConfigType.MCHAT_ALTER_DEATH.getBoolean())
             return;
 
         if (!(event.getEntity() instanceof Player))
@@ -68,9 +68,9 @@ public class EntityListener implements Listener {
                 pCause = damageEvent.getDamager().getType().getName();
         }
 
-        if (ConfigType.MCHAT_ALTER_EVENTS.getObject().toBoolean())
-            if (ConfigType.SUPPRESS_USE_DEATH.getObject().toBoolean()) {
-                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), ConfigType.SUPPRESS_MAX_DEATH.getObject().toInteger());
+        if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
+            if (ConfigType.SUPPRESS_USE_DEATH.getBoolean()) {
+                suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), ConfigType.SUPPRESS_MAX_DEATH.getInteger());
                 event.setDeathMessage(null);
             } else
                 event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage()));
@@ -78,7 +78,7 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        if (!ConfigType.MCHATE_ENABLE.getObject().toBoolean())
+        if (!ConfigType.MCHATE_ENABLE.getBoolean())
             return;
 
         if (event.isCancelled())

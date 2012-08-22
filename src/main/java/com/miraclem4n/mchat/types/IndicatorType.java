@@ -14,6 +14,6 @@ public enum IndicatorType {
     }
 
     public String getValue() {
-        return type.getObject().toString();
+        return type.getString();
     }
 }

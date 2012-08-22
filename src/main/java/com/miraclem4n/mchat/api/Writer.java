@@ -14,7 +14,7 @@ public class Writer {
         String base = type.getName();
 
         if (type.equals(InfoType.USER))
-            InfoUtil.getConfig().set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
+            InfoUtil.getConfig().set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getString());
 
         InfoUtil.getConfig().set(base + "." + name + ".info.prefix", "");
         InfoUtil.getConfig().set(base + "." + name + ".info.suffix", "");
@@ -22,7 +22,7 @@ public class Writer {
         save();
 
         if (type.equals(InfoType.USER))
-            setDGroup(ConfigType.INFO_DEFAULT_GROUP.getObject().toString());
+            setDGroup(ConfigType.INFO_DEFAULT_GROUP.getString());
     }
 
     /**
