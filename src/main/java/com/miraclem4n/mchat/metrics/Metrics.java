@@ -34,12 +34,21 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 
 /**
@@ -152,7 +161,7 @@ public class Metrics {
      * Construct and create a Graph that can be used to separate specific plotters to their own graphs
      * on the metrics website. Plotters can be added to the graph object returned.
      *
-     * @param name Name of Graph
+     * @param name The name of the graph
      * @return Graph object created. Will never return NULL under normal circumstances unless bad parameters are given
      */
     public Graph createGraph(final String name) {
@@ -173,7 +182,7 @@ public class Metrics {
     /**
      * Add a Graph object to Metrics that represents data for the plugin that should be sent to the backend
      *
-     * @param graph Graph to be added to Send queue
+     * @param graph The name of the graph
      */
     public void addGraph(final Graph graph) {
         if (graph == null) {
@@ -186,7 +195,7 @@ public class Metrics {
     /**
      * Adds a custom data plotter to the default graph
      *
-     * @param plotter Custom Plotter to be Plotted
+     * @param plotter The plotter to use to plot custom data
      */
     public void addCustomData(final Plotter plotter) {
         if (plotter == null) {
@@ -260,7 +269,7 @@ public class Metrics {
     /**
      * Has the server owner denied plugin metrics?
      *
-     * @return Opt Out Status
+     * @return true if metrics should be opted out of it
      */
     public boolean isOptOut() {
         synchronized(optOutLock) {
@@ -348,7 +357,6 @@ public class Metrics {
         // Construct the post data
         final StringBuilder data = new StringBuilder();
         data.append(encode("guid")).append('=').append(encode(guid));
-        encodeDataPair(data, "authors", description.getAuthors().get(0));
         encodeDataPair(data, "version", description.getVersion());
         encodeDataPair(data, "server", Bukkit.getVersion());
         encodeDataPair(data, "players", Integer.toString(Bukkit.getServer().getOnlinePlayers().length));
@@ -427,7 +435,7 @@ public class Metrics {
     /**
      * Check if mineshafter is present. If it is, we need to bypass it to send POST requests
      *
-     * @return true if Present false if not.
+     * @return true if mineshafter is installed on the server
      */
     private boolean isMineshafterPresent() {
         try {
@@ -447,9 +455,9 @@ public class Metrics {
      * encodeDataPair(data, "version", description.getVersion());
      * </code>
      *
-     * @param buffer StringBuffer Encoded data is to be parsed to
-     * @param key Key to be Encoded
-     * @param value Value to be Encoded
+     * @param buffer the stringbuilder to append the data pair onto
+     * @param key the key value
+     * @param value the value
      */
     private static void encodeDataPair(final StringBuilder buffer, final String key, final String value) throws UnsupportedEncodingException {
         buffer.append('&').append(encode(key)).append('=').append(encode(value));
@@ -458,8 +466,8 @@ public class Metrics {
     /**
      * Encode text as UTF-8
      *
-     * @param text Text to Encode
-     * @return Encoded String
+     * @param text the text to encode
+     * @return the encoded text, as UTF-8
      */
     private static String encode(final String text) throws UnsupportedEncodingException {
         return URLEncoder.encode(text, "UTF-8");
@@ -488,7 +496,7 @@ public class Metrics {
         /**
          * Gets the graph's name
          *
-         * @return Graphs's name
+         * @return the Graph's name
          */
         public String getName() {
             return name;
@@ -497,7 +505,7 @@ public class Metrics {
         /**
          * Add a plotter to the graph, which will be used to plot entries
          *
-         * @param plotter Plotter to be added to Graph
+         * @param plotter the plotter to add to the graph
          */
         public void addPlotter(final Plotter plotter) {
             plotters.add(plotter);
@@ -506,7 +514,7 @@ public class Metrics {
         /**
          * Remove a plotter from the graph
          *
-         * @param plotter Plotter to be removed from the Graph
+         * @param plotter the plotter to remove from the graph
          */
         public void removePlotter(final Plotter plotter) {
             plotters.remove(plotter);
@@ -515,7 +523,7 @@ public class Metrics {
         /**
          * Gets an <b>unmodifiable</b> set of the plotter objects in the graph
          *
-         * @return Set of Plotters in Graph
+         * @return an unmodifiable {@link Set} of the plotter objects
          */
         public Set<Plotter> getPlotters() {
             return Collections.unmodifiableSet(plotters);
@@ -539,7 +547,8 @@ public class Metrics {
         /**
          * Called when the server owner decides to opt-out of Metrics while the server is running.
          */
-        protected void onOptOut(){}
+        protected void onOptOut() {
+        }
 
     }
 
@@ -563,16 +572,19 @@ public class Metrics {
         /**
          * Construct a plotter with a specific plot name
          *
-         * @param name Name of Plotter
+         * @param name the name of the plotter to use, which will show up on the website
          */
         public Plotter(final String name) {
             this.name = name;
         }
 
         /**
-         * Get the current value for the plotted point
+         * Get the current value for the plotted point. Since this function defers to an external function
+         * it may or may not return immediately thus cannot be guaranteed to be thread friendly or safe.
+         * This function can be called from any thread so care should be taken when accessing resources
+         * that need to be synchronized.
          *
-         * @return Current value of Plotter point
+         * @return the current value for the point to be plotted.
          */
         public abstract int getValue();
 
