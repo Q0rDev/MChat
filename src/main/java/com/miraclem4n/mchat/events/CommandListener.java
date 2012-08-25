@@ -2,8 +2,6 @@ package com.miraclem4n.mchat.events;
 
 import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.ConfigUtil;
-import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.util.TimerUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -46,19 +44,11 @@ public class CommandListener implements Listener {
         String msg = event.getMessage();
         String command = msg.split(" ")[0].replace("/", "");
 
-        TimerUtil timer = new TimerUtil();
-        timer.start();
-
         for (Map.Entry<String, List<String>> entry : ConfigUtil.getAliasMap().entrySet())
             for (String comm : entry.getValue())
                 if (comm.equalsIgnoreCase(command)) {
                     event.setMessage(msg.replaceFirst("/" + command, "/" + entry.getKey()));
-                    timer.stop();
-                    MessageUtil.log("Command Process Time: " + timer.difference() + "ms");
                     return;
                 }
-
-        timer.stop();
-        MessageUtil.log("Command Process Time: " + timer.difference() + "ms");
     }
 }
