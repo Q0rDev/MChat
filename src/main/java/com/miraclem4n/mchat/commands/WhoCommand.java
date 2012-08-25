@@ -39,6 +39,10 @@ public class WhoCommand implements CommandExecutor {
         Integer locZ = (int) recipient.getLocation().getZ();
         String loc = ("X: " + locX + ", " + "Y: " + locY + ", " + "Z: " + locZ);
         String world = recipient.getWorld().getName();
+        String i = recipient.getAddress().toString();
+        String p = i.replace("/", "");
+        String ip = p.split(":")[0];
+        Integer exp = (int) recipient.getLevel();
 
         MessageUtil.sendColouredMessage(sender, "Player Name: " + recipient.getName());
         MessageUtil.sendColouredMessage(sender, "Display Name: " + recipient.getDisplayName());
@@ -46,7 +50,8 @@ public class WhoCommand implements CommandExecutor {
         MessageUtil.sendColouredMessage(sender, "Player's Location: [ " + loc + " ]");
         MessageUtil.sendColouredMessage(sender, "Player's World: " + world);
         MessageUtil.sendColouredMessage(sender, "Player's Health: " + API.createHealthBar(recipient) + " " + recipient.getHealth() + "/20");
-        MessageUtil.sendColouredMessage(sender, "Player's IP: " + recipient.getAddress().getHostString());
+        MessageUtil.sendColouredMessage(sender, "Player's Level: " + exp);
+        MessageUtil.sendColouredMessage(sender, "Player's IP: " + ip);
         MessageUtil.sendColouredMessage(sender, "Current Item: " + recipient.getItemInHand().getType().name());
         MessageUtil.sendColouredMessage(sender, "Entity ID: #" + recipient.getEntityId());
     }
