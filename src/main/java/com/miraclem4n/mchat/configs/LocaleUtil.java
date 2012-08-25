@@ -58,7 +58,7 @@ public class LocaleUtil {
         checkOption("message.general.noPerms", "You do not have '%permission'.");
         checkOption("message.info.alteration", "Info Alteration Successful.");
         checkOption("message.list.header", "&6-- There are &8%players&6 out of the maximum of &8%max&6 Players online. --");
-        checkOption("message.player.afk", "%player is now AFK. [ %r ]");
+        checkOption("message.player.afk", "%player is now AFK. [ %reason ]");
         checkOption("message.player.notAfk", "%player is no longer AFK.");
         checkOption("message.player.notFound", "");
         checkOption("message.player.notOnline", "");
@@ -70,7 +70,7 @@ public class LocaleUtil {
         checkOption("message.spout.typing", "*Typing*");
         checkOption("message.event.join", "%player has joined the game.");
         checkOption("message.event.leave", "%player has left the game.");
-        checkOption("message.event.kick", "%player has been kicked from the game. [ %r ]");
+        checkOption("message.event.kick", "%player has been kicked from the game. [ %reason ]");
         checkOption("message.death.inFire", "%player went up in flames.");
         checkOption("message.death.onFire", "%player burned to death.");
         checkOption("message.death.lava", "%player tried to swim in lava.");

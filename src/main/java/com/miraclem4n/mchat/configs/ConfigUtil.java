@@ -13,8 +13,8 @@ public class ConfigUtil {
     static File file;
 
     static ArrayList<String> meAliases = new ArrayList<String>();
-    static ArrayList<String> userAliases = new ArrayList<String>();
-    static ArrayList<String> groupAliases = new ArrayList<String>();
+    //static ArrayList<String> userAliases = new ArrayList<String>();
+    //static ArrayList<String> groupAliases = new ArrayList<String>();
     static ArrayList<String> whoAliases = new ArrayList<String>();
     static ArrayList<String> listAliases = new ArrayList<String>();
     static ArrayList<String> sayAliases = new ArrayList<String>();
@@ -119,8 +119,8 @@ public class ConfigUtil {
         loadAliases();
 
         checkOption("aliases.mchatme", meAliases);
-        checkOption("aliases.mchatuser", userAliases);
-        checkOption("aliases.mchatgroup", groupAliases);
+        //checkOption("aliases.mchatuser", userAliases);
+        //checkOption("aliases.mchatgroup", groupAliases);
         checkOption("aliases.mchatlist", listAliases);
         checkOption("aliases.mchatsay", sayAliases);
         checkOption("aliases.mchatafk", afkAliases);
@@ -183,9 +183,9 @@ public class ConfigUtil {
     private static void loadAliases() {
         meAliases.add("me");
 
-        userAliases.add("muser");
+        //userAliases.add("muser");
 
-        groupAliases.add("mgroup");
+        //groupAliases.add("mgroup");
 
         whoAliases.add("who");
 
@@ -232,9 +232,9 @@ public class ConfigUtil {
     private static void unloadAliases() {
         meAliases.clear();
 
-        userAliases.clear();
+        //userAliases.clear();
 
-        groupAliases.clear();
+        //groupAliases.clear();
 
         whoAliases.clear();
 

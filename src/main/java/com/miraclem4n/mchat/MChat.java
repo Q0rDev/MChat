@@ -107,8 +107,6 @@ public class MChat extends JavaPlugin {
                 if (InfoUtil.getConfig().get("users." + players.getName()) == null)
                     Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getString());
 
-        MessageUtil.log(ConfigType.MCHATE_ENABLE.getBoolean());
-
         if (ConfigType.MCHATE_ENABLE.getBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
                 isAFK.put(players.getName(), false);
