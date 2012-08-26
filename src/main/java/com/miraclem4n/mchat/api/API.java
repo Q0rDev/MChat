@@ -89,6 +89,19 @@ public class API {
 
         return createBasicBar(health, maxHealth, barLength);
     }
+    
+    /**
+     * Food Bar Formatting
+     * @param player Player the FoodBar is being rendered for.
+     * @return Formatted Health Bar.
+     */
+    public static String createFoodBar(Player player) {
+        float maxFood = 20;
+        float barLength = 10;
+        float food = player.getFoodLevel();
+
+        return createBasicBar(food, maxFood, barLength);
+    }
 
     /**
      * Basic Bar Formatting
