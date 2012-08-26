@@ -50,6 +50,7 @@ public class WhoCommand implements CommandExecutor {
         MessageUtil.sendColouredMessage(sender, "Player's Location: [ " + loc + " ]");
         MessageUtil.sendColouredMessage(sender, "Player's World: " + world);
         MessageUtil.sendColouredMessage(sender, "Player's Health: " + API.createHealthBar(recipient) + " " + recipient.getHealth() + "/20");
+        MessageUtil.sendColouredMessage(sender, "Player's Food: " + API.createFoodBar(recipient) + " " + recipient.getFoodLevel() + "/20");
         MessageUtil.sendColouredMessage(sender, "Player's Level: " + exp);
         MessageUtil.sendColouredMessage(sender, "Player's IP: " + ip);
         MessageUtil.sendColouredMessage(sender, "Current Item: " + recipient.getItemInHand().getType().name());
