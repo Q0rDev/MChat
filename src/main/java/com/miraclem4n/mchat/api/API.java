@@ -89,7 +89,7 @@ public class API {
 
         return createBasicBar(health, maxHealth, barLength);
     }
-    
+
     /**
      * Food Bar Formatting
      * @param player Player the FoodBar is being rendered for.
@@ -184,6 +184,13 @@ public class API {
         return sender.hasPermission(node);
     }
 
+    /**
+     * Variable Replacer
+     * @param source String being modified.
+     * @param changes Map of Search / Replace pairs.
+     * @param type Type of Variable.
+     * @return Source with variables replaced.
+     */
     public static String replace(String source, Map<String, String> changes, IndicatorType type) {
         for (Map.Entry<String, String> entry : changes.entrySet())
             source = source.replace(type.getValue() + entry.getKey(), entry.getValue());
@@ -191,6 +198,14 @@ public class API {
         return source;
     }
 
+    /**
+     * Variable Replacer
+     * @param source String being modified.
+     * @param search String being searched for.
+     * @param replace String search term is to be replaced with.
+     * @param type Type of Variable.
+     * @return Source with variable replaced.
+     */
     public static String replace(String source, String search, String replace, IndicatorType type) {
         return source.replace(type.getValue() + search, replace);
     }

@@ -31,10 +31,7 @@ public class Writer {
      * @param group Default Group to set to the Base(Only needed if doing for InfoType.USER).
      */
     public static void addBase(String player, String group) {
-
-
         InfoUtil.getConfig().set("users." + player + ".group", group);
-
         InfoUtil.getConfig().set("users." + player + ".info.prefix", "");
         InfoUtil.getConfig().set("users." + player + ".info.suffix", "");
 
@@ -50,7 +47,6 @@ public class Writer {
      * @param world Name of the World you are trying to add.
      */
     public static void addWorld(String name, InfoType type, String world) {
-
         String base = type.getName();
 
         if (!InfoUtil.getConfig().isSet(base + "." + name))
@@ -70,7 +66,6 @@ public class Writer {
      * @param value Value of the Variable you are trying to add.
      */
     public static void setInfoVar(String name, InfoType type, String var, Object value) {
-
         String base = type.getName();
 
         if (!InfoUtil.getConfig().isSet(base + "." + name))
@@ -90,7 +85,6 @@ public class Writer {
      * @param value Value of the Variable you are trying to add.
      */
     public static void setWorldVar(String name, InfoType type, String world, String var, Object value) {
-
         String base = type.getName();
 
         if (!InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world))
@@ -107,8 +101,6 @@ public class Writer {
      * @param group Group to be set to Player.
      */
     public static void setGroup(String player, String group) {
-
-
         if (!InfoUtil.getConfig().isSet(player + "." + group))
             addBase(player, group);
 
@@ -123,7 +115,6 @@ public class Writer {
      * @param type Type of Base you want to remove.
      */
     public static void removeBase(String name, InfoType type) {
-
         String base = type.getName();
 
         if (InfoUtil.getConfig().isSet(base + "." + name)) {
@@ -150,7 +141,6 @@ public class Writer {
      * @param world Name of the World you are trying to remove.
      */
     public static void removeWorld(String name, InfoType type, String world) {
-
         String base = type.getName();
 
         if (InfoUtil.getConfig().isSet(base + "." + name)) {
@@ -174,8 +164,6 @@ public class Writer {
     }
 
     private static void setDGroup(String group) {
-
-
         if (!InfoUtil.getConfig().isSet("groups." + group)) {
             InfoUtil.getConfig().set("groups." + group + ".info.prefix", "");
             InfoUtil.getConfig().set("groups." + group + ".info.suffix", "");
