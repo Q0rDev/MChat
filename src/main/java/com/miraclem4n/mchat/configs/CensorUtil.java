@@ -12,6 +12,11 @@ public class CensorUtil {
         load();
     }
 
+    public static void dispose() {
+        config = null;
+        file = null;
+    }
+
     public static void load() {
         file = new File("plugins/mChatSuite/censor.yml");
 
@@ -36,8 +41,6 @@ public class CensorUtil {
 
     public static void set(String key, Object obj) {
         config.set(key, obj);
-
-        save();
     }
 
     public static Boolean save() {

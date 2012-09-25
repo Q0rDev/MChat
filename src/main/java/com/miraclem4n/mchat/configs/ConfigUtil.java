@@ -1,5 +1,7 @@
 package com.miraclem4n.mchat.configs;
 
+import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.util.TimerUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -11,6 +13,7 @@ import java.util.Set;
 public class ConfigUtil {
     static YamlConfiguration config;
     static File file;
+    static Boolean changed;
 
     static ArrayList<String> meAliases = new ArrayList<String>();
     //static ArrayList<String> userAliases = new ArrayList<String>();
@@ -39,6 +42,7 @@ public class ConfigUtil {
     public static void dispose() {
         config = null;
         file = null;
+        changed = null;
         aliasMap = null;
     }
 
@@ -50,11 +54,9 @@ public class ConfigUtil {
         config.options().indent(4);
         config.options().header("MChat Config");
 
+        changed = false;
+
         loadDefaults();
-    }
-
-    public static void unload() {
-
     }
 
     private static void loadDefaults() {
@@ -138,17 +140,23 @@ public class ConfigUtil {
         unloadAliases();
 
         setupAliasMap();
+
+        save();
     }
 
     public static void set(String key, Object obj) {
         config.set(key, obj);
 
-        save();
+        changed = true;
     }
 
     public static Boolean save() {
+        if (!changed)
+            return false;
+
         try {
             config.save(file);
+            changed = false;
             return true;
         } catch (Exception ignored) {
             return false;

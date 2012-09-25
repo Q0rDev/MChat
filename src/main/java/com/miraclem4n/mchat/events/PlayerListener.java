@@ -63,7 +63,7 @@ public class PlayerListener implements Listener {
             return;
 
         if (ConfigType.MCHATE_ENABLE.getBoolean()) {
-            plugin.chatt.put(player.getName(), false);
+            plugin.isChatting.put(player.getName(), false);
             plugin.isAFK.put(player.getName(), false);
             plugin.lastMove.put(player.getName(), new Date().getTime());
         }

@@ -31,23 +31,23 @@ public class CustomListener implements Listener {
         Keyboard leftKey = player.getLeftKey();
         Keyboard rightKey = player.getRightKey();
 
-        if (plugin.chatt.get(pName) == null)
-            plugin.chatt.put(pName, false);
+        if (plugin.isChatting.get(pName) == null)
+            plugin.isChatting.put(pName, false);
 
         if (key == null) return;
 
         if (key.equals(chatKey)) {
             player.setTitle(ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getRaw().toUpperCase()) + MessageUtil.addColour(LocaleType.MESSAGE_SPOUT_TYPING.getVal()) + '\n' + Parser.parsePlayerName(pName, player.getWorld().getName()));
-            plugin.chatt.put(player.getName(), true);
+            plugin.isChatting.put(pName, true);
         }
 
-        if (plugin.chatt.get(player.getName())) {
+        if (plugin.isChatting.get(pName)) {
             if ((key.equals(forwardKey)) ||
                     (key.equals(backwardKey)) ||
                     (key.equals(leftKey)) ||
                     (key.equals(rightKey))) {
                 player.setTitle(Parser.parsePlayerName(pName, player.getWorld().getName()));
-                plugin.chatt.put(pName, false);
+                plugin.isChatting.put(pName, false);
             }
         }
     }

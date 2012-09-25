@@ -7,9 +7,16 @@ import java.io.File;
 public class InfoUtil {
     static YamlConfiguration config;
     static File file;
+    static Boolean changed;
 
     public static void initialize() {
         load();
+    }
+
+    public static void dispose() {
+        config = null;
+        file = null;
+        changed = null;
     }
 
     public static void load() {
@@ -20,11 +27,12 @@ public class InfoUtil {
         config.options().indent(4);
         config.options().header("MChat Info");
 
+        changed = false;
+
         loadDefaults();
     }
 
     private static void loadDefaults() {
-
         if (config.get("users") == null) {
             set("users.MiracleM4n.group", "admin");
             set("users.MiracleM4n.worlds.DtK.prefix", "");
@@ -57,17 +65,23 @@ public class InfoUtil {
             set("mname.MiracleM4n", "M1r4c13M4n");
             set("mname.Jessica_RS", "M1r4c13M4n's Woman");
         }
+
+        save();
     }
 
     public static void set(String key, Object obj) {
         config.set(key, obj);
 
-        save();
+        changed = true;
     }
 
     public static Boolean save() {
+        if (!changed)
+            return false;
+
         try {
             config.save(file);
+            changed = false;
             return true;
         } catch (Exception ignored) {
             return false;

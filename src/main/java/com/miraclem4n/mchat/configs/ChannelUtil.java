@@ -12,6 +12,11 @@ public class ChannelUtil {
         load();
     }
 
+    public static void dispose() {
+        config = null;
+        file = null;
+    }
+
     public static void load() {
         file = new File("plugins/mChatSuite/channels.yml");
 
@@ -63,8 +68,6 @@ public class ChannelUtil {
 
     public static void set(String key, Object obj) {
         config.set(key, obj);
-
-        save();
     }
 
     public static Boolean save() {

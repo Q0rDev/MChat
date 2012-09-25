@@ -54,7 +54,7 @@ public class MChat extends JavaPlugin {
     // Maps
     public HashMap<String, Location> AFKLoc = new HashMap<String, Location>();
 
-    public HashMap<String, Boolean> chatt = new HashMap<String, Boolean>();
+    public HashMap<String, Boolean> isChatting = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isAFK = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isConv = new HashMap<String, Boolean>();
     public HashMap<String, Boolean> isMuted = new HashMap<String, Boolean>();
@@ -110,7 +110,7 @@ public class MChat extends JavaPlugin {
         if (ConfigType.MCHATE_ENABLE.getBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
                 isAFK.put(players.getName(), false);
-                chatt.put(players.getName(), false);
+                isChatting.put(players.getName(), false);
                 lastMove.put(players.getName(), new Date().getTime());
 
                 if (spoutB) {
@@ -139,6 +139,9 @@ public class MChat extends JavaPlugin {
         isShouting = null;
         isSpying = null;
 
+        // Kill Configs
+        unloadConfigs();
+
         // Stop the Timer
         timer.stop();
 
@@ -149,7 +152,7 @@ public class MChat extends JavaPlugin {
     }
 
     void registerEvents() {
-        if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
+       if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
             pm.registerEvents(new PlayerListener(this), this);
 
             pm.registerEvents(new EntityListener(this), this);
@@ -226,6 +229,14 @@ public class MChat extends JavaPlugin {
         CensorUtil.initialize();
         LocaleUtil.initialize();
         ChannelUtil.initialize();
+    }
+
+    public void unloadConfigs() {
+        ConfigUtil.dispose();
+        InfoUtil.dispose();
+        CensorUtil.dispose();
+        LocaleUtil.dispose();
+        ChannelUtil.dispose();
     }
 
     void setupTasks() {

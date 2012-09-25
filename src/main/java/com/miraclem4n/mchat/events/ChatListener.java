@@ -85,7 +85,7 @@ public class ChatListener implements Listener {
                     + "- " + MessageUtil.addColour(msg) + ChatColor.valueOf(LocaleType.MESSAGE_SPOUT_COLOUR.getRaw().toUpperCase())
                     + " -" + '\n' + Parser.parsePlayerName(pName, world));
 
-            plugin.chatt.put(pName, false);
+            plugin.isChatting.put(pName, false);
 
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {

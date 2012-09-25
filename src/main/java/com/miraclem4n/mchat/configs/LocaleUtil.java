@@ -7,9 +7,16 @@ import java.io.File;
 public class LocaleUtil {
     static YamlConfiguration config;
     static File file;
+    static Boolean changed;
 
     public static void initialize() {
         load();
+    }
+
+    public static void dispose() {
+        config = null;
+        file = null;
+        changed = null;
     }
 
     public static void load() {
@@ -19,6 +26,8 @@ public class LocaleUtil {
 
         config.options().indent(4);
         config.options().header("MChat Locale");
+
+        changed = false;
 
         loadDefaults();
     }
@@ -89,17 +98,23 @@ public class LocaleUtil {
         checkOption("message.death.thrown", "%player was pummeled by %killer.");
         checkOption("message.heroes.isMaster", "The Great");
         checkOption("message.heroes.notMaster", "The Squire");
+
+        save();
     }
 
     public static void set(String key, Object obj) {
         config.set(key, obj);
 
-        save();
+        changed = true;
     }
 
     public static Boolean save() {
+        if (!changed)
+            return false;
+
         try {
             config.save(file);
+            changed = false;
             return true;
         } catch (Exception ignored) {
             return false;

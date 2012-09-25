@@ -68,26 +68,8 @@ public class ReplyCommand implements CommandExecutor {
         player.sendMessage(API.replace(LocaleType.FORMAT_PM_SENT.getVal(), rMap, IndicatorType.LOCALE_VAR));
 
         if (plugin.spoutB) {
-            if (ConfigType.MCHAT_SPOUT.getBoolean()) {
-                final SpoutPlayer sRecipient = (SpoutPlayer) recipient;
-
-                if (sRecipient.isSpoutCraftEnabled()) {
-                    plugin.lastPMd.put(rName, pName);
-
-                    Runnable runnable = new Runnable() {
-                        public void run() {
-                            for (int i = 0; i < ((message.length() / 40) + 1); i++) {
-                                sRecipient.sendNotification(formatPM(message, ((40 * i) + 1), ((i * 40) + 20)), formatPM(message, ((i * 40) + 21), ((i * 40) + 40)), Material.PAPER);
-                                waiting(2000);
-                            }
-                        }
-                    };
-
-                    sRecipient.sendNotification(LocaleType.MESSAGE_SPOUT_PM.getVal(), player.getName(), Material.PAPER);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, runnable, 2 * 20);
-                    return true;
-                }
-            }
+            sendSpoutMessage(player, recipient, message);
+            return true;
         }
 
         plugin.lastPMd.put(rName, pName);
@@ -98,14 +80,33 @@ public class ReplyCommand implements CommandExecutor {
         return true;
     }
 
-    void waiting(int n) {
-        long t0, t1;
+    void sendSpoutMessage(Player player, Player recipient, final String message) {
+        if (ConfigType.MCHAT_SPOUT.getBoolean()) {
+            final SpoutPlayer sRecipient = (SpoutPlayer) recipient;
 
-        t0 = System.currentTimeMillis();
+            if (sRecipient.isSpoutCraftEnabled()) {
+                plugin.lastPMd.put(recipient.getName(), player.getName());
 
-        do {
-            t1 = System.currentTimeMillis();
-        } while ((t1 - t0) < n * 1000);
+                sRecipient.sendNotification(LocaleType.MESSAGE_SPOUT_PM.getVal(), player.getName(), Material.PAPER);
+
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                    public void run() {
+                        for (int i = 0; i < ((message.length() / 40) + 1); i++) {
+                            sendRunnableNotification(sRecipient, formatPM(message, ((40 * i) + 1), ((i * 40) + 20)), formatPM(message, ((i * 40) + 21), ((i * 40) + 40)), i);
+                        }
+                    }
+                }, 2 * 20);
+
+            }
+        }
+    }
+
+    void sendRunnableNotification(final SpoutPlayer recipient, final String messageA, final String messageB, Integer delay) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                recipient.sendNotification(messageA, messageB, Material.PAPER);
+            }
+        }, 40 * delay);
     }
 
     String formatPM(String message, Integer start, Integer finish) {
