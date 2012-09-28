@@ -5,7 +5,6 @@ import com.massivecraft.factions.Conf;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Writer;
-import com.miraclem4n.mchat.channels.ChannelManager;
 import com.miraclem4n.mchat.commands.*;
 import com.miraclem4n.mchat.configs.*;
 import com.miraclem4n.mchat.events.*;
@@ -159,9 +158,7 @@ public class MChat extends JavaPlugin {
 
             pm.registerEvents(new ChatListener(this), this);
 
-            pm.registerEvents(new ChannelListener(this), this);
-
-            pm.registerEvents(new CommandListener(this), this);
+            pm.registerEvents(new CommandListener(), this);
 
             if (spoutB)
                 pm.registerEvents(new CustomListener(this), this);
@@ -220,7 +217,6 @@ public class MChat extends JavaPlugin {
         InfoUtil.initialize();
         CensorUtil.initialize();
         LocaleUtil.initialize();
-        ChannelUtil.initialize();
     }
 
     public void reloadConfigs() {
@@ -228,7 +224,6 @@ public class MChat extends JavaPlugin {
         InfoUtil.initialize();
         CensorUtil.initialize();
         LocaleUtil.initialize();
-        ChannelUtil.initialize();
     }
 
     public void unloadConfigs() {
@@ -236,7 +231,6 @@ public class MChat extends JavaPlugin {
         InfoUtil.dispose();
         CensorUtil.dispose();
         LocaleUtil.dispose();
-        ChannelUtil.dispose();
     }
 
     void setupTasks() {
@@ -313,8 +307,6 @@ public class MChat extends JavaPlugin {
         regCommands("pmchatinvite", new InviteCommand(this));
         regCommands("pmchatleave", new LeaveCommand(this));
         regCommands("pmchatreply", new ReplyCommand(this));
-
-        regCommands("mchannel", new MChannelCommand(this));
     }
 
     void regCommands(String command, CommandExecutor executor) {
@@ -323,8 +315,6 @@ public class MChat extends JavaPlugin {
     }
 
     void initializeClasses() {
-        ChannelManager.initialize();
-
         API.initialize();
         Parser.initialize(this);
     }

@@ -59,8 +59,7 @@ public enum ConfigType {
     ALIASES_PM_DENY("aliases.pmchatdeny"),
     ALIASES_PM_LEAVE("aliases.pmchatleave"),
     ALIASES_SHOUT("aliases.mchatshout"),
-    ALIASES_MUTE("aliases.mchatmute"),
-    ALIASES_CHANNEL("aliases.mchannel");
+    ALIASES_MUTE("aliases.mchatmute");
 
     private final String option;
     private final Object object;

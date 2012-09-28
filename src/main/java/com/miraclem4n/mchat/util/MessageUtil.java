@@ -85,6 +85,7 @@ public class MessageUtil {
 
         return string.replaceAll("(§([a-fk-orA-FK-OR0-9]))", "§z");
     }
+
     /**
      * Plugin Formatting
      * @param message Message being appended.
@@ -92,5 +93,14 @@ public class MessageUtil {
      */
     public static String format(String message) {
         return addColour("&2[&4m&8ChatSuite&2] &6" + message);
+    }
+
+    /**
+     * Plugin Formatting
+     * @param message Message being appended.
+     * @return Message appended to name
+     */
+    public static String format(String name, String message) {
+        return addColour("&2[&4" + name  + "&2] &6" + message);
     }
 }

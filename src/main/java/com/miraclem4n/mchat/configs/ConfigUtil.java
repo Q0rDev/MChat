@@ -31,7 +31,6 @@ public class ConfigUtil {
     static ArrayList<String> acceptAliases = new ArrayList<String>();
     static ArrayList<String> denyAliases = new ArrayList<String>();
     static ArrayList<String> leaveAliases = new ArrayList<String>();
-    static ArrayList<String> mChannelAliases = new ArrayList<String>();
 
     static HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
@@ -135,7 +134,6 @@ public class ConfigUtil {
         checkOption("aliases.pmchatleave", leaveAliases);
         checkOption("aliases.mchatshout", shoutAliases);
         checkOption("aliases.mchatmute", muteAliases);
-        checkOption("aliases.mchannel", mChannelAliases);
 
         unloadAliases();
 
@@ -233,8 +231,6 @@ public class ConfigUtil {
         denyAliases.add("deny");
 
         leaveAliases.add("leave");
-
-        mChannelAliases.add("channel");
     }
 
     private static void unloadAliases() {
@@ -269,8 +265,6 @@ public class ConfigUtil {
         denyAliases.clear();
 
         leaveAliases.clear();
-
-        mChannelAliases.clear();
     }
 
     private static void setupAliasMap() {
