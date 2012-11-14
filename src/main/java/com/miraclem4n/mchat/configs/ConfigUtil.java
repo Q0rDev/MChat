@@ -1,7 +1,5 @@
 package com.miraclem4n.mchat.configs;
 
-import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.util.TimerUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -18,19 +16,6 @@ public class ConfigUtil {
     static ArrayList<String> meAliases = new ArrayList<String>();
     //static ArrayList<String> userAliases = new ArrayList<String>();
     //static ArrayList<String> groupAliases = new ArrayList<String>();
-    static ArrayList<String> whoAliases = new ArrayList<String>();
-    static ArrayList<String> listAliases = new ArrayList<String>();
-    static ArrayList<String> sayAliases = new ArrayList<String>();
-    static ArrayList<String> afkAliases = new ArrayList<String>();
-    static ArrayList<String> afkOtherAliases = new ArrayList<String>();
-    static ArrayList<String> shoutAliases = new ArrayList<String>();
-    static ArrayList<String> muteAliases = new ArrayList<String>();
-    static ArrayList<String> pmAliases = new ArrayList<String>();
-    static ArrayList<String> replyAliases = new ArrayList<String>();
-    static ArrayList<String> inviteAliases = new ArrayList<String>();
-    static ArrayList<String> acceptAliases = new ArrayList<String>();
-    static ArrayList<String> denyAliases = new ArrayList<String>();
-    static ArrayList<String> leaveAliases = new ArrayList<String>();
 
     static HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
@@ -122,18 +107,6 @@ public class ConfigUtil {
         checkOption("aliases.mchatme", meAliases);
         //checkOption("aliases.mchatuser", userAliases);
         //checkOption("aliases.mchatgroup", groupAliases);
-        checkOption("aliases.mchatlist", listAliases);
-        checkOption("aliases.mchatsay", sayAliases);
-        checkOption("aliases.mchatafk", afkAliases);
-        checkOption("aliases.mchatafkother", afkOtherAliases);
-        checkOption("aliases.pmchat", pmAliases);
-        checkOption("aliases.pmchatreply", replyAliases);
-        checkOption("aliases.pmchatinvite", inviteAliases);
-        checkOption("aliases.pmchataccept", acceptAliases);
-        checkOption("aliases.pmchatdeny", denyAliases);
-        checkOption("aliases.pmchatleave", leaveAliases);
-        checkOption("aliases.mchatshout", shoutAliases);
-        checkOption("aliases.mchatmute", muteAliases);
 
         unloadAliases();
 
@@ -190,81 +163,14 @@ public class ConfigUtil {
         meAliases.add("me");
 
         //userAliases.add("muser");
-
         //groupAliases.add("mgroup");
-
-        whoAliases.add("who");
-
-        listAliases.add("list");
-        listAliases.add("online");
-        listAliases.add("playerlist");
-
-        sayAliases.add("say");
-
-        afkAliases.add("afk");
-        afkAliases.add("away");
-
-        afkOtherAliases.add("afko");
-        afkOtherAliases.add("awayother");
-        afkOtherAliases.add("awayo");
-
-        shoutAliases.add("shout");
-        shoutAliases.add("yell");
-
-        muteAliases.add("mute");
-        muteAliases.add("quiet");
-
-        pmAliases.add("pm");
-        pmAliases.add("msg");
-        pmAliases.add("message");
-        pmAliases.add("m");
-        pmAliases.add("tell");
-        pmAliases.add("t");
-
-        replyAliases.add("reply");
-        replyAliases.add("r");
-
-        inviteAliases.add("invite");
-
-        acceptAliases.add("accept");
-
-        denyAliases.add("deny");
-
-        leaveAliases.add("leave");
     }
 
     private static void unloadAliases() {
         meAliases.clear();
 
         //userAliases.clear();
-
         //groupAliases.clear();
-
-        whoAliases.clear();
-
-        listAliases.clear();
-
-        sayAliases.clear();
-
-        afkAliases.clear();
-
-        afkOtherAliases.clear();
-
-        shoutAliases.clear();
-
-        muteAliases.clear();
-
-        pmAliases.clear();
-
-        replyAliases.clear();
-
-        inviteAliases.clear();
-
-        acceptAliases.clear();
-
-        denyAliases.clear();
-
-        leaveAliases.clear();
     }
 
     private static void setupAliasMap() {

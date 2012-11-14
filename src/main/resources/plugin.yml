@@ -6,7 +6,7 @@ author: MiracleM4n
 authors: [MiracleM4n]
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
-softdepend: [GroupManager, PermissionsBukkit, bPermissions, Spout, PermissionsEx]
+softdepend: [GroupManager, PermissionsBukkit, bPermissions, PermissionsEx]
 description: Full mChat Suite
 commands:
     mchat:
@@ -35,68 +35,6 @@ commands:
             /<command> *Message* - Displays message.
         aliases: [mme]
         ~permissions: mchat.group.*
-    mchatwho:
-        usage: |
-            /<command> *PLAYER* - Displays info about player.
-        aliases: [mwho]
-        ~permissions: mchat.who
-    mchatlist:
-        usage: |
-            /<command> - See A list of online players.
-        aliases: [mlist, monline, mplayerlist]
-        ~permissions: mchat.list
-    mchatsay:
-        usage: |
-            /<command> *Message* - Broadcast a message.
-        aliases: [msay]
-        ~permissions: mchat.say
-    mchatafk:
-        usage: |
-            /<command> [REASON] - Displays you as AFK(REASON is optional).
-        aliases: [mafk, maway]
-        ~permissions: mchat.afk.self
-    mchatafkother:
-        usage: |
-            /<command> *PLAYER* [REASON] - Displays *PLAYER* as AFK (REASON is optional).
-        aliases: [mafkother, mafko, mawayother, mawayo]
-        ~permissions: mchat.afk.other
-    mchatshout:
-        usage: |
-            /<command> - Broadcasts message overriding Local Chat.
-        aliases: [mshout, myell]
-        ~permissions: mchat.shout
-    mchatmute:
-        usage: |
-            /<command> [Player] - Mutes a player.
-        aliases: [mmute]
-        ~permissions: mchat.mute
-    pmchat:
-        usage: |
-            /<command> {player} *Message* - Sends PM to player.
-        aliases: [mchattell, mtell, mmsg, mmessage]
-        ~permissions: mchat.pm.pm
-    pmchatreply:
-        usage: |
-            /<command> *Message* - Sends Reply to a players PM.
-        aliases: [pmchatr, pmreply, pmr, preply]
-        ~permissions: mchat.pm.reply
-    pmchatinvite:
-        usage: |
-            /<command> {player} - Sends a private Convo invitation to player.
-        aliases: [pmchati, pminvite, pmi, pinvite]
-        ~permissions: mchat.pm.invite
-    pmchataccept:
-        usage: |
-            /<command> - Accept pending Convo.
-        aliases: [pmchata, pmaccept, pma, paccept]
-    pmchatdeny:
-        usage: |
-            /<command> - Deny pending Convo.
-        aliases: [pmchatd, pmdeny, pmd, pdeny]
-    pmchatleave:
-        usage: |
-            /<command> - Ends convo.
-        aliases: [pmchatl, pmleave, pml, pleave]
 permissions:
     mchat.*:
         default: op
@@ -104,20 +42,14 @@ permissions:
         children:
             mchat.reload.*: true
             mchat.suppress.*: true
-            mchat.pm.*: true
-            mchat.afk.*: true
             mchat.bypass.*: true
             mchat.user.*: true
             mchat.group.*: true
             mchat.coloredchat: true
             mchat.censorbypass: true
             mchat.me: true
-            mchat.list: true
-            mchat.who: true
             mchat.version: true
-            mchat.shout: true
             mchat.spy: true
-            mchat.mute: true
     mchat.reload.*:
         default: false
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
@@ -135,19 +67,6 @@ permissions:
             mchat.suppress.quit: true
             mchat.suppress.kick: true
             mchat.suppress.death: true
-    mchat.pm.*:
-        default: false
-        description: Allow usage of all PM functions
-        children:
-            mchat.pm.pm: true
-            mchat.pm.reply: true
-            mchat.pm.invite: true
-    mchat.afk.*:
-        default: false
-        description: Allow usage of all PM functions
-        children:
-            mchat.afk.self: true
-            mchat.afk.other: true
     mchat.bypass.*:
         default: false
         description: Allow bypass of all Automatic functions.
@@ -237,30 +156,12 @@ permissions:
     mchat.me:
         default: false
         description: Allow use of the /mchatme command.
-    mchat.afk:
-        default: false
-        description: Allow use of the /mchatafk command.
-    mchat.afkother:
-        default: false
-        description: Allow use of the /mchatafkother command.
-    mchat.shout:
-        default: false
-        description: Allow use of the /mchatshout command.
-    mchat.list:
-        default: false
-        description: Allow use of the /mchatlist command.
-    mchat.who:
-        default: false
-        description: Allow use of the /mchatwho command.
     mchat.version:
         default: false
         description: Allow use of the /mchat version command.
     mchat.spy:
         default: false
         description: Allows player to view all chat messages.
-    mchat.mute:
-        default: false
-        description: Allows muting and unmuting of players.
     mchat.suppress.join:
         default: false
         description: Allow suppression of the mChat Join Messages.
@@ -273,21 +174,6 @@ permissions:
     mchat.suppress.death:
         default: false
         description: Allow suppression of the mChat Death Messages.
-    mchat.pm.pm:
-        default: false
-        description: Allow use of the /pmchat command.
-    mchat.pm.reply:
-        default: false
-        description: Allow use of the /pmchatreply command.
-    mchat.pm.invite:
-        default: false
-        description: Allow use of the /pmchatinvite command.
-    mchat.bypass.afk:
-        default: false
-        description: Allow bypassing of AutoAFK.
-    mchat.bypass.afkkick:
-        default: false
-        description: Allow bypassing of AutoAFK Kick.
     mchat.bypass.suppress.join:
         default: false
         description: Allow bypassing of Join Suppression.

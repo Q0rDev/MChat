@@ -35,6 +35,6 @@ public enum DeathType {
             if (msg.contains(type.name))
                 return type;
 
-        return null;
+        return DEATH_GENERIC;
     }
 }

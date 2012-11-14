@@ -130,10 +130,10 @@ public class Parser {
         // Chat Distance Type
         String dType = "";
 
-        if (MChat.isShouting.get(pName) != null
+        /*if (MChat.isShouting.get(pName) != null
                 && MChat.isShouting.get(pName)) {
             dType = LocaleType.FORMAT_SHOUT.getVal();
-        } else if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
+        } else */if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
             dType = LocaleType.FORMAT_LOCAL.getVal();
         }
 

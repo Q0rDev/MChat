@@ -6,7 +6,6 @@ import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.config.ConfigType;
 import com.miraclem4n.mchat.types.config.DeathType;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -76,44 +75,12 @@ public class EntityListener implements Listener {
                 event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage()));
     }
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageEvent event) {
-        if (!ConfigType.MCHATE_ENABLE.getBoolean())
-            return;
-
-        if (event.isCancelled())
-            return;
-
-        if (event instanceof EntityDamageByEntityEvent) {
-            EntityDamageByEntityEvent subEvent = (EntityDamageByEntityEvent) event;
-            Entity attacker = subEvent.getDamager();
-            Entity damaged = subEvent.getEntity();
-
-            if (attacker instanceof Player) {
-                Player player = (Player) attacker;
-
-                if (plugin.isAFK.get(player.getName()) == null)
-                    return;
-
-                if (plugin.isAFK.get(player.getName())) {
-                    damaged.setLastDamageCause(null);
-                    event.setCancelled(true);
-                }
-            }
-        }
-
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-
-            if (plugin.isAFK.get(player.getName()) != null)
-                if (plugin.isAFK.get(player.getName()))
-                    event.setCancelled(true);
-        }
-    }
-
     String handlePlayerDeath(String pName, String pCause, String world, String dMsg) {
         if (dMsg == null)
             return dMsg;
+
+        if (pCause == null)
+            pCause = pName;
 
         HashMap<String, String> map = new HashMap<String, String>();
 
@@ -122,10 +89,7 @@ public class EntityListener implements Listener {
 
         DeathType type = DeathType.fromMsg(dMsg);
 
-        if (type != null)
-            return API.replace(type.getValue(), map, IndicatorType.LOCALE_VAR);
-
-        return API.replace(dMsg, map, IndicatorType.LOCALE_VAR);
+        return API.replace(type.getValue(), map, IndicatorType.LOCALE_VAR);
     }
 
     void suppressDeathMessage(String pName, String pCause, String world, String dMsg, Integer max) {

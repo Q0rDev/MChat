@@ -7,45 +7,18 @@ import com.miraclem4n.mchat.api.Writer;
 import com.miraclem4n.mchat.configs.InfoUtil;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.config.ConfigType;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
-import org.getspout.spoutapi.player.SpoutPlayer;
-
-import java.util.Date;
 
 public class PlayerListener implements Listener {
     MChat plugin;
 
     public PlayerListener(MChat instance) {
         plugin = instance;
-    }
-
-    @EventHandler
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
-        String pName = player.getName();
-
-        if (!ConfigType.MCHATE_ENABLE.getBoolean())
-            return;
-
-        plugin.lastMove.put(pName, new Date().getTime());
-
-        for (String aliases : plugin.getCommand("mchatafk").getAliases())
-            if (event.getMessage().contains("/" + aliases) ||
-                    event.getMessage().contains("/mchatafk"))
-                return;
-
-        if (plugin.isAFK.get(pName) == null)
-            return;
-
-        if (plugin.isAFK.get(pName))
-            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "mchatafkother " + pName);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -61,12 +34,6 @@ public class PlayerListener implements Listener {
 
         if (msg == null)
             return;
-
-        if (ConfigType.MCHATE_ENABLE.getBoolean()) {
-            plugin.isChatting.put(player.getName(), false);
-            plugin.isAFK.put(player.getName(), false);
-            plugin.lastMove.put(player.getName(), new Date().getTime());
-        }
 
         // For Lazy People
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean())
@@ -84,11 +51,6 @@ public class PlayerListener implements Listener {
                     setListName(player, Parser.parseTabbedList(rPName, world));
             }
         }, 20L);
-
-        if (plugin.spoutB) {
-            SpoutPlayer sPlayer = (SpoutPlayer) player;
-            sPlayer.setTitle(Parser.parsePlayerName(mPName, world));
-        }
 
         if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
             if (ConfigType.SUPPRESS_USE_JOIN.getBoolean()) {
@@ -141,49 +103,6 @@ public class PlayerListener implements Listener {
             event.setQuitMessage(null);
         } else
             event.setQuitMessage(Parser.parseEvent(pName, world, EventType.QUIT));
-    }
-
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        Location from = event.getFrom();
-        Location to = event.getTo();
-
-        Integer fromX = from.getBlockX();
-        Integer fromY = from.getBlockY();
-        Integer fromZ = from.getBlockZ();
-
-        Integer toX = to.getBlockX();
-        Integer toY = to.getBlockY();
-        Integer toZ = to.getBlockZ();
-
-
-        String fromLoc = from.getWorld().getName() + "|" + fromX + "|" + fromY + "|" + fromZ;
-        String toLoc = to.getWorld().getName() + "|" + toX + "|" + toY + "|" + toZ;
-
-        if (fromLoc.equalsIgnoreCase(toLoc))
-            return;
-
-        if (event.isCancelled())
-            return;
-
-        Player player = event.getPlayer();
-
-        if (!ConfigType.MCHATE_ENABLE.getBoolean())
-            return;
-
-        plugin.lastMove.put(player.getName(), new Date().getTime());
-
-        if (plugin.isAFK.get(player.getName()) == null)
-            return;
-
-        if (plugin.isAFK.get(player.getName()))
-            if (ConfigType.MCHATE_HC_AFK.getBoolean()) {
-                if (plugin.AFKLoc.get(player.getName()) != null)
-                    player.teleport(plugin.AFKLoc.get(player.getName()));
-
-                MessageUtil.sendMessage(player, LocaleType.MESSAGE_PLAYER_STILL_AFK.getVal());
-            } else
-                player.performCommand("mchatafk");
     }
 
     void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
