@@ -155,8 +155,10 @@ public class MChat extends JavaPlugin {
     }
 
     void setupFactions() {
-        if (!(Conf.chatTagInsertIndex == 0))
-            getServer().dispatchCommand(getServer().getConsoleSender(), "f config chatTagInsertIndex 0");
+        try {
+            if (!(Conf.chatTagInsertIndex == 0))
+                getServer().dispatchCommand(getServer().getConsoleSender(), "f config chatTagInsertIndex 0");
+        } catch (NoSuchFieldError ignored) {}
     }
 
     void killEss() {
