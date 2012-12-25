@@ -37,6 +37,9 @@ public class MChat extends JavaPlugin {
     // Towny
     public Boolean townyB = false;
 
+    // MAdvanced
+    public Boolean mSocialB = false;
+
     // Debug
     Boolean debug = false;
 
@@ -147,6 +150,9 @@ public class MChat extends JavaPlugin {
 
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
+
+        // Setup MAdvanced
+        mSocialB = setupPlugin("MSocial");
 
         if (heroesB)
             heroes = (Heroes) pm.getPlugin("Heroes");

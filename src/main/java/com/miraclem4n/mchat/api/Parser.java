@@ -33,10 +33,14 @@ public class Parser {
     // Towny
     public static Boolean townyB;
 
+    // MAdvanced
+    public static Boolean mSocialB;
+
     public static void initialize(MChat instance) {
         heroesB = instance.heroesB;
         heroes = instance.heroes;
         townyB = instance.townyB;
+        mSocialB = instance.mSocialB;
     }
 
     /**
@@ -130,9 +134,10 @@ public class Parser {
         // Chat Distance Type
         String dType = "";
 
-        if (MChat.isShouting.get(pName) != null
+        if (mSocialB
+                && MChat.isShouting.get(pName) != null
                 && MChat.isShouting.get(pName)) {
-            dType = LocaleType.FORMAT_SHOUT.getVal();
+            dType = com.miraclem4n.msocial.types.LocaleType.FORMAT_SHOUT.getVal();
         } else if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
             dType = LocaleType.FORMAT_LOCAL.getVal();
         }

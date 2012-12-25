@@ -12,8 +12,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
-        <m.version>1.3.2</m.version>
-        <p.version>R2_0.1</p.version>
+        <m.version>1.4.5</m.version>
+        <p.version>R0.1</p.version>
     </properties>
 
     <!-- Source code -->
@@ -173,6 +173,13 @@
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
             <version>0.80.0.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.miraclem4n</groupId>
+            <artifactId>MSocial</artifactId>
+            <version>1.3.2-R1.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
