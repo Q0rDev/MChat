@@ -12,6 +12,8 @@ import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 import org.bukkit.Bukkit;
+import ru.tehkode.permissions.PermissionGroup;
+import ru.tehkode.permissions.PermissionUser;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,15 @@ public class Reader {
      * @return Raw Info.
      */
     public static Object getRawInfo(String name, InfoType type, String world, String info) {
+        if (type == null)
+            type = InfoType.USER;
+
+        if (world == null)
+            world = Bukkit.getServer().getWorlds().get(0).getName();
+
+        if (info == null)
+            info = "prefix";
+
         if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean())
             return getLeveledInfo(name, world, info);
 
@@ -270,23 +281,27 @@ public class Reader {
             return getPEXGroup(name);
 
         if (type == InfoType.USER) {
+            PermissionUser user = API.pexPermissions.getUser(name);
+
             if (info.equals("prefix"))
-                infoString = API.pexPermissions.getUser(name).getPrefix(world);
+                infoString = user.getPrefix(world);
 
             else if (info.equals("suffix"))
-                infoString = API.pexPermissions.getUser(name).getSuffix(world);
+                infoString = user.getSuffix(world);
 
             else
-                infoString = API.pexPermissions.getUser(name).getOption(info, world);
+                infoString = user.getOption(info, world);
         } else if (type == InfoType.GROUP) {
+            PermissionGroup group = API.pexPermissions.getGroup(name);
+
             if (info.equals("prefix"))
-                infoString = API.pexPermissions.getGroup(name).getPrefix(world);
+                infoString = group.getPrefix(world);
 
             else if (info.equals("suffix"))
-                infoString = API.pexPermissions.getGroup(name).getSuffix(world);
+                infoString = group.getSuffix(world);
 
             else
-                infoString = API.pexPermissions.getGroup(name).getOption(info, world);
+                infoString = group.getOption(info, world);
         }
 
         return infoString;
