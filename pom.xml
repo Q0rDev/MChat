@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>com.miraclem4n</groupId>
     <artifactId>MChat</artifactId>
-    <version>${m.version}-${p.version}</version>
+    <version>1.4.5-R0.4</version>
     <name>mChatSuite</name>
     <url>http://mDev.in/</url>
     <description>Full MChat Suite</description>
@@ -12,8 +12,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.number>Unknown</build.number>
-        <m.version>1.4.5</m.version>
-        <p.version>R0.3</p.version>
     </properties>
 
     <!-- Source code -->
