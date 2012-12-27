@@ -29,7 +29,7 @@ public class MiscUtil {
     public static Boolean isOnlineForCommand(CommandSender sender, Player player) {
         if (player == null) {
             MessageUtil.sendMessage(sender, "&4Player not Found.");
-            return true;
+            return false;
         }
 
         return true;

@@ -108,8 +108,6 @@ public class ConfigUtil {
         //checkOption("aliases.mchatuser", userAliases);
         //checkOption("aliases.mchatgroup", groupAliases);
 
-        unloadAliases();
-
         setupAliasMap();
 
         save();
@@ -164,13 +162,6 @@ public class ConfigUtil {
 
         //userAliases.add("muser");
         //groupAliases.add("mgroup");
-    }
-
-    private static void unloadAliases() {
-        meAliases.clear();
-
-        //userAliases.clear();
-        //groupAliases.clear();
     }
 
     private static void setupAliasMap() {
