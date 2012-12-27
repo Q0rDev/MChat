@@ -277,6 +277,9 @@ public class Reader {
     private static Object getPEXInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
 
+        if (name.isEmpty() || name == null)
+            return infoString;
+
         if (info.equals("group"))
             return getPEXGroup(name);
 
