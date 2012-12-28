@@ -32,7 +32,7 @@ commands:
         ~permissions: mchat.group.*
     mchatme:
         usage: |
-            /<command> *Message* - Displays message.
+            - /<command> *Message* - Displays message.
         aliases: [mme]
         ~permissions: mchat.group.*
 permissions:
