@@ -22,12 +22,12 @@ commands:
         ~permissions: mchat.reload.*
     mchatuser:
         usage: |
-            - /<command> = Show Info User Help.
+            /<command> = Show Info User Help.
         aliases: [muser]
         ~permissions: mchat.user.*
     mchatgroup:
         usage: |
-            - /<command> = Show Info Group Help.
+            /<command> = Show Info Group Help.
         aliases: [mgroup]
         ~permissions: mchat.group.*
     mchatme:
