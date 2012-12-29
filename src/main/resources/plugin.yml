@@ -11,7 +11,7 @@ description: Full mChat Suite
 commands:
     mchat:
         usage: |
-            [MChat] Help Screen
+            - [MChat] Help Screen
             - /<command> reload config = Reload Config.
             - /<command> reload info = Reload Info.
             - /<command> reload censor = Reload Censor.
@@ -32,7 +32,7 @@ commands:
         ~permissions: mchat.group.*
     mchatme:
         usage: |
-            /<command> *Message* - Displays message.
+            - /<command> *Message* - Displays message.
         aliases: [mme]
         ~permissions: mchat.group.*
 permissions:
