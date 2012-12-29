@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Project information -->
-    <groupId>com.miraclem4n</groupId>
+    <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.5-R0.9</version>
+    <version>1.4.5-R0.10</version>
     <name>mChatSuite</name>
-    <url>http://mDev.in/</url>
+    <url>http://mdev.in/</url>
     <description>Full MChat Suite</description>
 
     <properties>
@@ -24,7 +24,7 @@
     <!-- Continuous integration -->
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.mdev.in/job/${project.name}</url>
+        <url>http://ci.q0r.ca/job/${project.name}</url>
     </ciManagement>
 
     <!-- Repository locations -->
@@ -50,8 +50,8 @@
             </snapshots>
         </repository>
         <repository>
-            <id>mdev-repo</id>
-            <url>http://repo.mdev.in</url>
+            <id>q0r-repo</id>
+            <url>http://repo.q0r.ca</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -175,9 +175,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.miraclem4n</groupId>
+            <groupId>ca.q0r</groupId>
             <artifactId>MSocial</artifactId>
-            <version>1.3.2-R1.0</version>
+            <version>1.4.5-R0.7</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
