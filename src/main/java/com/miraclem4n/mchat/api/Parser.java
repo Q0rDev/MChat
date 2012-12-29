@@ -33,7 +33,7 @@ public class Parser {
     // Towny
     public static Boolean townyB;
 
-    // MAdvanced
+    // MSocial
     public static Boolean mSocialB;
 
     public static void initialize(MChat instance) {
