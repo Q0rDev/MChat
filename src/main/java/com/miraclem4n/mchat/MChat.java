@@ -28,17 +28,17 @@ public class MChat extends JavaPlugin {
     public PluginDescriptionFile pdfFile;
 
     // Factions
-    public Boolean factionsB = false;
+    public Boolean factions = false;
 
     // Heroes
     public Heroes heroes;
     public Boolean heroesB = false;
 
     // Towny
-    public Boolean townyB = false;
+    public Boolean towny = false;
 
-    // MAdvanced
-    public Boolean mSocialB = false;
+    // MSocial
+    public Boolean mSocial = false;
 
     // Debug
     Boolean debug = false;
@@ -47,8 +47,8 @@ public class MChat extends JavaPlugin {
     public Metrics metrics;
 
     // Maps
-    public static HashMap<String, Boolean> isShouting;
-    public static HashMap<String, Boolean> isSpying;
+    public static HashMap<String, Boolean> shouting;
+    public static HashMap<String, Boolean> spying;
 
 
     public void onEnable() {
@@ -63,8 +63,8 @@ public class MChat extends JavaPlugin {
         killEss();
 
         // Setup Static Variables
-        isShouting = new HashMap<String, Boolean>();
-        isSpying = new HashMap<String, Boolean>();
+        shouting = new HashMap<String, Boolean>();
+        spying = new HashMap<String, Boolean>();
 
         // Initialize Configs
         initializeConfigs();
@@ -103,8 +103,8 @@ public class MChat extends JavaPlugin {
         getServer().getScheduler().cancelTasks(this);
 
         // Kill Static Variables
-        isShouting = null;
-        isSpying = null;
+        shouting = null;
+        spying = null;
 
         // Kill Configs
         unloadConfigs();
@@ -143,21 +143,21 @@ public class MChat extends JavaPlugin {
 
     void setupPlugins() {
         // Setup Factions
-        factionsB = setupPlugin("Factions");
+        factions = setupPlugin("Factions");
 
-        if (factionsB)
+        if (factions)
             setupFactions();
 
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
 
         // Setup MAdvanced
-        mSocialB = setupPlugin("MSocial");
+        mSocial = setupPlugin("MSocial");
 
         if (heroesB)
             heroes = (Heroes) pm.getPlugin("Heroes");
 
-        townyB = setupPlugin("Towny");
+        towny = setupPlugin("Towny");
     }
 
     void setupFactions() {

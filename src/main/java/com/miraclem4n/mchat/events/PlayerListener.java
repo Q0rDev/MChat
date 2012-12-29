@@ -26,11 +26,8 @@ public class PlayerListener implements Listener {
         final Player player = event.getPlayer();
         final String world = player.getWorld().getName();
 
-        String pName = player.getName();
-        String mPName = player.getName();
+        final String pName = player.getName();
         String msg = event.getJoinMessage();
-
-        final String rPName = mPName;
 
         if (msg == null)
             return;
@@ -42,13 +39,7 @@ public class PlayerListener implements Listener {
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
-                // For Cruxsky
-                if (Parser.parseTabbedList(rPName, world).length() > 15) {
-                    String pLName = Parser.parseTabbedList(rPName, world);
-                    pLName = pLName.substring(0, 16);
-                    setListName(player, pLName);
-                } else
-                    setListName(player, Parser.parseTabbedList(rPName, world));
+                setListName(player, Parser.parseTabbedList(pName, world));
             }
         }, 20L);
 
@@ -121,6 +112,11 @@ public class PlayerListener implements Listener {
     }
 
     void setListName(Player player, String listName) {
+        if (listName.length() > 15) {
+            listName = listName.substring(0, 16);
+            player.setPlayerListName(listName);
+        }
+
         try {
             player.setPlayerListName(listName);
         } catch(Exception ignored) {}
