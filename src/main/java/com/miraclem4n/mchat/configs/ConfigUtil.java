@@ -90,18 +90,6 @@ public class ConfigUtil {
         checkOption("info.addNewPlayers", false);
         checkOption("info.defaultGroup", "default");
 
-        checkOption("mchate.enable", false);
-        checkOption("mchate.eHQAFK", true);
-        checkOption("mchate.useGroupedList", true);
-        checkOption("mchate.listVar", "group");
-        checkOption("mchate.collapsedListVars", "default,Default");
-        checkOption("mchate.AFKTimer", 30);
-        checkOption("mchate.AFKKickTimer", 120);
-        checkOption("mchate.useAFKList", false);
-
-        checkOption("pmchat.enable", false);
-        checkOption("pmchat.spoutPM", false);
-
         loadAliases();
 
         checkOption("aliases.mchatme", meAliases);

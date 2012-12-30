@@ -137,7 +137,7 @@ public class Parser {
         if (mSocialB
                 && MChat.shouting.get(pName) != null
                 && MChat.shouting.get(pName)) {
-            dType = com.miraclem4n.msocial.types.LocaleType.FORMAT_SHOUT.getVal();
+            dType = MChat.shoutFormat;
         } else if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
             dType = LocaleType.FORMAT_LOCAL.getVal();
         }

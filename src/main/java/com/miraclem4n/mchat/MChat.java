@@ -58,6 +58,8 @@ public class MChat extends JavaPlugin {
     public static HashMap<String, Boolean> shouting;
     public static HashMap<String, Boolean> spying;
 
+    // Shout Format Type
+    public static String shoutFormat;
 
     public void onEnable() {
         // Initialize and Start the Timer
@@ -73,6 +75,7 @@ public class MChat extends JavaPlugin {
         // Setup Static Variables
         shouting = new HashMap<String, Boolean>();
         spying = new HashMap<String, Boolean>();
+        shoutFormat = "";
 
         // Initialize Configs
         initializeConfigs();
@@ -113,6 +116,7 @@ public class MChat extends JavaPlugin {
         // Kill Static Variables
         shouting = null;
         spying = null;
+        shoutFormat = null;
 
         // Kill Configs
         unloadConfigs();

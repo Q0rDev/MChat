@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.5-R0.10</version>
+    <version>1.4.5-R0.11</version>
     <name>mChatSuite</name>
     <url>http://mdev.in/</url>
     <description>Full MChat Suite</description>
@@ -171,13 +171,6 @@
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
             <version>0.80.0.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>ca.q0r</groupId>
-            <artifactId>MSocial</artifactId>
-            <version>1.4.5-R0.7</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
