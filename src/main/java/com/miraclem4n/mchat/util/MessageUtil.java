@@ -92,7 +92,7 @@ public class MessageUtil {
      * @return Message appended to [MChat]
      */
     public static String format(String message) {
-        return addColour("&2[&4m&8ChatSuite&2] &6" + message);
+        return addColour("&2[&4M&8Chat&2] &6" + message);
     }
 
     /**

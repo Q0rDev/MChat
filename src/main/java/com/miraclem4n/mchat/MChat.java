@@ -163,7 +163,7 @@ public class MChat extends JavaPlugin {
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
 
-        // Setup MAdvanced
+        // Setup MSocial
         mSocial = setupPlugin("MSocial");
 
         if (heroesB)
