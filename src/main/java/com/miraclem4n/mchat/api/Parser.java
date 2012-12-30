@@ -262,7 +262,8 @@ public class Parser {
 
         formatAll = MessageUtil.addColour(formatAll);
 
-        if (ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger() > 0)
+        if (!API.checkPermissions(pName, world, "mchat.bypass.clock")
+                && ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger() > 0)
             msg = fixCaps(msg, ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger());
 
         if (formatAll == null)

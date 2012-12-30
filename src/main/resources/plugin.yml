@@ -74,6 +74,7 @@ permissions:
             mchat.bypass.afk: true
             mchat.bypass.afkkick: true
             mchat.bypass.suppress.*: true
+            mchat.bypass.clock: true
     mchat.bypass.suppress.*:
         default: false
         description: Allow bypass of all Override functions.
