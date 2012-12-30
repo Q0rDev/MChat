@@ -146,7 +146,7 @@ public class MChat extends JavaPlugin {
         Plugin plugin = pm.getPlugin(pluginName);
 
         if (plugin != null) {
-            MessageUtil.log("[" + pdfFile.getName() + "] <Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
+            MessageUtil.logFormatted("<Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
             return true;
         }
 

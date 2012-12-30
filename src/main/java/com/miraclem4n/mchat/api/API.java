@@ -15,7 +15,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-import java.util.Map;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class API {
@@ -33,6 +33,7 @@ public class API {
 
     // bPerms
     static Boolean bPermB;
+
 
     // PermissionsBukkit
     static Boolean pBukkitB;
@@ -191,8 +192,10 @@ public class API {
      * @param type Type of Variable.
      * @return Source with variables replaced.
      */
-    public static String replace(String source, Map<String, String> changes, IndicatorType type) {
-        for (Map.Entry<String, String> entry : changes.entrySet())
+    public static String replace(String source, TreeMap<String, String> changes, IndicatorType type) {
+        NavigableMap<String, String> changed = changes.descendingMap();
+
+        for (NavigableMap.Entry<String, String> entry : changed.entrySet())
             source = source.replace(type.getValue() + entry.getKey(), entry.getValue());
 
         return source;

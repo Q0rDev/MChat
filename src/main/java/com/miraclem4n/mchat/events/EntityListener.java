@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public class EntityListener implements Listener {
     MChat plugin;
@@ -82,7 +82,7 @@ public class EntityListener implements Listener {
         if (pCause == null)
             pCause = pName;
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        TreeMap<String, String> map = new TreeMap<String, String>();
 
         map.put("player", Parser.parsePlayerName(pName, world));
         map.put("killer", Parser.parsePlayerName(pCause, world));
