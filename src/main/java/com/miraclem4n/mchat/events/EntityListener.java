@@ -48,9 +48,12 @@ public class EntityListener implements Listener {
         if (dEvent instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) dEvent;
 
-            if (damageEvent.getDamager() instanceof Player)
-                pCause = player.getKiller().getName();
-            else if (damageEvent.getDamager() instanceof Projectile) {
+            if (damageEvent.getDamager() instanceof Player) {
+                Player killer = player.getKiller();
+
+                if (killer != null)
+                    pCause = killer.getName();
+            } else if (damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) damageEvent.getDamager();
 
                 LivingEntity shooter = projectile.getShooter();
