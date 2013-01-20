@@ -59,6 +59,11 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>kittehReleases</id>
+            <name>Kitteh Releases</name>
+            <url>http://repo.kitteh.org/content/repositories/releases</url>
+        </repository>
     </repositories>
 
     <build>
@@ -171,6 +176,13 @@
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
             <version>0.80.0.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.org.whoami</groupId>
+            <artifactId>GeoIPTools</artifactId>
+            <version>LATEST</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
