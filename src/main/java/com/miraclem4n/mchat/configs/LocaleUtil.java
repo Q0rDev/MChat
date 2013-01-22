@@ -47,8 +47,8 @@ public class LocaleUtil {
         checkOption("message.config.updated", "%config has been updated.");
         checkOption("message.general.noPerms", "You do not have '%permission'.");
         checkOption("message.info.alteration", "Info Alteration Successful.");
-        checkOption("message.player.notFound", "");
-        checkOption("message.player.notOnline", "");
+        checkOption("message.player.notFound", "%player not found.");
+        checkOption("message.player.notOnline", "%player is not online.");
         checkOption("message.player.stillAfk", "You are still AFK.");
         checkOption("message.event.join", "%player has joined the game.");
         checkOption("message.event.leave", "%player has left the game.");
