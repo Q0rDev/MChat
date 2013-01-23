@@ -1,6 +1,6 @@
 name: mChatSuite
 main: in.mDev.MiracleM4n.mChatSuite.mChatSuite
-version: ${pversion}-${build.number}
+version: ${version}-${build.number}
 MCMAPluginID: 13A44EB7-D013-4AD2-87E0-49CB2DAC6C08
 author: MiracleM4n
 authors: [MiracleM4n]
