@@ -4,13 +4,14 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.5-R0.1.5</version>
+    <version>dev-SNAPSHOT</version>
     <name>mChatSuite</name>
     <url>http://mdev.in/</url>
     <description>Full MChat Suite</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <pversion>1.4.5-R0.1.6</pversion>
         <build.number>Unknown</build.number>
     </properties>
 
@@ -104,6 +105,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Distribution management -->
+    <distributionManagement>
+        <!-- Publish releases here -->
+        <repository>
+            <id>q0r-releases</id>
+            <url>http://nexus.q0r.ca/content/repositories/releases</url>
+        </repository>
+        <!-- Publish snapshots here -->
+        <snapshotRepository>
+            <id>q0r-snapshots</id>
+            <url>http://nexus.q0r.ca/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <!-- Dependencies -->
     <dependencies>
