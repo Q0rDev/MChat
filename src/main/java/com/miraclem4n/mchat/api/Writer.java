@@ -14,10 +14,10 @@ public class Writer {
         String base = type.getName();
 
         if (type.equals(InfoType.USER))
-            InfoUtil.getConfig().set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getString());
+            InfoUtil.set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getString());
 
-        InfoUtil.getConfig().set(base + "." + name + ".info.prefix", "");
-        InfoUtil.getConfig().set(base + "." + name + ".info.suffix", "");
+        InfoUtil.set(base + "." + name + ".info.prefix", "");
+        InfoUtil.set(base + "." + name + ".info.suffix", "");
 
         save();
 
@@ -31,9 +31,9 @@ public class Writer {
      * @param group Default Group to set to the Base(Only needed if doing for InfoType.USER).
      */
     public static void addBase(String player, String group) {
-        InfoUtil.getConfig().set("users." + player + ".group", group);
-        InfoUtil.getConfig().set("users." + player + ".info.prefix", "");
-        InfoUtil.getConfig().set("users." + player + ".info.suffix", "");
+        InfoUtil.set("users." + player + ".group", group);
+        InfoUtil.set("users." + player + ".info.prefix", "");
+        InfoUtil.set("users." + player + ".info.suffix", "");
 
         save();
 
@@ -52,8 +52,8 @@ public class Writer {
         if (!InfoUtil.getConfig().isSet(base + "." + name))
             addBase(name, type);
 
-        InfoUtil.getConfig().set(base + "." + name + ".worlds." + world + "prefix", "");
-        InfoUtil.getConfig().set(base + "." + name + ".worlds." + world + "suffix", "");
+        InfoUtil.set(base + "." + name + ".worlds." + world + "prefix", "");
+        InfoUtil.set(base + "." + name + ".worlds." + world + "suffix", "");
 
         save();
     }
@@ -71,7 +71,7 @@ public class Writer {
         if (!InfoUtil.getConfig().isSet(base + "." + name))
             addBase(name, type);
 
-        InfoUtil.getConfig().set(base + "." + name + ".info." + var, value);
+        InfoUtil.set(base + "." + name + ".info." + var, value);
 
         save();
     }
@@ -90,7 +90,7 @@ public class Writer {
         if (!InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world))
             addWorld(name, type, world);
 
-        InfoUtil.getConfig().set(base + "." + name + ".worlds." + world + "." + var, value);
+        InfoUtil.set(base + "." + name + ".worlds." + world + "." + var, value);
 
         save();
     }
@@ -104,7 +104,7 @@ public class Writer {
         if (!InfoUtil.getConfig().isSet(player + "." + group))
             addBase(player, group);
 
-        InfoUtil.getConfig().set("users." + player + ".group", group);
+        InfoUtil.set("users." + player + ".group", group);
 
         save();
     }
@@ -118,7 +118,7 @@ public class Writer {
         String base = type.getName();
 
         if (InfoUtil.getConfig().isSet(base + "." + name)) {
-            InfoUtil.getConfig().set(base + "." + name, null);
+            InfoUtil.set(base + "." + name, null);
 
             save();
         }
@@ -143,12 +143,11 @@ public class Writer {
     public static void removeWorld(String name, InfoType type, String world) {
         String base = type.getName();
 
-        if (InfoUtil.getConfig().isSet(base + "." + name)) {
-            if (InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world)) {
-                InfoUtil.getConfig().set(base + "." + name + ".worlds." + world, null);
+        if (InfoUtil.getConfig().isSet(base + "." + name)
+                && InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world)) {
+            InfoUtil.set(base + "." + name + ".worlds." + world, null);
 
-                save();
-            }
+            save();
         }
     }
 
@@ -165,8 +164,8 @@ public class Writer {
 
     private static void setDGroup(String group) {
         if (!InfoUtil.getConfig().isSet("groups." + group)) {
-            InfoUtil.getConfig().set("groups." + group + ".info.prefix", "");
-            InfoUtil.getConfig().set("groups." + group + ".info.suffix", "");
+            InfoUtil.set("groups." + group + ".info.prefix", "");
+            InfoUtil.set("groups." + group + ".info.suffix", "");
 
             save();
         }
