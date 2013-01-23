@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.5-R0.1.3</version>
+    <version>1.4.5-R0.1.4</version>
     <name>mChatSuite</name>
     <url>http://mdev.in/</url>
     <description>Full MChat Suite</description>
@@ -42,6 +42,16 @@
         <repository>
             <id>spout-repo</id>
             <url>http://nexus.spout.org/content/groups/public</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>kitteh-repo</id>
+            <url>http://repo.kitteh.org/content/groups/public</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -171,6 +181,13 @@
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
             <version>0.80.0.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.org.whoami</groupId>
+            <artifactId>GeoIPTools</artifactId>
+            <version>1.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
