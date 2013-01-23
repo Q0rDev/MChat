@@ -27,6 +27,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import uk.org.whoami.geoip.GeoIPLookup;
+import uk.org.whoami.geoip.GeoIPTools;
 
 import java.util.HashMap;
 
@@ -37,6 +39,10 @@ public class MChat extends JavaPlugin {
 
     // Factions
     public Boolean factions = false;
+
+    // GeoIPTools
+    public GeoIPLookup geoip;
+    public Boolean geoipB = false;
 
     // Heroes
     public Heroes heroes;
@@ -154,6 +160,12 @@ public class MChat extends JavaPlugin {
     }
 
     void setupPlugins() {
+        // Setup GeoIPTools
+        geoipB = setupPlugin("GeoIPTools");
+
+        if (geoipB)
+            geoip = ((GeoIPTools) pm.getPlugin("GeoIPTools")).getGeoIPLookup();
+
         // Setup Factions
         factions = setupPlugin("Factions");
 

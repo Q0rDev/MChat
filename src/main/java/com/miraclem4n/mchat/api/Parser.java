@@ -4,6 +4,8 @@ import com.herocraftonline.heroes.Heroes;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
+import com.maxmind.geoip.Country;
+import com.maxmind.geoip.Location;
 import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.CensorUtil;
 import com.miraclem4n.mchat.types.EventType;
@@ -19,6 +21,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import uk.org.whoami.geoip.GeoIPLookup;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -26,6 +29,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
+    // GeoIP
+    public static GeoIPLookup geoip;
+    public static Boolean geoipB;
+
     // Heroes
     public static Boolean heroesB;
     public static Heroes heroes;
@@ -37,6 +44,8 @@ public class Parser {
     public static Boolean mSocialB;
 
     public static void initialize(MChat instance) {
+        geoip = instance.geoip;
+        geoipB = instance.geoipB;
         heroesB = instance.heroesB;
         heroes = instance.heroes;
         townyB = instance.towny;
@@ -69,6 +78,12 @@ public class Parser {
 
         if (group == null)
             group = "";
+
+        // Geoip Vars
+        String gCountry = "";
+        String gCountryCode = "";
+        String gRegion = "";//states?
+        String gCity = "";
 
         // Heroes Vars
         String hSClass = "";
@@ -181,6 +196,17 @@ public class Parser {
 
             // Display Name
             dName = player.getDisplayName();
+
+            // Initialize GeopIP Vars
+            if(geoipB)             {
+                Country country = geoip.getCountry(player.getAddress().getAddress());
+                Location location = geoip.getLocation(player.getAddress().getAddress());
+
+                gCountry = country.getName();
+                gCountryCode = country.getCode();
+                gRegion = com.maxmind.geoip.regionName.regionNameByCode(gCountryCode, location.region); //states?
+                gCity = location.city;
+            }
 
             // Initialize Heroes Vars
             if (heroesB)             {
@@ -303,6 +329,12 @@ public class Parser {
         addVar(rVarMap, vI + "time," + vI + "t", time);
         addVar(rVarMap, vI + "world," + vI + "w", pWorld);
         addVar(rVarMap, vI + "Groupname," + vI + "Gname," + vI + "G", Reader.getGroupName(group.toString()));
+
+        addVar(rVarMap, vI + "geoCountry", gCountry);
+        addVar(rVarMap, vI + "geoCountryCode", gCountryCode);
+        addVar(rVarMap, vI + "geoRegion", gRegion);
+        addVar(rVarMap, vI + "geoCity", gCity);
+
         addVar(rVarMap, vI + "HClass," + vI + "HC", hClass);
         addVar(rVarMap, vI + "HExp," + vI + "HEx", hExp);
         addVar(rVarMap, vI + "HEBar," + vI + "HEb", hEBar);
