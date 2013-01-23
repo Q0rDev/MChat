@@ -4,6 +4,9 @@ import com.herocraftonline.heroes.Heroes;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.herocraftonline.heroes.util.Messaging;
+import uk.org.whoami.geoip.GeoIPLookup;
+import com.maxmind.geoip.Country;
+import com.maxmind.geoip.Location;
 import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.CensorUtil;
 import com.miraclem4n.mchat.types.EventType;
@@ -26,6 +29,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
+    // GeoIP
+	public static GeoIPLookup geoip;
+	public static Boolean geoipB;
+	
     // Heroes
     public static Boolean heroesB;
     public static Heroes heroes;
@@ -41,6 +48,8 @@ public class Parser {
         heroes = instance.heroes;
         townyB = instance.towny;
         mSocialB = instance.mSocial;
+        geoip = instance.geoip;
+        geoipB = instance.geoipB;
     }
 
     /**
@@ -70,6 +79,12 @@ public class Parser {
         if (group == null)
             group = "";
 
+        // Geoip Vars
+        String gCountry = "";
+    	String gCountryCode = "";
+    	String gRegion = "";//states?
+    	String gCity = "";
+        
         // Heroes Vars
         String hSClass = "";
         String hClass = "";
@@ -182,6 +197,17 @@ public class Parser {
             // Display Name
             dName = player.getDisplayName();
 
+            // Initialize GeopIP Vars
+            if(geoipB)             {
+            	Country country = geoip.getCountry(player.getAddress().getAddress());
+            	Location location = geoip.getLocation(player.getAddress().getAddress());
+            	
+            	gCountry = country.getName();
+            	gCountryCode = country.getCode();
+            	gRegion = com.maxmind.geoip.regionName.regionNameByCode(gCountryCode, location.region); //states?
+            	gCity = location.city;
+            }
+            
             // Initialize Heroes Vars
             if (heroesB)             {
                 Hero hero = heroes.getCharacterManager().getHero(player);
@@ -303,6 +329,12 @@ public class Parser {
         addVar(rVarMap, vI + "time," + vI + "t", time);
         addVar(rVarMap, vI + "world," + vI + "w", pWorld);
         addVar(rVarMap, vI + "Groupname," + vI + "Gname," + vI + "G", Reader.getGroupName(group.toString()));
+        
+        addVar(rVarMap, vI + "geoCountry", gCountry);
+        addVar(rVarMap, vI + "geoCountryCode", gCountryCode);
+        addVar(rVarMap, vI + "geoRegion", gRegion);
+        addVar(rVarMap, vI + "geoCity", gCity);
+        
         addVar(rVarMap, vI + "HClass," + vI + "HC", hClass);
         addVar(rVarMap, vI + "HExp," + vI + "HEx", hExp);
         addVar(rVarMap, vI + "HEBar," + vI + "HEb", hEBar);
