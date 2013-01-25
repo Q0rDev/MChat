@@ -67,17 +67,21 @@ public class Parser {
 
         String vI = ConfigType.MCHAT_VAR_INDICATOR.getString();
 
-        if (msg == null)
+        if (msg == null) {
             msg = "";
+        }
 
-        if (prefix == null)
+        if (prefix == null) {
             prefix = "";
+        }
 
-        if (suffix == null)
+        if (suffix == null) {
             suffix = "";
+        }
 
-        if (group == null)
+        if (group == null) {
             group = "";
+        }
 
         // Geoip Vars
         String gCountry = "";
@@ -161,11 +165,12 @@ public class Parser {
         String sType = "";
 
         if (MChat.spying.get(pName) != null
-                && MChat.spying.get(pName))
+                && MChat.spying.get(pName)) {
             sType = LocaleType.FORMAT_SPY.getVal();
+        }
 
         // Player Object Stuff
-        if (Bukkit.getServer().getPlayer(pName) != null)  {
+        if (Bukkit.getServer().getPlayer(pName) != null) {
             Player player = Bukkit.getServer().getPlayer(pName);
 
             // Location
@@ -191,14 +196,15 @@ public class Parser {
             tExp = String.valueOf(player.getTotalExperience());
             gMode = "";
 
-            if (player.getGameMode() != null && player.getGameMode().name() != null)
+            if (player.getGameMode() != null && player.getGameMode().name() != null) {
                 gMode = player.getGameMode().name();
+            }
 
             // Display Name
             dName = player.getDisplayName();
 
             // Initialize GeopIP Vars
-            if(geoipB)             {
+            if (geoipB) {
                 Country country = geoip.getCountry(player.getAddress().getAddress());
                 Location location = geoip.getLocation(player.getAddress().getAddress());
 
@@ -209,7 +215,7 @@ public class Parser {
             }
 
             // Initialize Heroes Vars
-            if (heroesB)             {
+            if (heroesB) {
                 Hero hero = heroes.getCharacterManager().getHero(player);
                 HeroClass heroClass = hero.getHeroClass();
                 HeroClass heroSClass = hero.getSecondClass();
@@ -229,11 +235,13 @@ public class Parser {
 
                 Integer hMMana = hero.getMaxMana();
 
-                if (hMMana != null)
+                if (hMMana != null) {
                     hMBar = Messaging.createManaBar(hero.getMana(), hero.getMaxMana());
+                }
 
-                if (hero.getParty() != null)
+                if (hero.getParty() != null) {
                     hParty = hero.getParty().toString();
+                }
 
                 if (heroSClass != null) {
                     hSClass = heroSClass.getName();
@@ -243,10 +251,11 @@ public class Parser {
                 }
 
                 if ((hero.isMaster(heroClass))
-                        && (heroSClass == null || hero.isMaster(heroSClass)))
+                        && (heroSClass == null || hero.isMaster(heroSClass))) {
                     hMastered = LocaleType.MESSAGE_HEROES_TRUE.getVal();
-                else
+                } else {
                     hMastered = LocaleType.MESSAGE_HEROES_FALSE.getVal();
+                }
             }
 
             if (townyB) {
@@ -289,18 +298,21 @@ public class Parser {
         formatAll = MessageUtil.addColour(formatAll);
 
         if (!API.checkPermissions(pName, world, "mchat.bypass.clock")
-                && ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger() > 0)
+                && ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger() > 0) {
             msg = fixCaps(msg, ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger());
+        }
 
-        if (formatAll == null)
+        if (formatAll == null) {
             return msg;
+        }
 
-        if (API.checkPermissions(pName, world, "mchat.coloredchat"))
+        if (API.checkPermissions(pName, world, "mchat.coloredchat")) {
             msg = MessageUtil.addColour(msg);
+        }
 
-        if (!API.checkPermissions(pName, world, "mchat.censorbypass"))
+        if (!API.checkPermissions(pName, world, "mchat.censorbypass")) {
             msg = replaceCensoredWords(msg);
-
+        }
 
         TreeMap<String, Object> fVarMap = new TreeMap<String, Object>();
         TreeMap<String, Object> rVarMap = new TreeMap<String, Object>();
@@ -442,29 +454,33 @@ public class Parser {
     // Misc Stuff
 
     private static TreeMap<String, Object> addVar(TreeMap<String, Object> map, String keys, Object value) {
-        if (keys.contains(","))
+        if (keys.contains(",")) {
             for (String s : keys.split(",")) {
-                if (s == null || value == null)
+                if (s == null || value == null) {
                     continue;
+                }
 
                 map.put(s, value);
             }
-        else if (value != null)
+        } else if (value != null) {
             map.put(keys, value);
+        }
 
         return map;
     }
 
     private static String fixCaps(String format, Integer range) {
-        if (range < 1)
+        if (range < 1) {
             return format;
+        }
 
         Pattern pattern = Pattern.compile("([A-Z]{" + range + ",300})");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
 
-        while (matcher.find())
+        while (matcher.find()) {
             matcher.appendReplacement(sb, Matcher.quoteReplacement(matcher.group().toLowerCase()));
+        }
 
         matcher.appendTail(sb);
 
@@ -493,8 +509,9 @@ public class Parser {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             String value = entry.getValue().toString();
 
-            if (doColour)
+            if (doColour) {
                 value = MessageUtil.addColour(value);
+            }
 
             format = format.replace(entry.getKey(), value);
         }
@@ -509,24 +526,27 @@ public class Parser {
             String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue();
 
-            if (format.contains(pKey))
+            if (format.contains(pKey)) {
                 format = format.replace(pKey, MessageUtil.addColour(value));
+            }
         }
 
         for (Map.Entry<String, String> entry : varSet) {
             String gKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue();
 
-            if (format.contains(gKey))
+            if (format.contains(gKey)) {
                 format = format.replace(gKey, MessageUtil.addColour(value));
+            }
         }
 
         return format;
     }
 
     private static String replaceCensoredWords(String msg) {
-        if (ConfigType.MCHAT_IP_CENSOR.getBoolean())
+        if (ConfigType.MCHAT_IP_CENSOR.getBoolean()) {
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
+        }
 
         for (Map.Entry<String, Object> entry : CensorUtil.getConfig().getValues(false).entrySet()) {
             String val = entry.getValue().toString();
@@ -542,8 +562,9 @@ public class Parser {
         Matcher matcher = pattern.matcher(msg);
         StringBuffer sb = new StringBuffer();
 
-        while (matcher.find())
+        while (matcher.find()) {
             matcher.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+        }
 
         matcher.appendTail(sb);
 

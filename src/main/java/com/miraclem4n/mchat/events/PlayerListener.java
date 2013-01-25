@@ -31,13 +31,16 @@ public class PlayerListener implements Listener {
         final String pName = player.getName();
         String msg = event.getJoinMessage();
 
-        if (msg == null)
+        if (msg == null) {
             return;
+        }
 
         // For Lazy People
-        if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean())
-            if (InfoUtil.getConfig().get("users." + pName) == null)
+        if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
+            if (InfoUtil.getConfig().get("users." + pName) == null) {
                 Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString());
+            }
+        }
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
@@ -45,28 +48,33 @@ public class PlayerListener implements Listener {
             }
         }, 20L);
 
-        if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
+        if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (ConfigType.SUPPRESS_USE_JOIN.getBoolean()) {
                 suppressEventMessage(Parser.parseEvent(pName, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getInteger());
                 event.setJoinMessage(null);
-            } else
+            } else {
                 event.setJoinMessage(Parser.parseEvent(pName, world, EventType.JOIN));
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerKick(PlayerKickEvent event) {
-        if (!ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
+        if (!ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             return;
+        }
 
-        if (event.isCancelled())
+        if (event.isCancelled()) {
             return;
+        }
 
         String pName = event.getPlayer().getName();
         String world = event.getPlayer().getWorld().getName();
         String msg = event.getLeaveMessage();
 
-        if (msg == null)
+        if (msg == null) {
             return;
+        }
 
         String reason = event.getReason();
 
@@ -75,8 +83,9 @@ public class PlayerListener implements Listener {
         if (ConfigType.SUPPRESS_USE_KICK.getBoolean()) {
             suppressEventMessage(kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getInteger());
             event.setLeaveMessage(null);
-        } else
+        } else {
             event.setLeaveMessage(kickMsg);
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -85,17 +94,20 @@ public class PlayerListener implements Listener {
         String world = event.getPlayer().getWorld().getName();
         String msg = event.getQuitMessage();
 
-        if (!ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
+        if (!ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             return;
+        }
 
-        if (msg == null)
+        if (msg == null) {
             return;
+        }
 
         if (ConfigType.SUPPRESS_USE_QUIT.getBoolean()) {
             suppressEventMessage(Parser.parseEvent(pName, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getInteger());
             event.setQuitMessage(null);
-        } else
+        } else {
             event.setQuitMessage(Parser.parseEvent(pName, world, EventType.QUIT));
+        }
     }
 
     void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
@@ -105,9 +117,11 @@ public class PlayerListener implements Listener {
                 continue;
             }
 
-            if (!(plugin.getServer().getOnlinePlayers().length > max))
-                if (!API.checkPermissions(player.getName(), player.getWorld().getName(), permNode))
+            if (!(plugin.getServer().getOnlinePlayers().length > max)) {
+                if (!API.checkPermissions(player.getName(), player.getWorld().getName(), permNode)) {
                     player.sendMessage(format);
+                }
+            }
         }
 
         MessageUtil.log(format);

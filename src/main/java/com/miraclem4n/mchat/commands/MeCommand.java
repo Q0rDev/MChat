@@ -19,14 +19,16 @@ public class MeCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equalsIgnoreCase("mchatme")
-                || !MiscUtil.hasCommandPerm(sender, "mchat.me"))
+                || !MiscUtil.hasCommandPerm(sender, "mchat.me")) {
             return true;
+        }
 
         if (args.length > 0) {
             String message = "";
 
-            for (String arg : args)
+            for (String arg : args) {
                 message += " " + arg;
+            }
 
             message = message.trim();
 

@@ -108,8 +108,9 @@ public class ConfigUtil {
     }
 
     public static Boolean save() {
-        if (!changed)
+        if (!changed) {
             return false;
+        }
 
         try {
             config.save(file);
@@ -129,8 +130,9 @@ public class ConfigUtil {
     }
 
     private static void checkOption(String option, Object defValue) {
-        if (!config.isSet(option))
+        if (!config.isSet(option)) {
             set(option, defValue);
+        }
     }
 
     private static void editOption(String oldOption, String newOption) {
@@ -141,8 +143,9 @@ public class ConfigUtil {
     }
 
     private static void removeOption(String option) {
-        if (config.isSet(option))
+        if (config.isSet(option)) {
             set(option, null);
+        }
     }
 
     private static void loadAliases() {
@@ -155,7 +158,8 @@ public class ConfigUtil {
     private static void setupAliasMap() {
         Set<String> keys = config.getConfigurationSection("aliases").getKeys(false);
 
-        for (String key : keys)
+        for (String key : keys) {
             aliasMap.put(key, config.getStringList("aliases." + key));
+        }
     }
 }

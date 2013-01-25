@@ -28,14 +28,17 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
-        if (!ConfigType.MCHAT_ALTER_DEATH.getBoolean())
+        if (!ConfigType.MCHAT_ALTER_DEATH.getBoolean()) {
             return;
+        }
 
-        if (!(event.getEntity() instanceof Player))
+        if (!(event.getEntity() instanceof Player)) {
             return;
+        }
 
-        if (!(event instanceof PlayerDeathEvent))
+        if (!(event instanceof PlayerDeathEvent)) {
             return;
+        }
 
         Player player = event.getEntity();
 
@@ -51,39 +54,46 @@ public class EntityListener implements Listener {
             if (damageEvent.getDamager() instanceof Player) {
                 Player killer = player.getKiller();
 
-                if (killer != null)
+                if (killer != null) {
                     pCause = killer.getName();
+                }
             } else if (damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) damageEvent.getDamager();
 
                 LivingEntity shooter = projectile.getShooter();
 
-                if (shooter == null)
+                if (shooter == null) {
                     pCause = "Unknown";
-                else if (shooter instanceof Player) {
+                } else if (shooter instanceof Player) {
                     Player pShooter = (Player) shooter;
 
                     pCause = pShooter.getName();
-                } else
+                } else {
                     pCause = shooter.getType().getName();
-            } else
+                }
+            } else {
                 pCause = damageEvent.getDamager().getType().getName();
+            }
         }
 
-        if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean())
+        if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (ConfigType.SUPPRESS_USE_DEATH.getBoolean()) {
                 suppressDeathMessage(pName, pCause, world, event.getDeathMessage(), ConfigType.SUPPRESS_MAX_DEATH.getInteger());
                 event.setDeathMessage(null);
-            } else
+            } else {
                 event.setDeathMessage(handlePlayerDeath(pName, pCause, world, event.getDeathMessage()));
+            }
+        }
     }
 
     String handlePlayerDeath(String pName, String pCause, String world, String dMsg) {
-        if (dMsg == null)
+        if (dMsg == null) {
             return dMsg;
+        }
 
-        if (pCause == null)
+        if (pCause == null) {
             pCause = pName;
+        }
 
         TreeMap<String, String> map = new TreeMap<String, String>();
 
@@ -102,9 +112,11 @@ public class EntityListener implements Listener {
                 continue;
             }
 
-            if (!(plugin.getServer().getOnlinePlayers().length > max))
-                if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death"))
+            if (!(plugin.getServer().getOnlinePlayers().length > max)) {
+                if (!API.checkPermissions(player.getName(), player.getWorld().getName(), "mchat.suppress.death")) {
                     player.sendMessage(handlePlayerDeath(pName, pCause, world, dMsg));
+                }
+            }
         }
     }
 }

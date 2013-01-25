@@ -31,9 +31,11 @@ public enum DeathType {
     }
 
     public static DeathType fromMsg(String msg) {
-        for (DeathType type : DeathType.values())
-            if (msg.contains(type.name))
+        for (DeathType type : DeathType.values()) {
+            if (msg.contains(type.name)) {
                 return type;
+            }
+        }
 
         return DEATH_GENERIC;
     }

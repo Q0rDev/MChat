@@ -31,32 +31,41 @@ public class Reader {
      * @return Raw Info.
      */
     public static Object getRawInfo(String name, InfoType type, String world, String info) {
-        if (type == null)
+        if (type == null) {
             type = InfoType.USER;
+        }
 
-        if (world == null)
+        if (world == null) {
             world = Bukkit.getServer().getWorlds().get(0).getName();
+        }
 
-        if (info == null)
+        if (info == null) {
             info = "prefix";
+        }
 
-        if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean())
+        if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean()) {
             return getLeveledInfo(name, world, info);
+        }
 
-        if (ConfigType.INFO_USE_OLD_NODES.getBoolean())
+        if (ConfigType.INFO_USE_OLD_NODES.getBoolean()) {
             return getBukkitInfo(name, world, info);
+        }
 
-        if (ConfigType.INFO_USE_NEW_INFO.getBoolean())
+        if (ConfigType.INFO_USE_NEW_INFO.getBoolean()) {
             return getMChatInfo(name, type, world, info);
+        }
 
-        if (API.gmB)
+        if (API.gmB) {
             return getGroupManagerInfo(name, type, world, info);
+        }
 
-        if (API.pexB)
+        if (API.pexB) {
             return getPEXInfo(name, type, world, info);
+        }
 
-        if (API.bPermB)
+        if (API.bPermB) {
             return getbPermInfo(name, type, world, info);
+        }
 
         return getMChatInfo(name, type, world, info);
     }
@@ -142,23 +151,25 @@ public class Reader {
      * MChat Stuff
      */
     private static Object getMChatInfo(String name, InfoType type, String world, String info) {
-        if (info.equals("group"))
+        if (info.equals("group")) {
             return getMChatGroup(name);
+        }
 
         String iType = type.getName();
 
-        if (InfoUtil.getConfig().isSet(iType + "." + name + ".info." + info))
+        if (InfoUtil.getConfig().isSet(iType + "." + name + ".info." + info)) {
             return InfoUtil.getConfig().get(iType + "." + name + ".info." + info);
-
-        else if (InfoUtil.getConfig().isSet(iType + "." + name + ".worlds." + world + "." + info))
+        } else if (InfoUtil.getConfig().isSet(iType + "." + name + ".worlds." + world + "." + info)) {
             return InfoUtil.getConfig().get(iType + "." + name + ".worlds." + world + "." + info);
+        }
 
         return "";
     }
 
     private static Object getMChatGroup(String name) {
-        if (InfoUtil.getConfig().isSet("users." + name + ".group"))
+        if (InfoUtil.getConfig().isSet("users." + name + ".group")) {
             return InfoUtil.getConfig().get("users." + name + ".group");
+        }
 
         return "";
     }
@@ -169,33 +180,40 @@ public class Reader {
     private static Object getLeveledInfo(String name, String world, String info) {
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
-        if (API.pBukkitB)
-            if (info.equals("group"))
+        if (API.pBukkitB) {
+            if (info.equals("group")) {
                 return getPermBukkitGroup(name);
+            }
+        }
 
-        if (!InfoUtil.getConfig().isSet("mchat." + info))
+        if (!InfoUtil.getConfig().isSet("mchat." + info)) {
             return "";
+        }
 
-        if (!InfoUtil.getConfig().isSet("rank." + info))
+        if (!InfoUtil.getConfig().isSet("rank." + info)) {
             return getBukkitInfo(name, world, info);
+        }
 
         for (Map.Entry<String, Object> entry : InfoUtil.getConfig().getValues(true).entrySet()) {
-            if (entry.getKey().contains("mchat." + info + "."))
+            if (entry.getKey().contains("mchat." + info + ".")) {
                 if (API.checkPermissions(name, world, entry.getKey())) {
                     String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
 
-                    if (!InfoUtil.getConfig().isSet(rVal))
+                    if (!InfoUtil.getConfig().isSet(rVal)) {
                         continue;
+                    }
 
                     try {
                         iMap.put(InfoUtil.getConfig().getInt(rVal), entry.getValue().toString());
                     } catch (NumberFormatException ignored) {}
                 }
+            }
         }
 
         for (int i = 0; i < 101; ++i) {
-            if (iMap.get(i) != null && !iMap.get(i).isEmpty())
+            if (iMap.get(i) != null && !iMap.get(i).isEmpty()) {
                 return iMap.get(i);
+            }
         }
 
         return getBukkitInfo(name, world, info);
@@ -205,23 +223,28 @@ public class Reader {
      * Old Nodes Stuff
      */
     private static Object getBukkitInfo(String name, String world, String info) {
-        if (API.pBukkitB)
-            if (info.equals("group"))
+        if (API.pBukkitB) {
+            if (info.equals("group")) {
                 return getPermBukkitGroup(name);
+            }
+        }
 
-        if (!InfoUtil.getConfig().isSet("mchat." + info))
+        if (!InfoUtil.getConfig().isSet("mchat." + info)) {
             return "";
+        }
 
         for (Map.Entry<String, Object> entry : InfoUtil.getConfig().getValues(true).entrySet()) {
-            if (entry.getKey().contains("mchat." + info + "."))
+            if (entry.getKey().contains("mchat." + info + ".")) {
                 if (API.checkPermissions(name, world, entry.getKey())) {
                     Object infoResolve = entry.getValue();
 
-                    if (infoResolve != null && !info.isEmpty())
+                    if (infoResolve != null && !info.isEmpty()) {
                         return infoResolve;
+                    }
 
                     break;
                 }
+            }
         }
 
         return "";
@@ -246,16 +269,19 @@ public class Reader {
     private static Object getGroupManagerInfo(String name, InfoType type, String world, String info) {
         OverloadedWorldHolder gmPermissions = API.gmWH.getWorldData(world);
 
-        if (info.equals("group"))
+        if (info.equals("group")) {
             return getGroupManagerGroup(name, world);
+        }
 
         String infoString = "";
 
-        if (type == InfoType.USER)
+        if (type == InfoType.USER) {
             infoString = gmPermissions.getUser(name).getVariables().getVarString(info);
+        }
 
-        if (type == InfoType.GROUP)
+        if (type == InfoType.GROUP) {
             infoString = gmPermissions.getGroup(name).getVariables().getVarString(info);
+        }
 
         return infoString;
     }
@@ -265,8 +291,9 @@ public class Reader {
 
         String group = gmPermissions.getUser(name).getGroup().getName();
 
-        if (group == null)
+        if (group == null) {
             return "";
+        }
 
         return group;
     }
@@ -277,34 +304,34 @@ public class Reader {
     private static Object getPEXInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
 
-        if (name.isEmpty() || name == null)
+        if (name.isEmpty() || name == null) {
             return infoString;
+        }
 
-        if (info.equals("group"))
+        if (info.equals("group")) {
             return getPEXGroup(name);
+        }
 
         if (type == InfoType.USER) {
             PermissionUser user = API.pexPermissions.getUser(name);
 
-            if (info.equals("prefix"))
+            if (info.equals("prefix")) {
                 infoString = user.getPrefix(world);
-
-            else if (info.equals("suffix"))
+            } else if (info.equals("suffix")) {
                 infoString = user.getSuffix(world);
-
-            else
+            } else {
                 infoString = user.getOption(info, world);
+            }
         } else if (type == InfoType.GROUP) {
             PermissionGroup group = API.pexPermissions.getGroup(name);
 
-            if (info.equals("prefix"))
+            if (info.equals("prefix")) {
                 infoString = group.getPrefix(world);
-
-            else if (info.equals("suffix"))
+            } else if (info.equals("suffix")) {
                 infoString = group.getSuffix(world);
-
-            else
+            } else {
                 infoString = group.getOption(info, world);
+            }
         }
 
         return infoString;
@@ -314,8 +341,9 @@ public class Reader {
         String[] groupNames = API.pexPermissions.getUser(name).getGroupsNames();
         String group = "";
 
-        if (groupNames.length > 0)
+        if (groupNames.length > 0) {
             group = API.pexPermissions.getUser(name).getGroupsNames()[0];
+        }
 
         return group;
     }
@@ -324,16 +352,17 @@ public class Reader {
      * bPermissions Stuff
      */
     private static Object getbPermInfo(String name, InfoType type, String world, String info) {
-        if (info.equals("group"))
+        if (info.equals("group")) {
             return getbPermGroup(name, world);
+        }
 
         Object userString = "";
 
-        if (type == InfoType.USER)
+        if (type == InfoType.USER) {
             userString = ApiLayer.getValue(world, CalculableType.USER, name, info);
-
-        else if (type == InfoType.GROUP)
+        } else if (type == InfoType.GROUP) {
             userString = ApiLayer.getValue(world, CalculableType.GROUP, name, info);
+        }
 
         return userString;
     }
@@ -342,8 +371,9 @@ public class Reader {
         String[] groupNames = ApiLayer.getGroups(world, CalculableType.USER, name);
         String group = "";
 
-        if (groupNames.length > 0)
+        if (groupNames.length > 0) {
             group = ApiLayer.getGroups(world, CalculableType.USER, name)[0];
+        }
 
         return group;
     }
@@ -356,11 +386,13 @@ public class Reader {
      * @return Group Name's Alias.
      */
     public static String getGroupName(String group) {
-        if (group.isEmpty())
+        if (group.isEmpty()) {
             return "";
+        }
 
-        if (InfoUtil.getConfig().isSet("groupnames." + group))
+        if (InfoUtil.getConfig().isSet("groupnames." + group)) {
             return InfoUtil.getConfig().getString("groupnames." + group);
+        }
 
         return group;
     }
@@ -371,11 +403,13 @@ public class Reader {
      * @return World Name's Alias.
      */
     public static String getWorldName(String world) {
-        if (world.isEmpty())
+        if (world.isEmpty()) {
             return "";
+        }
 
-        if (InfoUtil.getConfig().isSet("worldnames." + world))
+        if (InfoUtil.getConfig().isSet("worldnames." + world)) {
             return InfoUtil.getConfig().getString("worldnames." + world);
+        }
 
         return world;
     }
@@ -386,10 +420,12 @@ public class Reader {
      * @return Player Name's mChat Alias.
      */
     public static String getMName(String name) {
-        if (InfoUtil.getConfig().isSet("mname." + name))
-            if (!(InfoUtil.getConfig().getString("mname." + name).isEmpty()))
+        if (InfoUtil.getConfig().isSet("mname." + name)) {
+            if (!(InfoUtil.getConfig().getString("mname." + name).isEmpty())) {
                 return InfoUtil.getConfig().getString("mname." + name);
-
+            }
+        }
+        
         return name;
     }
 
@@ -399,14 +435,13 @@ public class Reader {
      * @return Event Message.
      */
     public static String getEventMessage(EventType type) {
-        if (type.getName().equalsIgnoreCase("join"))
+        if (type.getName().equalsIgnoreCase("join")) {
             return LocaleType.MESSAGE_EVENT_JOIN.getRaw();
-
-        else if (type.getName().equalsIgnoreCase("kick"))
+        } else if (type.getName().equalsIgnoreCase("kick")) {
             return LocaleType.MESSAGE_EVENT_KICK.getRaw();
-
-        else if (type.getName().equalsIgnoreCase("leave"))
+        } else if (type.getName().equalsIgnoreCase("leave")) {
             return LocaleType.MESSAGE_EVENT_LEAVE.getRaw();
+        }
 
         return "";
     }

@@ -53,15 +53,17 @@ public enum LocaleType {
     }
 
     public String getVal() {
-        if (LocaleUtil.getConfig().isSet(option))
+        if (LocaleUtil.getConfig().isSet(option)) {
             return MessageUtil.addColour(LocaleUtil.getConfig().getString(option));
+        }
 
         return "Locale Option '" + option + "' not found!";
     }
 
     public String getRaw() {
-        if (LocaleUtil.getConfig().isSet(option))
+        if (LocaleUtil.getConfig().isSet(option)) {
             return LocaleUtil.getConfig().getString(option);
+        }
 
         return "Locale Option '" + option + "' not found!";
     }

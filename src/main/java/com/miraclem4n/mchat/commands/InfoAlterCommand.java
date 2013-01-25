@@ -23,8 +23,9 @@ public class InfoAlterCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!command.getName().equalsIgnoreCase(cmd))
+        if (!command.getName().equalsIgnoreCase(cmd)) {
             return true;
+        }
 
         if (args.length == 0) {
             MessageUtil.sendMessage(sender, "Use '/" + cmd + " add/edit/remove' for more info.");
@@ -54,52 +55,60 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
                     || args[1].equalsIgnoreCase(t)) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add." + t))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add." + t)) {
                     return true;
+                }
 
                 editType = InfoEditType.ADD_BASE;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.addBase(args[2], type);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.ivar"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.ivar")) {
                     return true;
+                }
 
                 editType = InfoEditType.ADD_INFO_VAR;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.setInfoVar(args[2], type, args[3], combineArgs(args, 4));
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.world"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.world")) {
                     return true;
+                }
 
                 editType = InfoEditType.ADD_WORLD;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.addWorld(args[2], type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.wvar"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.wvar")) {
                     return true;
+                }
 
                 editType = InfoEditType.ADD_WORLD_VAR;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.setWorldVar(args[2], type, args[3], args[4], combineArgs(args, 5));
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
@@ -116,52 +125,60 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
                     || args[1].equalsIgnoreCase(t)) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove." + t))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove." + t)) {
                     return true;
+                }
 
                 editType = InfoEditType.REMOVE_BASE;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.removeBase(args[2], type);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.ivar"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.ivar")) {
                     return true;
+                }
 
                 editType = InfoEditType.REMOVE_WORLD;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.removeInfoVar(args[2], type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.world"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.world")) {
                     return true;
+                }
 
                 editType = InfoEditType.REMOVE_WORLD;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.removeWorld(args[2], type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.wvar"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.wvar")) {
                     return true;
+                }
 
                 editType = InfoEditType.REMOVE_WORLD_VAR;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
                 Writer.removeWorldVar(args[2], type, args[3], args[4]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
@@ -175,17 +192,19 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("g")
                     || args[1].equalsIgnoreCase("group")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat.user.set.group"))
+                if (!MiscUtil.hasCommandPerm(sender, "mchat.user.set.group")) {
                     return true;
+                }
 
                 editType = InfoEditType.SET_GROUP;
 
-                if (args.length < editType.getLength())
+                if (args.length < editType.getLength()) {
                     return editType.sendMsg(sender, cmd, type);
+                }
 
-                    Writer.setGroup(args[2], args[3]);
-                    MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
-                    return true;
+                Writer.setGroup(args[2], args[3]);
+                MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
+                return true;
             }
         }
 

@@ -15,9 +15,11 @@ public enum InfoType {
     }
 
     public static InfoType fromName(String name) {
-        for (InfoType type : InfoType.values())
-            if (type.name.contains(name))
+        for (InfoType type : InfoType.values()) {
+            if (type.name.contains(name)) {
                 return type;
+            }
+        }
 
         return null;
     }

@@ -21,8 +21,9 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        if (event.isCancelled())
+        if (event.isCancelled()) {
             return;
+        }
 
         Player player = event.getPlayer();
         String pName = player.getName();
@@ -31,22 +32,25 @@ public class ChatListener implements Listener {
         String msg = event.getMessage();
         String eventFormat = Parser.parseChatMessage(pName, world, msg);
 
-        if (msg == null)
+        if (msg == null) {
             return;
+        }
 
         setListName(player, Parser.parseTabbedList(pName, world));
 
         // Chat Distance Stuff
-        if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0)
+        if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 if (players.getWorld() != player.getWorld()
                         || players.getLocation().distance(player.getLocation()) > ConfigType.MCHAT_CHAT_DISTANCE.getDouble()) {
-                    if (isSpy(players.getName(), players.getWorld().getName()))
+                    if (isSpy(players.getName(), players.getWorld().getName())) {
                         players.sendMessage(eventFormat.replace(LocaleType.FORMAT_LOCAL.getVal(), LocaleType.FORMAT_FORWARD.getVal()));
+                    }
 
                     event.getRecipients().remove(players);
                 }
             }
+        }
 
         event.setFormat(eventFormat);
     }

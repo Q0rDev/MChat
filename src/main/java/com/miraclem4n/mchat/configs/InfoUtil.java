@@ -76,8 +76,9 @@ public class InfoUtil {
     }
 
     public static Boolean save() {
-        if (!changed)
+        if (!changed) {
             return false;
+        }
 
         try {
             config.save(file);

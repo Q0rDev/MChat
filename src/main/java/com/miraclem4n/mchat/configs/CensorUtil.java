@@ -25,8 +25,9 @@ public class CensorUtil {
         config.options().indent(4);
         config.options().header("MChat Censor");
 
-        if (!file.exists())
+        if (!file.exists()) {
             loadDefaults();
+        }
     }
 
     private static void loadDefaults() {

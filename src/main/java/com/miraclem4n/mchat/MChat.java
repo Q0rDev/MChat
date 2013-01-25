@@ -99,10 +99,13 @@ public class MChat extends JavaPlugin {
         setupCommands();
 
         // Add All Players To Info.yml
-        if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean())
-            for (Player players : getServer().getOnlinePlayers())
-                if (InfoUtil.getConfig().get("users." + players.getName()) == null)
+        if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
+            for (Player players : getServer().getOnlinePlayers()) {
+                if (InfoUtil.getConfig().get("users." + players.getName()) == null) {
                     Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getString());
+                }
+            }
+        }
 
         // Stop the Timer
         timer.stop();
@@ -163,39 +166,44 @@ public class MChat extends JavaPlugin {
         // Setup GeoIPTools
         geoipB = setupPlugin("GeoIPTools");
 
-        if (geoipB)
+        if (geoipB) {
             geoip = ((GeoIPTools) pm.getPlugin("GeoIPTools")).getGeoIPLookup();
+        }
 
         // Setup Factions
         factions = setupPlugin("Factions");
 
-        if (factions)
+        if (factions) {
             setupFactions();
+        }
 
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
 
+        if (heroesB) {
+            heroes = (Heroes) pm.getPlugin("Heroes");
+        }
+
         // Setup MSocial
         mSocial = setupPlugin("MSocial");
-
-        if (heroesB)
-            heroes = (Heroes) pm.getPlugin("Heroes");
 
         towny = setupPlugin("Towny");
     }
 
     void setupFactions() {
         try {
-            if (!(Conf.chatTagInsertIndex == 0))
+            if (!(Conf.chatTagInsertIndex == 0)) {
                 getServer().dispatchCommand(getServer().getConsoleSender(), "f config chatTagInsertIndex 0");
+            }
         } catch (NoSuchFieldError ignored) {}
     }
 
     void killEss() {
         Plugin plugin = pm.getPlugin("EssentialsChat");
 
-        if (plugin != null)
+        if (plugin != null) {
             pm.disablePlugin(plugin);
+        }
     }
 
     public void initializeConfigs() {
@@ -229,8 +237,9 @@ public class MChat extends JavaPlugin {
     }
 
     void regCommands(String command, CommandExecutor executor) {
-        if (getCommand(command) != null)
+        if (getCommand(command) != null) {
             getCommand(command).setExecutor(executor);
+        }
     }
 
     void initializeClasses() {

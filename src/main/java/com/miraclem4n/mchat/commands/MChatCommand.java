@@ -19,15 +19,17 @@ public class MChatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!command.getName().equalsIgnoreCase("mchat"))
+        if (!command.getName().equalsIgnoreCase("mchat")) {
             return true;
+        }
 
         if (args.length == 0)
             return false;
 
         if (args[0].equalsIgnoreCase("version")) {
-            if (!MiscUtil.hasCommandPerm(sender, "mchat.version"))
+            if (!MiscUtil.hasCommandPerm(sender, "mchat.version")) {
                 return true;
+            }
 
             String cVersion = "&6MineCraft Version: &2" + plugin.pdfFile.getVersion();
 
@@ -39,55 +41,62 @@ public class MChatCommand implements CommandExecutor {
 
             MessageUtil.sendMessage(sender, "&6Full Version: &1" + plugin.pdfFile.getVersion());
 
-            for (String string : vArray)
+            for (String string : vArray) {
                 MessageUtil.sendMessage(sender, string);
+            }
 
             return true;
         } else if (args[0].equalsIgnoreCase("reload")
                 || args[0].equalsIgnoreCase("r")) {
-            if (args.length > 1)
+            if (args.length > 1) {
                 if (args[1].equalsIgnoreCase("config")
                         || args[1].equalsIgnoreCase("co")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.config"))
+                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.config")) {
                         return true;
+                    }
 
                     ConfigUtil.initialize();
                     MessageUtil.sendMessage(sender, "Config Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("info")
                         || args[1].equalsIgnoreCase("i")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.info"))
+                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.info")) {
                         return true;
+                    }
 
                     InfoUtil.initialize();
                     MessageUtil.sendMessage(sender, "Info Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("censor")
                         || args[1].equalsIgnoreCase("ce")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.censor"))
+                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.censor")) {
                         return true;
+                    }
 
                     CensorUtil.initialize();
                     MessageUtil.sendMessage(sender, "Censor Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("locale")
                         || args[1].equalsIgnoreCase("l")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.locale"))
+                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.locale")) {
                         return true;
+                    }
 
                     LocaleUtil.initialize();
                     MessageUtil.sendMessage(sender, "Locale Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("all")
                         || args[1].equalsIgnoreCase("a")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.all"))
+                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.all")) {
                         return true;
+                    }
 
                     plugin.reloadConfigs();
                     plugin.initializeConfigs();
                     MessageUtil.sendMessage(sender, "All Config's Reloaded.");
                     return true;
                 }
+            }
         }
 
         return false;

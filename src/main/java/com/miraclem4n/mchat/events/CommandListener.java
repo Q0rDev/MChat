@@ -17,11 +17,13 @@ public class CommandListener implements Listener {
         String msg = event.getMessage();
         String command = msg.split(" ")[0].replace("/", "");
 
-        for (Map.Entry<String, List<String>> entry : ConfigUtil.getAliasMap().entrySet())
-            for (String comm : entry.getValue())
+        for (Map.Entry<String, List<String>> entry : ConfigUtil.getAliasMap().entrySet()) {
+            for (String comm : entry.getValue()) {
                 if (comm.equalsIgnoreCase(command)) {
                     event.setMessage(msg.replaceFirst("/" + command, "/" + entry.getKey()));
                     return;
                 }
+            }
+        }
     }
 }

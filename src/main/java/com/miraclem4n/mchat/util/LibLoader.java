@@ -13,8 +13,9 @@ public class LibLoader {
     static URLClassLoader loader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 
     public static Boolean include(String filename, String url) {
-        if (!download(filename, url))
+        if (!download(filename, url)) {
             return false;
+        }
 
         File file = getFile(filename);
 
@@ -39,11 +40,13 @@ public class LibLoader {
     private static File getFile(String filename) {
         Boolean dirCreated = false;
 
-        if (!new File("./lib").exists())
+        if (!new File("./lib").exists()) {
             dirCreated = new File("./lib").mkdirs();
+        }
 
-        if (dirCreated)
+        if (dirCreated) {
             MessageUtil.log("Lib Directory Created.");
+        }
 
         return  new File("./lib/" + filename);
     }
@@ -72,9 +75,11 @@ public class LibLoader {
     }
 
     private static Boolean load(URL url) {
-        for (URL otherUrl : loader.getURLs())
-            if (otherUrl.sameFile(url))
+        for (URL otherUrl : loader.getURLs()) {
+            if (otherUrl.sameFile(url)) {
                 return true;
+            }
+        }
 
         try {
             Method addURLMethod = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);

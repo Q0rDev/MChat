@@ -13,16 +13,18 @@ public class Writer {
     public static void addBase(String name, InfoType type) {
         String base = type.getName();
 
-        if (type.equals(InfoType.USER))
+        if (type.equals(InfoType.USER)) {
             InfoUtil.set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getString());
+        }
 
         InfoUtil.set(base + "." + name + ".info.prefix", "");
         InfoUtil.set(base + "." + name + ".info.suffix", "");
 
         save();
 
-        if (type.equals(InfoType.USER))
+        if (type.equals(InfoType.USER)) {
             setDGroup(ConfigType.INFO_DEFAULT_GROUP.getString());
+        }
     }
 
     /**
@@ -49,8 +51,9 @@ public class Writer {
     public static void addWorld(String name, InfoType type, String world) {
         String base = type.getName();
 
-        if (!InfoUtil.getConfig().isSet(base + "." + name))
+        if (!InfoUtil.getConfig().isSet(base + "." + name)) {
             addBase(name, type);
+        }
 
         InfoUtil.set(base + "." + name + ".worlds." + world + "prefix", "");
         InfoUtil.set(base + "." + name + ".worlds." + world + "suffix", "");
@@ -68,8 +71,9 @@ public class Writer {
     public static void setInfoVar(String name, InfoType type, String var, Object value) {
         String base = type.getName();
 
-        if (!InfoUtil.getConfig().isSet(base + "." + name))
+        if (!InfoUtil.getConfig().isSet(base + "." + name)) {
             addBase(name, type);
+        }
 
         InfoUtil.set(base + "." + name + ".info." + var, value);
 
@@ -87,8 +91,9 @@ public class Writer {
     public static void setWorldVar(String name, InfoType type, String world, String var, Object value) {
         String base = type.getName();
 
-        if (!InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world))
+        if (!InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world)) {
             addWorld(name, type, world);
+        }
 
         InfoUtil.set(base + "." + name + ".worlds." + world + "." + var, value);
 
@@ -101,8 +106,9 @@ public class Writer {
      * @param group Group to be set to Player.
      */
     public static void setGroup(String player, String group) {
-        if (!InfoUtil.getConfig().isSet(player + "." + group))
+        if (!InfoUtil.getConfig().isSet(player + "." + group)) {
             addBase(player, group);
+        }
 
         InfoUtil.set("users." + player + ".group", group);
 
