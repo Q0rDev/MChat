@@ -304,7 +304,7 @@ public class Reader {
     private static Object getPEXInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
 
-        if (name.isEmpty() || name == null) {
+        if (name == null || name.isEmpty()) {
             return infoString;
         }
 

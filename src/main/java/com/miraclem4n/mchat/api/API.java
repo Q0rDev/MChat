@@ -20,26 +20,26 @@ import java.util.TreeMap;
 
 public class API {
     // Vault
-    static Permission vPerm;
-    static Boolean vaultB;
+    public static Permission vPerm;
+    public static Boolean vaultB;
 
     // GroupManager
-    static WorldsHolder gmWH;
-    static Boolean gmB;
+    public static WorldsHolder gmWH;
+    public static Boolean gmB;
 
     //PEX
-    static PermissionManager pexPermissions;
-    static Boolean pexB;
+    public static PermissionManager pexPermissions;
+    public static Boolean pexB;
 
     // bPerms
-    static Boolean bPermB;
+    public static Boolean bPermB;
 
 
     // PermissionsBukkit
-    static Boolean pBukkitB;
+    public static Boolean pBukkitB;
 
     // Var Map
-    static TreeMap<String, String> varMap;
+    public static TreeMap<String, String> varMap;
 
     public static void initialize() {
         setupPlugins();

@@ -24,19 +24,9 @@ public class EntityListener implements Listener {
         plugin = instance;
     }
 
-    Boolean messageTimeout = true;
-
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
         if (!ConfigType.MCHAT_ALTER_DEATH.getBoolean()) {
-            return;
-        }
-
-        if (!(event.getEntity() instanceof Player)) {
-            return;
-        }
-
-        if (!(event instanceof PlayerDeathEvent)) {
             return;
         }
 

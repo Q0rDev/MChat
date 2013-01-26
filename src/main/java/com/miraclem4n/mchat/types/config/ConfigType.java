@@ -82,9 +82,9 @@ public enum ConfigType {
         ArrayList<String> list = new ArrayList<String>();
 
         if (object instanceof ArrayList) {
-            ArrayList aList = (ArrayList) object;
+            ArrayList<?> oList = (ArrayList<?>) object;
 
-            for (Object obj : aList) {
+            for (Object obj : oList) {
                 list.add((String) obj);
             }
         }
