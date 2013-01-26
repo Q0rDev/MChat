@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
-    MChat plugin;
+    private MChat plugin;
 
     public ChatListener(MChat instance) {
         plugin = instance;

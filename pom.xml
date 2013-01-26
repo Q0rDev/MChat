@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.5-R0.1.9</version>
+    <version>1.4.5-R0.1.10</version>
     <name>mChatSuite</name>
     <url>http://mdev.in/</url>
     <description>Full MChat Suite</description>
