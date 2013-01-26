@@ -10,7 +10,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class LibLoader {
-    static URLClassLoader loader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+    private static URLClassLoader loader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 
     public static Boolean include(String filename, String url) {
         if (!download(filename, url)) {

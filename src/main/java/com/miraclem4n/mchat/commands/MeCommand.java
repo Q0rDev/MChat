@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MeCommand implements CommandExecutor {
-    MChat plugin;
+    private MChat plugin;
 
     public MeCommand(MChat instance) {
         plugin = instance;

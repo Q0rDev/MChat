@@ -13,14 +13,8 @@ public enum LocaleType {
     FORMAT_LIST_CMD("format.listCmd"),
     FORMAT_ME("format.me"),
 
-    MESSAGE_CONFIG_RELOADED("message.config.reloaded"),
-    MESSAGE_CONFIG_UPDATED("message.config.updated"),
     MESSAGE_INFO_ALTERATION("message.info.alteration"),
     MESSAGE_NO_PERMS("message.general.noPerms"),
-    MESSAGE_PLAYER_DAMAGED("message.player.damaged"),
-    MESSAGE_PLAYER_DIED("message.player.damaged"),
-    MESSAGE_YOU_DAMAGED("message.you.damaged"),
-    MESSAGE_YOU_DIED("message.you.died"),
     MESSAGE_EVENT_JOIN("message.event.join"),
     MESSAGE_EVENT_LEAVE("message.event.leave"),
     MESSAGE_EVENT_KICK("message.event.kick"),
@@ -41,10 +35,7 @@ public enum LocaleType {
     MESSAGE_DEATH_FIREBALL("message.death.fireball"),
     MESSAGE_DEATH_THROWN("message.death.thrown"),
     MESSAGE_HEROES_TRUE("message.heroes.isMaster"),
-    MESSAGE_HEROES_FALSE("message.heroes.notMaster"),
-
-    PLAYER_NOT_FOUND("message.player.notOnline"),
-    PLAYER_NOT_ONLINE("message.player.notFound");
+    MESSAGE_HEROES_FALSE("message.heroes.notMaster");
 
     private final String option;
 

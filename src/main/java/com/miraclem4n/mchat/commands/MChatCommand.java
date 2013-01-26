@@ -12,7 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class MChatCommand implements CommandExecutor {
-    MChat plugin;
+    private MChat plugin;
 
     public MChatCommand(MChat instance) {
         plugin = instance;

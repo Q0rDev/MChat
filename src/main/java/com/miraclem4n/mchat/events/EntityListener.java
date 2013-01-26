@@ -18,7 +18,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.util.TreeMap;
 
 public class EntityListener implements Listener {
-    MChat plugin;
+    private MChat plugin;
 
     public EntityListener(MChat instance) {
         plugin = instance;

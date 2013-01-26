@@ -31,9 +31,7 @@ public enum ConfigType {
     INFO_USE_LEVELED_NODES("info.useLeveledNodes"),
     INFO_USE_OLD_NODES("info.useOldNodes"),
     INFO_ADD_NEW_PLAYERS("info.addNewPlayers"),
-    INFO_DEFAULT_GROUP("info.defaultGroup"),
-
-    ALIASES_ME("aliases.mchatme");
+    INFO_DEFAULT_GROUP("info.defaultGroup");
 
     private final String option;
 

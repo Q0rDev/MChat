@@ -13,11 +13,11 @@ public class ConfigUtil {
     private static File file;
     private static Boolean changed;
 
-    static ArrayList<String> meAliases = new ArrayList<String>();
-    //static ArrayList<String> userAliases = new ArrayList<String>();
-    //static ArrayList<String> groupAliases = new ArrayList<String>();
+    private static ArrayList<String> meAliases = new ArrayList<String>();
+    //private static ArrayList<String> userAliases = new ArrayList<String>();
+    //private static ArrayList<String> groupAliases = new ArrayList<String>();
 
-    static HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
+    private static HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
     public static void initialize() {
         load();
@@ -31,7 +31,7 @@ public class ConfigUtil {
     }
 
     public static void load() {
-        file = new File("plugins/mChatSuite/config.yml");
+        file = new File("plugins/MChat/config.yml");
 
         config = YamlConfiguration.loadConfiguration(file);
 

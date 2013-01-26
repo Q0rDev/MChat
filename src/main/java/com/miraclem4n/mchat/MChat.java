@@ -38,9 +38,6 @@ public class MChat extends JavaPlugin {
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
 
-    // Factions
-    public Boolean factions = false;
-
     // GeoIPTools
     public GeoIPLookup geoip;
     public Boolean geoipB = false;
@@ -54,12 +51,6 @@ public class MChat extends JavaPlugin {
 
     // MSocial
     public Boolean mSocial = false;
-
-    // Debug
-    Boolean debug = false;
-
-    // Metrics
-    public Metrics metrics;
 
     // Maps
     public static HashMap<String, Boolean> shouting;
@@ -80,7 +71,7 @@ public class MChat extends JavaPlugin {
         killEss();
 
         try {
-            metrics = new Metrics(this);
+            Metrics metrics = new Metrics(this);
             metrics.start();
         } catch (IOException ignored) {}
 
@@ -178,7 +169,7 @@ public class MChat extends JavaPlugin {
         }
 
         // Setup Factions
-        factions = setupPlugin("Factions");
+        Boolean factions = setupPlugin("Factions");
 
         if (factions) {
             setupFactions();
@@ -227,7 +218,7 @@ public class MChat extends JavaPlugin {
         LocaleUtil.initialize();
     }
 
-    public void unloadConfigs() {
+    private void unloadConfigs() {
         ConfigUtil.dispose();
         InfoUtil.dispose();
         CensorUtil.dispose();
@@ -237,8 +228,8 @@ public class MChat extends JavaPlugin {
     void setupCommands() {
         regCommands("mchat", new MChatCommand(this));
 
-        regCommands("mchatuser", new InfoAlterCommand(this, "mchatuser", InfoType.USER));
-        regCommands("mchatgroup", new InfoAlterCommand(this, "mchatgroup", InfoType.GROUP));
+        regCommands("mchatuser", new InfoAlterCommand("mchatuser", InfoType.USER));
+        regCommands("mchatgroup", new InfoAlterCommand("mchatgroup", InfoType.GROUP));
 
         regCommands("mchatme", new MeCommand(this));
     }

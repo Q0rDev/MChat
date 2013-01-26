@@ -1,6 +1,5 @@
 package com.miraclem4n.mchat.commands;
 
-import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.Writer;
 import com.miraclem4n.mchat.types.InfoEditType;
 import com.miraclem4n.mchat.types.InfoType;
@@ -12,12 +11,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class InfoAlterCommand implements CommandExecutor {
-    MChat plugin;
-    InfoType type;
-    String cmd;
+    private InfoType type;
+    private String cmd;
 
-    public InfoAlterCommand(MChat instance, String command, InfoType infoType) {
-        plugin = instance;
+    public InfoAlterCommand(String command, InfoType infoType) {
         type = infoType;
         cmd = command;
     }
@@ -62,7 +59,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.ADD_BASE;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.addBase(args[2], type);
@@ -77,7 +75,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.ADD_INFO_VAR;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.setInfoVar(args[2], type, args[3], combineArgs(args, 4));
@@ -92,7 +91,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.ADD_WORLD;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.addWorld(args[2], type, args[3]);
@@ -107,7 +107,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.ADD_WORLD_VAR;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.setWorldVar(args[2], type, args[3], args[4], combineArgs(args, 5));
@@ -132,7 +133,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.REMOVE_BASE;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.removeBase(args[2], type);
@@ -144,10 +146,11 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                editType = InfoEditType.REMOVE_WORLD;
+                editType = InfoEditType.REMOVE_INFO_VAR;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.removeInfoVar(args[2], type, args[3]);
@@ -162,7 +165,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.REMOVE_WORLD;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.removeWorld(args[2], type, args[3]);
@@ -177,7 +181,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.REMOVE_WORLD_VAR;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.removeWorldVar(args[2], type, args[3], args[4]);
@@ -199,7 +204,8 @@ public class InfoAlterCommand implements CommandExecutor {
                 editType = InfoEditType.SET_GROUP;
 
                 if (args.length < editType.getLength()) {
-                    return editType.sendMsg(sender, cmd, type);
+                    editType.sendMsg(sender, cmd, type);
+                    return true;
                 }
 
                 Writer.setGroup(args[2], args[3]);
@@ -211,7 +217,7 @@ public class InfoAlterCommand implements CommandExecutor {
         return false;
     }
 
-    String combineArgs(String[] args, Integer startingPoint) {
+    private String combineArgs(String[] args, Integer startingPoint) {
         String argString = "";
 
         for (int i = startingPoint; i < args.length; ++i)

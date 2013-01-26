@@ -14,8 +14,8 @@ public enum InfoEditType {
     REMOVE_WORLD_VAR(5, "/%cmd remove wvar <%Type> <World> <Variable>"),
     SET_GROUP(4, "/%cmd set group <Player> <Group>");
 
-    Integer i;
-    String msg;
+    private Integer i;
+    private String msg;
 
     InfoEditType(Integer i, String msg) {
         this.i = i;
@@ -26,7 +26,7 @@ public enum InfoEditType {
         return i;
     }
 
-    public Boolean sendMsg(CommandSender sender, String cmd, InfoType type) {
+    public void sendMsg(CommandSender sender, String cmd, InfoType type) {
         String t = "player";
         String T = "Player";
 
@@ -36,6 +36,5 @@ public enum InfoEditType {
         }
 
         MessageUtil.sendMessage(sender, msg.replace("%cmd", cmd).replace("%Type", T).replace("%type", t));
-        return true;
     }
 }

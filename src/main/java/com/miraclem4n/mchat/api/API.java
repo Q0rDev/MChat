@@ -20,8 +20,8 @@ import java.util.TreeMap;
 
 public class API {
     // Vault
-    public static Permission vPerm;
-    public static Boolean vaultB;
+    private static Permission vPerm;
+    private static Boolean vaultB;
 
     // GroupManager
     public static WorldsHolder gmWH;

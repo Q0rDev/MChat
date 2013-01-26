@@ -5,9 +5,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 
 public class LocaleUtil {
-    static YamlConfiguration config;
-    static File file;
-    static Boolean changed;
+    private static YamlConfiguration config;
+    private static File file;
+    private static Boolean changed;
 
     public static void initialize() {
         load();
@@ -43,12 +43,10 @@ public class LocaleUtil {
         checkOption("format.listCmd", "+p+dn+s");
         checkOption("format.me", "* +p+dn+s&e +m");
 
-        checkOption("message.config.reloaded", "%config Reloaded.");
-        checkOption("message.config.updated", "%config has been updated.");
+        checkOption("message.general.noPerms", "You do not have '%permission'.");
         checkOption("message.general.noPerms", "You do not have '%permission'.");
         checkOption("message.info.alteration", "Info Alteration Successful.");
-        checkOption("message.player.notFound", "%player not found.");
-        checkOption("message.player.notOnline", "%player is not online.");
+        checkOption("message.player.stillAfk", "You are still AFK.");
         checkOption("message.player.stillAfk", "You are still AFK.");
         checkOption("message.event.join", "%player has joined the game.");
         checkOption("message.event.leave", "%player has left the game.");
