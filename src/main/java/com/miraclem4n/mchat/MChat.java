@@ -30,6 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import uk.org.whoami.geoip.GeoIPLookup;
 import uk.org.whoami.geoip.GeoIPTools;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MChat extends JavaPlugin {
@@ -77,6 +78,12 @@ public class MChat extends JavaPlugin {
 
         // First we kill EssentialsChat
         killEss();
+
+        try {
+            metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException ignored) {}
+
 
         // Setup Static Variables
         shouting = new HashMap<String, Boolean>();
@@ -140,7 +147,7 @@ public class MChat extends JavaPlugin {
     }
 
     void registerEvents() {
-       if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
+        if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
             pm.registerEvents(new PlayerListener(this), this);
 
             pm.registerEvents(new EntityListener(this), this);

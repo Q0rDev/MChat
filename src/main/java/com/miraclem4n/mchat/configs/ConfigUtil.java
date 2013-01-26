@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 public class ConfigUtil {
-    static YamlConfiguration config;
-    static File file;
-    static Boolean changed;
+    private static YamlConfiguration config;
+    private static File file;
+    private static Boolean changed;
 
     static ArrayList<String> meAliases = new ArrayList<String>();
     //static ArrayList<String> userAliases = new ArrayList<String>();
