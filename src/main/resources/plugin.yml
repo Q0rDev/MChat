@@ -7,6 +7,7 @@ authors: [MiracleM4n]
 website: http://mdev.in/
 thread: http://forums.bukkit.org/threads/22958/
 softdepend: [GroupManager, PermissionsBukkit, bPermissions, PermissionsEx, GeoIPTools]
+depend: [Vault]
 description: Full mChat Suite
 commands:
     mchat:
