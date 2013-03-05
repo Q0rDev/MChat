@@ -31,19 +31,13 @@ public class MChatCommand implements CommandExecutor {
                 return true;
             }
 
-            String cVersion = "&6MineCraft Version: &2" + plugin.pdfFile.getVersion();
-
-            cVersion = cVersion.replaceFirst("-", "^*^&6Jenkins Build &5#&5: &2");
-            cVersion = cVersion.replaceFirst("-", "^*^&6Release Version: &2");
-            cVersion = cVersion.replaceFirst("_", "^*^&6Fix &5#&5: &2");
-
-            String[] vArray = cVersion.split("\\^\\*\\^");
+            String[] vArray = plugin.pdfFile.getVersion().split("-");
 
             MessageUtil.sendMessage(sender, "&6Full Version: &1" + plugin.pdfFile.getVersion());
-
-            for (String string : vArray) {
-                MessageUtil.sendMessage(sender, string);
-            }
+            MessageUtil.sendMessage(sender, "&6MineCraft Version: &2" + vArray[0]);
+            MessageUtil.sendMessage(sender, "&6Release Version: &2" + vArray[1]);
+            MessageUtil.sendMessage(sender, "&6Fix &5#&5: &2" + vArray[2]);
+            MessageUtil.sendMessage(sender, "&6Jenkins Build &5#&5: &2" + vArray[3]);
 
             return true;
         } else if (args[0].equalsIgnoreCase("reload")
