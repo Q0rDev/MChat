@@ -34,6 +34,8 @@ public class API {
     // bPerms
     public static Boolean bPermB;
 
+    // Privileges
+    public static Boolean privB;
 
     // PermissionsBukkit
     public static Boolean pBukkitB;
@@ -270,7 +272,13 @@ public class API {
             MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
         }
 
-        if (!(vaultB || pBukkitB || bPermB || pexB ||gmB)) {
+        pluginTest = pm.getPlugin("Privileges");
+        privB = pluginTest != null;
+        if (privB) {
+            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+        }
+
+        if (!(vaultB || pBukkitB || bPermB || pexB || gmB)) {
             MessageUtil.logFormatted("<Permissions> SuperPerms hooked!.");
         }
     }

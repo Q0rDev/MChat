@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.7-R0.1-0</version>
+    <version>1.4.7-R0.2-0</version>
     <name>MChat</name>
     <url>http://mdev.in/</url>
     <description>Full MChat Suite</description>
@@ -188,6 +188,13 @@
             <groupId>uk.org.whoami</groupId>
             <artifactId>GeoIPTools</artifactId>
             <version>1.0.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.krinsoft.privileges</groupId>
+            <artifactId>Privileges</artifactId>
+            <version>1.7.5-b158</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

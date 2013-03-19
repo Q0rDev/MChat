@@ -10,6 +10,7 @@ import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
+import net.krinsoft.privileges.Privileges;
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 import org.bukkit.Bukkit;
 import ru.tehkode.permissions.PermissionGroup;
@@ -227,6 +228,10 @@ public class Reader {
             if (info.equals("group")) {
                 return getPermBukkitGroup(name);
             }
+        } else if (API.privB) {
+            if (info.equals("group")) {
+                return getPrivGroup(name);
+            }
         }
 
         if (!InfoUtil.getConfig().isSet("mchat." + info)) {
@@ -258,6 +263,19 @@ public class Reader {
 
         try {
             return pGroups.get(0).getName();
+        } catch (Exception ignored) {
+            return "";
+        }
+    }
+
+    private static String getPrivGroup(String name) {
+        Privileges priv =
+                (Privileges) Bukkit.getServer().getPluginManager().getPlugin("Privileges");
+
+        net.krinsoft.privileges.groups.Group[] pGroups = priv.getPlayerManager().getPlayer(name).getGroups();
+
+        try {
+            return pGroups[0].getName();
         } catch (Exception ignored) {
             return "";
         }
