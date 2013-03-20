@@ -16,9 +16,7 @@ import org.bukkit.Bukkit;
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Reader {
     //Info Stuff
@@ -105,6 +103,25 @@ public class Reader {
     }
 
     /**
+     * Raw Groups Resolving
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
+     * @return Raw Groups.
+     */
+    @SuppressWarnings("unchecked")
+    public static List<Object> getRawGroups(String name, InfoType type, String world) {
+        Object info = getRawInfo(name, type, world, "groups");
+        List<Object> list = new ArrayList<Object>();
+
+        if (info instanceof ArrayList<?>) {
+            list = (List<Object>) getRawInfo(name, type, world, "groups");
+        }
+
+        return list;
+    }
+
+    /**
      * Raw Info Resolving
      * @param name Defining value of the InfoType(Also known as Name).
      * @param type InfoType being reflected upon.
@@ -148,12 +165,35 @@ public class Reader {
         return getInfo(name, InfoType.USER, world, "group");
     }
 
+    /**
+     * Raw Groups Resolving
+     * @param name Defining value of the InfoType(Also known as Name).
+     * @param type InfoType being reflected upon.
+     * @param world Name of the InfoType's World.
+     * @return Raw Groups.
+     */
+    @SuppressWarnings("unchecked")
+    public static List<String> getGroups(String name, InfoType type, String world) {
+        Object info = getRawInfo(name, type, world, "groups");
+        List<String> list = new ArrayList<String>();
+
+        if (info instanceof List<?>) {
+            List<Object> inf = (List<Object>) info;
+
+            for (Object obj : inf) {
+                list.add(MessageUtil.addColour(obj.toString()));
+            }
+        }
+
+        return list;
+    }
+
     /*
      * MChat Stuff
      */
     private static Object getMChatInfo(String name, InfoType type, String world, String info) {
-        if (info.equals("group")) {
-            return getMChatGroup(name);
+        if (info.equals("group") || info.equals("groups")) {
+            return getMChatGroup(name, info);
         }
 
         String iType = type.getName();
@@ -167,7 +207,13 @@ public class Reader {
         return "";
     }
 
-    private static Object getMChatGroup(String name) {
+    private static Object getMChatGroup(String name, String info) {
+        if (info.equals("groups")) {
+            if (InfoUtil.getConfig().isSet("users." + name + ".groups")) {
+                return InfoUtil.getConfig().getStringList("users." + name + ".groups");
+            }
+        }
+
         if (InfoUtil.getConfig().isSet("users." + name + ".group")) {
             return InfoUtil.getConfig().get("users." + name + ".group");
         }
@@ -182,8 +228,8 @@ public class Reader {
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
         if (API.pBukkitB) {
-            if (info.equals("group")) {
-                return getPermBukkitGroup(name);
+            if (info.equals("group") || info.equals("groups")) {
+                return getPermBukkitGroup(name, info);
             }
         }
 
@@ -225,12 +271,12 @@ public class Reader {
      */
     private static Object getBukkitInfo(String name, String world, String info) {
         if (API.pBukkitB) {
-            if (info.equals("group")) {
-                return getPermBukkitGroup(name);
+            if (info.equals("group") || info.equals("groups")) {
+                return getPermBukkitGroup(name, info);
             }
         } else if (API.privB) {
-            if (info.equals("group")) {
-                return getPrivGroup(name);
+            if (info.equals("group") || info.equals("groups")) {
+                return getPrivGroup(name, info);
             }
         }
 
@@ -255,26 +301,46 @@ public class Reader {
         return "";
     }
 
-    private static String getPermBukkitGroup(String name) {
+    private static Object getPermBukkitGroup(String name, String info) {
         PermissionsPlugin pBukkit =
                 (PermissionsPlugin) Bukkit.getServer().getPluginManager().getPlugin("PermissionsBukkit");
 
         List<Group> pGroups = pBukkit.getGroups(name);
 
         try {
+            if (info.equals("groups")) {
+                ArrayList<String> list = new ArrayList<String>();
+
+                for (Group group : pGroups) {
+                    list.add(group.getName());
+                }
+
+                return list;
+            }
+
             return pGroups.get(0).getName();
         } catch (Exception ignored) {
             return "";
         }
     }
 
-    private static String getPrivGroup(String name) {
+    private static Object getPrivGroup(String name, String info) {
         Privileges priv =
                 (Privileges) Bukkit.getServer().getPluginManager().getPlugin("Privileges");
 
         net.krinsoft.privileges.groups.Group[] pGroups = priv.getPlayerManager().getPlayer(name).getGroups();
 
         try {
+            if (info.equals("groups")) {
+                ArrayList<String> list = new ArrayList<String>();
+
+                for (net.krinsoft.privileges.groups.Group group : pGroups) {
+                    list.add(group.getName());
+                }
+
+                return list;
+            }
+
             return pGroups[0].getName();
         } catch (Exception ignored) {
             return "";
@@ -287,8 +353,8 @@ public class Reader {
     private static Object getGroupManagerInfo(String name, InfoType type, String world, String info) {
         OverloadedWorldHolder gmPermissions = API.gmWH.getWorldData(world);
 
-        if (info.equals("group")) {
-            return getGroupManagerGroup(name, world);
+        if (info.equals("group") || info.equals("groups")) {
+            return getGroupManagerGroups(name, world, info);
         }
 
         String infoString = "";
@@ -304,8 +370,18 @@ public class Reader {
         return infoString;
     }
 
-    private static String getGroupManagerGroup(String name, String world) {
+    private static Object getGroupManagerGroups(String name, String world, String info) {
         OverloadedWorldHolder gmPermissions = API.gmWH.getWorldData(world);
+
+        if (info.equals("groups")) {
+            List<String> list = gmPermissions.getUser(name).subGroupListStringCopy();
+
+            if (list == null) {
+                return new ArrayList<String>();
+            }
+
+            return list;
+        }
 
         String group = gmPermissions.getUser(name).getGroup().getName();
 
@@ -326,8 +402,8 @@ public class Reader {
             return infoString;
         }
 
-        if (info.equals("group")) {
-            return getPEXGroup(name);
+        if (info.equals("group") || info.equals("groups")) {
+            return getPEXGroup(name, info);
         }
 
         if (type == InfoType.USER) {
@@ -355,8 +431,13 @@ public class Reader {
         return infoString;
     }
 
-    private static Object getPEXGroup(String name) {
+    private static Object getPEXGroup(String name, String info) {
         String[] groupNames = API.pexPermissions.getUser(name).getGroupsNames();
+
+        if (info.equals("groups")) {
+            return Arrays.asList(groupNames);
+        }
+
         String group = "";
 
         if (groupNames.length > 0) {
@@ -370,8 +451,8 @@ public class Reader {
      * bPermissions Stuff
      */
     private static Object getbPermInfo(String name, InfoType type, String world, String info) {
-        if (info.equals("group")) {
-            return getbPermGroup(name, world);
+        if (info.equals("group") || info.equals("groups")) {
+            return getbPermGroup(name, world, info);
         }
 
         Object userString = "";
@@ -385,8 +466,13 @@ public class Reader {
         return userString;
     }
 
-    private static Object getbPermGroup(String name, String world) {
+    private static Object getbPermGroup(String name, String world, String info) {
         String[] groupNames = ApiLayer.getGroups(world, CalculableType.USER, name);
+
+        if (info.equals("groups")) {
+            return Arrays.asList(groupNames);
+        }
+
         String group = "";
 
         if (groupNames.length > 0) {
