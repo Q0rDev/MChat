@@ -64,6 +64,7 @@ public class Parser {
         Object prefix = Reader.getRawPrefix(pName, InfoType.USER, world);
         Object suffix = Reader.getRawSuffix(pName, InfoType.USER, world);
         Object group = Reader.getRawGroup(pName, InfoType.USER, world);
+        List<Object> groups = Reader.getRawGroups(pName, InfoType.USER, world);
 
         String vI = ConfigType.MCHAT_VAR_INDICATOR.getString();
 
@@ -81,6 +82,10 @@ public class Parser {
 
         if (group == null) {
             group = "";
+        }
+
+        if (groups == null) {
+            group = new ArrayList<Object>();
         }
 
         // Geoip Vars
@@ -327,6 +332,14 @@ public class Parser {
         addVar(rVarMap, vI + "experience," + vI + "exp", exp);
         addVar(rVarMap, vI + "gamemode," + vI + "gm", gMode);
         addVar(rVarMap, vI + "group," + vI + "g", group);
+
+        Integer grpInt = 0;
+
+        for (Object obj : groups) {
+            addVar(rVarMap, vI + "groups" + grpInt + "," + vI + "gs" + grpInt, group);
+            grpInt++;
+        }
+
         addVar(rVarMap, vI + "hungerbar," + vI + "hub", hungerBar);
         addVar(rVarMap, vI + "hunger", hungerLevel);
         addVar(rVarMap, vI + "health," + vI + "h", health);
