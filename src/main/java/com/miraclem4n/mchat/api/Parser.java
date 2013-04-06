@@ -336,7 +336,7 @@ public class Parser {
         Integer grpInt = 0;
 
         for (Object obj : groups) {
-            addVar(rVarMap, vI + "groups" + grpInt + "," + vI + "gs" + grpInt, group);
+            addVar(rVarMap, vI + "groups" + grpInt + "," + vI + "gs" + grpInt, obj);
             grpInt++;
         }
 
@@ -409,7 +409,7 @@ public class Parser {
      * @return Formatted Chat Message.
      */
     public static String parseChatMessage(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, ConfigType.FORMAT_CHAT.getString());
+        return parseMessage(pName, world, msg, LocaleType.FORMAT_CHAT.getRaw());
     }
 
     /**

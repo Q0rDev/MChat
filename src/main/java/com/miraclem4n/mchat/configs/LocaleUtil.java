@@ -37,6 +37,7 @@ public class LocaleUtil {
         checkOption("format.local", "[L]");
         checkOption("format.spy", "[Spy]");
 
+        checkOption("format.chat", "+p+dn+s&f: +m");
         checkOption("format.date", "HH:mm:ss");
         checkOption("format.name", "+p+dn+s&e");
         checkOption("format.tabbedList", "+p+dn+s");

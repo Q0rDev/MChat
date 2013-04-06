@@ -6,8 +6,6 @@ import com.miraclem4n.mchat.util.MessageUtil;
 import java.util.ArrayList;
 
 public enum ConfigType {
-    FORMAT_CHAT("format.chat"),
-
     MCHAT_API_ONLY("mchat.apiOnly"),
     MCHAT_ALTER_EVENTS("mchat.alter.events"),
     MCHAT_ALTER_DEATH("mchat.alter.death"),

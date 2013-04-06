@@ -62,8 +62,6 @@ public class ConfigUtil {
         editOption("mchat.alterEvents", "mchat.alter.events");
         editOption("mchat.alterDeathMessages", "mchat.alter.death");
 
-        checkOption("format.chat", "+p+dn+s&f: +m");
-
         checkOption("mchat.apiOnly", false);
         checkOption("mchat.alter.events", true);
         checkOption("mchat.alter.death", true);

@@ -7,6 +7,7 @@ public enum LocaleType {
     FORMAT_FORWARD("format.forward"),
     FORMAT_LOCAL("format.local"),
     FORMAT_SPY("format.spy"),
+    FORMAT_CHAT("format.chat"),
     FORMAT_DATE("format.date"),
     FORMAT_NAME("format.name"),
     FORMAT_TABBED_LIST("format.tabbedList"),

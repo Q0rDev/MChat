@@ -1,7 +1,6 @@
 name: MChat
 main: com.miraclem4n.mchat.MChat
 version: ${version}-${build.number}
-MCMAPluginID: 13A44EB7-D013-4AD2-87E0-49CB2DAC6C08
 author: MiracleM4n
 authors: [MiracleM4n]
 website: http://mdev.in/
