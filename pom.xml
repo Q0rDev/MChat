@@ -4,10 +4,10 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.4.7-R0.3-1</version>
+    <version>1.5.1-R0.1</version>
     <name>MChat</name>
     <url>http://mdev.in/</url>
-    <description>Full MChat Suite</description>
+    <description>Chat Formatting</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.4.7-R1.0</version>
+            <version>1.5.1-R0.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
