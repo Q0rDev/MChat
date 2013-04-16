@@ -20,7 +20,7 @@ public class InfoUtil {
     }
 
     public static void load() {
-        file = new File("plugins/mChatSuite/info.yml");
+        file = new File("plugins/MChat/info.yml");
 
         config = YamlConfiguration.loadConfiguration(file);
 

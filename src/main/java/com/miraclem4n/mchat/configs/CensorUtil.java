@@ -18,7 +18,7 @@ public class CensorUtil {
     }
 
     public static void load() {
-        file = new File("plugins/mChatSuite/censor.yml");
+        file = new File("plugins/MChat/censor.yml");
 
         config = YamlConfiguration.loadConfiguration(file);
 

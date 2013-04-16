@@ -20,7 +20,7 @@ public class LocaleUtil {
     }
 
     public static void load() {
-        file = new File("plugins/mChatSuite/locale.yml");
+        file = new File("plugins/MChat/locale.yml");
 
         config = YamlConfiguration.loadConfiguration(file);
 
