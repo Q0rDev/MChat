@@ -128,12 +128,12 @@ public class PlayerListener implements Listener {
     }
 
     void setListName(Player player, String listName) {
-        if (listName.length() > 15) {
-            listName = listName.substring(0, 16);
-            player.setPlayerListName(listName);
-        }
-
         try {
+            if (listName.length() > 15) {
+                listName = listName.substring(0, 16);
+                player.setPlayerListName(listName);
+            }
+
             player.setPlayerListName(listName);
         } catch(Exception ignored) {}
     }
