@@ -4,6 +4,7 @@ import com.miraclem4n.mchat.configs.ConfigUtil;
 import com.miraclem4n.mchat.util.MessageUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public enum ConfigType {
     MCHAT_API_ONLY("mchat.apiOnly"),
@@ -37,52 +38,57 @@ public enum ConfigType {
         this.option = option;
     }
 
-    private Object getObject() {
-        Object value = ConfigUtil.getConfig().get(option);
+    public Boolean getBoolean() {
+        Boolean b = ConfigUtil.getConfig().getBoolean(option);
 
-        if (value instanceof String) {
-            String val = (String) value;
-
-            value = MessageUtil.addColour(val);
+        if (b != null) {
+            return b;
         }
 
-        return value;
-    }
-
-    public Boolean getBoolean() {
-        Object object = getObject();
-
-        return object instanceof Boolean ? (Boolean) object : false;
+        return false;
     }
 
     public String getString() {
-        Object object = getObject();
+        String s = ConfigUtil.getConfig().getString(option);
 
-        return object != null ? object.toString() : "";
+        if (s != null) {
+            return MessageUtil.addColour(s);
+        }
+
+        return "";
     }
 
     public Integer getInteger() {
-        Object object = getObject();
+        Integer i = ConfigUtil.getConfig().getInt(option);
 
-        return object instanceof Number ? (Integer) object : 0;
+        if (i != null) {
+            return i;
+        }
+
+        return 0;
     }
 
     public Double getDouble() {
-        Object object = getObject();
+        Double d = ConfigUtil.getConfig().getDouble(option);
 
-        return object instanceof Number ? (Double) object : 0.0;
+        if (d != null) {
+            return d;
+        }
+
+        return 0.0;
     }
 
-    public ArrayList<String> getList() {
-        Object object = getObject();
-        ArrayList<String> list = new ArrayList<String>();
+    public List<String> getList() {
+        List<String> list = ConfigUtil.getConfig().getStringList(option);
 
-        if (object instanceof ArrayList) {
-            ArrayList<?> oList = (ArrayList<?>) object;
+        if (list != null) {
+            ArrayList<String> l = new ArrayList<String>();
 
-            for (Object obj : oList) {
-                list.add((String) obj);
+            for (String s : list) {
+                l.add(MessageUtil.addColour(s));
             }
+
+            return l;
         }
 
         return list;

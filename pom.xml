@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.5.1-R0.3</version>
+    <version>1.5.1-R0.4</version>
     <name>MChat</name>
     <url>http://mdev.in/</url>
     <description>Chat Formatting</description>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.1-R0.1</version>
+            <version>1.5.1-R0.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
