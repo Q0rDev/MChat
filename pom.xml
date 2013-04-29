@@ -7,7 +7,7 @@
     <version>1.5.1-R0.5</version>
     <name>MChat</name>
     <url>http://mdev.in/</url>
-    <description>Chat Formatting</description>
+    <description>Chat Formatting for Bukkit</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
