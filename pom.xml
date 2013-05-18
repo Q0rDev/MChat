@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.5.1-R0.6</version>
+    <version>1.5.1-R0.7</version>
     <name>MChat</name>
     <url>http://mdev.in/</url>
     <description>Chat Formatting for Bukkit</description>
@@ -180,7 +180,7 @@
         <dependency>
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.80.0.0</version>
+            <version>0.83.0.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
