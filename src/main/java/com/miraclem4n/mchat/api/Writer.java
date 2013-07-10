@@ -31,11 +31,15 @@ public class Writer {
      * Used to add the Base for a Player with a custom DefaultGroup.
      * @param player Player's name.
      * @param group Default Group to set to the Base(Only needed if doing for InfoType.USER).
+     * @param createBlank Whether or not to create blank prefix / suffix.
      */
-    public static void addBase(String player, String group) {
+    public static void addBase(String player, String group, Boolean createBlank) {
         InfoUtil.set("users." + player + ".group", group);
-        InfoUtil.set("users." + player + ".info.prefix", "");
-        InfoUtil.set("users." + player + ".info.suffix", "");
+
+        if (createBlank) {
+            InfoUtil.set("users." + player + ".info.prefix", "");
+            InfoUtil.set("users." + player + ".info.suffix", "");
+        }
 
         save();
 
@@ -107,7 +111,7 @@ public class Writer {
      */
     public static void setGroup(String player, String group) {
         if (!InfoUtil.getConfig().isSet(player + "." + group)) {
-            addBase(player, group);
+            addBase(player, group, false);
         }
 
         InfoUtil.set("users." + player + ".group", group);

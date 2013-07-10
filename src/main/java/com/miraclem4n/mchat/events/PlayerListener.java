@@ -38,7 +38,7 @@ public class PlayerListener implements Listener {
         // For Lazy People
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
             if (InfoUtil.getConfig().get("users." + pName) == null) {
-                Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString());
+                Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString(), false);
             }
         }
 

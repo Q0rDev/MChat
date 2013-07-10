@@ -99,7 +99,7 @@ public class MChat extends JavaPlugin {
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
             for (Player players : getServer().getOnlinePlayers()) {
                 if (InfoUtil.getConfig().get("users." + players.getName()) == null) {
-                    Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getString());
+                    Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getString(), false);
                 }
             }
         }
