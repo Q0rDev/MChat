@@ -1,7 +1,7 @@
 package com.miraclem4n.mchat;
 
 import com.herocraftonline.heroes.Heroes;
-import com.massivecraft.factions.Conf;
+import com.massivecraft.factions.ConfServer;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Writer;
@@ -168,12 +168,12 @@ public class MChat extends JavaPlugin {
             geoip = ((GeoIPTools) pm.getPlugin("GeoIPTools")).getGeoIPLookup();
         }
 
-        // Setup Factions
+        /* Setup Factions
         Boolean factions = setupPlugin("Factions");
 
         if (factions) {
             setupFactions();
-        }
+        }*/
 
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
@@ -186,14 +186,6 @@ public class MChat extends JavaPlugin {
         mSocial = setupPlugin("MSocial");
 
         towny = setupPlugin("Towny");
-    }
-
-    void setupFactions() {
-        try {
-            if (!(Conf.chatTagInsertIndex == 0)) {
-                getServer().dispatchCommand(getServer().getConsoleSender(), "f config chatTagInsertIndex 0");
-            }
-        } catch (NoSuchFieldError ignored) {}
     }
 
     void killEss() {

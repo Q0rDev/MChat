@@ -34,7 +34,7 @@ public class CensorUtil {
         set("fuck", "fawg");
         set("cunt", "punt");
         set("shit", "feces");
-        set("dick", "LARGE PENIS");
+        set("dick", "74RG3 P3N1S");
         set("miracleman", "MiracleM4n");
         set("dretax", "DreTax");
 

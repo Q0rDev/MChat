@@ -3,7 +3,6 @@ package com.miraclem4n.mchat.api;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import net.milkbowl.vault.permission.Permission;
-import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -13,11 +12,11 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+@SuppressWarnings("unused")
 public class API {
     // Vault
     private static Permission vPerm;
@@ -42,11 +41,13 @@ public class API {
 
     // Var Map
     public static TreeMap<String, String> varMap;
+    public static TreeMap<String, String> varMapQueue;
 
     public static void initialize() {
         setupPlugins();
 
         varMap = new TreeMap<String, String>();
+        varMapQueue = new TreeMap<String, String>();
     }
 
     /**
@@ -63,7 +64,7 @@ public class API {
             value = "";
         }
 
-        varMap.put("%^global^%|" + var, value);
+        varMapQueue.put("%^global^%|" + var, value);
     }
 
     /**
@@ -81,7 +82,7 @@ public class API {
             value = "";
         }
 
-        varMap.put(pName + "|" + var, value);
+        varMapQueue.put(pName + "|" + var, value);
     }
 
     /**
@@ -156,31 +157,10 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(String pName, String world, String node) {
-        if (vaultB) {
-            if (vPerm.has(world, pName, node)) {
-                return true;
-            }
-        }
-
-        if (gmB) {
-            if (gmWH.getWorldPermissions(pName).getPermissionBoolean(pName, node)) {
-                return true;
-            }
-        }
-
-        if (pexB) {
-            if (pexPermissions.has(pName, world, node)) {
-                return true;
-            }
-        }
-
-        if (Bukkit.getServer().getPlayer(pName) != null) {
-            if (Bukkit.getServer().getPlayer(pName).hasPermission(node)) {
-                return true;
-            }
-        }
-
-        return false;
+        return vaultB && vPerm.has(world, pName, node)
+                || gmB && gmWH.getWorldPermissions(pName).getPermissionBoolean(pName, node)
+                || pexB && pexPermissions.has(pName, world, node)
+                || Bukkit.getServer().getPlayer(pName) != null && Bukkit.getServer().getPlayer(pName).hasPermission(node);
     }
 
     /**
@@ -190,13 +170,8 @@ public class API {
      * @return Sender has Node.
      */
     public static Boolean checkPermissions(CommandSender sender, String node) {
-        if (vaultB) {
-            if (vPerm.has(sender, node)) {
-                return true;
-            }
-        }
-
-        return sender.hasPermission(node);
+        return vaultB && vPerm.has(sender, node)
+                || sender.hasPermission(node);
     }
 
     /**
@@ -246,40 +221,23 @@ public class API {
             vaultB = vPerm != null;
         }
 
-        pluginTest = pm.getPlugin("PermissionsBukkit");
-        pBukkitB = pluginTest != null;
-        if (pBukkitB) {
-            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-        }
-
-        pluginTest = pm.getPlugin("bPermissions");
-        bPermB = pluginTest != null;
-        if (bPermB) {
-            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-        }
-
-        pluginTest = pm.getPlugin("PermissionsEx");
-        pexB = pluginTest != null;
-        if (pexB) {
-            pexPermissions = PermissionsEx.getPermissionManager();
-            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-        }
-
-        pluginTest = pm.getPlugin("GroupManager");
-        gmB = pluginTest != null;
-        if (gmB) {
-            gmWH = ((GroupManager) pluginTest).getWorldsHolder();
-            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-        }
-
-        pluginTest = pm.getPlugin("Privileges");
-        privB = pluginTest != null;
-        if (privB) {
-            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-        }
-
+        pBukkitB = setupPermPlugin(pm.getPlugin("PermissionsBukkit"));
+        bPermB = setupPermPlugin(pm.getPlugin("bPermissions"));
+        pexB = setupPermPlugin(pm.getPlugin("PermissionsEx"));
+        gmB = setupPermPlugin(pm.getPlugin("GroupManager"));
+        privB = setupPermPlugin(pm.getPlugin("Privileges"));
+        
         if (!(vaultB || pBukkitB || bPermB || pexB || gmB)) {
             MessageUtil.logFormatted("<Permissions> SuperPerms hooked!.");
         }
+    }
+
+    private static Boolean setupPermPlugin(Plugin plugin) {
+        if (plugin != null) {
+            MessageUtil.logFormatted("<Permissions> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
+            return true;
+        }
+
+        return false;
     }
 }
