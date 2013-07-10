@@ -270,12 +270,10 @@ public class Reader {
      * Old Nodes Stuff
      */
     private static Object getBukkitInfo(String name, String world, String info) {
-        if (API.pBukkitB) {
-            if (info.equals("group") || info.equals("groups")) {
+        if (info.equals("group") || info.equals("groups")) {
+            if (API.pBukkitB) {
                 return getPermBukkitGroup(name, info);
-            }
-        } else if (API.privB) {
-            if (info.equals("group") || info.equals("groups")) {
+            } else if (API.privB) {
                 return getPrivGroup(name, info);
             }
         }
