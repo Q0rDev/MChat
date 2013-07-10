@@ -3,6 +3,7 @@ package com.miraclem4n.mchat.api;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import net.milkbowl.vault.permission.Permission;
+import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -224,9 +226,21 @@ public class API {
         pBukkitB = setupPermPlugin(pm.getPlugin("PermissionsBukkit"));
         bPermB = setupPermPlugin(pm.getPlugin("bPermissions"));
         pexB = setupPermPlugin(pm.getPlugin("PermissionsEx"));
-        gmB = setupPermPlugin(pm.getPlugin("GroupManager"));
+
+        if (pexB) {
+            pexPermissions = PermissionsEx.getPermissionManager();
+        }
+
+        pluginTest = pm.getPlugin("GroupManager");
+        gmB = pluginTest != null;
+        if (gmB) {
+            gmWH = ((GroupManager) pluginTest).getWorldsHolder();
+            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+
+        }
+
         privB = setupPermPlugin(pm.getPlugin("Privileges"));
-        
+
         if (!(vaultB || pBukkitB || bPermB || pexB || gmB)) {
             MessageUtil.logFormatted("<Permissions> SuperPerms hooked!.");
         }

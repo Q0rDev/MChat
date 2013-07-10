@@ -1,7 +1,6 @@
 package com.miraclem4n.mchat;
 
 import com.herocraftonline.heroes.Heroes;
-import com.massivecraft.factions.ConfServer;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Writer;
