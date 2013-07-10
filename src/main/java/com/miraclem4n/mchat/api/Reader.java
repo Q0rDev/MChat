@@ -205,10 +205,10 @@ public class Reader {
         } else if (InfoUtil.getConfig().isSet("users." + name + ".group")) {
             String group = InfoUtil.getConfig().getString("users." + name + ".group");
 
-            if (InfoUtil.getConfig().isSet(iType + "." + group + ".info." + info)) {
-                return InfoUtil.getConfig().get(iType + "." + group + ".info." + info);
-            } else if (InfoUtil.getConfig().isSet(iType + "." + group + ".worlds." + world + "." + info)) {
-                return InfoUtil.getConfig().get(iType + "." + group + ".worlds." + world + "." + info);
+            if (InfoUtil.getConfig().isSet("groups." + group + ".info." + info)) {
+                return InfoUtil.getConfig().get("groups." + group + ".info." + info);
+            } else if (InfoUtil.getConfig().isSet("groups." + group + ".worlds." + world + "." + info)) {
+                return InfoUtil.getConfig().get("groups." + group + ".worlds." + world + "." + info);
             }
         }
 
