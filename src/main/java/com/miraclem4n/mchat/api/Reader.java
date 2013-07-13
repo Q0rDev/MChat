@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.api;
 
+import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.InfoUtil;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.InfoType;
@@ -62,8 +63,13 @@ public class Reader {
             return getPEXInfo(name, type, world, info);
         }
 
-        if (API.bPermB) {
+        //if (API.bPermB) {
+        if (false) {
             return getbPermInfo(name, type, world, info);
+        }
+        
+        if (API.vChatB) {
+            return getVaultInfo(name, type, world, info);
         }
 
         return getMChatInfo(name, type, world, info);
@@ -486,6 +492,29 @@ public class Reader {
         }
 
         return group;
+    }
+    
+    /*
+     * Vault Stuff
+     */
+    private static Object getVaultInfo(String name, InfoType type, String world, String info) {
+
+    	Object r = "";
+    	
+        if(type == InfoType.USER){
+        	if      ("group" .equals(info)){r=API.vChat.getPrimaryGroup(world, name);}
+        	else if ("groups".equals(info)){r=API.vChat.getPlayerGroups(world, name);}
+        	else if ("prefix".equals(info)){r=API.vChat.getPlayerPrefix(world, name);}
+        	else if ("suffix".equals(info)){r=API.vChat.getPlayerSuffix(world, name);}
+        	else                           {r=API.vChat.getPlayerInfoString(world, name, info, "");}
+        }
+        if(type==InfoType.GROUP || r==""){
+        	if      ("prefix".equals(info)){r=API.vChat.getGroupPrefix(world, name);}
+        	else if ("suffix".equals(info)){r=API.vChat.getGroupSuffix(world, name);}
+        	else                           {r=API.vChat.getGroupInfoString(world, name, info, "");}
+        }
+        	return r;
+        
     }
 
     // Misc
