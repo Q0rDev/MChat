@@ -2,6 +2,7 @@ package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
@@ -40,6 +41,10 @@ public class API {
 
     // PermissionsBukkit
     public static Boolean pBukkitB;
+    
+    //Vault
+    public static Chat vChat = null;
+    public static Boolean vChatB = false;
 
     // Var Map
     public static TreeMap<String, String> varMap;
@@ -221,6 +226,10 @@ public class API {
             }
 
             vaultB = vPerm != null;
+            
+            RegisteredServiceProvider<Chat> rsp = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
+            vChat = rsp.getProvider();
+            vChatB = vChat != null;
         }
 
         pBukkitB = setupPermPlugin(pm.getPlugin("PermissionsBukkit"));
@@ -243,6 +252,9 @@ public class API {
 
         if (!(vaultB || pBukkitB || bPermB || pexB || gmB)) {
             MessageUtil.logFormatted("<Permissions> SuperPerms hooked!.");
+        }
+        if(vChatB){
+        	MessageUtil.logFormatted("Vault Chat variables hooked!.");
         }
     }
 
