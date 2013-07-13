@@ -508,6 +508,7 @@ public class Reader {
         	else if ("suffix".equals(info)){r=API.vChat.getPlayerSuffix(world, name);}
         	else                           {r=API.vChat.getPlayerInfoString(world, name, info, "");}
         }
+        if(r=="") name = API.vChat.getPrimaryGroup(world, name);
         if(type==InfoType.GROUP || r==""){
         	if      ("prefix".equals(info)){r=API.vChat.getGroupPrefix(world, name);}
         	else if ("suffix".equals(info)){r=API.vChat.getGroupSuffix(world, name);}
