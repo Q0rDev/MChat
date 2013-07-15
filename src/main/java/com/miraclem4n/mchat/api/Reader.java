@@ -498,36 +498,56 @@ public class Reader {
      */
     private static Object getVaultInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
-
+        boolean UserInfoLookupFailed = false;
+        
         if (type == InfoType.USER) {
-            if (info.equals("group")) {
-                infoString = API.vChat.getPrimaryGroup(world, name);
-            } else if (info.equals("groups")) {
-                infoString = API.vChat.getPlayerGroups(world, name);
-            } else if (info.equals("prefix")) {
-                infoString = API.vChat.getPlayerPrefix(world, name);
-            } else if (info.equals("suffix")) {
-                infoString = API.vChat.getPlayerSuffix(world, name);
-            } else {
-                infoString = API.vChat.getPlayerInfoString(world, name, info, "");
-            }
+            infoString = getVaultUserInfo(name,world,info);
+            UserInfoLookupFailed = ("".equals(infoString));
         }
 
-        if (type == InfoType.GROUP || infoString == "") {
-            name = API.vChat.getPrimaryGroup(world, name);
-
-            if (info.equals("prefix")) {
-                infoString = API.vChat.getGroupPrefix(world, name);
-            } else if (info.equals("suffix")) {
-                infoString = API.vChat.getGroupSuffix(world, name);
-            } else {
-                infoString = API.vChat.getGroupInfoString(world, name, info, "");
-            }
+        if(UserInfoLookupFailed){
+        	name = API.vChat.getPrimaryGroup(world, name);
+        }
+        
+        if (type == InfoType.GROUP || UserInfoLookupFailed) {
+            getVaultGroupInfo(name,world,info);
         }
 
         return infoString;
     }
+    
+    private static Object getVaultUserInfo(String name, String world, String info){
+    	Object infoString = "";
+    	
+        if (info.equals("group")) {
+            infoString = API.vChat.getPrimaryGroup(world, name);
+        } else if (info.equals("groups")) {
+            infoString = API.vChat.getPlayerGroups(world, name);
+        } else if (info.equals("prefix")) {
+            infoString = API.vChat.getPlayerPrefix(world, name);
+        } else if (info.equals("suffix")) {
+            infoString = API.vChat.getPlayerSuffix(world, name);
+        } else {
+            infoString = API.vChat.getPlayerInfoString(world, name, info, "");
+        }
+        
+        return infoString;
+    }
 
+    private static Object getVaultGroupInfo(String name, String world, String info){
+    	Object infoString = "";
+    	
+    	if (info.equals("prefix")) {
+            infoString = API.vChat.getGroupPrefix(world, name);
+        } else if (info.equals("suffix")) {
+            infoString = API.vChat.getGroupSuffix(world, name);
+        } else {
+            infoString = API.vChat.getGroupInfoString(world, name, info, "");
+        }
+    	
+    	return infoString;
+    }
+    
     // Misc
 
     /**
