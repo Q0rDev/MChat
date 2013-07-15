@@ -511,7 +511,9 @@ public class Reader {
             } else {
                 infoString = API.vChat.getPlayerInfoString(world, name, info, "");
             }
-        } else if (type == InfoType.GROUP || infoString == "") {
+        }
+
+        if (type == InfoType.GROUP || infoString == "") {
             name = API.vChat.getPrimaryGroup(world, name);
 
             if (info.equals("prefix")) {
