@@ -26,6 +26,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
 import uk.org.whoami.geoip.GeoIPLookup;
 import uk.org.whoami.geoip.GeoIPTools;
 
@@ -69,12 +72,20 @@ public class MChat extends JavaPlugin {
         // First we kill EssentialsChat
         killEss();
 
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException ignored) {}
-
-
+        //Use a task, so we can wait for server to finish intializing.
+        final Plugin mchat = this;
+        this.getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
+				@Override
+				public void run() {
+					try {
+						Metrics metrics = new Metrics(mchat);
+			            metrics.findCustomData();
+			            metrics.start();
+			        } catch (IOException ignored) {}	
+				}
+		        			
+			}, 200);
+                
         // Setup Static Variables
         shouting = new HashMap<String, Boolean>();
         spying = new HashMap<String, Boolean>();

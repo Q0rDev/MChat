@@ -27,12 +27,19 @@
  */
 package com.miraclem4n.mchat.metrics;
 
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitTask;
+
+import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.types.config.ConfigType;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -165,6 +172,88 @@ public class Metrics {
         return graph;
     }
 
+    //Copied from vault, lets see what vault plugins our users use, that we can now hook into!
+    public void findCustomData() {
+        // Create our Permission Graph and Add our permission Plotters
+        Graph permGraph = createGraph("Permission");
+        final String permName = Bukkit.getServer().getServicesManager().getRegistration(Permission.class).getProvider().getName();
+        permGraph.addPlotter(new Metrics.Plotter(permName) {
+
+            @Override
+            public int getValue() {
+                return 1;
+            }
+        });
+
+        // Create our Chat Graph and Add our chat Plotters
+        Graph chatGraph = createGraph("Chat");
+        RegisteredServiceProvider<Chat> rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
+        Chat chat = null;
+        if (rspChat != null) {
+            chat = rspChat.getProvider();
+        }
+        final String chatName = chat != null ? chat.getName() : "No Chat";
+        // Add our Chat Plotters
+        chatGraph.addPlotter(new Metrics.Plotter(chatName) {
+
+            @Override
+            public int getValue() {
+                return 1;
+            }
+        });
+        
+        Graph loadedPlugins = createGraph("Plugins");
+        Plugin[] plugins = Bukkit.getServer().getPluginManager().getPlugins();
+        for (Plugin p : plugins){
+        	loadedPlugins.addPlotter(new Metrics.Plotter(p.getName()){
+        		@Override
+                public int getValue() {
+                    return 1;
+                }	
+        	});
+        }
+        
+        Graph nodeStyle = createGraph("NodeStyle");
+        MChat mchat = (MChat)plugin;
+        if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean()) {
+        	nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_LEVELED_NODES.name()){
+        		@Override
+                public int getValue() {
+                    return 1;
+                }	
+        	});   
+        }else if (ConfigType.INFO_USE_OLD_NODES.getBoolean()) {
+        	nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_OLD_NODES.name()){
+        		@Override
+                public int getValue() {
+                    return 1;
+                }	
+        	});   
+        }else if (ConfigType.INFO_USE_NEW_INFO.getBoolean()) {
+        	nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_NEW_INFO.name()){
+        		@Override
+                public int getValue() {
+                    return 1;
+                }	
+        	});   
+        }else{
+        	nodeStyle.addPlotter(new Metrics.Plotter("Custom Variables"){
+        		@Override
+                public int getValue() {
+                    return 1;
+                }	
+        	});  
+        }
+        
+        Graph APIOnly = createGraph("APIOnly");
+        APIOnly.addPlotter(new Metrics.Plotter(ConfigType.MCHAT_API_ONLY.getBoolean() == true ? "true":"false") {
+			@Override
+			public int getValue() {
+				return 1;
+			}
+		});        
+    }
+    
     /**
      * Add a Graph object to BukkitMetrics that represents data for the plugin that should be sent to the backend
      *
