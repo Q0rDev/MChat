@@ -2,6 +2,7 @@ package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
@@ -23,6 +24,9 @@ public class API {
     // Vault
     private static Permission vPerm;
     private static Boolean vaultB;
+
+    public static Chat vChat = null;
+    public static Boolean vChatB = false;
 
     // GroupManager
     public static WorldsHolder gmWH;
@@ -212,15 +216,21 @@ public class API {
         pluginTest = pm.getPlugin("Vault");
         vaultB = pluginTest != null;
         if (vaultB) {
-            MessageUtil.logFormatted("<Plugin> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-
             RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
+            RegisteredServiceProvider<Chat> chatProvider = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
+
+            if (chatProvider != null) {
+                MessageUtil.logFormatted("<Chat> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
+                vChat = chatProvider.getProvider();
+            }
 
             if (permissionProvider != null) {
+                MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
                 vPerm = permissionProvider.getProvider();
             }
 
             vaultB = vPerm != null;
+            vChatB = vChat != null;
         }
 
         pBukkitB = setupPermPlugin(pm.getPlugin("PermissionsBukkit"));

@@ -66,6 +66,10 @@ public class Reader {
             return getbPermInfo(name, type, world, info);
         }
 
+        if (API.vChatB) {
+            return getVaultInfo(name, type, world, info);
+        }
+
         return getMChatInfo(name, type, world, info);
     }
 
@@ -486,6 +490,40 @@ public class Reader {
         }
 
         return group;
+    }
+
+
+    /*
+     * Vault Stuff
+     */
+    private static Object getVaultInfo(String name, InfoType type, String world, String info) {
+        Object infoString = "";
+
+        if (type == InfoType.USER) {
+            if (info.equals("group")) {
+                infoString = API.vChat.getPrimaryGroup(world, name);
+            } else if (info.equals("groups")) {
+                infoString = API.vChat.getPlayerGroups(world, name);
+            } else if (info.equals("prefix")) {
+                infoString = API.vChat.getPlayerPrefix(world, name);
+            } else if (info.equals("suffix")) {
+                infoString = API.vChat.getPlayerSuffix(world, name);
+            } else {
+                infoString = API.vChat.getPlayerInfoString(world, name, info, "");
+            }
+        } else if (type == InfoType.GROUP || infoString == "") {
+            name = API.vChat.getPrimaryGroup(world, name);
+
+            if (info.equals("prefix")) {
+                infoString = API.vChat.getGroupPrefix(world, name);
+            } else if (info.equals("suffix")) {
+                infoString = API.vChat.getGroupSuffix(world, name);
+            } else {
+                infoString = API.vChat.getGroupInfoString(world, name, info, "");
+            }
+        }
+
+        return infoString;
     }
 
     // Misc
