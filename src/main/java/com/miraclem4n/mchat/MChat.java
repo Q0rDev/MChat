@@ -171,13 +171,6 @@ public class MChat extends JavaPlugin {
             geoip = ((GeoIPTools) pm.getPlugin("GeoIPTools")).getGeoIPLookup();
         }
 
-        /* Setup Factions
-        Boolean factions = setupPlugin("Factions");
-
-        if (factions) {
-            setupFactions();
-        }*/
-
         // Setup Heroes
         heroesB = setupPlugin("Heroes");
 
