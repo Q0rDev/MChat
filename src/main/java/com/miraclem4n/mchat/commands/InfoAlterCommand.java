@@ -1,9 +1,9 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.api.Writer;
+import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.InfoEditType;
 import com.miraclem4n.mchat.types.InfoType;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import org.bukkit.command.Command;

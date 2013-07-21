@@ -49,7 +49,7 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
-        <repository>
+        <!--repository>
             <id>kitteh-repo</id>
             <url>http://repo.kitteh.org/content/groups/public</url>
             <releases>
@@ -58,7 +58,7 @@
             <snapshots>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-        </repository>
+        </repository-->
         <repository>
             <id>q0r-repo</id>
             <url>http://repo.q0r.ca</url>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.1-R0.2</version>
+            <version>1.5.2-R0.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

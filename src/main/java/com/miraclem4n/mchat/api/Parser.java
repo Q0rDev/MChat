@@ -8,12 +8,13 @@ import com.maxmind.geoip.Country;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.regionName;
 import com.miraclem4n.mchat.MChat;
-import com.miraclem4n.mchat.configs.CensorUtil;
+import com.miraclem4n.mchat.configs.YmlManager;
+import com.miraclem4n.mchat.configs.YmlType;
+import com.miraclem4n.mchat.configs.config.ConfigType;
+import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.InfoType;
-import com.miraclem4n.mchat.types.config.ConfigType;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -67,7 +68,7 @@ public class Parser {
         Object group = checkNull(Reader.getRawGroup(pName, InfoType.USER, world));
         List<Object> groups = Reader.getRawGroups(pName, InfoType.USER, world);
 
-        String vI = ConfigType.MCHAT_VAR_INDICATOR.getString();
+        String vI = IndicatorType.MISC_VAR.getValue();
 
         msg = checkNull(msg).toString();
 
@@ -453,7 +454,7 @@ public class Parser {
     }
 
     private static String parseVars(String format, String pName, String world) {
-        String vI = "\\" + ConfigType.MCHAT_VAR_INDICATOR.getString();
+        String vI = "\\" + IndicatorType.MISC_VAR.getValue();
         Pattern pattern = Pattern.compile(vI + "<(.*?)>");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
@@ -516,7 +517,7 @@ public class Parser {
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
         }
 
-        for (Map.Entry<String, Object> entry : CensorUtil.getConfig().getValues(false).entrySet()) {
+        for (Map.Entry<String, Object> entry : YmlManager.getYml(YmlType.CENSOR_YML).getConfig().getValues(false).entrySet()) {
             String val = entry.getValue().toString();
 
             msg = replacer(msg, "(?i)" + entry.getKey(), val);

@@ -10,11 +10,11 @@ public enum InfoType {
         this.name = name;
     }
 
-    public String getName() {
+    public String getConfValue() {
         return name;
     }
 
-    public static InfoType fromName(String name) {
+    /*public static InfoType fromName(String name) {
         for (InfoType type : InfoType.values()) {
             if (type.name.contains(name)) {
                 return type;
@@ -22,5 +22,5 @@ public enum InfoType {
         }
 
         return null;
-    }
+    }*/
 }

@@ -22,7 +22,7 @@ public class LibLoader {
         return load(file);
     }
 
-    public static Boolean download(String filename, String url) {
+    private static Boolean download(String filename, String url) {
         File file = getFile(filename);
 
         if (!file.exists()) {

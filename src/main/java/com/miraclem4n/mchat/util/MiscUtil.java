@@ -1,8 +1,8 @@
 package com.miraclem4n.mchat.util;
 
 import com.miraclem4n.mchat.api.API;
+import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.IndicatorType;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

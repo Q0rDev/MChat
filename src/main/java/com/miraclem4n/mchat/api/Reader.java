@@ -1,10 +1,11 @@
 package com.miraclem4n.mchat.api;
 
-import com.miraclem4n.mchat.configs.InfoUtil;
+import com.miraclem4n.mchat.configs.YmlManager;
+import com.miraclem4n.mchat.configs.YmlType;
+import com.miraclem4n.mchat.configs.config.ConfigType;
+import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.InfoType;
-import com.miraclem4n.mchat.types.config.ConfigType;
-import com.miraclem4n.mchat.types.config.LocaleType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
@@ -13,6 +14,7 @@ import de.bananaco.bpermissions.api.util.CalculableType;
 import net.krinsoft.privileges.Privileges;
 import org.anjocaido.groupmanager.dataholder.OverloadedWorldHolder;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 
@@ -200,19 +202,21 @@ public class Reader {
             return getMChatGroup(name, info);
         }
 
-        String iType = type.getName();
+        String iType = type.getConfValue();
 
-        if (InfoUtil.getConfig().isSet(iType + "." + name + ".info." + info)) {
-            return InfoUtil.getConfig().get(iType + "." + name + ".info." + info);
-        } else if (InfoUtil.getConfig().isSet(iType + "." + name + ".worlds." + world + "." + info)) {
-            return InfoUtil.getConfig().get(iType + "." + name + ".worlds." + world + "." + info);
-        } else if (InfoUtil.getConfig().isSet("users." + name + ".group")) {
-            String group = InfoUtil.getConfig().getString("users." + name + ".group");
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-            if (InfoUtil.getConfig().isSet("groups." + group + ".info." + info)) {
-                return InfoUtil.getConfig().get("groups." + group + ".info." + info);
-            } else if (InfoUtil.getConfig().isSet("groups." + group + ".worlds." + world + "." + info)) {
-                return InfoUtil.getConfig().get("groups." + group + ".worlds." + world + "." + info);
+        if (infoConfig.isSet(iType + "." + name + ".info." + info)) {
+            return infoConfig.get(iType + "." + name + ".info." + info);
+        } else if (infoConfig.isSet(iType + "." + name + ".worlds." + world + "." + info)) {
+            return infoConfig.get(iType + "." + name + ".worlds." + world + "." + info);
+        } else if (infoConfig.isSet("users." + name + ".group")) {
+            String group = infoConfig.getString("users." + name + ".group");
+
+            if (infoConfig.isSet("groups." + group + ".info." + info)) {
+                return infoConfig.get("groups." + group + ".info." + info);
+            } else if (infoConfig.isSet("groups." + group + ".worlds." + world + "." + info)) {
+                return infoConfig.get("groups." + group + ".worlds." + world + "." + info);
             }
         }
 
@@ -220,14 +224,16 @@ public class Reader {
     }
 
     private static Object getMChatGroup(String name, String info) {
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
+
         if (info.equals("groups")) {
-            if (InfoUtil.getConfig().isSet("users." + name + ".groups")) {
-                return InfoUtil.getConfig().getStringList("users." + name + ".groups");
+            if (infoConfig.isSet("users." + name + ".groups")) {
+                return infoConfig.getStringList("users." + name + ".groups");
             }
         }
 
-        if (InfoUtil.getConfig().isSet("users." + name + ".group")) {
-            return InfoUtil.getConfig().get("users." + name + ".group");
+        if (infoConfig.isSet("users." + name + ".group")) {
+            return infoConfig.get("users." + name + ".group");
         }
 
         return "";
@@ -237,6 +243,7 @@ public class Reader {
      * Leveled Nodes Stuff
      */
     private static Object getLeveledInfo(String name, String world, String info) {
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
         if (API.pBukkitB) {
@@ -245,25 +252,25 @@ public class Reader {
             }
         }
 
-        if (!InfoUtil.getConfig().isSet("mchat." + info)) {
+        if (!infoConfig.isSet("mchat." + info)) {
             return "";
         }
 
-        if (!InfoUtil.getConfig().isSet("rank." + info)) {
+        if (!infoConfig.isSet("rank." + info)) {
             return getBukkitInfo(name, world, info);
         }
 
-        for (Map.Entry<String, Object> entry : InfoUtil.getConfig().getValues(true).entrySet()) {
+        for (Map.Entry<String, Object> entry : infoConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + ".")) {
                 if (API.checkPermissions(name, world, entry.getKey())) {
                     String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
 
-                    if (!InfoUtil.getConfig().isSet(rVal)) {
+                    if (!infoConfig.isSet(rVal)) {
                         continue;
                     }
 
                     try {
-                        iMap.put(InfoUtil.getConfig().getInt(rVal), entry.getValue().toString());
+                        iMap.put(infoConfig.getInt(rVal), entry.getValue().toString());
                     } catch (NumberFormatException ignored) {}
                 }
             }
@@ -282,6 +289,8 @@ public class Reader {
      * Old Nodes Stuff
      */
     private static Object getBukkitInfo(String name, String world, String info) {
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
+
         if (info.equals("group") || info.equals("groups")) {
             if (API.pBukkitB) {
                 return getPermBukkitGroup(name, info);
@@ -290,11 +299,11 @@ public class Reader {
             }
         }
 
-        if (!InfoUtil.getConfig().isSet("mchat." + info)) {
+        if (!infoConfig.isSet("mchat." + info)) {
             return "";
         }
 
-        for (Map.Entry<String, Object> entry : InfoUtil.getConfig().getValues(true).entrySet()) {
+        for (Map.Entry<String, Object> entry : infoConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + ".")) {
                 if (API.checkPermissions(name, world, entry.getKey())) {
                     Object infoResolve = entry.getValue();
@@ -499,26 +508,26 @@ public class Reader {
     private static Object getVaultInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
         boolean UserInfoLookupFailed = false;
-        
+
         if (type == InfoType.USER) {
             infoString = getVaultUserInfo(name,world,info);
-            UserInfoLookupFailed = ("".equals(infoString));
+            UserInfoLookupFailed = infoString.equals("");
         }
 
-        if(UserInfoLookupFailed){
-        	name = API.vChat.getPrimaryGroup(world, name);
+        if (UserInfoLookupFailed) {
+            name = API.vChat.getPrimaryGroup(world, name);
         }
-        
+
         if (type == InfoType.GROUP || UserInfoLookupFailed) {
             getVaultGroupInfo(name,world,info);
         }
 
         return infoString;
     }
-    
+
     private static Object getVaultUserInfo(String name, String world, String info){
-    	Object infoString = "";
-    	
+        Object infoString;
+
         if (info.equals("group")) {
             infoString = API.vChat.getPrimaryGroup(world, name);
         } else if (info.equals("groups")) {
@@ -530,24 +539,24 @@ public class Reader {
         } else {
             infoString = API.vChat.getPlayerInfoString(world, name, info, "");
         }
-        
+
         return infoString;
     }
 
     private static Object getVaultGroupInfo(String name, String world, String info){
-    	Object infoString = "";
-    	
-    	if (info.equals("prefix")) {
+        Object infoString;
+
+        if (info.equals("prefix")) {
             infoString = API.vChat.getGroupPrefix(world, name);
         } else if (info.equals("suffix")) {
             infoString = API.vChat.getGroupSuffix(world, name);
         } else {
             infoString = API.vChat.getGroupInfoString(world, name, info, "");
         }
-    	
-    	return infoString;
+
+        return infoString;
     }
-    
+
     // Misc
 
     /**
@@ -556,12 +565,14 @@ public class Reader {
      * @return Group Name's Alias.
      */
     public static String getGroupName(String group) {
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
+
         if (group.isEmpty()) {
             return "";
         }
 
-        if (InfoUtil.getConfig().isSet("groupnames." + group)) {
-            return InfoUtil.getConfig().getString("groupnames." + group);
+        if (infoConfig.isSet("groupnames." + group)) {
+            return infoConfig.getString("groupnames." + group);
         }
 
         return group;
@@ -573,12 +584,14 @@ public class Reader {
      * @return World Name's Alias.
      */
     public static String getWorldName(String world) {
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
+
         if (world.isEmpty()) {
             return "";
         }
 
-        if (InfoUtil.getConfig().isSet("worldnames." + world)) {
-            return InfoUtil.getConfig().getString("worldnames." + world);
+        if (infoConfig.isSet("worldnames." + world)) {
+            return infoConfig.getString("worldnames." + world);
         }
 
         return world;
@@ -590,12 +603,14 @@ public class Reader {
      * @return Player Name's mChat Alias.
      */
     public static String getMName(String name) {
-        if (InfoUtil.getConfig().isSet("mname." + name)) {
-            if (!(InfoUtil.getConfig().getString("mname." + name).isEmpty())) {
-                return InfoUtil.getConfig().getString("mname." + name);
+        YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
+
+        if (infoConfig.isSet("mname." + name)) {
+            if (!(infoConfig.getString("mname." + name).isEmpty())) {
+                return infoConfig.getString("mname." + name);
             }
         }
-        
+
         return name;
     }
 

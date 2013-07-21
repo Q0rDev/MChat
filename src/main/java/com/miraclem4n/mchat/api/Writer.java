@@ -1,8 +1,10 @@
 package com.miraclem4n.mchat.api;
 
-import com.miraclem4n.mchat.configs.InfoUtil;
+import com.miraclem4n.mchat.configs.Yml;
+import com.miraclem4n.mchat.configs.YmlManager;
+import com.miraclem4n.mchat.configs.YmlType;
+import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.types.InfoType;
-import com.miraclem4n.mchat.types.config.ConfigType;
 
 public class Writer {
     /**
@@ -11,14 +13,15 @@ public class Writer {
      * @param name Defining value of the base(Also known as Name).
      */
     public static void addBase(String name, InfoType type) {
-        String base = type.getName();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = type.getConfValue();
 
         if (type.equals(InfoType.USER)) {
-            InfoUtil.set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getString());
+            yml.set(base + "." + name + ".group", ConfigType.INFO_DEFAULT_GROUP.getString());
         }
 
-        InfoUtil.set(base + "." + name + ".info.prefix", "");
-        InfoUtil.set(base + "." + name + ".info.suffix", "");
+        yml.set(base + "." + name + ".info.prefix", "");
+        yml.set(base + "." + name + ".info.suffix", "");
 
         save();
 
@@ -34,11 +37,13 @@ public class Writer {
      * @param createBlank Whether or not to create blank prefix / suffix.
      */
     public static void addBase(String player, String group, Boolean createBlank) {
-        InfoUtil.set("users." + player + ".group", group);
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+
+        yml.set("users." + player + ".group", group);
 
         if (createBlank) {
-            InfoUtil.set("users." + player + ".info.prefix", "");
-            InfoUtil.set("users." + player + ".info.suffix", "");
+            yml.set("users." + player + ".info.prefix", "");
+            yml.set("users." + player + ".info.suffix", "");
         }
 
         save();
@@ -53,14 +58,15 @@ public class Writer {
      * @param world Name of the World you are trying to add.
      */
     public static void addWorld(String name, InfoType type, String world) {
-        String base = type.getName();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = type.getConfValue();
 
-        if (!InfoUtil.getConfig().isSet(base + "." + name)) {
+        if (!yml.getConfig().isSet(base + "." + name)) {
             addBase(name, type);
         }
 
-        InfoUtil.set(base + "." + name + ".worlds." + world + "prefix", "");
-        InfoUtil.set(base + "." + name + ".worlds." + world + "suffix", "");
+        yml.set(base + "." + name + ".worlds." + world + "prefix", "");
+        yml.set(base + "." + name + ".worlds." + world + "suffix", "");
 
         save();
     }
@@ -73,13 +79,14 @@ public class Writer {
      * @param value Value of the Variable you are trying to add.
      */
     public static void setInfoVar(String name, InfoType type, String var, Object value) {
-        String base = type.getName();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = type.getConfValue();
 
-        if (!InfoUtil.getConfig().isSet(base + "." + name)) {
+        if (!yml.getConfig().isSet(base + "." + name)) {
             addBase(name, type);
         }
 
-        InfoUtil.set(base + "." + name + ".info." + var, value);
+        yml.set(base + "." + name + ".info." + var, value);
 
         save();
     }
@@ -93,13 +100,14 @@ public class Writer {
      * @param value Value of the Variable you are trying to add.
      */
     public static void setWorldVar(String name, InfoType type, String world, String var, Object value) {
-        String base = type.getName();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = type.getConfValue();
 
-        if (!InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world)) {
+        if (!yml.getConfig().isSet(base + "." + name + ".worlds." + world)) {
             addWorld(name, type, world);
         }
 
-        InfoUtil.set(base + "." + name + ".worlds." + world + "." + var, value);
+        yml.set(base + "." + name + ".worlds." + world + "." + var, value);
 
         save();
     }
@@ -110,11 +118,13 @@ public class Writer {
      * @param group Group to be set to Player.
      */
     public static void setGroup(String player, String group) {
-        if (!InfoUtil.getConfig().isSet(player + "." + group)) {
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+
+        if (!yml.getConfig().isSet(player + "." + group)) {
             addBase(player, group, false);
         }
 
-        InfoUtil.set("users." + player + ".group", group);
+        yml.set("users." + player + ".group", group);
 
         save();
     }
@@ -125,10 +135,11 @@ public class Writer {
      * @param type Type of Base you want to remove.
      */
     public static void removeBase(String name, InfoType type) {
-        String base = type.getName();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = type.getConfValue();
 
-        if (InfoUtil.getConfig().isSet(base + "." + name)) {
-            InfoUtil.set(base + "." + name, null);
+        if (yml.getConfig().isSet(base + "." + name)) {
+            yml.set(base + "." + name, null);
 
             save();
         }
@@ -151,11 +162,12 @@ public class Writer {
      * @param world Name of the World you are trying to remove.
      */
     public static void removeWorld(String name, InfoType type, String world) {
-        String base = type.getName();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = type.getConfValue();
 
-        if (InfoUtil.getConfig().isSet(base + "." + name)
-                && InfoUtil.getConfig().isSet(base + "." + name + ".worlds." + world)) {
-            InfoUtil.set(base + "." + name + ".worlds." + world, null);
+        if (yml.getConfig().isSet(base + "." + name)
+                && yml.getConfig().isSet(base + "." + name + ".worlds." + world)) {
+            yml.set(base + "." + name + ".worlds." + world, null);
 
             save();
         }
@@ -173,15 +185,19 @@ public class Writer {
     }
 
     private static void setDGroup(String group) {
-        if (!InfoUtil.getConfig().isSet("groups." + group)) {
-            InfoUtil.set("groups." + group + ".info.prefix", "");
-            InfoUtil.set("groups." + group + ".info.suffix", "");
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+
+        if (!yml.getConfig().isSet("groups." + group)) {
+            yml.set("groups." + group + ".info.prefix", "");
+            yml.set("groups." + group + ".info.suffix", "");
 
             save();
         }
     }
 
     private static void save() {
-        InfoUtil.save();
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+
+        yml.save();
     }
 }

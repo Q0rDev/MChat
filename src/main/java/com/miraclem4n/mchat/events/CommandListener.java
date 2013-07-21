@@ -1,6 +1,8 @@
 package com.miraclem4n.mchat.events;
 
-import com.miraclem4n.mchat.configs.ConfigUtil;
+import com.miraclem4n.mchat.configs.YmlManager;
+import com.miraclem4n.mchat.configs.YmlType;
+import com.miraclem4n.mchat.configs.config.ConfigYml;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -17,7 +19,9 @@ public class CommandListener implements Listener {
         String msg = event.getMessage();
         String command = msg.split(" ")[0].replace("/", "");
 
-        for (Map.Entry<String, List<String>> entry : ConfigUtil.getAliasMap().entrySet()) {
+        ConfigYml configYml = (ConfigYml) YmlManager.getYml(YmlType.CONFIG_YML);
+
+        for (Map.Entry<String, List<String>> entry : configYml.getAliasMap().entrySet()) {
             for (String comm : entry.getValue()) {
                 if (comm.equalsIgnoreCase(command)) {
                     event.setMessage(msg.replaceFirst("/" + command, "/" + entry.getKey()));

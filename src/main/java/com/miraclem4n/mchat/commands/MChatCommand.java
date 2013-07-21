@@ -1,10 +1,8 @@
 package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.MChat;
-import com.miraclem4n.mchat.configs.CensorUtil;
-import com.miraclem4n.mchat.configs.ConfigUtil;
-import com.miraclem4n.mchat.configs.InfoUtil;
-import com.miraclem4n.mchat.configs.LocaleUtil;
+import com.miraclem4n.mchat.configs.YmlManager;
+import com.miraclem4n.mchat.configs.YmlType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.MiscUtil;
 import org.bukkit.command.Command;
@@ -48,7 +46,6 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     }
 
-                    ConfigUtil.initialize();
                     MessageUtil.sendMessage(sender, "Config Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("info")
@@ -57,7 +54,7 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     }
 
-                    InfoUtil.initialize();
+                    YmlManager.reloadYml(YmlType.INFO_YML);
                     MessageUtil.sendMessage(sender, "Info Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("censor")
@@ -66,7 +63,7 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     }
 
-                    CensorUtil.initialize();
+                    YmlManager.reloadYml(YmlType.CENSOR_YML);
                     MessageUtil.sendMessage(sender, "Censor Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("locale")
@@ -75,7 +72,7 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     }
 
-                    LocaleUtil.initialize();
+                    YmlManager.reloadYml(YmlType.LOCALE_YML);
                     MessageUtil.sendMessage(sender, "Locale Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("all")
@@ -84,8 +81,7 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     }
 
-                    plugin.reloadConfigs();
-                    plugin.initializeConfigs();
+                    YmlManager.load();
                     MessageUtil.sendMessage(sender, "All Config's Reloaded.");
                     return true;
                 }

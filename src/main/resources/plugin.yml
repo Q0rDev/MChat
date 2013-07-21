@@ -65,7 +65,6 @@ permissions:
             mchat.suppress.join: true
             mchat.suppress.quit: true
             mchat.suppress.kick: true
-            mchat.suppress.death: true
     mchat.bypass.*:
         default: false
         description: Allow bypass of all Automatic functions.
@@ -81,7 +80,6 @@ permissions:
             mchat.bypass.suppress.join: true
             mchat.bypass.suppress.quit: true
             mchat.bypass.suppress.kick: true
-            mchat.bypass.suppress.death: true
     mchat.user.*:
         default: false
         description: Allows full use of all user info related mChat commands.
@@ -171,9 +169,6 @@ permissions:
     mchat.suppress.kick:
         default: false
         description: Allow suppression of the mChat Kick Messages.
-    mchat.suppress.death:
-        default: false
-        description: Allow suppression of the mChat Death Messages.
     mchat.bypass.suppress.join:
         default: false
         description: Allow bypassing of Join Suppression.
@@ -183,9 +178,6 @@ permissions:
     mchat.bypass.suppress.kick:
         default: false
         description: Allow bypassing of Kick Suppression.
-    mchat.bypass.suppress.death:
-        default: false
-        description: Allow bypassing of Death Suppression.
     mchat.user.add.player:
         default: false
         description: Allow usage of /mchat user add player Player

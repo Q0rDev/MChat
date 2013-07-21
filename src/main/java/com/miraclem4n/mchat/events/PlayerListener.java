@@ -4,9 +4,11 @@ import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Writer;
-import com.miraclem4n.mchat.configs.InfoUtil;
+import com.miraclem4n.mchat.configs.YmlManager;
+import com.miraclem4n.mchat.configs.YmlType;
+import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.types.EventType;
-import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +39,7 @@ public class PlayerListener implements Listener {
 
         // For Lazy People
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
-            if (InfoUtil.getConfig().get("users." + pName) == null) {
+            if (YmlManager.getYml(YmlType.INFO_YML).getConfig().get("users." + pName) == null) {
                 Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString(), false);
             }
         }
@@ -78,7 +80,7 @@ public class PlayerListener implements Listener {
 
         String reason = event.getReason();
 
-        String kickMsg = Parser.parseEvent(pName, world, EventType.KICK).replace(ConfigType.MCHAT_VAR_INDICATOR.getString() + "reason", reason).replace(ConfigType.MCHAT_VAR_INDICATOR.getString() + "r", reason);
+        String kickMsg = Parser.parseEvent(pName, world, EventType.KICK).replace(IndicatorType.MISC_VAR.getValue() + "reason", reason).replace(IndicatorType.MISC_VAR.getValue() + "r", reason);
 
         if (ConfigType.SUPPRESS_USE_KICK.getBoolean()) {
             suppressEventMessage(kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getInteger());

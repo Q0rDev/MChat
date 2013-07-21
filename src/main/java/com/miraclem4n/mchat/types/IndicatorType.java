@@ -1,6 +1,6 @@
 package com.miraclem4n.mchat.types;
 
-import com.miraclem4n.mchat.types.config.ConfigType;
+import com.miraclem4n.mchat.configs.config.ConfigType;
 
 public enum IndicatorType {
     MISC_VAR(ConfigType.MCHAT_VAR_INDICATOR),
