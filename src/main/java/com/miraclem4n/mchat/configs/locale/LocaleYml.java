@@ -7,16 +7,7 @@ import java.io.File;
 
 public class LocaleYml extends Yml {
     public LocaleYml() {
-        file = new File("plugins/MChat/locale.yml");
-
-        config = YamlConfiguration.loadConfiguration(file);
-
-        config.options().indent(4);
-        config.options().header("MChat Locale");
-
-        changed = false;
-
-        loadDefaults();
+        super(new File("plugins/MChat/locale.yml"), "MChat Locale");
     }
 
     public void loadDefaults() {

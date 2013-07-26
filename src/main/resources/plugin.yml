@@ -180,52 +180,52 @@ permissions:
         description: Allow bypassing of Kick Suppression.
     mchat.user.add.player:
         default: false
-        description: Allow usage of /mchat user add player Player
+        description: Allow usage of /mchatuser add player Player
     mchat.user.add.ivar:
         default: false
-        description: Allow usage of /mchat user add ivar Player InfoVariable InfoValue
+        description: Allow usage of /mchatuser add ivar Player InfoVariable InfoValue
     mchat.user.add.world:
         default: false
-        description: Allow usage of /mchat user add world Player World
+        description: Allow usage of /mchatuser add world Player World
     mchat.user.add.wvar:
         default: false
-        description: Allow usage of /mchat user add world Player World InfoVariable InfoValue
+        description: Allow usage of /mchatuser add world Player World InfoVariable InfoValue
     mchat.user.set.group:
         default: false
-        description: Allow usage of /mchat user set group Player NewGroup
+        description: Allow usage of /mchatuser set group Player NewGroup
     mchat.user.remove.player:
         default: false
-        description: Allow usage of /mchat user remove Player
+        description: Allow usage of /mchatuser remove Player
     mchat.user.remove.ivar:
         default: false
-        description: Allow usage of /mchat user remove Player InfoVariable
+        description: Allow usage of /mchatuser remove Player InfoVariable
     mchat.user.remove.world:
         default: false
-        description: Allow usage of /mchat user remove Player World
+        description: Allow usage of /mchatuser remove Player World
     mchat.user.remove.wvar:
         default: false
-        description: Allow usage of /mchat user remove Player World InfoVariable
+        description: Allow usage of /mchatuser remove Player World InfoVariable
     mchat.group.add.group:
         default: false
-        description: Allow usage of /mchat group add group Group
+        description: Allow usage of /mchatgroup add group Group
     mchat.group.add.ivar:
         default: false
-        description: Allow usage of /mchat group add ivar Group InfoVariable InfoValue
+        description: Allow usage of /mchatgroup add ivar Group InfoVariable InfoValue
     mchat.group.add.world:
         default: false
-        description: Allow usage of /mchat group add world Group World
+        description: Allow usage of /mchatgroup add world Group World
     mchat.group.add.wvar:
         default: false
-        description: Allow usage of /mchat group add world Group World InfoVariable InfoValue
+        description: Allow usage of /mchatgroup add world Group World InfoVariable InfoValue
     mchat.group.remove.group:
         default: false
-        description: Allow usage of /mchat group remove group Group
+        description: Allow usage of /mchatgroup remove group Group
     mchat.group.remove.ivar:
         default: false
-        description: Allow usage of /mchat group remove ivar Group InfoVariable
+        description: Allow usage of /mchatgroup remove ivar Group InfoVariable
     mchat.group.remove.world:
         default: false
-        description: Allow usage of /mchat group remove world Group World
+        description: Allow usage of /mchatgroup remove world Group World
     mchat.group.remove.wvar:
         default: false
-        description: Allow usage of /mchat group remove wvar Group World InfoVariable
+        description: Allow usage of /mchatgroup remove wvar Group World InfoVariable

@@ -17,6 +17,7 @@ import com.miraclem4n.mchat.metrics.Metrics;
 import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.TimerUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -68,12 +69,11 @@ public class MChat extends JavaPlugin {
         killEss();
 
         //Use a task, so we can wait for server to finish intializing.
-        final Plugin mchat = this;
-        this.getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
+        getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
 				@Override
 				public void run() {
 					try {
-						Metrics metrics = new Metrics(mchat);
+						Metrics metrics = new Metrics(Bukkit.getPluginManager().getPlugin("MChat"));
 			            metrics.findCustomData();
 			            metrics.start();
 			        } catch (IOException ignored) {}	

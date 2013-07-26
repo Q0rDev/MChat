@@ -16,7 +16,7 @@ public enum EventType {
         return name;
     }
 
-    public static EventType fromName(String name) {
+    /*public static EventType fromName(String name) {
         for (EventType type : EventType.values()) {
             if (type.name.contains(name)) {
                 return type;
@@ -24,5 +24,5 @@ public enum EventType {
         }
 
         return null;
-    }
+    }*/
 }

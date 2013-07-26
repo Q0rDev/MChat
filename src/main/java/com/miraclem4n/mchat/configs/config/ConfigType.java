@@ -41,13 +41,7 @@ public enum ConfigType {
     }
 
     public String getString() {
-        String s = YmlManager.getYml(YmlType.CONFIG_YML).getConfig().getString(option, "");
-
-        if (s != null) {
-            return MessageUtil.addColour(s);
-        }
-
-        return "";
+        return MessageUtil.addColour(YmlManager.getYml(YmlType.CONFIG_YML).getConfig().getString(option, ""));
     }
 
     public Integer getInteger() {
@@ -71,6 +65,6 @@ public enum ConfigType {
             return l;
         }
 
-        return list;
+        return new ArrayList<String>();
     }
 }

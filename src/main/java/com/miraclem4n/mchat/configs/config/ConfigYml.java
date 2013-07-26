@@ -1,7 +1,6 @@
 package com.miraclem4n.mchat.configs.config;
 
 import com.miraclem4n.mchat.configs.Yml;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,16 +16,7 @@ public class ConfigYml extends Yml {
     private HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
 
     public ConfigYml() {
-        file = new File("plugins/MChat/config.yml");
-
-        config = YamlConfiguration.loadConfiguration(file);
-
-        config.options().indent(4);
-        config.options().header("MChat Config");
-
-        changed = false;
-
-        loadDefaults();
+        super(new File("plugins/MChat/config.yml"), "MChat Config");
     }
 
     public void loadDefaults() {

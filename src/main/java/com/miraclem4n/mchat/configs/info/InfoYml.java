@@ -7,16 +7,7 @@ import java.io.File;
 
 public class InfoYml extends Yml {
     public InfoYml() {
-        file = new File("plugins/MChat/info.yml");
-
-        config = YamlConfiguration.loadConfiguration(file);
-
-        config.options().indent(4);
-        config.options().header("MChat Info");
-
-        changed = false;
-
-        loadDefaults();
+        super(new File("plugins/MChat/info.yml"), "MChat Info");
     }
 
     public void loadDefaults() {

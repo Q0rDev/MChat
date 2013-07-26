@@ -9,6 +9,18 @@ public abstract class Yml {
     public File file;
     public Boolean changed;
 
+    public Yml(File filez, String header) {
+        file = filez;
+        changed = false;
+
+        config = YamlConfiguration.loadConfiguration(file);
+
+        config.options().indent(4);
+        config.options().header(header);
+
+        loadDefaults();
+    }
+
     public abstract void loadDefaults();
 
     public void set(String key, Object obj) {
