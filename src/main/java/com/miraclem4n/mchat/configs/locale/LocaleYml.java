@@ -1,7 +1,6 @@
 package com.miraclem4n.mchat.configs.locale;
 
 import com.miraclem4n.mchat.configs.Yml;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 

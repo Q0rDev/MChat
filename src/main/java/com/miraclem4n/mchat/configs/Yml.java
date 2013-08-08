@@ -17,8 +17,6 @@ public abstract class Yml {
 
         config.options().indent(4);
         config.options().header(header);
-
-        loadDefaults();
     }
 
     public abstract void loadDefaults();

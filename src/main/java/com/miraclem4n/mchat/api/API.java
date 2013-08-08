@@ -22,8 +22,8 @@ import java.util.TreeMap;
 @SuppressWarnings("unused")
 public class API {
     // Vault
-    private static Permission vPerm;
-    private static Boolean vaultB;
+    public static Permission vPerm;
+    public static Boolean vaultB;
 
     public static Chat vChat = null;
     public static Boolean vChatB = false;
@@ -99,7 +99,7 @@ public class API {
     public static String createHealthBar(Player player) {
         float maxHealth = 20;
         float barLength = 10;
-        float health = player.getHealth();
+        float health = new Float(player.getHealth());
 
         return createBasicBar(health, maxHealth, barLength);
     }

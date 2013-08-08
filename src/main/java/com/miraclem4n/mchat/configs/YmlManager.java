@@ -13,9 +13,16 @@ public class YmlManager {
 
     public static void load() {
         censorYml = new CensorYml();
+        censorYml.loadDefaults();
+
         configYml = new ConfigYml();
+        configYml.loadDefaults();
+
         infoYml = new InfoYml();
+        infoYml.loadDefaults();
+
         localeYml = new LocaleYml();
+        localeYml.loadDefaults();
     }
 
     public static Yml getYml(YmlType type) {
@@ -35,12 +42,16 @@ public class YmlManager {
     public static void reloadYml(YmlType type) {
         if (type == YmlType.CENSOR_YML) {
             censorYml = new CensorYml();
+            censorYml.loadDefaults();
         } else if (type == YmlType.CONFIG_YML) {
             configYml = new ConfigYml();
+            configYml.loadDefaults();
         } else if (type == YmlType.INFO_YML) {
             infoYml = new InfoYml();
+            infoYml.loadDefaults();
         } else if (type == YmlType.LOCALE_YML) {
             localeYml = new LocaleYml();
+            localeYml.loadDefaults();
         }
     }
 

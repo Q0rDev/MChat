@@ -27,7 +27,7 @@
  */
 package com.miraclem4n.mchat.metrics;
 
-import com.miraclem4n.mchat.MChat;
+import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.configs.config.ConfigType;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
@@ -163,7 +163,30 @@ public class Metrics {
     public void findCustomData() {
         // Create our Permission Graph and Add our permission Plotters
         Graph permGraph = createGraph("Permission");
-        final String permName = Bukkit.getServer().getServicesManager().getRegistration(Permission.class).getProvider().getName();
+        Graph chatGraph = createGraph("Chat");
+
+        RegisteredServiceProvider<Permission> rspPerm = null;
+        RegisteredServiceProvider<Chat> rspChat = null;
+
+        if (API.vaultB) {
+            rspPerm = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
+            rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
+        }
+
+        Permission perm = null;
+        Chat chat = null;
+
+        if (rspPerm != null) {
+            perm = rspPerm.getProvider();
+        }
+
+        if (rspChat != null) {
+            chat = rspChat.getProvider();
+        }
+
+        final String permName = perm != null ? perm.getName() : "No Permissions";
+        final String chatName = chat != null ? chat.getName() : "No Chat";
+
         permGraph.addPlotter(new Metrics.Plotter(permName) {
 
             @Override
@@ -172,15 +195,6 @@ public class Metrics {
             }
         });
 
-        // Create our Chat Graph and Add our chat Plotters
-        Graph chatGraph = createGraph("Chat");
-        RegisteredServiceProvider<Chat> rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
-        Chat chat = null;
-        if (rspChat != null) {
-            chat = rspChat.getProvider();
-        }
-        final String chatName = chat != null ? chat.getName() : "No Chat";
-        // Add our Chat Plotters
         chatGraph.addPlotter(new Metrics.Plotter(chatName) {
 
             @Override
@@ -188,59 +202,58 @@ public class Metrics {
                 return 1;
             }
         });
-        
+
         Graph loadedPlugins = createGraph("Plugins");
         Plugin[] plugins = Bukkit.getServer().getPluginManager().getPlugins();
         for (Plugin p : plugins){
-        	loadedPlugins.addPlotter(new Metrics.Plotter(p.getName()){
-        		@Override
+            loadedPlugins.addPlotter(new Metrics.Plotter(p.getName()){
+                @Override
                 public int getValue() {
                     return 1;
-                }	
-        	});
+                }
+            });
         }
-        
+
         Graph nodeStyle = createGraph("NodeStyle");
-        MChat mchat = (MChat)plugin;
         if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean()) {
-        	nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_LEVELED_NODES.name()){
-        		@Override
+            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_LEVELED_NODES.name()){
+                @Override
                 public int getValue() {
                     return 1;
-                }	
-        	});   
+                }
+            });
         }else if (ConfigType.INFO_USE_OLD_NODES.getBoolean()) {
-        	nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_OLD_NODES.name()){
-        		@Override
+            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_OLD_NODES.name()){
+                @Override
                 public int getValue() {
                     return 1;
-                }	
-        	});   
+                }
+            });
         }else if (ConfigType.INFO_USE_NEW_INFO.getBoolean()) {
-        	nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_NEW_INFO.name()){
-        		@Override
+            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_NEW_INFO.name()){
+                @Override
                 public int getValue() {
                     return 1;
-                }	
-        	});   
+                }
+            });
         }else{
-        	nodeStyle.addPlotter(new Metrics.Plotter("Custom Variables"){
-        		@Override
+            nodeStyle.addPlotter(new Metrics.Plotter("Custom Variables"){
+                @Override
                 public int getValue() {
                     return 1;
-                }	
-        	});  
+                }
+            });
         }
-        
+
         Graph APIOnly = createGraph("APIOnly");
         APIOnly.addPlotter(new Metrics.Plotter(ConfigType.MCHAT_API_ONLY.getBoolean() ? "true":"false") {
-			@Override
-			public int getValue() {
-				return 1;
-			}
-		});        
+            @Override
+            public int getValue() {
+                return 1;
+            }
+        });
     }
-    
+
     /**
      * Add a Graph object to BukkitMetrics that represents data for the plugin that should be sent to the backend
      *
