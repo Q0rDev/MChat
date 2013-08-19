@@ -16,9 +16,9 @@
 
     <!-- Source code -->
     <scm>
-        <developerConnection>scm:git:git@github.com:MiracleM4n/${project.name}.git</developerConnection>
-        <connection>scm:git:git://github.com/MiracleM4n/${project.name}.git</connection>
-        <url>https://github.com/MiracleM4n/${project.name}</url>
+        <developerConnection>scm:git:git@github.com:Q0rDev/${project.name}.git</developerConnection>
+        <connection>scm:git:git://github.com/Q0rDev/${project.name}.git</connection>
+        <url>https://github.com/Q0rDev/${project.name}</url>
     </scm>
 
     <!-- Continuous integration -->
