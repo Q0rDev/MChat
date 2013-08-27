@@ -10,7 +10,6 @@ import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.variables.Var;
 import com.miraclem4n.mchat.variables.VariableManager;
 import com.miraclem4n.mchat.variables.vars.GeoIpVars;
 import com.miraclem4n.mchat.variables.vars.HeroesVars;
@@ -89,14 +88,14 @@ public class Parser {
             msg = replaceCensoredWords(msg);
         }
 
-        VariableManager varMan = new VariableManager();
+        VariableManager varMgr = new VariableManager();
 
-        varMan.addVar(new Var(new String[]{"mnameformat","mnf"}, LocaleType.FORMAT_NAME.getVal()));
+        varMgr.addVars(new String[]{"mnameformat","mnf"}, LocaleType.FORMAT_NAME.getVal());
 
-        varMan.sortVars();
-        formatAll = varMan.replaceCustVars(pName, formatAll);
-        formatAll = varMan.replaceVars(formatAll, true);
-        varMan = new VariableManager();
+        varMgr.sortVars();
+        formatAll = varMgr.replaceCustVars(pName, formatAll);
+        formatAll = varMgr.replaceVars(formatAll, true);
+        varMgr = new VariableManager();
 
         // Time Var
         Date now = new Date();
@@ -122,43 +121,43 @@ public class Parser {
             sType = LocaleType.FORMAT_SPY.getVal();
         }
 
-        varMan.addVar(new Var(new String[]{"distancetype","dtype"}, dType));
-        varMan.addVar(new Var(new String[]{"spying","spy"}, sType));
-        varMan.addVar(new Var(new String[]{"time","t"}, time));
+        varMgr.addVars(new String[]{"distancetype","dtype"}, dType);
+        varMgr.addVars(new String[]{"spying","spy"}, sType);
+        varMgr.addVars(new String[]{"time","t"}, time);
 
         // Player Object Stuff
         Player player = Bukkit.getServer().getPlayer(pName);
         if (player != null) {
             // Initialize Player Vars
-            varMan.addVars(new PlayerVars(player, pName, world));
+            PlayerVars.addVars(varMgr, player, pName, world);
 
             // Initialize GeoIP Vars
             if (geoipB) {
-                varMan.addVars(new GeoIpVars(geoip.getCountry(player.getAddress().getAddress()), geoip.getLocation(player.getAddress().getAddress())));
+                GeoIpVars.addVars(varMgr, geoip.getCountry(player.getAddress().getAddress()), geoip.getLocation(player.getAddress().getAddress()));
             }
 
             // Initialize Heroes Vars
             if (heroesB) {
-                varMan.addVars(new HeroesVars(heroes.getCharacterManager().getHero(player)));
+                HeroesVars.addVars(varMgr, heroes.getCharacterManager().getHero(player));
             }
 
             // Initialize Towny Vars
             if (townyB) {
                 try {
                     Resident resident = TownyUniverse.getDataSource().getResident(pName);
-                    varMan.addVars(new TownyVars(resident));
+                    TownyVars.addVars(varMgr, resident);
                 } catch (Exception ignored) {}
             }
         }
 
-        varMan.sortVars();
-        formatAll = varMan.replaceVars(formatAll, true);
-        varMan = new VariableManager();
+        varMgr.sortVars();
+        formatAll = varMgr.replaceVars(formatAll, true);
+        varMgr = new VariableManager();
 
-        varMan.addVar(new Var(new String[]{"message","msg","m"}, msg));
+        varMgr.addVars(new String[]{"message","msg","m"}, msg);
 
-        varMan.sortVars();
-        formatAll = varMan.replaceVars(formatAll, false);
+        varMgr.sortVars();
+        formatAll = varMgr.replaceVars(formatAll, false);
 
         return formatAll;
     }

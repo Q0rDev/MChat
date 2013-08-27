@@ -4,29 +4,22 @@ import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
 
-import java.util.*;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class VariableManager {
-    ArrayList<Variable> variables;
     NavigableMap<String, Object> varMap;
 
     public VariableManager() {
-        variables = new ArrayList<Variable>();
         varMap = new TreeMap<String, Object>();
     }
 
-    public void addVars(MultiVariable vars) {
-        for (Var var : vars.getVars()) {
-            addVar(var);
-        }
-    }
-
-    public void addVar(Variable var) {
-        if (var != null) {
-            variables.add(var);
-
-            for (String varz : var.getVariables()) {
-                varMap.put(varz, var.getValue());
+    public void addVars(String[] strings, Object value) {
+        if (strings != null) {
+            for (String string : strings) {
+                varMap.put(IndicatorType.MISC_VAR.getValue() + string, value);
             }
         }
     }
