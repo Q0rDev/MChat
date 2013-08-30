@@ -24,7 +24,6 @@ import uk.org.whoami.geoip.GeoIPLookup;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -265,10 +264,12 @@ public class Parser {
             msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
         }
 
-        for (Map.Entry<String, Object> entry : YmlManager.getYml(YmlType.CENSOR_YML).getConfig().getValues(false).entrySet()) {
-            String val = entry.getValue().toString();
+        for (Map.Entry<String, Object> entry : YmlManager.getYml(YmlType.CENSOR_YML).getConfig().getValues(true).entrySet()) {
+            if (!(entry.getValue() instanceof String)) {
+                continue;
+            }
 
-            msg = replacer(msg, "(?i)" + entry.getKey(), val);
+            msg = replacer(msg, "(?i)" + entry.getKey(), entry.getValue().toString());
         }
 
         return msg;
@@ -288,11 +289,5 @@ public class Parser {
         msg = sb.toString();
 
         return msg;
-    }
-
-    private static Integer randomNumber(Integer minValue, Integer maxValue) {
-        Random random = new Random();
-
-        return random.nextInt(maxValue - minValue + 1) + minValue;
     }
 }

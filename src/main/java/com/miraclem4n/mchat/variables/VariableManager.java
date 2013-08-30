@@ -4,10 +4,7 @@ import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.util.MessageUtil;
 
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class VariableManager {
     NavigableMap<String, Object> varMap;

@@ -54,17 +54,12 @@ public enum ConfigType {
 
     public List<String> getList() {
         List<String> list = YmlManager.getYml(YmlType.CONFIG_YML).getConfig().getStringList(option);
+        ArrayList<String> l = new ArrayList<String>();
 
-        if (list != null) {
-            ArrayList<String> l = new ArrayList<String>();
-
-            for (String s : list) {
-                l.add(MessageUtil.addColour(s));
-            }
-
-            return l;
+        for (String string : list) {
+            l.add(MessageUtil.addColour(string));
         }
 
-        return new ArrayList<String>();
+        return l;
     }
 }
