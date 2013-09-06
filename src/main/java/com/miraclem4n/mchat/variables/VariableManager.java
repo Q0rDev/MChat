@@ -7,25 +7,83 @@ import com.miraclem4n.mchat.util.MessageUtil;
 import java.util.*;
 
 public class VariableManager {
-    NavigableMap<String, Object> varMap;
+    NavigableMap<String, Object> hVarMap;
+    NavigableMap<String, Object> nVarMap;
+    NavigableMap<String, Object> lVarMap;
 
     public VariableManager() {
-        varMap = new TreeMap<String, Object>();
+        hVarMap = new TreeMap<String, Object>();
+        nVarMap = new TreeMap<String, Object>();
+        lVarMap = new TreeMap<String, Object>();
     }
 
-    public void addVars(String[] strings, Object value) {
-        if (strings != null) {
-            for (String string : strings) {
-                varMap.put(IndicatorType.MISC_VAR.getValue() + string, value);
+    public void addVars(String[] strings, Object value, ResolvePriority priority) {
+        if (strings != null && value != null) {
+            addVars(Arrays.asList(strings), value, priority);
+        }
+    }
+
+    public void addVars(List<String> list, Object value, ResolvePriority priority) {
+        if (list != null && value != null) {
+            for (String string : list) {
+                switch(priority) {
+                    case FIRST:
+                        hVarMap.put(IndicatorType.MISC_VAR.getValue() + string, value);
+                        break;
+                    case NORMAL:
+                        nVarMap.put(IndicatorType.MISC_VAR.getValue() + string, value);
+                        break;
+                    case LAST:
+                        lVarMap.put(IndicatorType.MISC_VAR.getValue() + string, value);
+                        break;
+                    default:
+                        nVarMap.put(IndicatorType.MISC_VAR.getValue() + string, value);
+                        break;
+                }
             }
         }
     }
 
-    public void sortVars() {
-        varMap = varMap.descendingMap();
+    public void sortVars(ResolvePriority priority) {
+        switch(priority) {
+            case FIRST:
+                hVarMap = hVarMap.descendingMap();
+                break;
+            case NORMAL:
+                nVarMap = nVarMap.descendingMap();
+                break;
+            case LAST:
+                lVarMap = lVarMap.descendingMap();
+                break;
+            default:
+                hVarMap = hVarMap.descendingMap();
+                nVarMap = nVarMap.descendingMap();
+                lVarMap = lVarMap.descendingMap();
+                break;
+        }
     }
 
-    public String replaceVars(String format, Boolean doColour) {
+    public String replaceVars(String format, Boolean doColour, ResolvePriority priority) {
+        NavigableMap<String, Object> varMap;
+
+        switch(priority) {
+            case FIRST:
+                varMap = hVarMap;
+                break;
+            case NORMAL:
+                varMap = nVarMap;
+                break;
+            case LAST:
+                varMap = lVarMap;
+                break;
+            default:
+                format = replaceVars(format, doColour, ResolvePriority.FIRST);
+                format = replaceVars(format, doColour, ResolvePriority.NORMAL);
+                format = replaceVars(format, false, ResolvePriority.LAST);
+
+                return format;
+        }
+
         for (Map.Entry<String, Object> entry : varMap.entrySet()) {
             String value = entry.getValue().toString();
 

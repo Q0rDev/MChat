@@ -10,6 +10,7 @@ import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.util.MessageUtil;
+import com.miraclem4n.mchat.variables.ResolvePriority;
 import com.miraclem4n.mchat.variables.VariableManager;
 import com.miraclem4n.mchat.variables.vars.GeoIpVars;
 import com.miraclem4n.mchat.variables.vars.HeroesVars;
@@ -70,9 +71,10 @@ public class Parser {
 
         formatAll = MessageUtil.addColour(formatAll);
 
-        if (!API.checkPermissions(pName, world, "mchat.bypass.clock")
-                && ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger() > 0) {
-            msg = fixCaps(msg, ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger());
+        Integer cInt = ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger();
+
+        if (!API.checkPermissions(pName, world, "mchat.bypass.clock") && cInt > 0) {
+            msg = fixCaps(msg, cInt);
         }
 
         if (formatAll == null) {
@@ -86,15 +88,6 @@ public class Parser {
         if (!API.checkPermissions(pName, world, "mchat.censorbypass")) {
             msg = replaceCensoredWords(msg);
         }
-
-        VariableManager varMgr = new VariableManager();
-
-        varMgr.addVars(new String[]{"mnameformat","mnf"}, LocaleType.FORMAT_NAME.getVal());
-
-        varMgr.sortVars();
-        formatAll = varMgr.replaceCustVars(pName, formatAll);
-        formatAll = varMgr.replaceVars(formatAll, true);
-        varMgr = new VariableManager();
 
         // Time Var
         Date now = new Date();
@@ -120,9 +113,7 @@ public class Parser {
             sType = LocaleType.FORMAT_SPY.getVal();
         }
 
-        varMgr.addVars(new String[]{"distancetype","dtype"}, dType);
-        varMgr.addVars(new String[]{"spying","spy"}, sType);
-        varMgr.addVars(new String[]{"time","t"}, time);
+        VariableManager varMgr = new VariableManager();
 
         // Player Object Stuff
         Player player = Bukkit.getServer().getPlayer(pName);
@@ -149,14 +140,18 @@ public class Parser {
             }
         }
 
-        varMgr.sortVars();
-        formatAll = varMgr.replaceVars(formatAll, true);
-        varMgr = new VariableManager();
+        varMgr.addVars(new String[]{"mnameformat", "mnf"}, LocaleType.FORMAT_NAME.getVal(), ResolvePriority.FIRST);
 
-        varMgr.addVars(new String[]{"message","msg","m"}, msg);
+        varMgr.addVars(new String[]{"distancetype","dtype"}, dType, ResolvePriority.NORMAL);
+        varMgr.addVars(new String[]{"spying","spy"}, sType, ResolvePriority.NORMAL);
+        varMgr.addVars(new String[]{"time","t"}, time, ResolvePriority.NORMAL);
 
-        varMgr.sortVars();
-        formatAll = varMgr.replaceVars(formatAll, false);
+        varMgr.addVars(new String[]{"message","msg","m"}, msg, ResolvePriority.LAST);
+
+        varMgr.sortVars(ResolvePriority.ALL);
+
+        formatAll = varMgr.replaceCustVars(pName, formatAll);
+        formatAll = varMgr.replaceVars(formatAll, true, ResolvePriority.ALL);
 
         return formatAll;
     }
