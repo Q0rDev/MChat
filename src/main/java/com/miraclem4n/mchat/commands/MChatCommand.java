@@ -3,8 +3,8 @@ package com.miraclem4n.mchat.commands;
 import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.YmlManager;
 import com.miraclem4n.mchat.configs.YmlType;
+import com.miraclem4n.mchat.util.CommandUtil;
 import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.util.MiscUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,7 @@ public class MChatCommand implements CommandExecutor {
             return false;
 
         if (args[0].equalsIgnoreCase("version")) {
-            if (!MiscUtil.hasCommandPerm(sender, "mchat.version")) {
+            if (!CommandUtil.hasCommandPerm(sender, "mchat.version")) {
                 return true;
             }
 
@@ -42,7 +42,7 @@ public class MChatCommand implements CommandExecutor {
             if (args.length > 1) {
                 if (args[1].equalsIgnoreCase("config")
                         || args[1].equalsIgnoreCase("co")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.config")) {
+                    if (!CommandUtil.hasCommandPerm(sender, "mchat.reload.config")) {
                         return true;
                     }
 
@@ -50,7 +50,7 @@ public class MChatCommand implements CommandExecutor {
                     return true;
                 } else if (args[1].equalsIgnoreCase("info")
                         || args[1].equalsIgnoreCase("i")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.info")) {
+                    if (!CommandUtil.hasCommandPerm(sender, "mchat.reload.info")) {
                         return true;
                     }
 
@@ -59,7 +59,7 @@ public class MChatCommand implements CommandExecutor {
                     return true;
                 } else if (args[1].equalsIgnoreCase("censor")
                         || args[1].equalsIgnoreCase("ce")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.censor")) {
+                    if (!CommandUtil.hasCommandPerm(sender, "mchat.reload.censor")) {
                         return true;
                     }
 
@@ -68,7 +68,7 @@ public class MChatCommand implements CommandExecutor {
                     return true;
                 } else if (args[1].equalsIgnoreCase("locale")
                         || args[1].equalsIgnoreCase("l")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.locale")) {
+                    if (!CommandUtil.hasCommandPerm(sender, "mchat.reload.locale")) {
                         return true;
                     }
 
@@ -77,11 +77,11 @@ public class MChatCommand implements CommandExecutor {
                     return true;
                 } else if (args[1].equalsIgnoreCase("all")
                         || args[1].equalsIgnoreCase("a")) {
-                    if (!MiscUtil.hasCommandPerm(sender, "mchat.reload.all")) {
+                    if (!CommandUtil.hasCommandPerm(sender, "mchat.reload.all")) {
                         return true;
                     }
 
-                    YmlManager.load();
+                    YmlManager.initialize();
                     MessageUtil.sendMessage(sender, "All Config's Reloaded.");
                     return true;
                 }

@@ -37,7 +37,6 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        // For Lazy People
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
             if (YmlManager.getYml(YmlType.INFO_YML).getConfig().get("users." + pName) == null) {
                 Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString(), false);
@@ -112,7 +111,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
+    private void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
         for (Player player : plugin.getServer().getOnlinePlayers())  {
             if (API.checkPermissions(player.getName(), player.getWorld().getName(), overrideNode)) {
                 player.sendMessage(format);
@@ -129,7 +128,7 @@ public class PlayerListener implements Listener {
         MessageUtil.log(format);
     }
 
-    void setListName(Player player, String listName) {
+    private void setListName(Player player, String listName) {
         try {
             if (listName.length() > 15) {
                 listName = listName.substring(0, 16);

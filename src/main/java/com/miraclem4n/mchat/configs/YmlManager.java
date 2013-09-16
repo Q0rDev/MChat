@@ -5,13 +5,19 @@ import com.miraclem4n.mchat.configs.config.ConfigYml;
 import com.miraclem4n.mchat.configs.info.InfoYml;
 import com.miraclem4n.mchat.configs.locale.LocaleYml;
 
+/**
+ * Used to Manage all YML Configs.
+ */
 public class YmlManager {
-    private static CensorYml censorYml;
-    private static ConfigYml configYml;
-    private static InfoYml infoYml;
-    private static LocaleYml localeYml;
+    static CensorYml censorYml;
+    static ConfigYml configYml;
+    static InfoYml infoYml;
+    static LocaleYml localeYml;
 
-    public static void load() {
+    /**
+     * Class Initializer.
+     */
+    public static void initialize() {
         censorYml = new CensorYml();
         censorYml.loadDefaults();
 
@@ -25,6 +31,11 @@ public class YmlManager {
         localeYml.loadDefaults();
     }
 
+    /**
+     * YML retriever.
+     * @param type Type of Config to get.
+     * @return YML Config.
+     */
     public static Yml getYml(YmlType type) {
         if (type == YmlType.CENSOR_YML) {
             return censorYml;
@@ -39,6 +50,10 @@ public class YmlManager {
         return null;
     }
 
+    /**
+     * YML Reloader.
+     * @param type Type of Config to reload.
+     */
     public static void reloadYml(YmlType type) {
         if (type == YmlType.CENSOR_YML) {
             censorYml = new CensorYml();
@@ -55,6 +70,9 @@ public class YmlManager {
         }
     }
 
+    /**
+     * YML Unloader. Unloads all configs.
+     */
     public static void unload() {
         censorYml = null;
         configYml = null;

@@ -2,8 +2,8 @@ package com.miraclem4n.mchat.commands;
 
 import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.api.Parser;
+import com.miraclem4n.mchat.util.CommandUtil;
 import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.util.MiscUtil;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +19,7 @@ public class MeCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equalsIgnoreCase("mchatme")
-                || !MiscUtil.hasCommandPerm(sender, "mchat.me")) {
+                || !CommandUtil.hasCommandPerm(sender, "mchat.me")) {
             return true;
         }
 

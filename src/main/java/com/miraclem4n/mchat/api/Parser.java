@@ -1,7 +1,6 @@
 package com.miraclem4n.mchat.api;
 
 import com.herocraftonline.heroes.Heroes;
-import com.miraclem4n.mchat.MChat;
 import com.miraclem4n.mchat.configs.YmlManager;
 import com.miraclem4n.mchat.configs.YmlType;
 import com.miraclem4n.mchat.configs.config.ConfigType;
@@ -20,7 +19,10 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import uk.org.whoami.geoip.GeoIPLookup;
+import uk.org.whoami.geoip.GeoIPTools;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,28 +30,29 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class used to parse messages / events / misc.
+ */
 public class Parser {
     // GeoIP
-    public static GeoIPLookup geoip;
-    public static Boolean geoipB;
+    private static GeoIPLookup geoip;
+    private static Boolean geoipB;
 
     // Heroes
-    public static Boolean heroesB;
-    public static Heroes heroes;
+    private static Boolean heroesB;
+    private static Heroes heroes;
 
     // Towny
-    public static Boolean townyB;
+    private static Boolean townyB;
 
     // MSocial
-    public static Boolean mSocialB;
+    private static Boolean mSocialB;
 
-    public static void initialize(MChat instance) {
-        geoip = instance.geoip;
-        geoipB = instance.geoipB;
-        heroesB = instance.heroesB;
-        heroes = instance.heroes;
-        townyB = instance.towny;
-        mSocialB = instance.mSocial;
+    /**
+     * Class Initializer
+     */
+    public static void initialize() {
+        setupPlugins();
     }
 
     /**
@@ -98,9 +101,9 @@ public class Parser {
         String dType = "";
 
         if (mSocialB
-                && MChat.shouting.get(pName) != null
-                && MChat.shouting.get(pName)) {
-            dType = MChat.shoutFormat;
+                && API.isShouting().get(pName) != null
+                && API.isShouting().get(pName)) {
+            dType = API.getShoutFormat();
         } else if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
             dType = LocaleType.FORMAT_LOCAL.getVal();
         }
@@ -108,8 +111,8 @@ public class Parser {
         // Spy Type
         String sType = "";
 
-        if (MChat.spying.get(pName) != null
-                && MChat.spying.get(pName)) {
+        if (API.isSpying().get(pName) != null
+                && API.isSpying().get(pName)) {
             sType = LocaleType.FORMAT_SPY.getVal();
         }
 
@@ -143,7 +146,7 @@ public class Parser {
         varMgr.addVars(new String[]{"mnameformat", "mnf"}, LocaleType.FORMAT_NAME.getVal(), ResolvePriority.FIRST);
 
         varMgr.addVars(new String[]{"distancetype","dtype"}, dType, ResolvePriority.NORMAL);
-        varMgr.addVars(new String[]{"spying","spy"}, sType, ResolvePriority.NORMAL);
+        varMgr.addVars(new String[]{"API.isSpying()","spy"}, sType, ResolvePriority.NORMAL);
         varMgr.addVars(new String[]{"time","t"}, time, ResolvePriority.NORMAL);
 
         varMgr.addVars(new String[]{"message","msg","m"}, msg, ResolvePriority.LAST);
@@ -181,6 +184,7 @@ public class Parser {
      * Event Message Formatting
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
+     * @param type Event Type being formatted.
      * @return Formatted Event Message.
      */
     public static String parseEvent(String pName, String world, EventType type) {
@@ -198,7 +202,7 @@ public class Parser {
     }
 
     /**
-     * ListCommand Formatting
+     * ListCommand Formatting.
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted ListCommand Name.
@@ -208,7 +212,7 @@ public class Parser {
     }
 
     /**
-     * Me Formatting
+     * Me Formatting.
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
      * @param msg Message being displayed.
@@ -284,5 +288,39 @@ public class Parser {
         msg = sb.toString();
 
         return msg;
+    }
+
+    private static void setupPlugins() {
+        PluginManager pm = Bukkit.getPluginManager();
+
+        // Setup GeoIPTools
+        geoipB = setupPlugin("GeoIPTools");
+
+        if (geoipB) {
+            geoip = ((GeoIPTools) pm.getPlugin("GeoIPTools")).getGeoIPLookup();
+        }
+
+        // Setup Heroes
+        heroesB = setupPlugin("Heroes");
+
+        if (heroesB) {
+            heroes = (Heroes) pm.getPlugin("Heroes");
+        }
+
+        // Setup MSocial
+        mSocialB = setupPlugin("MSocial");
+
+        townyB = setupPlugin("Towny");
+    }
+
+    private static Boolean setupPlugin(String pluginName) {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
+
+        if (plugin != null) {
+            MessageUtil.logFormatted("<Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
+            return true;
+        }
+
+        return false;
     }
 }

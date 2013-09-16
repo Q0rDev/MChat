@@ -4,39 +4,46 @@ import com.miraclem4n.mchat.configs.YmlManager;
 import com.miraclem4n.mchat.configs.YmlType;
 import com.miraclem4n.mchat.util.MessageUtil;
 
+/**
+ * Enum for Different Locale Values.
+ */
 public enum LocaleType {
-    FORMAT_FORWARD("format.forward"),
-    FORMAT_LOCAL("format.local"),
-    FORMAT_SPY("format.spy"),
-    FORMAT_CHAT("format.chat"),
-    FORMAT_DATE("format.date"),
-    FORMAT_NAME("format.name"),
-    FORMAT_TABBED_LIST("format.tabbedList"),
-    FORMAT_LIST_CMD("format.listCmd"),
-    FORMAT_ME("format.me"),
+    /** Forward Format */ FORMAT_FORWARD("format.forward"),
+    /** Local Format */ FORMAT_LOCAL("format.local"),
+    /** Spy Format */ FORMAT_SPY("format.spy"),
+    /** Chat Format */ FORMAT_CHAT("format.chat"),
+    /** Date Format */ FORMAT_DATE("format.date"),
+    /** Name Format */ FORMAT_NAME("format.name"),
+    /** Tabbed List Format */ FORMAT_TABBED_LIST("format.tabbedList"),
+    /** List Command Format */ FORMAT_LIST_CMD("format.listCmd"),
+    /** Me Format */ FORMAT_ME("format.me"),
 
-    MESSAGE_INFO_ALTERATION("message.info.alteration"),
-    MESSAGE_NO_PERMS("message.general.noPerms"),
-    MESSAGE_EVENT_JOIN("message.event.join"),
-    MESSAGE_EVENT_LEAVE("message.event.leave"),
-    MESSAGE_EVENT_KICK("message.event.kick"),
-    MESSAGE_HEROES_TRUE("message.heroes.isMaster"),
-    MESSAGE_HEROES_FALSE("message.heroes.notMaster");
+    /** Info Alteration Message */ MESSAGE_INFO_ALTERATION("message.info.alteration"),
+    /** No Permissions Message */ MESSAGE_NO_PERMS("message.general.noPerms"),
+    /** Join Event Message */ MESSAGE_EVENT_JOIN("message.event.join"),
+    /** Leave Event Message */ MESSAGE_EVENT_LEAVE("message.event.leave"),
+    /** Kick Event Message */ MESSAGE_EVENT_KICK("message.event.kick"),
+    /** Heroes Mastered Message */ MESSAGE_HEROES_TRUE("message.heroes.isMaster"),
+    /** Heroes Not Mastered Message */ MESSAGE_HEROES_FALSE("message.heroes.notMaster");
 
     private final String option;
 
-    LocaleType(String option) {
+    private LocaleType(String option) {
         this.option = option;
     }
 
+    /**
+     * Value Retriever.
+     * @return Retrieves Value and and Colours it.
+     */
     public String getVal() {
-        if (YmlManager.getYml(YmlType.LOCALE_YML).getConfig().isSet(option)) {
-            return MessageUtil.addColour(YmlManager.getYml(YmlType.LOCALE_YML).getConfig().getString(option));
-        }
-
-        return "Locale Option '" + option + "' not found!";
+       return MessageUtil.addColour(getRaw());
     }
 
+    /**
+     * Value Retriever.
+     * @return Retrieves Raw Value.
+     */
     public String getRaw() {
         if (YmlManager.getYml(YmlType.LOCALE_YML).getConfig().isSet(option)) {
             return YmlManager.getYml(YmlType.LOCALE_YML).getConfig().getString(option);

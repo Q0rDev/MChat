@@ -4,8 +4,8 @@ import com.miraclem4n.mchat.api.Writer;
 import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.InfoEditType;
 import com.miraclem4n.mchat.types.InfoType;
+import com.miraclem4n.mchat.util.CommandUtil;
 import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.util.MiscUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,7 +52,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
                     || args[1].equalsIgnoreCase(t)) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add." + t)) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".add." + t)) {
                     return true;
                 }
 
@@ -68,7 +68,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.ivar")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".add.ivar")) {
                     return true;
                 }
 
@@ -84,7 +84,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.world")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".add.world")) {
                     return true;
                 }
 
@@ -100,7 +100,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".add.wvar")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".add.wvar")) {
                     return true;
                 }
 
@@ -126,7 +126,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase(t.substring(0, 1))
                     || args[1].equalsIgnoreCase(t)) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove." + t)) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".remove." + t)) {
                     return true;
                 }
 
@@ -142,7 +142,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("iVar")
                     || args[1].equalsIgnoreCase("infoVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.ivar")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".remove.ivar")) {
                     return true;
                 }
 
@@ -158,7 +158,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
                     || args[1].equalsIgnoreCase("world")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.world")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".remove.world")) {
                     return true;
                 }
 
@@ -174,7 +174,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("wVar")
                     || args[1].equalsIgnoreCase("worldVariable")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat." + p + ".remove.wvar")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat." + p + ".remove.wvar")) {
                     return true;
                 }
 
@@ -197,7 +197,7 @@ public class InfoAlterCommand implements CommandExecutor {
                 return true;
             } else if (args[1].equalsIgnoreCase("g")
                     || args[1].equalsIgnoreCase("group")) {
-                if (!MiscUtil.hasCommandPerm(sender, "mchat.user.set.group")) {
+                if (!CommandUtil.hasCommandPerm(sender, "mchat.user.set.group")) {
                     return true;
                 }
 

@@ -6,6 +6,9 @@ import com.miraclem4n.mchat.configs.YmlType;
 import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.types.InfoType;
 
+/**
+ * Class used to write to <b>info.yml</b>.
+ */
 public class Writer {
     /**
      * Used to set the Base values of an InfoType.

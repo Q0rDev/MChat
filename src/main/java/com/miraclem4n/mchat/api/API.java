@@ -1,6 +1,7 @@
 package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.types.IndicatorType;
+import com.miraclem4n.mchat.types.PluginType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
@@ -16,44 +17,61 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
+import java.util.HashMap;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-@SuppressWarnings("unused")
+/**
+ * Class used for various tasks not covered by other classes.
+ */
 public class API {
     // Vault
-    public static Permission vPerm;
-    public static Boolean vaultB;
+    static Permission vPerm;
+    static Boolean vaultB;
 
-    public static Chat vChat = null;
-    public static Boolean vChatB = false;
+    static Chat vChat = null;
+    static Boolean vChatB = false;
 
     // GroupManager
-    public static WorldsHolder gmWH;
-    public static Boolean gmB;
+    static WorldsHolder gmWH;
+    static Boolean gmB;
 
     //PEX
-    public static PermissionManager pexPermissions;
-    public static Boolean pexB;
+    static PermissionManager pexPermissions;
+    static Boolean pexB;
 
     // bPerms
-    public static Boolean bPermB;
+    static Boolean bPermB;
 
     // Privileges
-    public static Boolean privB;
+    static Boolean privB;
 
     // PermissionsBukkit
-    public static Boolean pBukkitB;
+    static Boolean pBukkitB;
 
     // Var Map
-    public static TreeMap<String, String> varMap;
-    public static TreeMap<String, String> varMapQueue;
+    private static TreeMap<String, Object> varMap;
+    private static TreeMap<String, Object> varMapQueue;
 
+    // Maps
+    private static HashMap<String, Boolean> shouting;
+    private static HashMap<String, Boolean> spying;
+
+    // Shout Format Type
+    private static String shoutFormat;
+
+    /**
+     * Class Initializer
+     */
     public static void initialize() {
         setupPlugins();
 
-        varMap = new TreeMap<String, String>();
-        varMapQueue = new TreeMap<String, String>();
+        varMap = new TreeMap<String, Object>();
+        varMapQueue = new TreeMap<String, Object>();
+
+        shouting = new HashMap<String, Boolean>();
+        spying = new HashMap<String, Boolean>();
+        shoutFormat = "";
     }
 
     /**
@@ -61,7 +79,7 @@ public class API {
      * @param var Name of Variable being added.
      * @param value Value of Variable being added.
      */
-    public static void addGlobalVar(String var, String value) {
+    public static void addGlobalVar(String var, Object value) {
         if (var == null || var.isEmpty()) {
             return;
         }
@@ -79,7 +97,7 @@ public class API {
      * @param var Name of Variable being added.
      * @param value Value of Variable being added.
      */
-    public static void addPlayerVar(String pName, String var, String value) {
+    public static void addPlayerVar(String pName, String var, Object value) {
         if (var == null || var.isEmpty()) {
             return;
         }
@@ -207,6 +225,85 @@ public class API {
      */
     public static String replace(String source, String search, String replace, IndicatorType type) {
         return source.replace(type.getValue() + search, replace);
+    }
+
+    /**
+     * Used to check if Plugin is enabled.
+     * @param type Plugin to be checked.
+     * @return <code>true</code> if plugin is enabled <code>false</code> if not.
+     */
+    public static Boolean isPluginEnabled(PluginType type) {
+        if (type == null) {
+            return false;
+        }
+
+        Boolean bool = false;
+
+        switch(type) {
+            case VAULT:
+                return vaultB;
+            case VAULT_CHAT:
+                return vChatB;
+            case GROUP_MANAGER:
+                return gmB;
+            case PERMISSIONS_EX:
+                return pexB;
+            case BPERMISSIONS:
+                return bPermB;
+            case PRIVILEGES:
+                return privB;
+            case PERMISSIONS_BUKKIT:
+                return pBukkitB;
+        }
+
+        return bool;
+    }
+
+    /**
+     * Variable TreeMap.
+     * @return Map of Custom Variables.
+     */
+    public static TreeMap<String, Object> getVarMap() {
+        return varMap;
+    }
+
+    /**
+     * Variable Queue.
+     * @return Queue of Variable to be added to VarMap.
+     */
+    public static TreeMap<String, Object> getVarMapQueue() {
+        return varMapQueue;
+    }
+
+    /**
+     * Spying HashMap.
+     * @return Map of Player's Spying status.
+     */
+    public static HashMap<String, Boolean> isSpying() {
+        return spying;
+    }
+
+    /**
+     * Shouting HashMap.
+     * @return Map of Player's Shouting status.
+     */
+    public static HashMap<String, Boolean> isShouting() {
+        return shouting;
+    }
+
+    /**
+     * Shout Format.
+     * @return Shout Format.
+     */
+    public static String getShoutFormat() {
+        return shoutFormat;
+    }
+
+    /**
+     * Sets Shout Format.
+     */
+    public static void setShoutFormat(String format) {
+        shoutFormat = format;
     }
 
     private static void setupPlugins() {

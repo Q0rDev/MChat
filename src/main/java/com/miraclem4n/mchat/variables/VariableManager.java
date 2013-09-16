@@ -6,10 +6,13 @@ import com.miraclem4n.mchat.util.MessageUtil;
 
 import java.util.*;
 
+/**
+ * Manager for Variables.
+ */
 public class VariableManager {
-    NavigableMap<String, Object> hVarMap;
-    NavigableMap<String, Object> nVarMap;
-    NavigableMap<String, Object> lVarMap;
+    private NavigableMap<String, Object> hVarMap;
+    private NavigableMap<String, Object> nVarMap;
+    private NavigableMap<String, Object> lVarMap;
 
     public VariableManager() {
         hVarMap = new TreeMap<String, Object>();
@@ -17,12 +20,24 @@ public class VariableManager {
         lVarMap = new TreeMap<String, Object>();
     }
 
+    /**
+     * Adds Variables to Designated Priority.
+     * @param strings Variables being added.
+     * @param value Value of Variables.
+     * @param priority Priority to be resolved at.
+     */
     public void addVars(String[] strings, Object value, ResolvePriority priority) {
         if (strings != null && value != null) {
             addVars(Arrays.asList(strings), value, priority);
         }
     }
 
+    /**
+     * Adds Variables to Designated Priority.
+     * @param list Variables being added.
+     * @param value Value of Variables.
+     * @param priority Priority to be resolved at.
+     */
     public void addVars(List<String> list, Object value, ResolvePriority priority) {
         if (list != null && value != null) {
             for (String string : list) {
@@ -44,6 +59,10 @@ public class VariableManager {
         }
     }
 
+    /**
+     * Variable Sorter.
+     * @param priority Which Map Priority to be sorted.
+     */
     public void sortVars(ResolvePriority priority) {
         switch(priority) {
             case FIRST:
@@ -63,6 +82,13 @@ public class VariableManager {
         }
     }
 
+    /**
+     * Variable Replacer.
+     * @param format String to be replaced.
+     * @param doColour Whether or not to colour replacement value.
+     * @param priority Which Map priority to replace.
+     * @return String with Variables replaced.
+     */
     public String replaceVars(String format, Boolean doColour, ResolvePriority priority) {
         NavigableMap<String, Object> varMap;
 
@@ -97,26 +123,32 @@ public class VariableManager {
         return format;
     }
 
+    /**
+     * Custom Variable Replacer.
+     * @param pName Player's Name.
+     * @param format String to be replaced.
+     * @return String with Custom Variables replaced.
+     */
     public String replaceCustVars(String pName, String format) {
-        if (!API.varMapQueue.isEmpty()) {
-            API.varMap.putAll(API.varMapQueue);
-            API.varMapQueue.clear();
+        if (!API.getVarMapQueue().isEmpty()) {
+            API.getVarMap().putAll(API.getVarMapQueue());
+            API.getVarMapQueue().clear();
         }
 
-        Set<Map.Entry<String, String>> varSet = API.varMap.entrySet();
+        Set<Map.Entry<String, Object>> varSet = API.getVarMap().entrySet();
 
-        for (Map.Entry<String, String> entry : varSet) {
+        for (Map.Entry<String, Object> entry : varSet) {
             String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
-            String value = entry.getValue();
+            String value = entry.getValue().toString();
 
             if (format.contains(pKey)) {
                 format = format.replace(pKey, MessageUtil.addColour(value));
             }
         }
 
-        for (Map.Entry<String, String> entry : varSet) {
+        for (Map.Entry<String, Object> entry : varSet) {
             String gKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace("%^global^%|", "");
-            String value = entry.getValue();
+            String value = entry.getValue().toString();
 
             if (format.contains(gKey)) {
                 format = format.replace(gKey, MessageUtil.addColour(value));

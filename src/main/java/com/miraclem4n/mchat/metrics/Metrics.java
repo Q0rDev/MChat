@@ -29,6 +29,7 @@ package com.miraclem4n.mchat.metrics;
 
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.configs.config.ConfigType;
+import com.miraclem4n.mchat.types.PluginType;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -168,7 +169,7 @@ public class Metrics {
         RegisteredServiceProvider<Permission> rspPerm = null;
         RegisteredServiceProvider<Chat> rspChat = null;
 
-        if (API.vaultB) {
+        if (API.isPluginEnabled(PluginType.VAULT)) {
             rspPerm = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
             rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
         }

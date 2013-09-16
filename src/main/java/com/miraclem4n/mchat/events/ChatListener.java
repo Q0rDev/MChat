@@ -55,17 +55,17 @@ public class ChatListener implements Listener {
         event.setFormat(eventFormat);
     }
 
-    Boolean isSpy(String player, String world) {
+    private Boolean isSpy(String player, String world) {
         if (API.checkPermissions(player, world, "mchat.spy")) {
-            MChat.spying.put(player, true);
+            API.isSpying().put(player, true);
             return true;
         }
 
-        MChat.spying.put(player, false);
+        API.isSpying().put(player, false);
         return false;
     }
 
-    void setListName(Player player, String listName) {
+    private void setListName(Player player, String listName) {
         try {
             if (listName.length() > 15) {
                 listName = listName.substring(0, 16);

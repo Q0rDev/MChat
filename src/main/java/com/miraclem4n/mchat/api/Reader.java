@@ -6,6 +6,7 @@ import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.InfoType;
+import com.miraclem4n.mchat.types.PluginType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
@@ -20,9 +21,10 @@ import ru.tehkode.permissions.PermissionUser;
 
 import java.util.*;
 
+/**
+ * Class used to read from <b>info.yml</b> and various other Plugins.
+ */
 public class Reader {
-    //Info Stuff
-
     /**
      * Raw Info Resolving
      * @param name Defining value of the InfoType(Also known as Name).
@@ -56,19 +58,19 @@ public class Reader {
             return getMChatInfo(name, type, world, info);
         }
 
-        if (API.gmB) {
+        if (API.isPluginEnabled(PluginType.GROUP_MANAGER)) {
             return getGroupManagerInfo(name, type, world, info);
         }
 
-        if (API.pexB) {
+        if (API.isPluginEnabled(PluginType.PERMISSIONS_EX)) {
             return getPEXInfo(name, type, world, info);
         }
 
-        if (API.bPermB) {
+        if (API.isPluginEnabled(PluginType.BPERMISSIONS)) {
             return getbPermInfo(name, type, world, info);
         }
 
-        if (API.vChatB) {
+        if (API.isPluginEnabled(PluginType.VAULT_CHAT)) {
             return getVaultInfo(name, type, world, info);
         }
 
@@ -194,9 +196,6 @@ public class Reader {
         return list;
     }
 
-    /*
-     * MChat Stuff
-     */
     private static Object getMChatInfo(String name, InfoType type, String world, String info) {
         if (info.equals("group") || info.equals("groups")) {
             return getMChatGroup(name, info);
@@ -239,14 +238,11 @@ public class Reader {
         return "";
     }
 
-    /*
-     * Leveled Nodes Stuff
-     */
     private static Object getLeveledInfo(String name, String world, String info) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
         HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
-        if (API.pBukkitB) {
+        if (API.isPluginEnabled(PluginType.PERMISSIONS_BUKKIT)) {
             if (info.equals("group") || info.equals("groups")) {
                 return getPermBukkitGroup(name, info);
             }
@@ -285,16 +281,13 @@ public class Reader {
         return getBukkitInfo(name, world, info);
     }
 
-    /*
-     * Old Nodes Stuff
-     */
     private static Object getBukkitInfo(String name, String world, String info) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
         if (info.equals("group") || info.equals("groups")) {
-            if (API.pBukkitB) {
+            if (API.isPluginEnabled(PluginType.PERMISSIONS_BUKKIT)) {
                 return getPermBukkitGroup(name, info);
-            } else if (API.privB) {
+            } else if (API.isPluginEnabled(PluginType.PRIVILEGES)) {
                 return getPrivGroup(name, info);
             }
         }
@@ -366,9 +359,6 @@ public class Reader {
         }
     }
 
-    /*
-     * GroupManager Stuff
-     */
     private static Object getGroupManagerInfo(String name, InfoType type, String world, String info) {
         OverloadedWorldHolder gmPermissions = API.gmWH.getWorldData(world);
 
@@ -411,9 +401,6 @@ public class Reader {
         return group;
     }
 
-    /*
-     * PEX Stuff
-     */
     private static Object getPEXInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
 
@@ -466,9 +453,6 @@ public class Reader {
         return group;
     }
 
-    /*
-     * bPermissions Stuff
-     */
     private static Object getbPermInfo(String name, InfoType type, String world, String info) {
         if (info.equals("group") || info.equals("groups")) {
             return getbPermGroup(name, world, info);
@@ -501,10 +485,6 @@ public class Reader {
         return group;
     }
 
-
-    /*
-     * Vault Stuff
-     */
     private static Object getVaultInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
         boolean UserInfoLookupFailed = false;
@@ -556,8 +536,6 @@ public class Reader {
 
         return infoString;
     }
-
-    // Misc
 
     /**
      * Group Name Resolver
@@ -620,12 +598,15 @@ public class Reader {
      * @return Event Message.
      */
     public static String getEventMessage(EventType type) {
-        if (type.getName().equalsIgnoreCase("join")) {
-            return LocaleType.MESSAGE_EVENT_JOIN.getRaw();
-        } else if (type.getName().equalsIgnoreCase("kick")) {
-            return LocaleType.MESSAGE_EVENT_KICK.getRaw();
-        } else if (type.getName().equalsIgnoreCase("leave")) {
-            return LocaleType.MESSAGE_EVENT_LEAVE.getRaw();
+        switch(type) {
+            case JOIN:
+                return LocaleType.MESSAGE_EVENT_JOIN.getRaw();
+            case KICK:
+                return LocaleType.MESSAGE_EVENT_KICK.getRaw();
+            case LEAVE:
+                return LocaleType.MESSAGE_EVENT_LEAVE.getRaw();
+            case QUIT:
+                return LocaleType.MESSAGE_EVENT_LEAVE.getRaw();
         }
 
         return "";

@@ -1,6 +1,5 @@
 package com.miraclem4n.mchat;
 
-import com.herocraftonline.heroes.Heroes;
 import com.miraclem4n.mchat.api.API;
 import com.miraclem4n.mchat.api.Parser;
 import com.miraclem4n.mchat.api.Writer;
@@ -25,37 +24,13 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import uk.org.whoami.geoip.GeoIPLookup;
-import uk.org.whoami.geoip.GeoIPTools;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class MChat extends JavaPlugin {
     // Default Plugin Data
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
-
-    // GeoIPTools
-    public GeoIPLookup geoip;
-    public Boolean geoipB = false;
-
-    // Heroes
-    public Heroes heroes;
-    public Boolean heroesB = false;
-
-    // Towny
-    public Boolean towny = false;
-
-    // MSocial
-    public Boolean mSocial = false;
-
-    // Maps
-    public static HashMap<String, Boolean> shouting;
-    public static HashMap<String, Boolean> spying;
-
-    // Shout Format Type
-    public static String shoutFormat;
 
     public void onEnable() {
         // Initialize and Start the Timer
@@ -80,17 +55,9 @@ public class MChat extends JavaPlugin {
 				}
 		        			
 			}, 200);
-                
-        // Setup Static Variables
-        shouting = new HashMap<String, Boolean>();
-        spying = new HashMap<String, Boolean>();
-        shoutFormat = "";
 
         // Load Yml
-        YmlManager.load();
-
-        // Setup Plugins
-        setupPlugins();
+        YmlManager.initialize();
 
         // Initialize Classes
         initializeClasses();
@@ -125,11 +92,6 @@ public class MChat extends JavaPlugin {
 
         getServer().getScheduler().cancelTasks(this);
 
-        // Kill Static Variables
-        shouting = null;
-        spying = null;
-        shoutFormat = null;
-
         // Unload Yml
         YmlManager.unload();
 
@@ -142,7 +104,7 @@ public class MChat extends JavaPlugin {
         MessageUtil.log("[" + pdfFile.getName() + "] " + pdfFile.getName() + " v" + pdfFile.getVersion() + " is disabled! [" + diff + "ms]");
     }
 
-    void registerEvents() {
+    private void registerEvents() {
         if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
             pm.registerEvents(new PlayerListener(this), this);
 
@@ -152,39 +114,7 @@ public class MChat extends JavaPlugin {
         }
     }
 
-    Boolean setupPlugin(String pluginName) {
-        Plugin plugin = pm.getPlugin(pluginName);
-
-        if (plugin != null) {
-            MessageUtil.logFormatted("<Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
-            return true;
-        }
-
-        return false;
-    }
-
-    void setupPlugins() {
-        // Setup GeoIPTools
-        geoipB = setupPlugin("GeoIPTools");
-
-        if (geoipB) {
-            geoip = ((GeoIPTools) pm.getPlugin("GeoIPTools")).getGeoIPLookup();
-        }
-
-        // Setup Heroes
-        heroesB = setupPlugin("Heroes");
-
-        if (heroesB) {
-            heroes = (Heroes) pm.getPlugin("Heroes");
-        }
-
-        // Setup MSocial
-        mSocial = setupPlugin("MSocial");
-
-        towny = setupPlugin("Towny");
-    }
-
-    void killEss() {
+    private void killEss() {
         Plugin plugin = pm.getPlugin("EssentialsChat");
 
         if (plugin != null) {
@@ -192,7 +122,7 @@ public class MChat extends JavaPlugin {
         }
     }
 
-    void setupCommands() {
+    private void setupCommands() {
         regCommands("mchat", new MChatCommand(this));
 
         regCommands("mchatuser", new InfoAlterCommand("mchatuser", InfoType.USER));
@@ -201,14 +131,14 @@ public class MChat extends JavaPlugin {
         regCommands("mchatme", new MeCommand(this));
     }
 
-    void regCommands(String command, CommandExecutor executor) {
+    private void regCommands(String command, CommandExecutor executor) {
         if (getCommand(command) != null) {
             getCommand(command).setExecutor(executor);
         }
     }
 
-    void initializeClasses() {
+    private void initializeClasses() {
         API.initialize();
-        Parser.initialize(this);
+        Parser.initialize();
     }
 }
