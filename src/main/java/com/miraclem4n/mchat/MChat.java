@@ -12,20 +12,15 @@ import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.events.ChatListener;
 import com.miraclem4n.mchat.events.CommandListener;
 import com.miraclem4n.mchat.events.PlayerListener;
-import com.miraclem4n.mchat.metrics.Metrics;
 import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.util.MessageUtil;
 import com.miraclem4n.mchat.util.Timer;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.io.IOException;
 
 public class MChat extends JavaPlugin {
     // Default Plugin Data

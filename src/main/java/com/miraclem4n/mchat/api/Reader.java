@@ -2,7 +2,6 @@ package com.miraclem4n.mchat.api;
 
 import com.miraclem4n.mchat.configs.YmlManager;
 import com.miraclem4n.mchat.configs.YmlType;
-import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.configs.locale.LocaleType;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.InfoType;
@@ -50,24 +49,23 @@ public class Reader {
             info = "prefix";
         }
 
-        switch(API.getEnabledPlugin()) {
-            case LEVELED_NODES:
-                return getLeveledInfo(name, world, info);
-            case OLD_NODES:
-                return getBukkitInfo(name, world, info);
-            case NEW_INFO:
-                return getMChatInfo(name, type, world, info);
-            case GROUP_MANAGER:
-                return getGroupManagerInfo(name, type, world, info);
-            case PERMISSIONS_EX:
-                return getPEXInfo(name, type, world, info);
-            case BPERMISSIONS:
-                return getbPermInfo(name, type, world, info);
-            case VAULT_CHAT:
-                return getVaultInfo(name, type, world, info);
-            default:
-                return getMChatInfo(name, type, world, info);
-        }
+        if (API.isPluginEnabled(PluginType.LEVELED_NODES)) {
+            return getLeveledInfo(name, world, info);
+        } else if (API.isPluginEnabled(PluginType.OLD_NODES)) {
+            return getBukkitInfo(name, world, info);
+        } else if (API.isPluginEnabled(PluginType.NEW_INFO)) {
+            return getMChatInfo(name, type, world, info);
+        } else if (API.isPluginEnabled(PluginType.GROUP_MANAGER)) {
+            return getGroupManagerInfo(name, type, world, info);
+        } else if (API.isPluginEnabled(PluginType.PERMISSIONS_EX)) {
+            return getPEXInfo(name, type, world, info);
+        } else if (API.isPluginEnabled(PluginType.BPERMISSIONS)) {
+            return getbPermInfo(name, type, world, info);
+        }/* else if (API.isPluginEnabled(PluginType.VAULT_CHAT)) {
+            return getVaultInfo(name, type, world, info);
+        }*/
+
+        return getMChatInfo(name, type, world, info);
     }
 
     /**

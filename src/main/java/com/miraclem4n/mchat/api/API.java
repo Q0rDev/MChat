@@ -265,30 +265,6 @@ public class API {
     }
 
     /**
-     * Used grab first enabled Plugin.
-     * @return First enabled Plugin. Used for Info resolving.
-     */
-    public static PluginType getEnabledPlugin() {
-        if (isPluginEnabled(PluginType.LEVELED_NODES)) {
-            return PluginType.LEVELED_NODES;
-        } else if (isPluginEnabled(PluginType.OLD_NODES)) {
-            return PluginType.OLD_NODES;
-        } else if (isPluginEnabled(PluginType.NEW_INFO)) {
-            return PluginType.NEW_INFO;
-        } else if (isPluginEnabled(PluginType.GROUP_MANAGER)) {
-            return PluginType.GROUP_MANAGER;
-        } else if (isPluginEnabled(PluginType.PERMISSIONS_EX)) {
-            return PluginType.PERMISSIONS_EX;
-        } else if (isPluginEnabled(PluginType.BPERMISSIONS)) {
-            return PluginType.BPERMISSIONS;
-        } else if (isPluginEnabled(PluginType.VAULT_CHAT)) {
-            return PluginType.VAULT_CHAT;
-        }
-
-        return PluginType.NEW_INFO;
-    }
-
-    /**
      * Variable TreeMap.
      * @return Map of Custom Variables.
      */
