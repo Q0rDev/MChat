@@ -1,5 +1,6 @@
 package com.miraclem4n.mchat.api;
 
+import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.types.IndicatorType;
 import com.miraclem4n.mchat.types.PluginType;
 import com.miraclem4n.mchat.util.MessageUtil;
@@ -237,8 +238,6 @@ public class API {
             return false;
         }
 
-        Boolean bool = false;
-
         switch(type) {
             case VAULT:
                 return vaultB;
@@ -254,9 +253,39 @@ public class API {
                 return privB;
             case PERMISSIONS_BUKKIT:
                 return pBukkitB;
+            case LEVELED_NODES:
+                return ConfigType.INFO_USE_LEVELED_NODES.getBoolean();
+            case OLD_NODES:
+                return ConfigType.INFO_USE_OLD_NODES.getBoolean();
+            case NEW_INFO:
+                return ConfigType.INFO_USE_NEW_INFO.getBoolean();
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Used grab first enabled Plugin.
+     * @return First enabled Plugin. Used for Info resolving.
+     */
+    public static PluginType getEnabledPlugin() {
+        if (isPluginEnabled(PluginType.LEVELED_NODES)) {
+            return PluginType.LEVELED_NODES;
+        } else if (isPluginEnabled(PluginType.OLD_NODES)) {
+            return PluginType.OLD_NODES;
+        } else if (isPluginEnabled(PluginType.NEW_INFO)) {
+            return PluginType.NEW_INFO;
+        } else if (isPluginEnabled(PluginType.GROUP_MANAGER)) {
+            return PluginType.GROUP_MANAGER;
+        } else if (isPluginEnabled(PluginType.PERMISSIONS_EX)) {
+            return PluginType.PERMISSIONS_EX;
+        } else if (isPluginEnabled(PluginType.BPERMISSIONS)) {
+            return PluginType.BPERMISSIONS;
+        } else if (isPluginEnabled(PluginType.VAULT_CHAT)) {
+            return PluginType.VAULT_CHAT;
         }
 
-        return bool;
+        return PluginType.NEW_INFO;
     }
 
     /**

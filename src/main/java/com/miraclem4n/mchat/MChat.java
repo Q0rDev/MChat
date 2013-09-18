@@ -15,7 +15,7 @@ import com.miraclem4n.mchat.events.PlayerListener;
 import com.miraclem4n.mchat.metrics.Metrics;
 import com.miraclem4n.mchat.types.InfoType;
 import com.miraclem4n.mchat.util.MessageUtil;
-import com.miraclem4n.mchat.util.TimerUtil;
+import com.miraclem4n.mchat.util.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -34,7 +34,7 @@ public class MChat extends JavaPlugin {
 
     public void onEnable() {
         // Initialize and Start the Timer
-        TimerUtil timer = new TimerUtil();
+        Timer timer = new Timer();
 
         // Initialize Plugin Data
         pm = getServer().getPluginManager();
@@ -88,7 +88,7 @@ public class MChat extends JavaPlugin {
 
     public void onDisable() {
         // Initialize and Start the Timer
-        TimerUtil timer = new TimerUtil();
+        Timer timer = new Timer();
 
         getServer().getScheduler().cancelTasks(this);
 

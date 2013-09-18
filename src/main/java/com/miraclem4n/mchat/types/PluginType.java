@@ -10,5 +10,8 @@ public enum PluginType {
     /** PermissionsEx Plugin. */ PERMISSIONS_EX,
     /** bPermissions Plugin. */ BPERMISSIONS,
     /** Privileges Plugin. */ PRIVILEGES,
-    /** PermissionsBukkit Plugin. */ PERMISSIONS_BUKKIT
+    /** PermissionsBukkit Plugin. */ PERMISSIONS_BUKKIT,
+    /** Leveled Nodes MChat Plugin. */ LEVELED_NODES,
+    /** Old Nodes MChat Plugin. */ OLD_NODES,
+    /** New Info MChat Plugin. */ NEW_INFO
 }
