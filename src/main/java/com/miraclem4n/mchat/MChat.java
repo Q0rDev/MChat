@@ -43,8 +43,8 @@ public class MChat extends JavaPlugin {
         // First we kill EssentialsChat
         killEss();
 
-        //Use a task, so we can wait for server to finish intializing.
-        getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
+        // Initialize Metrics
+        /*getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
 				@Override
 				public void run() {
 					try {
@@ -54,7 +54,7 @@ public class MChat extends JavaPlugin {
 			        } catch (IOException ignored) {}	
 				}
 		        			
-			}, 200);
+			}, 200);*/
 
         // Load Yml
         YmlManager.initialize();
