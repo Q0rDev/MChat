@@ -569,7 +569,7 @@ public class Reader {
     /**
      * Player Name Resolver
      * @param name Name of Player to be Resolved.
-     * @return Player Name's mChat Alias.
+     * @return Player Name's MChat Alias.
      */
     public static String getMName(String name) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();

@@ -9,7 +9,9 @@ import com.miraclem4n.mchat.configs.YmlType;
 import com.miraclem4n.mchat.configs.config.ConfigType;
 import com.miraclem4n.mchat.types.EventType;
 import com.miraclem4n.mchat.types.IndicatorType;
+import com.miraclem4n.mchat.updater.Updater;
 import com.miraclem4n.mchat.util.MessageUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerListener implements Listener {
     MChat plugin;
@@ -32,6 +35,17 @@ public class PlayerListener implements Listener {
 
         final String pName = player.getName();
         String msg = event.getJoinMessage();
+
+        if (((MChat) plugin.pm.getPlugin("MChat")).update && API.checkPermissions(pName, world, "mchat.update")) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable(){
+                @Override
+                public void run() {
+                    MessageUtil.sendMessage(player, "An update is available! Please check");
+                    MessageUtil.sendMessage(player, "http://goo.gl/dCwFac for details!");
+                }
+
+            }, 50);
+        }
 
         if (msg == null) {
             return;

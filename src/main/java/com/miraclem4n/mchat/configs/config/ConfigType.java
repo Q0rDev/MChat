@@ -12,6 +12,7 @@ import java.util.List;
  */
 public enum ConfigType {
     /** Runs MChat in API Only mode. */ MCHAT_API_ONLY("mchat.apiOnly"),
+    /** Allows MChat to do an update check and alert Admins of updates. */ MCHAT_UPDATE_CHECK("mchat.updateCheck"),
     /** Whether or not to Alter Events. */ MCHAT_ALTER_EVENTS("mchat.alter.events"),
     /** Distance Based Chat Value. Negative or 0 disables. */ MCHAT_CHAT_DISTANCE("mchat.chatDistance"),
     /** Variable Indicator. Used in Locale.yml for Variables hardcoded into MChat or Bukkit. */ MCHAT_VAR_INDICATOR("mchat.varIndicator"),

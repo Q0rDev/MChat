@@ -37,7 +37,7 @@ commands:
 permissions:
     mchat.*:
         default: op
-        description: Allows full use of mChat.
+        description: Allows full use of MChat.
         children:
             mchat.reload.*: true
             mchat.suppress.*: true
@@ -49,6 +49,7 @@ permissions:
             mchat.me: true
             mchat.version: true
             mchat.spy: true
+            mchat.update: true
     mchat.reload.*:
         default: false
         description: Allow usage of /mchat reload '[config/info/censor/locale/all]'
@@ -82,20 +83,20 @@ permissions:
             mchat.bypass.suppress.kick: true
     mchat.user.*:
         default: false
-        description: Allows full use of all user info related mChat commands.
+        description: Allows full use of all user info related MChat commands.
         children:
             mchat.user.add.*: true
             mchat.user.set.*: true
             mchat.user.remove.*: true
     mchat.group.*:
         default: false
-        description: Allows full use of all group info related mChat commands.
+        description: Allows full use of all group info related MChat commands.
         children:
             mchat.group.add.*: true
             mchat.group.remove.*: true
     mchat.user.add.*:
         default: false
-        description: Allows full use of all user info add mChat commands.
+        description: Allows full use of all user info add MChat commands.
         children:
             mchat.user.add.player: true
             mchat.user.add.ivar: true
@@ -103,12 +104,12 @@ permissions:
             mchat.user.add.wvar: true
     mchat.user.set.*:
         default: false
-        description: Allows full use of all user info set mChat commands.
+        description: Allows full use of all user info set MChat commands.
         children:
             mchat.user.set.group: true
     mchat.user.remove.*:
         default: false
-        description: Allows full use of all user info remove mChat commands.
+        description: Allows full use of all user info remove MChat commands.
         children:
             mchat.user.remove.player: true
             mchat.user.remove.ivar: true
@@ -116,7 +117,7 @@ permissions:
             mchat.user.remove.wvar: true
     mchat.group.add.*:
         default: false
-        description: Allows full use of all group info add mChat commands.
+        description: Allows full use of all group info add MChat commands.
         children:
             mchat.group.add.group: true
             mchat.group.add.ivar: true
@@ -124,7 +125,7 @@ permissions:
             mchat.group.add.wvar: true
     mchat.group.remove.*:
         default: false
-        description: Allows full use of all group info remove mChat commands.
+        description: Allows full use of all group info remove MChat commands.
         children:
             mchat.group.remove.group: true
             mchat.group.remove.ivar: true
@@ -160,15 +161,18 @@ permissions:
     mchat.spy:
         default: false
         description: Allows player to view all chat messages.
+    mchat.update:
+        default: false
+        description: Allows player to be alerted of MChat updates onJoin.
     mchat.suppress.join:
         default: false
-        description: Allow suppression of the mChat Join Messages.
+        description: Allow suppression of the MChat Join Messages.
     mchat.suppress.quit:
         default: false
-        description: Allow suppression of the mChat Quit Messages.
+        description: Allow suppression of the MChat Quit Messages.
     mchat.suppress.kick:
         default: false
-        description: Allow suppression of the mChat Kick Messages.
+        description: Allow suppression of the MChat Kick Messages.
     mchat.bypass.suppress.join:
         default: false
         description: Allow bypassing of Join Suppression.
