@@ -33,7 +33,7 @@ commands:
         usage: |
             /<command> *Message* - Displays message.
         aliases: [mme]
-        ~permissions: mchat.group.*
+        ~permissions: mchat.me
 permissions:
     mchat.*:
         default: op
