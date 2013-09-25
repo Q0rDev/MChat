@@ -1,5 +1,5 @@
 name: MChat
-main: com.miraclem4n.mchat.MChat
+main: ca.q0r.mchat.MChat
 version: ${version}-${build.number}
 author: MiracleM4n
 authors: [MiracleM4n]
