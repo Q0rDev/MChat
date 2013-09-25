@@ -4,7 +4,7 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.6.4-R0.3</version>
+    <version>1.6.4-R0.4</version>
     <name>MChat</name>
     <url>http://mdev.in/</url>
     <description>Chat Formatting for Bukkit</description>
@@ -142,7 +142,7 @@
         <dependency>
             <groupId>com.herocraftonline</groupId>
             <artifactId>Heroes</artifactId>
-            <version>1.5.3-dev-b000</version>
+            <version>1.5.3.3</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

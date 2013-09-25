@@ -238,7 +238,7 @@ public class VariableManager {
     private static Boolean setupPlugin(String pluginName) {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
 
-        if (plugin != null) {
+        if (plugin != null && plugin.isEnabled()) {
             MessageUtil.logFormatted("<Plugin> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
             return true;
         }
