@@ -33,9 +33,6 @@ public class VariableManager {
     // Towny
     private static Boolean townyB;
 
-    // MSocial
-    private static Boolean mSocialB;
-
     public static void initialize() {
         varSet = new HashSet<Var>();
 
@@ -48,9 +45,6 @@ public class VariableManager {
 
         // Initialize Player Vars
         PlayerVars.addVars();
-
-        // Initialize MSocial Vars
-        MSocialVars.addVars(mSocialB);
 
         // Initialize Heroes Vars
         if (heroesB) {
@@ -237,9 +231,6 @@ public class VariableManager {
         if (heroesB) {
             heroes = (Heroes) pm.getPlugin("Heroes");
         }
-
-        // Setup MSocial
-        mSocialB = setupPlugin("MSocial");
 
         townyB = setupPlugin("Towny");
     }

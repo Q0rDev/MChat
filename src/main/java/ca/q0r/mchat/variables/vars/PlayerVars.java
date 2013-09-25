@@ -2,6 +2,7 @@ package ca.q0r.mchat.variables.vars;
 
 import ca.q0r.mchat.api.API;
 import ca.q0r.mchat.api.Reader;
+import ca.q0r.mchat.configs.config.ConfigType;
 import ca.q0r.mchat.configs.locale.LocaleType;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.types.InfoType;
@@ -15,10 +16,10 @@ import java.util.Date;
 
 public class PlayerVars {
     public static void addVars() {
-        VariableManager.addVars(new Var[] { new GroupVar(), new PrefixVar(), new SuffixVar(), new MNameVar(),
-                new PNameVar(), new DNameVar(), new ExpVar(), new ExpBarVar(), new GameModeVar(), new HealthVar(),
-                new HealthBarVar(), new HungerVar(), new HungerBarVar(), new LevelVar(), new LocVar(), new TotalExpVar(),
-                new WorldVar(), new WorldNameVar(), new GroupNameVar(), new MNameFormat(), new TimeFormat(), new SpyFormat()});
+        VariableManager.addVars(new Var[] { new GroupVar(), new PrefixVar(), new SuffixVar(), new MNameVar(), new PNameVar(),
+                new DNameVar(), new ExpVar(), new ExpBarVar(), new GameModeVar(), new HealthVar(), new HealthBarVar(),
+                new HungerVar(), new HungerBarVar(), new LevelVar(), new LocVar(), new TotalExpVar(), new WorldVar(),
+                new WorldNameVar(), new GroupNameVar(), new MNameFormat(), new TimeFormat(), new SpyFormat(), new DistanceType()});
     }
 
     private static class GroupVar extends Var {
@@ -282,6 +283,19 @@ public class PlayerVars {
             }
 
             return sType;
+        }
+    }
+
+    private static class DistanceType extends Var {
+        @Keys( keys = {"distancetype","dtype"} )
+        public Object getValue(Object obj) {
+            String dType = "";
+
+            if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
+                dType = LocaleType.FORMAT_LOCAL.getVal();
+            }
+
+            return dType;
         }
     }
 }

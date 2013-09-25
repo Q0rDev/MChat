@@ -55,11 +55,7 @@ public class API {
     private static TreeMap<String, Object> varMapQueue;
 
     // Maps
-    private static HashMap<String, Boolean> shouting;
     private static HashMap<String, Boolean> spying;
-
-    // Shout Format Type
-    private static String shoutFormat;
 
     /**
      * Class Initializer
@@ -70,9 +66,7 @@ public class API {
         varMap = new TreeMap<String, Object>();
         varMapQueue = new TreeMap<String, Object>();
 
-        shouting = new HashMap<String, Boolean>();
         spying = new HashMap<String, Boolean>();
-        shoutFormat = "";
     }
 
     /**
@@ -286,29 +280,6 @@ public class API {
      */
     public static HashMap<String, Boolean> isSpying() {
         return spying;
-    }
-
-    /**
-     * Shouting HashMap.
-     * @return Map of Player's Shouting status.
-     */
-    public static HashMap<String, Boolean> isShouting() {
-        return shouting;
-    }
-
-    /**
-     * Shout Format.
-     * @return Shout Format.
-     */
-    public static String getShoutFormat() {
-        return shoutFormat;
-    }
-
-    /**
-     * Sets Shout Format.
-     */
-    public static void setShoutFormat(String format) {
-        shoutFormat = format;
     }
 
     private static void setupPlugins() {
