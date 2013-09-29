@@ -1,8 +1,8 @@
-package ca.q0r.mchat.configs.locale;
+package ca.q0r.mchat.yml.locale;
 
-import ca.q0r.mchat.configs.YmlManager;
-import ca.q0r.mchat.configs.YmlType;
 import ca.q0r.mchat.util.MessageUtil;
+import ca.q0r.mchat.yml.YmlManager;
+import ca.q0r.mchat.yml.YmlType;
 
 /**
  * Enum for Different Locale Values.

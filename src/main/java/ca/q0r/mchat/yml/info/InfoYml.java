@@ -1,6 +1,6 @@
-package ca.q0r.mchat.configs.info;
+package ca.q0r.mchat.yml.info;
 
-import ca.q0r.mchat.configs.Yml;
+import ca.q0r.mchat.yml.Yml;
 
 import java.io.File;
 

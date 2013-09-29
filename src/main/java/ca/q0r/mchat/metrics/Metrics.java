@@ -28,8 +28,8 @@
 package ca.q0r.mchat.metrics;
 
 import ca.q0r.mchat.api.API;
-import ca.q0r.mchat.configs.config.ConfigType;
 import ca.q0r.mchat.types.PluginType;
+import ca.q0r.mchat.yml.config.ConfigType;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;

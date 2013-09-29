@@ -1,6 +1,6 @@
 package ca.q0r.mchat.types;
 
-import ca.q0r.mchat.configs.config.ConfigType;
+import ca.q0r.mchat.yml.config.ConfigType;
 
 /**
  * Enum for Different Indicator Types.

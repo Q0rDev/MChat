@@ -1,12 +1,12 @@
 package ca.q0r.mchat.api;
 
-import ca.q0r.mchat.configs.YmlManager;
-import ca.q0r.mchat.configs.YmlType;
-import ca.q0r.mchat.configs.locale.LocaleType;
 import ca.q0r.mchat.types.EventType;
 import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.types.PluginType;
 import ca.q0r.mchat.util.MessageUtil;
+import ca.q0r.mchat.yml.YmlManager;
+import ca.q0r.mchat.yml.YmlType;
+import ca.q0r.mchat.yml.locale.LocaleType;
 import com.platymuus.bukkit.permissions.Group;
 import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import de.bananaco.bpermissions.api.ApiLayer;

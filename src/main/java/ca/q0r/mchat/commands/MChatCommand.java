@@ -1,10 +1,10 @@
 package ca.q0r.mchat.commands;
 
 import ca.q0r.mchat.MChat;
-import ca.q0r.mchat.configs.YmlManager;
-import ca.q0r.mchat.configs.YmlType;
 import ca.q0r.mchat.util.CommandUtil;
 import ca.q0r.mchat.util.MessageUtil;
+import ca.q0r.mchat.yml.YmlManager;
+import ca.q0r.mchat.yml.YmlType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,9 +1,9 @@
 package ca.q0r.mchat.api;
 
-import ca.q0r.mchat.configs.config.ConfigType;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.types.PluginType;
 import ca.q0r.mchat.util.MessageUtil;
+import ca.q0r.mchat.yml.config.ConfigType;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;

@@ -1,14 +1,14 @@
 package ca.q0r.mchat.api;
 
-import ca.q0r.mchat.configs.YmlManager;
-import ca.q0r.mchat.configs.YmlType;
-import ca.q0r.mchat.configs.config.ConfigType;
-import ca.q0r.mchat.configs.locale.LocaleType;
 import ca.q0r.mchat.types.EventType;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.variables.VariableManager;
+import ca.q0r.mchat.yml.YmlManager;
+import ca.q0r.mchat.yml.YmlType;
+import ca.q0r.mchat.yml.config.ConfigType;
+import ca.q0r.mchat.yml.locale.LocaleType;
 import org.bukkit.Bukkit;
 
 import java.util.Map;

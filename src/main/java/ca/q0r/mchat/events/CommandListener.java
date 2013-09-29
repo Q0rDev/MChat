@@ -1,8 +1,8 @@
 package ca.q0r.mchat.events;
 
-import ca.q0r.mchat.configs.YmlManager;
-import ca.q0r.mchat.configs.YmlType;
-import ca.q0r.mchat.configs.config.ConfigYml;
+import ca.q0r.mchat.yml.YmlManager;
+import ca.q0r.mchat.yml.YmlType;
+import ca.q0r.mchat.yml.config.ConfigYml;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

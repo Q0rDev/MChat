@@ -1,4 +1,4 @@
-package ca.q0r.mchat.configs;
+package ca.q0r.mchat.yml;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 

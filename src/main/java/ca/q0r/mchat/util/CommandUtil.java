@@ -1,8 +1,8 @@
 package ca.q0r.mchat.util;
 
 import ca.q0r.mchat.api.API;
-import ca.q0r.mchat.configs.locale.LocaleType;
 import ca.q0r.mchat.types.IndicatorType;
+import ca.q0r.mchat.yml.locale.LocaleType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

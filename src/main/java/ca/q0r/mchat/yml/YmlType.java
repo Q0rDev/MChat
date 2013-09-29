@@ -1,4 +1,4 @@
-package ca.q0r.mchat.configs;
+package ca.q0r.mchat.yml;
 
 /**
  * Enum for Different YML Types.

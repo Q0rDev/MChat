@@ -1,11 +1,11 @@
 package ca.q0r.mchat.commands;
 
 import ca.q0r.mchat.api.Writer;
-import ca.q0r.mchat.configs.locale.LocaleType;
 import ca.q0r.mchat.types.InfoEditType;
 import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.util.CommandUtil;
 import ca.q0r.mchat.util.MessageUtil;
+import ca.q0r.mchat.yml.locale.LocaleType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

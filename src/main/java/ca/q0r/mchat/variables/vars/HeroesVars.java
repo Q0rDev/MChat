@@ -1,8 +1,8 @@
 package ca.q0r.mchat.variables.vars;
 
-import ca.q0r.mchat.configs.locale.LocaleType;
 import ca.q0r.mchat.variables.Var;
 import ca.q0r.mchat.variables.VariableManager;
+import ca.q0r.mchat.yml.locale.LocaleType;
 import com.herocraftonline.heroes.characters.CharacterManager;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.util.Messaging;

@@ -1,9 +1,9 @@
-package ca.q0r.mchat.configs;
+package ca.q0r.mchat.yml;
 
-import ca.q0r.mchat.configs.censor.CensorYml;
-import ca.q0r.mchat.configs.config.ConfigYml;
-import ca.q0r.mchat.configs.info.InfoYml;
-import ca.q0r.mchat.configs.locale.LocaleYml;
+import ca.q0r.mchat.yml.censor.CensorYml;
+import ca.q0r.mchat.yml.config.ConfigYml;
+import ca.q0r.mchat.yml.info.InfoYml;
+import ca.q0r.mchat.yml.locale.LocaleYml;
 
 /**
  * Used to Manage all YML Configs.
