@@ -33,6 +33,9 @@ public class VariableManager {
     // Towny
     private static Boolean townyB;
 
+    /**
+     * Initializes Manager.
+     */
     public static void initialize() {
         varSet = new HashSet<Var>();
 
