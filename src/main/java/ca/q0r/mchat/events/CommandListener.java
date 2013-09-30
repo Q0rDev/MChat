@@ -19,9 +19,7 @@ public class CommandListener implements Listener {
         String msg = event.getMessage();
         String command = msg.split(" ")[0].replace("/", "");
 
-        ConfigYml configYml = (ConfigYml) YmlManager.getYml(YmlType.CONFIG_YML);
-
-        for (Map.Entry<String, List<String>> entry : configYml.getAliasMap().entrySet()) {
+        for (Map.Entry<String, List<String>> entry : ((ConfigYml) YmlManager.getYml(YmlType.CONFIG_YML)).getAliasMap().entrySet()) {
             for (String comm : entry.getValue()) {
                 if (comm.equalsIgnoreCase(command)) {
                     event.setMessage(msg.replaceFirst("/" + command, "/" + entry.getKey()));
