@@ -37,14 +37,15 @@ public class YmlManager {
      * @return YML Config.
      */
     public static Yml getYml(YmlType type) {
-        if (type == YmlType.CENSOR_YML) {
-            return censorYml;
-        } else if (type == YmlType.CONFIG_YML) {
-            return configYml;
-        } else if (type == YmlType.INFO_YML) {
-            return infoYml;
-        } else if (type == YmlType.LOCALE_YML) {
-            return localeYml;
+        switch(type) {
+            case CENSOR_YML:
+                return censorYml;
+            case CONFIG_YML:
+                return configYml;
+            case INFO_YML:
+                return infoYml;
+            case LOCALE_YML:
+                return localeYml;
         }
 
         return null;
@@ -55,18 +56,23 @@ public class YmlManager {
      * @param type Type of Config to reload.
      */
     public static void reloadYml(YmlType type) {
-        if (type == YmlType.CENSOR_YML) {
-            censorYml = new CensorYml();
-            censorYml.loadDefaults();
-        } else if (type == YmlType.CONFIG_YML) {
-            configYml = new ConfigYml();
-            configYml.loadDefaults();
-        } else if (type == YmlType.INFO_YML) {
-            infoYml = new InfoYml();
-            infoYml.loadDefaults();
-        } else if (type == YmlType.LOCALE_YML) {
-            localeYml = new LocaleYml();
-            localeYml.loadDefaults();
+        switch(type) {
+            case CENSOR_YML:
+                censorYml = new CensorYml();
+                censorYml.loadDefaults();
+                break;
+            case CONFIG_YML:
+                configYml = new ConfigYml();
+                configYml.loadDefaults();
+                break;
+            case INFO_YML:
+                infoYml = new InfoYml();
+                infoYml.loadDefaults();
+                break;
+            case LOCALE_YML:
+                localeYml = new LocaleYml();
+                localeYml.loadDefaults();
+                break;
         }
     }
 

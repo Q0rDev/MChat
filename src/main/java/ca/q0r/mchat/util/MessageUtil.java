@@ -1,5 +1,6 @@
 package ca.q0r.mchat.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import java.util.logging.Level;
@@ -41,16 +42,7 @@ public class MessageUtil {
      * @param message Object being Logged.
      */
     public static void log(Object message) {
-        System.out.println(message);
-    }
-
-    /**
-     * Logger.
-     * @param level Level to be logged at.
-     * @param message Object being Logged.
-     */
-    public static void log(Level level, Object message) {
-        Logger.getLogger("Minecraft").log(level, message.toString());
+        Bukkit.getConsoleSender().sendMessage(message.toString());
     }
 
     /**
@@ -58,7 +50,7 @@ public class MessageUtil {
      * @param message Object being Logged.
      */
     public static void logFormatted(Object message) {
-        System.out.println(format(message.toString()));
+        log(format(message.toString()));
     }
     /**
      * Colour Formatting.

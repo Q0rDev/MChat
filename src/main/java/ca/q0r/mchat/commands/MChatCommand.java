@@ -46,6 +46,7 @@ public class MChatCommand implements CommandExecutor {
                         return true;
                     }
 
+                    YmlManager.reloadYml(YmlType.CONFIG_YML);
                     MessageUtil.sendMessage(sender, "Config Reloaded.");
                     return true;
                 } else if (args[1].equalsIgnoreCase("info")

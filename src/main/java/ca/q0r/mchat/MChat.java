@@ -8,6 +8,7 @@ import ca.q0r.mchat.commands.MeCommand;
 import ca.q0r.mchat.events.ChatListener;
 import ca.q0r.mchat.events.CommandListener;
 import ca.q0r.mchat.events.PlayerListener;
+import ca.q0r.mchat.metrics.Metrics;
 import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.updater.Updater;
 import ca.q0r.mchat.util.MessageUtil;
@@ -44,16 +45,16 @@ public class MChat extends JavaPlugin {
         killEss();
 
         // Initialize Metrics
-        /*getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
+        getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
 				@Override
 				public void run() {
 					try {
 						Metrics metrics = new Metrics(Bukkit.getPluginManager().getPlugin("MChat"));
 			            metrics.findCustomData();
 			            metrics.start();
-			        } catch (IOException ignored) {}	
+			        } catch (Exception ignored) {}
 				}
-			}, 200);*/
+			}, 200);
 
         // Load Yml
         YmlManager.initialize();

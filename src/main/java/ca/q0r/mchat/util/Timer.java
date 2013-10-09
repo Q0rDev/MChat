@@ -1,7 +1,5 @@
 package ca.q0r.mchat.util;
 
-import java.util.Date;
-
 /**
  * Class used when a Timer is needed.
  */
@@ -13,7 +11,7 @@ public class Timer {
      * Class Initializer, also starts timer.
      */
     public Timer() {
-        start = new Date().getTime();
+        start = System.nanoTime();
     }
 
     /**
@@ -28,21 +26,53 @@ public class Timer {
      * Starts timer.
      */
     public void start() {
-        start = new Date().getTime();
+        start = System.nanoTime();
     }
 
     /**
      * Stops timer.
      */
     public void stop() {
-        end = new Date().getTime();
+        end = System.nanoTime();
     }
 
     /**
      * Calculates Difference.
-     * @return Difference between start and end values.
+     * @return Difference between start and end values in milliseconds.
      */
     public long difference() {
+        return differenceInMillis();
+    }
+
+    /**
+     * Calculates Difference.
+     * @return Difference between start and end values in seconds.
+     */
+    public long differenceInSeconds() {
+        return differenceInMillis() / 1000;
+    }
+
+    /**
+     * Calculates Difference.
+     * @return Difference between start and end values in milliseconds.
+     */
+    public long differenceInMillis() {
+        return differenceInMicros() / 1000;
+    }
+
+    /**
+     * Calculates Difference.
+     * @return Difference between start and end values in microseconds.
+     */
+    public long differenceInMicros() {
+        return differenceInNanos() / 1000;
+    }
+
+    /**
+     * Calculates Difference.
+     * @return Difference between start and end values in nanoseconds.
+     */
+    public long differenceInNanos() {
         return end - start;
     }
 }
