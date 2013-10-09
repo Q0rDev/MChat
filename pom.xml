@@ -4,9 +4,9 @@
     <!-- Project information -->
     <groupId>ca.q0r</groupId>
     <artifactId>MChat</artifactId>
-    <version>1.6.4-R0.8</version>
+    <version>1.6.4-R0.9</version>
     <name>MChat</name>
-    <url>http://mdev.in/</url>
+    <url>http://q0r.ca/</url>
     <description>Chat Formatting for Bukkit</description>
 
     <properties>

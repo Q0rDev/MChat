@@ -3,7 +3,7 @@ main: ca.q0r.mchat.MChat
 version: ${version}-${build.number}
 author: MiracleM4n
 authors: [MiracleM4n]
-website: http://mdev.in/
+website: http://q0r.ca/
 thread: http://forums.bukkit.org/threads/22958/
 softdepend: [GroupManager, PermissionsBukkit, bPermissions, PermissionsEx, GeoIPTools, Heroes, Towny, Vault]
 description: Chat Formatting for Bukkit
