@@ -44,28 +44,8 @@
     <!-- Repository locations -->
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <!--repository>
-            <id>kitteh-repo</id>
-            <url>http://repo.kitteh.org/content/groups/public</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository-->
-        <repository>
             <id>q0r-repo</id>
-            <url>http://repo.q0r.ca</url>
+            <url>http://nexus.q0r.ca/content/groups/public</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -119,13 +99,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.anjocaido</groupId>
-            <artifactId>GroupManager</artifactId>
-            <version>1.9</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit-permissions</artifactId>
             <version>0.1.0-SNAPSHOT</version>
@@ -133,8 +106,15 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>ru.tehkode.permissions</groupId>
-            <artifactId>bukkit</artifactId>
+            <groupId>org.anjocaido</groupId>
+            <artifactId>GroupManager</artifactId>
+            <version>1.9</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.tehkode</groupId>
+            <artifactId>PermissionsEx</artifactId>
             <version>1.18</version>
             <type>jar</type>
             <scope>compile</scope>
@@ -142,7 +122,7 @@
         <dependency>
             <groupId>de.bananaco</groupId>
             <artifactId>bPermissions</artifactId>
-            <version>dev-SNAPSHOT</version>
+            <version>v2.12-DEV</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -160,13 +140,6 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        <!--dependency>
-            <groupId>org.spoutcraft</groupId>
-            <artifactId>spoutcraftplugin</artifactId>
-            <version>1.5.2-R1.0-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency-->
         <dependency>
             <groupId>net.milkbowl</groupId>
             <artifactId>vault</artifactId>
