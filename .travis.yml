@@ -13,3 +13,8 @@ after_success:
 notifications:
   # Disable build status email notifications, until the issue with forks is fixed.
   email: false
+
+env:
+  global:
+    - secure: "fQ6sRJI1UnB8pU+cizDJt88nTbsIA4cZsalPdkzvouWOKa0pxZw0gJitbfCbQFf/cSAS3Nb7lmnW9T4RhBvQeRZPJsVcOTBU3hLOZUqUi+2+7z6971+6G8UziMGKG17gE3oCLay5TjOy9RLO5HpcOvRLU7hAhqRYG7WCLL4FpBw="
+    - secure: "JA+iIa8G3qwBau6lCas7+gNJVi/3l4PklDG7wceLcbelnnuqKm948fIUM/kOJkC5P2eQOAWHCkj3fbQS9LsEln3gnABDqAaIYdfMAnv1kx1I67GwiAeq7QViI3rWAabloAAoCxGbPCOsCinU3Cbi+bvi1HJG/06VKX0jL0KltIo="
