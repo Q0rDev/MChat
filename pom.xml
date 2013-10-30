@@ -44,6 +44,16 @@
     <!-- Repository locations -->
     <repositories>
         <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
             <id>q0r-repo</id>
             <url>http://nexus.q0r.ca/content/groups/public</url>
             <releases>
