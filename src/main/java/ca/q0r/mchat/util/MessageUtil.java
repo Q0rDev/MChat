@@ -52,6 +52,25 @@ public class MessageUtil {
     public static void logFormatted(Object message) {
         log(format(message.toString()));
     }
+
+    /**
+     * Logger.
+     * @param name Name of plugin to be formatted.
+     * @param message Object being Logged.
+     */
+    public static void logFormatted(String name, Object message) {
+        log(format(name, message.toString()));
+    }
+
+    /**
+     * Logger.
+     * @param message Object being Logged.
+     */
+    public static void logColoured(Object message) {
+        log(addColour(message.toString()));
+    }
+
+
     /**
      * Colour Formatting.
      * @param string String being Formatted.
