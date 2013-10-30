@@ -32,12 +32,12 @@
         <repository>
             <id>q0r-rel</id>
             <name>nexus.q0r.org Releases</name>
-            <url>http://nexus.q0r.org/content/repositories/releases/</url>
+            <url>http://nexus.q0r.ca/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>q0r-snap</id>
             <name>nexus.q0r.org Snapshots</name>
-            <url>http://nexus.q0r.org/content/repositories/snapshots/</url>
+            <url>http://nexus.q0r.ca/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
