@@ -85,11 +85,11 @@ public class Updater
         /**
          * When running the version check, the file on DBO did not contain the a version in the format 'vVersion' such as 'v1.0'.
          */
-        FAIL_NOVERSION,
+        FAIL_NO_VERSION,
         /**
          * The slug provided by the plugin running the updater was invalid and doesn't exist on DBO.
          */
-        FAIL_BADSLUG,
+        FAIL_BAD_SLUG,
         /**
          * The updater found an update, but because of the UpdateType being set to NO_DOWNLOAD, it wasn't downloaded.
          */
@@ -145,7 +145,7 @@ public class Updater
             // Invalid slug
             plugin.getLogger().warning("The author of this plugin (" + plugin.getDescription().getAuthors().get(0) + ") has misconfigured their Auto Update system");
             plugin.getLogger().warning("The project slug given ('" + slug + "') is invalid. Please nag the author about this.");
-            result = Updater.UpdateResult.FAIL_BADSLUG; // Bad slug! Bad!
+            result = Updater.UpdateResult.FAIL_BAD_SLUG; // Bad slug! Bad!
         }
         thread = new Thread(new UpdateRunnable());
         thread.start();
@@ -461,7 +461,7 @@ public class Updater
                 plugin.getLogger().warning("The author of this plugin (" + plugin.getDescription().getAuthors().get(0) + ") has misconfigured their Auto Update system");
                 plugin.getLogger().warning("Files uploaded to BukkitDev should contain the version number, seperated from the name by a 'v', such as PluginName v1.0");
                 plugin.getLogger().warning("Please notify the author of this error.");
-                result = Updater.UpdateResult.FAIL_NOVERSION;
+                result = Updater.UpdateResult.FAIL_NO_VERSION;
                 return false;
             }
         }

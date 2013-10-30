@@ -34,7 +34,7 @@ public class PlayerListener implements Listener {
         final String pName = player.getName();
         String msg = event.getJoinMessage();
 
-        if (((MChat) plugin.pm.getPlugin("MChat")).update && API.checkPermissions(pName, world, "mchat.update")) {
+        if (plugin.update && API.checkPermissions(pName, world, "mchat.update")) {
             plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable(){
                 @Override
                 public void run() {
