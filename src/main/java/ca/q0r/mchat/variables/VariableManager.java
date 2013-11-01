@@ -163,7 +163,7 @@ public class VariableManager {
 
         format = replacer(format, fVarMap, doColour);
         format = replacer(format, nVarMap, doColour);
-        format = replacer(format, lVarMap, doColour);
+        format = replacer(format, lVarMap, false);
 
         return format;
     }
