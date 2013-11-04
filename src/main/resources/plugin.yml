@@ -16,8 +16,7 @@ commands:
             - /<command> reload censor = Reload Censor.
             - /<command> reload locale = Reload Locale.
             - /<command> reload all = Reload All Configs.
-            - /<command> version = Show mChatSuite Version.
-        aliases: [mchatsuite]
+            - /<command> version = Show MChat Version.
         ~permissions: mchat.reload.*
     mchatuser:
         usage: |

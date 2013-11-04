@@ -175,14 +175,9 @@ public class VariableManager {
      * @return String with Custom Variables replaced.
      */
     public static String replaceCustVars(String pName, String format) {
-        if (!API.getVarMapQueue().isEmpty()) {
-            API.getVarMap().putAll(API.getVarMapQueue());
-            API.getVarMapQueue().clear();
-        }
+        Set<Map.Entry<String, Object>> entries = API.getVarMap().entrySet();
 
-        Set<Map.Entry<String, Object>> entrySet = API.getVarMap().entrySet();
-
-        for (Map.Entry<String, Object> entry : entrySet) {
+        for (Map.Entry<String, Object> entry : entries) {
             String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
             String value = entry.getValue().toString();
 
@@ -191,7 +186,7 @@ public class VariableManager {
             }
         }
 
-        for (Map.Entry<String, Object> entry : entrySet) {
+        for (Map.Entry<String, Object> entry : entries) {
             String gKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace("%^global^%|", "");
             String value = entry.getValue().toString();
 

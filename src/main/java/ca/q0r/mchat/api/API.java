@@ -18,9 +18,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-import java.util.HashMap;
-import java.util.NavigableMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Class used for various tasks not covered by other classes.
@@ -51,8 +49,7 @@ public class API {
     static Boolean pBukkitB;
 
     // Var Map
-    private static TreeMap<String, Object> varMap;
-    private static TreeMap<String, Object> varMapQueue;
+    private static SortedMap<String, Object> varMap;
 
     // Maps
     private static HashMap<String, Boolean> spying;
@@ -64,7 +61,6 @@ public class API {
         setupPlugins();
 
         varMap = new TreeMap<String, Object>();
-        varMapQueue = new TreeMap<String, Object>();
 
         spying = new HashMap<String, Boolean>();
     }
@@ -83,7 +79,9 @@ public class API {
             value = "";
         }
 
-        varMapQueue.put("%^global^%|" + var, value);
+        synchronized (varMap.entrySet()) {
+            varMap.put("%^global^%|" + var, value);
+        }
     }
 
     /**
@@ -101,7 +99,9 @@ public class API {
             value = "";
         }
 
-        varMapQueue.put(pName + "|" + var, value);
+        synchronized (varMap.entrySet()) {
+            varMap.put(pName + "|" + var, value);
+        }
     }
 
     /**
@@ -262,16 +262,8 @@ public class API {
      * Variable TreeMap.
      * @return Map of Custom Variables.
      */
-    public static TreeMap<String, Object> getVarMap() {
-        return varMap;
-    }
-
-    /**
-     * Variable Queue.
-     * @return Queue of Variable to be added to VarMap.
-     */
-    public static TreeMap<String, Object> getVarMapQueue() {
-        return varMapQueue;
+    public static SortedMap<String, Object> getVarMap() {
+        return Collections.unmodifiableSortedMap(varMap);
     }
 
     /**

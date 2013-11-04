@@ -9,6 +9,7 @@ import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import ca.q0r.mchat.yml.config.ConfigType;
 import ca.q0r.mchat.yml.locale.LocaleType;
+import com.google.common.base.Strings;
 import org.bukkit.Bukkit;
 
 import java.util.Map;
@@ -28,7 +29,7 @@ public class Parser {
      * @return Formatted Message.
      */
     public static String parseMessage(String pName, String world, String msg, String format) {
-        msg = msg != null ? msg : "";
+        msg = Strings.nullToEmpty(msg);
 
         format = parseVars(format, pName, world);
 

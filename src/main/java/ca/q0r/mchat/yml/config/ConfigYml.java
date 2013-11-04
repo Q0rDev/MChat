@@ -44,7 +44,6 @@ public class ConfigYml extends Yml {
         checkOption("mchat.varIndicator", "+");
         checkOption("mchat.cusVarIndicator", "-");
         checkOption("mchat.localeVarIndicator", "%");
-        checkOption("mchat.spout", true);
         checkOption("mchat.IPCensor", true);
         checkOption("mchat.cLockRange", 3);
 
