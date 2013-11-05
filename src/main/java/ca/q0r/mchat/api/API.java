@@ -49,7 +49,8 @@ public class API {
     static Boolean pBukkitB;
 
     // Var Map
-    private static SortedMap<String, Object> varMap;
+    private static final SortedMap<String, Object> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, Object>());
+    private static final SortedMap<String, Object> pVarMap = Collections.synchronizedSortedMap(new TreeMap<String, Object>());
 
     // Maps
     private static HashMap<String, Boolean> spying;
@@ -59,8 +60,6 @@ public class API {
      */
     public static void initialize() {
         setupPlugins();
-
-        varMap = new TreeMap<String, Object>();
 
         spying = new HashMap<String, Boolean>();
     }
@@ -79,8 +78,34 @@ public class API {
             value = "";
         }
 
-        synchronized (varMap.entrySet()) {
-            varMap.put("%^global^%|" + var, value);
+        synchronized (gVarMap) {
+            gVarMap.put(var, value);
+        }
+    }
+
+    /**
+     * Global Variable Removal
+     * @param var Name of Variable being removed.
+     */
+    public static void removeGlobalVar(String var) {
+        synchronized (gVarMap) {
+            if (gVarMap.get(var) != null) {
+                gVarMap.remove(var);
+            }
+        }
+    }
+
+    /**
+     * Global Variable TreeMap.
+     * @return Map of Custom Variables.
+     */
+    public static SortedMap<String, Object> getGlobalVarMap() {
+        SortedMap<String, Object> map = new TreeMap<String, Object>();
+
+        synchronized (gVarMap) {
+            map.putAll(Collections.unmodifiableSortedMap(gVarMap));
+
+            return map;
         }
     }
 
@@ -99,8 +124,35 @@ public class API {
             value = "";
         }
 
-        synchronized (varMap.entrySet()) {
-            varMap.put(pName + "|" + var, value);
+        synchronized (pVarMap) {
+            pVarMap.put(pName + "|" + var, value);
+        }
+    }
+
+    /**
+     * Player Variable Removal
+     * @param pName Name of Player this Variable is being removed from.
+     * @param var Name of Variable being removed.
+     */
+    public static void removePlayerVar(String pName, String var) {
+        synchronized (pVarMap) {
+            if (pVarMap.get(pName + "|" + var) != null) {
+                pVarMap.remove(pName + "|" + var);
+            }
+        }
+    }
+
+    /**
+     * Player Variable TreeMap.
+     * @return Map of Custom Variables.
+     */
+    public static SortedMap<String, Object> getPlayerVarMap() {
+        SortedMap<String, Object> map = new TreeMap<String, Object>();
+
+        synchronized (pVarMap) {
+            map.putAll(Collections.unmodifiableSortedMap(pVarMap));
+
+            return map;
         }
     }
 
@@ -256,14 +308,6 @@ public class API {
             default:
                 return false;
         }
-    }
-
-    /**
-     * Variable TreeMap.
-     * @return Map of Custom Variables.
-     */
-    public static SortedMap<String, Object> getVarMap() {
-        return Collections.unmodifiableSortedMap(varMap);
     }
 
     /**

@@ -55,7 +55,7 @@ public class PlayerListener implements Listener {
             }
         }
 
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+        plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
             public void run() {
                 setListName(player, Parser.parseTabbedList(pName, world));
             }

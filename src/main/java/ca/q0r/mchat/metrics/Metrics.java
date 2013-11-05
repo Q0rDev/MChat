@@ -38,6 +38,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.*;
@@ -288,7 +289,7 @@ public class Metrics {
             }
 
             // Begin hitting the server with glorious data
-            task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
+            task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new BukkitRunnable() {
 
                 private boolean firstPost = true;
 

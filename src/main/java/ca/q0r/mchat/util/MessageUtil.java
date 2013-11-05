@@ -3,9 +3,6 @@ package ca.q0r.mchat.util;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Utility Class for various Message related tasks.
  */
