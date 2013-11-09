@@ -5,6 +5,7 @@ import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.variables.vars.*;
 import com.herocraftonline.heroes.Heroes;
+import com.p000ison.dev.simpleclans2.chat.SimpleClansChat;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,6 +34,10 @@ public class VariableManager {
     // Towny
     private static Boolean townyB;
 
+    // SimpleClansChat
+    private static SimpleClansChat clans;
+    private static Boolean clansB;
+
     /**
      * Initializes Manager.
      */
@@ -59,6 +64,11 @@ public class VariableManager {
             try {
                 TownyVars.addVars(TownyUniverse.getDataSource());
             } catch (Exception ignored) {}
+        }
+
+        // Initialize SimpleClansChat Vars
+        if (clansB) {
+            SimpleClansVars.addVars(clans);
         }
 
         MessageVars.addVars();
@@ -229,6 +239,12 @@ public class VariableManager {
         }
 
         townyB = setupPlugin("Towny");
+
+        clansB = setupPlugin("SimpleClansChat") && setupPlugin("SimpleClans2");
+
+        if (clansB) {
+            clans = (SimpleClansChat) pm.getPlugin("SimpleClansChat");
+        }
     }
 
     private static Boolean setupPlugin(String pluginName) {
