@@ -16,14 +16,14 @@ import java.util.Date;
 
 public class PlayerVars {
     public static void addVars() {
-        VariableManager.addVars(new Var[] { new GroupVar(), new PrefixVar(), new SuffixVar(), new MNameVar(), new PNameVar(),
+        VariableManager.addVars(new Var[]{new GroupVar(), new PrefixVar(), new SuffixVar(), new MNameVar(), new PNameVar(),
                 new DNameVar(), new ExpVar(), new ExpBarVar(), new GameModeVar(), new HealthVar(), new HealthBarVar(),
                 new HungerVar(), new HungerBarVar(), new LevelVar(), new LocVar(), new TotalExpVar(), new WorldVar(),
                 new WorldNameVar(), new GroupNameVar(), new MNameFormat(), new TimeFormat(), new SpyFormat(), new DistanceType()});
     }
 
     private static class GroupVar extends Var {
-        @Keys( keys = {"group","g"} )
+        @Keys(keys = {"group", "g"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -35,7 +35,7 @@ public class PlayerVars {
     }
 
     private static class PrefixVar extends Var {
-        @Keys ( keys = {"prefix","p"} )
+        @Keys(keys = {"prefix", "p"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -47,7 +47,7 @@ public class PlayerVars {
     }
 
     private static class SuffixVar extends Var {
-        @Keys ( keys = {"suffix","s"} )
+        @Keys(keys = {"suffix", "s"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -59,7 +59,7 @@ public class PlayerVars {
     }
 
     private static class MNameVar extends Var {
-        @Keys ( keys = {"mname","mn"} )
+        @Keys(keys = {"mname", "mn"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -71,7 +71,7 @@ public class PlayerVars {
     }
 
     private static class PNameVar extends Var {
-        @Keys ( keys = {"pname","n"} )
+        @Keys(keys = {"pname", "n"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 return ((Player) obj).getName();
@@ -82,7 +82,7 @@ public class PlayerVars {
     }
 
     private static class DNameVar extends Var {
-        @Keys ( keys = {"displayname","dname","dn"} )
+        @Keys(keys = {"displayname", "dname", "dn"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 return ((Player) obj).getDisplayName();
@@ -93,7 +93,7 @@ public class PlayerVars {
     }
 
     private static class ExpVar extends Var {
-        @Keys ( keys = {"experience","exp"} )
+        @Keys(keys = {"experience", "exp"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -105,7 +105,7 @@ public class PlayerVars {
     }
 
     private static class ExpBarVar extends Var {
-        @Keys ( keys = {"experiencebar","expb","ebar"} )
+        @Keys(keys = {"experiencebar", "expb", "ebar"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -117,7 +117,7 @@ public class PlayerVars {
     }
 
     private static class GameModeVar extends Var {
-        @Keys ( keys = {"gamemode","gm"} )
+        @Keys(keys = {"gamemode", "gm"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -129,7 +129,7 @@ public class PlayerVars {
     }
 
     private static class HealthVar extends Var {
-        @Keys ( keys = {"health","h"} )
+        @Keys(keys = {"health", "h"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -141,7 +141,7 @@ public class PlayerVars {
     }
 
     private static class HealthBarVar extends Var {
-        @Keys ( keys = {"healthbar","hb"} )
+        @Keys(keys = {"healthbar", "hb"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -153,7 +153,7 @@ public class PlayerVars {
     }
 
     private static class HungerVar extends Var {
-        @Keys ( keys = {"hunger"} )
+        @Keys(keys = {"hunger"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -165,7 +165,7 @@ public class PlayerVars {
     }
 
     private static class HungerBarVar extends Var {
-        @Keys ( keys = {"hungerbar","hub"} )
+        @Keys(keys = {"hungerbar", "hub"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -177,7 +177,7 @@ public class PlayerVars {
     }
 
     private static class LevelVar extends Var {
-        @Keys ( keys = {"level","l"} )
+        @Keys(keys = {"level", "l"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -189,7 +189,7 @@ public class PlayerVars {
     }
 
     private static class LocVar extends Var {
-        @Keys ( keys = {"location","loc"} )
+        @Keys(keys = {"location", "loc"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -201,7 +201,7 @@ public class PlayerVars {
     }
 
     private static class TotalExpVar extends Var {
-        @Keys ( keys = {"totalexp","texp","te"} )
+        @Keys(keys = {"totalexp", "texp", "te"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -213,7 +213,7 @@ public class PlayerVars {
     }
 
     private static class WorldVar extends Var {
-        @Keys ( keys = {"world","w"} )
+        @Keys(keys = {"world", "w"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -225,7 +225,7 @@ public class PlayerVars {
     }
 
     private static class GroupNameVar extends Var {
-        @Keys ( keys = {"Groupname","Gname","G"} )
+        @Keys(keys = {"Groupname", "Gname", "G"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -237,7 +237,7 @@ public class PlayerVars {
     }
 
     private static class WorldNameVar extends Var {
-        @Keys ( keys = {"Worldname","Wname","W"} )
+        @Keys(keys = {"Worldname", "Wname", "W"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Player player = (Player) obj;
@@ -249,16 +249,16 @@ public class PlayerVars {
     }
 
     private static class MNameFormat extends Var {
-        @Keys( keys = {"mnameformat", "mnf"} )
-        @Meta ( type = IndicatorType.MISC_VAR,
-                priority = ResolvePriority.FIRST )
+        @Keys(keys = {"mnameformat", "mnf"})
+        @Meta(type = IndicatorType.MISC_VAR,
+                priority = ResolvePriority.FIRST)
         public Object getValue(Object obj) {
             return LocaleType.FORMAT_NAME.getVal();
         }
     }
 
     private static class TimeFormat extends Var {
-        @Keys( keys = {"time","t"} )
+        @Keys(keys = {"time", "t"})
         public Object getValue(Object obj) {
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat(LocaleType.FORMAT_DATE.getRaw());
@@ -268,7 +268,7 @@ public class PlayerVars {
     }
 
     private static class SpyFormat extends Var {
-        @Keys( keys = {"spying","spy"} )
+        @Keys(keys = {"spying", "spy"})
         public Object getValue(Object obj) {
             String sType = "";
 
@@ -287,7 +287,7 @@ public class PlayerVars {
     }
 
     private static class DistanceType extends Var {
-        @Keys( keys = {"distancetype","dtype"} )
+        @Keys(keys = {"distancetype", "dtype"})
         public Object getValue(Object obj) {
             String dType = "";
 

@@ -17,27 +17,29 @@ public enum InfoEditType {
     /** Remove World Variable Command. */ REMOVE_WORLD_VAR(5, "/%cmd remove wvar <%Type> <World> <Variable>"),
     /** Set Group Command. */ SET_GROUP(4, "/%cmd set group <Player> <Group>");
 
-    private Integer i;
+    private Integer length;
     private String msg;
 
-    private InfoEditType(Integer i, String msg) {
-        this.i = i;
+    private InfoEditType(Integer length, String msg) {
+        this.length = length;
         this.msg = msg;
     }
 
     /**
      * Command Length.
+     *
      * @return Length of Edit Command.
      */
     public Integer getLength() {
-        return i;
+        return length;
     }
 
     /**
      * Command Message Sender.
+     *
      * @param sender Object Sending Message.
-     * @param cmd Command being sent.
-     * @param type Info Type being used.
+     * @param cmd    Command being sent.
+     * @param type   Info Type being used.
      */
     public void sendMsg(CommandSender sender, String cmd, InfoType type) {
         String t = "player";
@@ -45,7 +47,7 @@ public enum InfoEditType {
 
         if (type == InfoType.GROUP) {
             t = "group";
-            T =  "Group";
+            T = "Group";
         }
 
         MessageUtil.sendMessage(sender, msg.replace("%cmd", cmd).replace("%Type", T).replace("%type", t));

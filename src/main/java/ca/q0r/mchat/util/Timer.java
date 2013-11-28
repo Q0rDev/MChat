@@ -38,6 +38,7 @@ public class Timer {
 
     /**
      * Calculates Difference.
+     *
      * @return Difference between start and end values in milliseconds.
      */
     public long difference() {
@@ -46,6 +47,7 @@ public class Timer {
 
     /**
      * Calculates Difference.
+     *
      * @return Difference between start and end values in seconds.
      */
     public long differenceInSeconds() {
@@ -54,6 +56,7 @@ public class Timer {
 
     /**
      * Calculates Difference.
+     *
      * @return Difference between start and end values in milliseconds.
      */
     public long differenceInMillis() {
@@ -62,6 +65,7 @@ public class Timer {
 
     /**
      * Calculates Difference.
+     *
      * @return Difference between start and end values in microseconds.
      */
     public long differenceInMicros() {
@@ -70,6 +74,7 @@ public class Timer {
 
     /**
      * Calculates Difference.
+     *
      * @return Difference between start and end values in nanoseconds.
      */
     public long differenceInNanos() {

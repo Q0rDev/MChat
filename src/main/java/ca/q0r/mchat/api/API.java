@@ -66,7 +66,8 @@ public class API {
 
     /**
      * Global Variable Addition
-     * @param var Name of Variable being added.
+     *
+     * @param var   Name of Variable being added.
      * @param value Value of Variable being added.
      */
     public static void addGlobalVar(String var, Object value) {
@@ -85,6 +86,7 @@ public class API {
 
     /**
      * Global Variable Removal
+     *
      * @param var Name of Variable being removed.
      */
     public static void removeGlobalVar(String var) {
@@ -97,6 +99,7 @@ public class API {
 
     /**
      * Global Variable TreeMap.
+     *
      * @return Map of Custom Variables.
      */
     public static SortedMap<String, Object> getGlobalVarMap() {
@@ -111,8 +114,9 @@ public class API {
 
     /**
      * Player Variable Addition
+     *
      * @param pName Name of Player this Variable is being added for.
-     * @param var Name of Variable being added.
+     * @param var   Name of Variable being added.
      * @param value Value of Variable being added.
      */
     public static void addPlayerVar(String pName, String var, Object value) {
@@ -131,8 +135,9 @@ public class API {
 
     /**
      * Player Variable Removal
+     *
      * @param pName Name of Player this Variable is being removed from.
-     * @param var Name of Variable being removed.
+     * @param var   Name of Variable being removed.
      */
     public static void removePlayerVar(String pName, String var) {
         synchronized (pVarMap) {
@@ -144,6 +149,7 @@ public class API {
 
     /**
      * Player Variable TreeMap.
+     *
      * @return Map of Custom Variables.
      */
     public static SortedMap<String, Object> getPlayerVarMap() {
@@ -158,6 +164,7 @@ public class API {
 
     /**
      * Health Bar Formatting
+     *
      * @param player Player the HealthBar is being rendered for.
      * @return Formatted Health Bar.
      */
@@ -171,6 +178,7 @@ public class API {
 
     /**
      * Food Bar Formatting
+     *
      * @param player Player the FoodBar is being rendered for.
      * @return Formatted Health Bar.
      */
@@ -184,9 +192,10 @@ public class API {
 
     /**
      * Basic Bar Formatting
+     *
      * @param currentValue Current Value of Bar.
-     * @param maxValue Max Value of Bar.
-     * @param barLength Length of Bar.
+     * @param maxValue     Max Value of Bar.
+     * @param barLength    Length of Bar.
      * @return Formatted Health Bar.
      */
     public static String createBasicBar(float currentValue, float maxValue, float barLength) {
@@ -211,9 +220,10 @@ public class API {
 
     /**
      * Permission Checking
+     *
      * @param player Player being checked.
-     * @param world Player's World.
-     * @param node Permission Node being checked.
+     * @param world  Player's World.
+     * @param node   Permission Node being checked.
      * @return Player has Node.
      */
     public static Boolean checkPermissions(Player player, World world, String node) {
@@ -222,9 +232,10 @@ public class API {
 
     /**
      * Permission Checking
+     *
      * @param pName Name of Player being checked.
      * @param world Name of Player's World.
-     * @param node Permission Node being checked.
+     * @param node  Permission Node being checked.
      * @return Player has Node.
      */
     public static Boolean checkPermissions(String pName, String world, String node) {
@@ -236,8 +247,9 @@ public class API {
 
     /**
      * Permission Checking
+     *
      * @param sender CommandSender being checked.
-     * @param node Permission Node being checked.
+     * @param node   Permission Node being checked.
      * @return Sender has Node.
      */
     public static Boolean checkPermissions(CommandSender sender, String node) {
@@ -247,9 +259,10 @@ public class API {
 
     /**
      * Variable Replacer
-     * @param source String being modified.
+     *
+     * @param source  String being modified.
      * @param changes Map of Search / Replace pairs.
-     * @param type Type of Variable.
+     * @param type    Type of Variable.
      * @return Source with variables replaced.
      */
     public static String replace(String source, TreeMap<String, String> changes, IndicatorType type) {
@@ -264,10 +277,11 @@ public class API {
 
     /**
      * Variable Replacer
-     * @param source String being modified.
-     * @param search String being searched for.
+     *
+     * @param source  String being modified.
+     * @param search  String being searched for.
      * @param replace String search term is to be replaced with.
-     * @param type Type of Variable.
+     * @param type    Type of Variable.
      * @return Source with variable replaced.
      */
     public static String replace(String source, String search, String replace, IndicatorType type) {
@@ -276,6 +290,7 @@ public class API {
 
     /**
      * Used to check if Plugin is enabled.
+     *
      * @param type Plugin to be checked.
      * @return <code>true</code> if plugin is enabled <code>false</code> if not.
      */
@@ -284,7 +299,7 @@ public class API {
             return false;
         }
 
-        switch(type) {
+        switch (type) {
             case VAULT:
                 return vaultB;
             case VAULT_CHAT:
@@ -312,6 +327,7 @@ public class API {
 
     /**
      * Spying HashMap.
+     *
      * @return Map of Player's Spying status.
      */
     public static HashMap<String, Boolean> isSpying() {

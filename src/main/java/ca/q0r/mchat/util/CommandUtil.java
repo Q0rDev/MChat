@@ -13,7 +13,8 @@ import org.bukkit.entity.Player;
 public class CommandUtil {
     /**
      * Command Permission Checker
-     * @param sender Object Sending Command.
+     *
+     * @param sender     Object Sending Command.
      * @param permission Permissions attached to command.
      * @return Result of Permission check.
      */
@@ -28,6 +29,7 @@ public class CommandUtil {
 
     /**
      * Checks if player is online before sending command.
+     *
      * @param sender Object sending command.
      * @param player Player to check for.
      * @return Result of Online Check.
@@ -43,6 +45,7 @@ public class CommandUtil {
 
     /**
      * Checks if player is online before sending command.
+     *
      * @param sender Object sending command.
      * @param player Player to check for.
      * @return Result of Online Check.

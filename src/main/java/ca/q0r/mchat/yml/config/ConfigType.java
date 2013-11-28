@@ -42,6 +42,7 @@ public enum ConfigType {
 
     /**
      * Boolean Value.
+     *
      * @return Boolean Value of Config Key.
      */
     public Boolean getBoolean() {
@@ -50,6 +51,7 @@ public enum ConfigType {
 
     /**
      * String Value.
+     *
      * @return String Value of Config Key.
      */
     public String getString() {
@@ -58,6 +60,7 @@ public enum ConfigType {
 
     /**
      * Integer Value.
+     *
      * @return Integer Value of Config Key.
      */
     public Integer getInteger() {
@@ -66,6 +69,7 @@ public enum ConfigType {
 
     /**
      * Double Value.
+     *
      * @return Double Value of Config Key.
      */
     public Double getDouble() {
@@ -74,11 +78,12 @@ public enum ConfigType {
 
     /**
      * List Value.
+     *
      * @return List Value of Config Key.
      */
     public List<String> getList() {
         List<String> list = YmlManager.getYml(YmlType.CONFIG_YML).getConfig().getStringList(option);
-        ArrayList<String> l = new ArrayList<String>();
+        List<String> l = new ArrayList<String>();
 
         for (String string : list) {
             l.add(MessageUtil.addColour(string));

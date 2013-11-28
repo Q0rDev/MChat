@@ -207,8 +207,8 @@ public class Metrics {
 
         Graph loadedPlugins = createGraph("Plugins");
         Plugin[] plugins = Bukkit.getServer().getPluginManager().getPlugins();
-        for (Plugin p : plugins){
-            loadedPlugins.addPlotter(new Metrics.Plotter(p.getName()){
+        for (Plugin p : plugins) {
+            loadedPlugins.addPlotter(new Metrics.Plotter(p.getName()) {
                 @Override
                 public int getValue() {
                     return 1;
@@ -218,28 +218,28 @@ public class Metrics {
 
         Graph nodeStyle = createGraph("NodeStyle");
         if (ConfigType.INFO_USE_LEVELED_NODES.getBoolean()) {
-            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_LEVELED_NODES.name()){
+            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_LEVELED_NODES.name()) {
                 @Override
                 public int getValue() {
                     return 1;
                 }
             });
-        }else if (ConfigType.INFO_USE_OLD_NODES.getBoolean()) {
-            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_OLD_NODES.name()){
+        } else if (ConfigType.INFO_USE_OLD_NODES.getBoolean()) {
+            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_OLD_NODES.name()) {
                 @Override
                 public int getValue() {
                     return 1;
                 }
             });
-        }else if (ConfigType.INFO_USE_NEW_INFO.getBoolean()) {
-            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_NEW_INFO.name()){
+        } else if (ConfigType.INFO_USE_NEW_INFO.getBoolean()) {
+            nodeStyle.addPlotter(new Metrics.Plotter(ConfigType.INFO_USE_NEW_INFO.name()) {
                 @Override
                 public int getValue() {
                     return 1;
                 }
             });
-        }else{
-            nodeStyle.addPlotter(new Metrics.Plotter("Custom Variables"){
+        } else {
+            nodeStyle.addPlotter(new Metrics.Plotter("Custom Variables") {
                 @Override
                 public int getValue() {
                     return 1;
@@ -248,7 +248,7 @@ public class Metrics {
         }
 
         Graph APIOnly = createGraph("APIOnly");
-        APIOnly.addPlotter(new Metrics.Plotter(ConfigType.MCHAT_API_ONLY.getBoolean() ? "true":"false") {
+        APIOnly.addPlotter(new Metrics.Plotter(ConfigType.MCHAT_API_ONLY.getBoolean() ? "true" : "false") {
             @Override
             public int getValue() {
                 return 1;

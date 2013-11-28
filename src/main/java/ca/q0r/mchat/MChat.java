@@ -45,16 +45,17 @@ public class MChat extends JavaPlugin {
         killEss();
 
         // Initialize Metrics
-        getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
-				@Override
-				public void run() {
-					try {
-						Metrics metrics = new Metrics(Bukkit.getPluginManager().getPlugin("MChat"));
-			            metrics.findCustomData();
-			            metrics.start();
-			        } catch (Exception ignored) {}
-				}
-			}, 200);
+        getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    Metrics metrics = new Metrics(Bukkit.getPluginManager().getPlugin("MChat"));
+                    metrics.findCustomData();
+                    metrics.start();
+                } catch (Exception ignored) {
+                }
+            }
+        }, 200);
 
         // Load Yml
         YmlManager.initialize();
@@ -79,7 +80,7 @@ public class MChat extends JavaPlugin {
 
         // Updater
         if (ConfigType.MCHAT_UPDATE_CHECK.getBoolean()) {
-            getServer().getScheduler().runTaskLater(this, new BukkitRunnable(){
+            getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
                 @Override
                 public void run() {
                     MChat mchat = (MChat) Bukkit.getPluginManager().getPlugin("MChat");

@@ -35,7 +35,7 @@ public class PlayerListener implements Listener {
         String msg = event.getJoinMessage();
 
         if (plugin.update && API.checkPermissions(pName, world, "mchat.update")) {
-            plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable(){
+            plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
                 @Override
                 public void run() {
                     MessageUtil.sendMessage(player, "An update is available! Please check");
@@ -124,7 +124,7 @@ public class PlayerListener implements Listener {
     }
 
     private void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
-        for (Player player : plugin.getServer().getOnlinePlayers())  {
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (API.checkPermissions(player.getName(), player.getWorld().getName(), overrideNode)) {
                 player.sendMessage(format);
                 continue;
@@ -148,6 +148,7 @@ public class PlayerListener implements Listener {
             }
 
             player.setPlayerListName(listName);
-        } catch(Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 }

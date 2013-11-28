@@ -15,6 +15,7 @@ public enum InfoType {
 
     /**
      * Config Value.
+     *
      * @return Config Value of Info Type.
      */
     public String getConfValue() {

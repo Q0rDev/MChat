@@ -13,10 +13,12 @@ import java.lang.annotation.Target;
 public abstract class Var {
     /**
      * Variable Processor.
-     * @param obj Ojbect used to parse Variable. (Usually Bukkit Player object).
+     *
+     * @param obj Object used to parse Variable. (Usually Bukkit Player object).
      * @return Variable's Value after processing.
      */
-    @Keys @Meta
+    @Keys
+    @Meta
     public abstract Object getValue(Object obj);
 
     /**
@@ -27,6 +29,7 @@ public abstract class Var {
     public @interface Keys {
         /**
          * Variable's Keys.
+         *
          * @return Array of Keys used to define this Variable.
          */
         String[] keys() default {};
@@ -40,12 +43,14 @@ public abstract class Var {
     public @interface Meta {
         /**
          * Indicator Type of Variable.
+         *
          * @return Indicator Type to be used with this Variable.
          */
         IndicatorType type() default IndicatorType.MISC_VAR;
 
         /**
          * Resolve Priority of Variable.
+         *
          * @return Resolve Priority to be used with this Variable.
          */
         ResolvePriority priority() default ResolvePriority.NORMAL;

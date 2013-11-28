@@ -11,9 +11,9 @@ public class MessageVars {
     }
 
     public static class MessageVar extends Var {
-        @Keys( keys = {"message","msg","m"} )
-        @Meta( type = IndicatorType.MISC_VAR,
-                priority = ResolvePriority.LAST )
+        @Keys(keys = {"message", "msg", "m"})
+        @Meta(type = IndicatorType.MISC_VAR,
+                priority = ResolvePriority.LAST)
         public Object getValue(Object obj) {
             return obj;
         }

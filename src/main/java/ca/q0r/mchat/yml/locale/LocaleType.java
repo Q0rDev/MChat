@@ -34,14 +34,16 @@ public enum LocaleType {
 
     /**
      * Value Retriever.
+     *
      * @return Retrieves Value and and Colours it.
      */
     public String getVal() {
-       return MessageUtil.addColour(getRaw());
+        return MessageUtil.addColour(getRaw());
     }
 
     /**
      * Value Retriever.
+     *
      * @return Retrieves Raw Value.
      */
     public String getRaw() {

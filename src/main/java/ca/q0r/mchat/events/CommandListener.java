@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CommandListener implements Listener {
-    public CommandListener() {}
+    public CommandListener() {
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {

@@ -9,7 +9,8 @@ import org.bukkit.command.CommandSender;
 public class MessageUtil {
     /**
      * Raw Message Sending.
-     * @param sender Object sending message.
+     *
+     * @param sender  Object sending message.
      * @param message Message being sent.
      */
     public static void sendRawMessage(CommandSender sender, String message) {
@@ -18,7 +19,8 @@ public class MessageUtil {
 
     /**
      * Coloured Message Sending.
-     * @param sender Object sending message.
+     *
+     * @param sender  Object sending message.
      * @param message Message being sent.
      */
     public static void sendColouredMessage(CommandSender sender, String message) {
@@ -27,7 +29,8 @@ public class MessageUtil {
 
     /**
      * Message Sending.
-     * @param sender Object sending message.
+     *
+     * @param sender  Object sending message.
      * @param message Message being sent.
      */
     public static void sendMessage(CommandSender sender, String message) {
@@ -36,6 +39,7 @@ public class MessageUtil {
 
     /**
      * Logger.
+     *
      * @param message Object being Logged.
      */
     public static void log(Object message) {
@@ -44,6 +48,7 @@ public class MessageUtil {
 
     /**
      * Logger.
+     *
      * @param message Object being Logged.
      */
     public static void logFormatted(Object message) {
@@ -52,7 +57,8 @@ public class MessageUtil {
 
     /**
      * Logger.
-     * @param name Name of plugin to be formatted.
+     *
+     * @param name    Name of plugin to be formatted.
      * @param message Object being Logged.
      */
     public static void logFormatted(String name, Object message) {
@@ -61,6 +67,7 @@ public class MessageUtil {
 
     /**
      * Logger.
+     *
      * @param message Object being Logged.
      */
     public static void logColoured(Object message) {
@@ -70,6 +77,7 @@ public class MessageUtil {
 
     /**
      * Colour Formatting.
+     *
      * @param string String being Formatted.
      * @return Coloured String.
      */
@@ -103,6 +111,7 @@ public class MessageUtil {
 
     /**
      * Colour Removal.
+     *
      * @param string String Colour is being removed from.
      * @return DeColoured String.
      */
@@ -114,6 +123,7 @@ public class MessageUtil {
 
     /**
      * Plugin Formatting.
+     *
      * @param message Message being appended.
      * @return Message appended to [MChat].
      */
@@ -123,11 +133,12 @@ public class MessageUtil {
 
     /**
      * Plugin Formatting.
-     * @param name Name of plugin to be formatted.
+     *
+     * @param name    Name of plugin to be formatted.
      * @param message Message being appended.
      * @return Message appended to name.
      */
     public static String format(String name, String message) {
-        return addColour("&2[&4" + name  + "&2] &6" + message);
+        return addColour("&2[&4" + name + "&2] &6" + message);
     }
 }

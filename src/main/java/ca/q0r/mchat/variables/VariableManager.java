@@ -63,7 +63,8 @@ public class VariableManager {
         if (townyB) {
             try {
                 TownyVars.addVars(TownyUniverse.getDataSource());
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         // Initialize SimpleClansChat Vars
@@ -76,6 +77,7 @@ public class VariableManager {
 
     /**
      * Adds Var to VarSet.
+     *
      * @param var Variable processor.
      */
     public static void addVar(Var var) {
@@ -86,6 +88,7 @@ public class VariableManager {
 
     /**
      * Adds Vars to VarSet.
+     *
      * @param vars Variable processor Array.
      */
     public static void addVars(Var[] vars) {
@@ -99,9 +102,10 @@ public class VariableManager {
 
     /**
      * Variable Replacer.
-     * @param format String to be replaced.
-     * @param player Player being formatted against.
-     * @param msg Message being relayed.
+     *
+     * @param format   String to be replaced.
+     * @param player   Player being formatted against.
+     * @param msg      Message being relayed.
      * @param doColour Whether or not to colour replacement value.
      * @return String with Variables replaced.
      */
@@ -138,7 +142,7 @@ public class VariableManager {
                     type = vMeta.type();
                 }
 
-                switch(priority) {
+                switch (priority) {
                     case FIRST:
                         for (String key : keys) {
                             fVarMap.put(type.getValue() + key, value);
@@ -180,7 +184,8 @@ public class VariableManager {
 
     /**
      * Custom Variable Replacer.
-     * @param pName Player's Name.
+     *
+     * @param pName  Player's Name.
      * @param format String to be replaced.
      * @return String with Custom Variables replaced.
      */

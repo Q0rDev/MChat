@@ -18,6 +18,7 @@ public enum IndicatorType {
 
     /**
      * Indicator Value.
+     *
      * @return Value of Indicator Type.
      */
     public String getValue() {

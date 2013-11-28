@@ -21,9 +21,10 @@ import java.util.regex.Pattern;
 public class Parser {
     /**
      * Core Formatting
-     * @param pName Name of Player being reflected upon.
-     * @param world Player's World.
-     * @param msg Message being displayed.
+     *
+     * @param pName  Name of Player being reflected upon.
+     * @param world  Player's World.
+     * @param msg    Message being displayed.
      * @param format Resulting Format.
      * @return Formatted Message.
      */
@@ -64,9 +65,10 @@ public class Parser {
 
     /**
      * Chat Formatting
+     *
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
-     * @param msg Message being displayed.
+     * @param msg   Message being displayed.
      * @return Formatted Chat Message.
      */
     public static String parseChatMessage(String pName, String world, String msg) {
@@ -75,6 +77,7 @@ public class Parser {
 
     /**
      * Player Name Formatting
+     *
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted Player Name.
@@ -85,9 +88,10 @@ public class Parser {
 
     /**
      * Event Message Formatting
+     *
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
-     * @param type Event Type being formatted.
+     * @param type  Event Type being formatted.
      * @return Formatted Event Message.
      */
     public static String parseEvent(String pName, String world, EventType type) {
@@ -96,6 +100,7 @@ public class Parser {
 
     /**
      * TabbedList Formatting
+     *
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted TabbedList Name.
@@ -106,6 +111,7 @@ public class Parser {
 
     /**
      * ListCommand Formatting.
+     *
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted ListCommand Name.
@@ -116,9 +122,10 @@ public class Parser {
 
     /**
      * Me Formatting.
+     *
      * @param pName Name of Player being reflected upon.
      * @param world Name of Player's World.
-     * @param msg Message being displayed.
+     * @param msg   Message being displayed.
      * @return Formatted Me Message.
      */
     public static String parseMe(String pName, String world, String msg) {

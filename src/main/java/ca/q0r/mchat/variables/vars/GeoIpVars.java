@@ -13,11 +13,11 @@ public class GeoIpVars {
     public static void addVars(GeoIPLookup geo) {
         geoip = geo;
 
-        VariableManager.addVars(new Var[] {new CountryName(), new CountryCode(), new Region(), new City()});
+        VariableManager.addVars(new Var[]{new CountryName(), new CountryCode(), new Region(), new City()});
     }
 
     private static class CountryName extends Var {
-        @Keys ( keys = {"geoCountry"} )
+        @Keys(keys = {"geoCountry"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 return geoip.getLocation(((Player) obj).getAddress().getAddress()).countryName;
@@ -28,7 +28,7 @@ public class GeoIpVars {
     }
 
     private static class CountryCode extends Var {
-        @Keys ( keys = {"geoCountryCode"} )
+        @Keys(keys = {"geoCountryCode"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 return geoip.getLocation(((Player) obj).getAddress().getAddress()).countryCode;
@@ -39,7 +39,7 @@ public class GeoIpVars {
     }
 
     private static class Region extends Var {
-        @Keys ( keys = {"geoRegion"} )
+        @Keys(keys = {"geoRegion"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 Location location = geoip.getLocation(((Player) obj).getAddress().getAddress());
@@ -51,7 +51,7 @@ public class GeoIpVars {
     }
 
     private static class City extends Var {
-        @Keys ( keys = {"geoCity"} )
+        @Keys(keys = {"geoCity"})
         public Object getValue(Object obj) {
             if (obj != null && obj instanceof Player) {
                 return geoip.getLocation(((Player) obj).getAddress().getAddress()).city;

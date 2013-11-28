@@ -26,10 +26,11 @@ import java.util.*;
 public class Reader {
     /**
      * Raw Info Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
      * @param world Name of the InfoType's World.
-     * @param type InfoType being reflected upon.
-     * @param info Info Variable being resolved.
+     * @param type  InfoType being reflected upon.
+     * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
     public static Object getRawInfo(String name, InfoType type, String world, String info) {
@@ -70,8 +71,9 @@ public class Reader {
 
     /**
      * Raw Prefix Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Prefix.
      */
@@ -81,8 +83,9 @@ public class Reader {
 
     /**
      * Raw Suffix Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Suffix.
      */
@@ -92,8 +95,9 @@ public class Reader {
 
     /**
      * Raw Group Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Group.
      */
@@ -103,8 +107,9 @@ public class Reader {
 
     /**
      * Raw Groups Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Groups.
      */
@@ -122,10 +127,11 @@ public class Reader {
 
     /**
      * Raw Info Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Player's World.
-     * @param info Info Variable being resolved.
+     * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
     public static String getInfo(String name, InfoType type, String world, String info) {
@@ -134,8 +140,9 @@ public class Reader {
 
     /**
      * Formatted Prefix Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Prefix.
      */
@@ -145,8 +152,9 @@ public class Reader {
 
     /**
      * Formatted Suffix Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Suffix.
      */
@@ -156,7 +164,8 @@ public class Reader {
 
     /**
      * Formatted Group Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
      * @param world Name of the InfoType's World.
      * @return Formatted Group.
      */
@@ -166,8 +175,9 @@ public class Reader {
 
     /**
      * Raw Groups Resolving
-     * @param name Defining value of the InfoType(Also known as Name).
-     * @param type InfoType being reflected upon.
+     *
+     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Groups.
      */
@@ -258,7 +268,8 @@ public class Reader {
 
                     try {
                         iMap.put(infoConfig.getInt(rVal), entry.getValue().toString());
-                    } catch (NumberFormatException ignored) {}
+                    } catch (NumberFormatException ignored) {
+                    }
                 }
             }
         }
@@ -481,7 +492,7 @@ public class Reader {
         boolean UserInfoLookupFailed = false;
 
         if (type == InfoType.USER) {
-            infoString = getVaultUserInfo(name,world,info);
+            infoString = getVaultUserInfo(name, world, info);
             UserInfoLookupFailed = infoString.equals("");
         }
 
@@ -490,13 +501,13 @@ public class Reader {
         }
 
         if (type == InfoType.GROUP || UserInfoLookupFailed) {
-            getVaultGroupInfo(name,world,info);
+            getVaultGroupInfo(name, world, info);
         }
 
         return infoString;
     }
 
-    private static Object getVaultUserInfo(String name, String world, String info){
+    private static Object getVaultUserInfo(String name, String world, String info) {
         Object infoString;
 
         if (info.equals("group")) {
@@ -514,7 +525,7 @@ public class Reader {
         return infoString;
     }
 
-    private static Object getVaultGroupInfo(String name, String world, String info){
+    private static Object getVaultGroupInfo(String name, String world, String info) {
         Object infoString;
 
         if (info.equals("prefix")) {
@@ -530,6 +541,7 @@ public class Reader {
 
     /**
      * Group Name Resolver
+     *
      * @param group Group to be Resolved.
      * @return Group Name's Alias.
      */
@@ -549,6 +561,7 @@ public class Reader {
 
     /**
      * World Name Resolver
+     *
      * @param world Group to be Resolved.
      * @return World Name's Alias.
      */
@@ -568,6 +581,7 @@ public class Reader {
 
     /**
      * Player Name Resolver
+     *
      * @param name Name of Player to be Resolved.
      * @return Player Name's MChat Alias.
      */
@@ -585,11 +599,12 @@ public class Reader {
 
     /**
      * Event Message Resolver.
+     *
      * @param type Type of Event you want to grab.
      * @return Event Message.
      */
     public static String getEventMessage(EventType type) {
-        switch(type) {
+        switch (type) {
             case JOIN:
                 return LocaleType.MESSAGE_EVENT_JOIN.getRaw();
             case KICK:

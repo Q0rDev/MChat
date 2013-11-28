@@ -15,28 +15,30 @@ public class SimpleClansVars {
     }
 
     private static class ClanVar extends Var {
-        @Keys ( keys = {"-clan"} )
+        @Keys(keys = {"-clan"})
         public Object getValue(Object obj) {
             try {
                 if (obj != null && obj instanceof Player) {
                     return chat.formatVariable("-clan",
-                            chat.getClanPlayerManager().getClanPlayer((Player)obj).getClan().getTag());
+                            chat.getClanPlayerManager().getClanPlayer((Player) obj).getClan().getTag());
                 }
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
 
             return "";
         }
     }
 
     private static class RankVar extends Var {
-        @Keys ( keys = {"-rank"} )
+        @Keys(keys = {"-rank"})
         public Object getValue(Object obj) {
             try {
                 if (obj != null && obj instanceof Player) {
                     return chat.formatVariable("-rank",
-                            chat.getClanPlayerManager().getClanPlayer((Player)obj).getRank().getTag());
+                            chat.getClanPlayerManager().getClanPlayer((Player) obj).getRank().getTag());
                 }
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
 
             return "";
         }

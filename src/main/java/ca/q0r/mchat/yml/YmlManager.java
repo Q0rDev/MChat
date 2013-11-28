@@ -33,11 +33,12 @@ public class YmlManager {
 
     /**
      * YML retriever.
+     *
      * @param type Type of Config to get.
      * @return YML Config.
      */
     public static Yml getYml(YmlType type) {
-        switch(type) {
+        switch (type) {
             case CENSOR_YML:
                 return censorYml;
             case CONFIG_YML:
@@ -53,10 +54,11 @@ public class YmlManager {
 
     /**
      * YML Reloader.
+     *
      * @param type Type of Config to reload.
      */
     public static void reloadYml(YmlType type) {
-        switch(type) {
+        switch (type) {
             case CENSOR_YML:
                 censorYml = new CensorYml();
                 censorYml.loadDefaults();

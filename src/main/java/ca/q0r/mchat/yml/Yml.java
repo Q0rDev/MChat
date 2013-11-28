@@ -8,17 +8,27 @@ import java.io.File;
  * Parent class for all YML configs.
  */
 public abstract class Yml {
-    /** YML Config */ public YamlConfiguration config;
-    /** Config File */ public File file;
-    /** Value is true when Config has been altered. */ public Boolean changed;
+    /**
+     * YML Config
+     */
+    public YamlConfiguration config;
+    /**
+     * Config File
+     */
+    public File file;
+    /**
+     * Value is true when Config has been altered.
+     */
+    public Boolean changed;
 
     /**
      * Used to instantiate Class.
-     * @param filez YML Config File to be loaded.
+     *
+     * @param file   YML Config File to be loaded.
      * @param header Header Comment.
      */
-    public Yml(File filez, String header) {
-        file = filez;
+    public Yml(File file, String header) {
+        this.file = file;
         changed = false;
 
         config = YamlConfiguration.loadConfiguration(file);
@@ -34,6 +44,7 @@ public abstract class Yml {
 
     /**
      * Sets key / value pair to config.
+     *
      * @param key Key to be set.
      * @param obj Value to be set.
      */
@@ -45,6 +56,7 @@ public abstract class Yml {
 
     /**
      * Writes config to disk.
+     *
      * @return Write result.
      */
     public Boolean save() {
@@ -63,6 +75,7 @@ public abstract class Yml {
 
     /**
      * YML Config.
+     *
      * @return YML File loaded from Disk.
      */
     public YamlConfiguration getConfig() {
@@ -71,7 +84,8 @@ public abstract class Yml {
 
     /**
      * Check if Option is Set, if not set Value.
-     * @param option Key to check.
+     *
+     * @param option   Key to check.
      * @param defValue Value to set if Key is not found.
      */
     public void checkOption(String option, Object defValue) {
@@ -82,6 +96,7 @@ public abstract class Yml {
 
     /**
      * Edit Key.
+     *
      * @param oldOption Key to be changed.
      * @param newOption Key to change to if found.
      */
@@ -94,6 +109,7 @@ public abstract class Yml {
 
     /**
      * Remove Key / Value.
+     *
      * @param option Key to remove if found.
      */
     public void removeOption(String option) {
