@@ -10,7 +10,7 @@ public class MessageUtil {
     /**
      * Raw Message Sending.
      *
-     * @param sender  Object sending message.
+     * @param sender  Sender sending message.
      * @param message Message being sent.
      */
     public static void sendRawMessage(CommandSender sender, String message) {
@@ -20,21 +20,21 @@ public class MessageUtil {
     /**
      * Coloured Message Sending.
      *
-     * @param sender  Object sending message.
+     * @param sender  Sender sending message.
      * @param message Message being sent.
      */
     public static void sendColouredMessage(CommandSender sender, String message) {
-        sender.sendMessage(addColour(message));
+        sendRawMessage(sender, addColour(message));
     }
 
     /**
      * Message Sending.
      *
-     * @param sender  Object sending message.
+     * @param sender  Sender sending message.
      * @param message Message being sent.
      */
     public static void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage(format(message));
+        sendRawMessage(sender, format(message));
     }
 
     /**
@@ -43,7 +43,7 @@ public class MessageUtil {
      * @param message Object being Logged.
      */
     public static void log(Object message) {
-        Bukkit.getConsoleSender().sendMessage(message.toString());
+        Bukkit.getConsoleSender().sendRawMessage(message.toString());
     }
 
     /**
