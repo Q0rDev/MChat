@@ -489,20 +489,18 @@ public class Reader {
 
     private static Object getVaultInfo(String name, InfoType type, String world, String info) {
         Object infoString = "";
-        boolean UserInfoLookupFailed = false;
 
         if (type == InfoType.USER) {
             infoString = getVaultUserInfo(name, world, info);
-            UserInfoLookupFailed = infoString.equals("");
         }
 
-        if (UserInfoLookupFailed) {
+        if (infoString.equals("")) {
             if (!API.vChat.getName().equals("MChat")) {
                 name = API.vChat.getPrimaryGroup(world, name);
             }
         }
 
-        if (type == InfoType.GROUP || UserInfoLookupFailed) {
+        if (type == InfoType.GROUP || infoString.equals("")) {
             getVaultGroupInfo(name, world, info);
         }
 

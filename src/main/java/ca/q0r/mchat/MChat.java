@@ -84,7 +84,7 @@ public class MChat extends JavaPlugin {
                 @Override
                 public void run() {
                     MChat mchat = (MChat) Bukkit.getPluginManager().getPlugin("MChat");
-                    Updater updater = new Updater(mchat, "mchat", mchat.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+                    Updater updater = new Updater(mchat, 31112, mchat.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
                     mchat.update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
                 }
 
