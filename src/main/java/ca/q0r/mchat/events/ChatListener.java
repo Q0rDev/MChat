@@ -36,7 +36,7 @@ public class ChatListener implements Listener {
             return;
         }
 
-        setListName(player, Parser.parseTabbedList(pName, world));
+        setListName(player);
 
         // Chat Distance Stuff
         if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
@@ -65,7 +65,9 @@ public class ChatListener implements Listener {
         return false;
     }
 
-    private void setListName(Player player, String listName) {
+    private void setListName(Player player) {
+        String listName = Parser.parseTabbedList(player.getName(), player.getWorld().getName());
+
         try {
             if (listName.length() > 15) {
                 listName = listName.substring(0, 16);

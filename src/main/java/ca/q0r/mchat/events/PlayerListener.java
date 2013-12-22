@@ -10,7 +10,6 @@ import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import ca.q0r.mchat.yml.config.ConfigType;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,22 +28,18 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
+
         String world = player.getWorld().getName();
         String msg = event.getJoinMessage();
-
-        final String pName = player.getName();
+        String pName = player.getName();
 
         if (plugin.update && API.checkPermissions(pName, world, "mchat.update")) {
             plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Player player = Bukkit.getPlayer(pName);
-
-                    if (player != null) {
-                        MessageUtil.sendMessage(player, "An update is available! Please check");
-                        MessageUtil.sendMessage(player, "http://goo.gl/dCwFac for details!");
-                    }
+                    MessageUtil.sendMessage(player, "An update is available! Please check");
+                    MessageUtil.sendMessage(player, "http://goo.gl/dCwFac for details!");
                 }
 
             }, 50);
@@ -62,7 +57,7 @@ public class PlayerListener implements Listener {
 
         plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
             public void run() {
-                setListName(pName);
+                setListName(player);
             }
         }, 20L);
 
@@ -145,20 +140,16 @@ public class PlayerListener implements Listener {
         MessageUtil.log(format);
     }
 
-    private void setListName(String pName) {
-        Player player = Bukkit.getPlayer(pName);
+    private void setListName(Player player) {
+        String listName = Parser.parseTabbedList(player.getName(), player.getWorld().getName());
 
-        if (player != null) {
-            String listName = Parser.parseTabbedList(player.getName(), player.getWorld().getName());
-
-            try {
-                if (listName.length() > 15) {
-                    listName = listName.substring(0, 16);
-                    player.setPlayerListName(listName);
-                }
-
+        try {
+            if (listName.length() > 15) {
+                listName = listName.substring(0, 16);
                 player.setPlayerListName(listName);
-            } catch (Exception ignored) { }
-        }
+            }
+
+            player.setPlayerListName(listName);
+        } catch (Exception ignored) { }
     }
 }
