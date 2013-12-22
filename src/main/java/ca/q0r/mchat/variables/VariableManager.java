@@ -8,7 +8,6 @@ import com.herocraftonline.heroes.Heroes;
 import com.p000ison.dev.simpleclans2.chat.SimpleClansChat;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import uk.org.whoami.geoip.GeoIPLookup;
@@ -104,12 +103,12 @@ public class VariableManager {
      * Variable Replacer.
      *
      * @param format   String to be replaced.
-     * @param player   Player being formatted against.
+     * @param pName   Name of Player being formatted against.
      * @param msg      Message being relayed.
      * @param doColour Whether or not to colour replacement value.
      * @return String with Variables replaced.
      */
-    public static String replaceVars(String format, Player player, String msg, Boolean doColour) {
+    public static String replaceVars(String format, String pName, String msg, Boolean doColour) {
         NavigableMap<String, Object> fVarMap = new TreeMap<String, Object>();
         NavigableMap<String, Object> nVarMap = new TreeMap<String, Object>();
         NavigableMap<String, Object> lVarMap = new TreeMap<String, Object>();
@@ -131,7 +130,7 @@ public class VariableManager {
                     if (msg != null && var instanceof MessageVars.MessageVar) {
                         value = var.getValue(msg).toString();
                     } else {
-                        value = var.getValue(player).toString();
+                        value = var.getValue(pName).toString();
                     }
                 }
 

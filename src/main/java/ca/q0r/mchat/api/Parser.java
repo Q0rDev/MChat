@@ -9,7 +9,6 @@ import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import ca.q0r.mchat.yml.config.ConfigType;
 import ca.q0r.mchat.yml.locale.LocaleType;
-import org.bukkit.Bukkit;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -58,7 +57,7 @@ public class Parser {
         }
 
         format = VariableManager.replaceCustVars(pName, format);
-        format = VariableManager.replaceVars(format, Bukkit.getServer().getPlayer(pName), msg, true);
+        format = VariableManager.replaceVars(format, pName, msg, true);
 
         return format;
     }
