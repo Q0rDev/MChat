@@ -118,7 +118,7 @@ public class VariableManager {
             Method[] methods = var.getClass().getMethods();
 
             for (Method method : methods) {
-                ResolvePriority priority = ResolvePriority.NORMAL;
+                ResolvePriority priority = ResolvePriority.DEFAULT;
                 IndicatorType type = IndicatorType.MISC_VAR;
                 String[] keys = {};
                 String value = "";
@@ -149,7 +149,7 @@ public class VariableManager {
                         }
 
                         break;
-                    case NORMAL:
+                    case DEFAULT:
                         for (String key : keys) {
                             nVarMap.put(type.getValue() + key, value);
                         }

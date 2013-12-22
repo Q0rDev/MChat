@@ -53,6 +53,6 @@ public abstract class Var {
          *
          * @return Resolve Priority to be used with this Variable.
          */
-        ResolvePriority priority() default ResolvePriority.NORMAL;
+        ResolvePriority priority() default ResolvePriority.DEFAULT;
     }
 }

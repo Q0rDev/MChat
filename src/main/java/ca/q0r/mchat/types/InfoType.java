@@ -4,8 +4,14 @@ package ca.q0r.mchat.types;
  * Enum for Different Info Types.
  */
 public enum InfoType {
-    /** Group Info Type. */ GROUP("groups"),
-    /** User Info Type. */ USER("users");
+    /**
+     * Group Info Type.
+     */
+    GROUP("groups"),
+    /**
+     * User Info Type.
+     */
+    USER("users");
 
     private final String name;
 

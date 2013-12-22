@@ -73,7 +73,6 @@ public class ChatListener implements Listener {
             }
 
             player.setPlayerListName(listName);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
     }
 }
