@@ -22,10 +22,9 @@ public class LocaleYml extends Yml {
         checkOption("format.me", "* +p+dn+s&e +m");
 
         checkOption("message.general.noPerms", "You do not have '%permission'.");
-        checkOption("message.general.noPerms", "You do not have '%permission'.");
         checkOption("message.info.alteration", "Info Alteration Successful.");
         checkOption("message.player.stillAfk", "You are still AFK.");
-        checkOption("message.player.stillAfk", "You are still AFK.");
+        checkOption("message.event.firstJoin", "Welcome %player to the server!");
         checkOption("message.event.join", "%player has joined the game.");
         checkOption("message.event.leave", "%player has left the game.");
         checkOption("message.event.kick", "%player has been kicked from the game. [ %reason ]");

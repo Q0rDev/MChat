@@ -46,6 +46,9 @@ public enum LocaleType {
      * Join Event Message
      */MESSAGE_EVENT_JOIN("message.event.join"),
     /**
+     * Join Event Message
+     */MESSAGE_EVENT_FIRSTJOIN("message.event.firstJoin"),
+    /**
      * Leave Event Message
      */MESSAGE_EVENT_LEAVE("message.event.leave"),
     /**

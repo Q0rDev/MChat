@@ -9,6 +9,10 @@ public enum EventType {
      */
     JOIN,
     /**
+     * Player FirstJoin Event.
+     */
+    FIRSTJOIN,
+    /**
      * Player Quit Event.
      */
     QUIT,
