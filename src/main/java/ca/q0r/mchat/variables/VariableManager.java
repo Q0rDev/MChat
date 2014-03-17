@@ -98,7 +98,6 @@ public class VariableManager {
         }
     }
 
-
     /**
      * Variable Replacer.
      *

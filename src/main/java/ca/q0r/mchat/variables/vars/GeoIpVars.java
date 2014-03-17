@@ -4,6 +4,7 @@ import ca.q0r.mchat.variables.Var;
 import ca.q0r.mchat.variables.VariableManager;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.regionName;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import uk.org.whoami.geoip.GeoIPLookup;
 
@@ -19,8 +20,9 @@ public class GeoIpVars {
     private static class CountryName extends Var {
         @Keys(keys = {"geoCountry"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                return geoip.getLocation(((Player) obj).getAddress().getAddress()).countryName;
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                return geoip.getLocation((player).getAddress().getAddress()).countryName;
             }
 
             return "";
@@ -30,8 +32,9 @@ public class GeoIpVars {
     private static class CountryCode extends Var {
         @Keys(keys = {"geoCountryCode"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                return geoip.getLocation(((Player) obj).getAddress().getAddress()).countryCode;
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                return geoip.getLocation((player).getAddress().getAddress()).countryCode;
             }
 
             return "";
@@ -41,8 +44,9 @@ public class GeoIpVars {
     private static class Region extends Var {
         @Keys(keys = {"geoRegion"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Location location = geoip.getLocation(((Player) obj).getAddress().getAddress());
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Location location = geoip.getLocation((player).getAddress().getAddress());
                 return regionName.regionNameByCode(location.countryCode, location.region);
             }
 
@@ -53,8 +57,9 @@ public class GeoIpVars {
     private static class City extends Var {
         @Keys(keys = {"geoCity"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                return geoip.getLocation(((Player) obj).getAddress().getAddress()).city;
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                return geoip.getLocation((player).getAddress().getAddress()).city;
             }
 
             return "";

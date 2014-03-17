@@ -6,6 +6,7 @@ import ca.q0r.mchat.yml.locale.LocaleType;
 import com.herocraftonline.heroes.characters.CharacterManager;
 import com.herocraftonline.heroes.characters.Hero;
 import com.herocraftonline.heroes.util.Messaging;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class HeroesVars {
@@ -22,8 +23,9 @@ public class HeroesVars {
     private static class ClassVar extends Var {
         @Keys(keys = {"HClass", "HClass"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.getHeroClass().getName();
             }
 
@@ -34,8 +36,9 @@ public class HeroesVars {
     private static class ExpVar extends Var {
         @Keys(keys = {"HExp", "HEx"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return String.valueOf(hero.getExperience(hero.getHeroClass()));
             }
 
@@ -46,8 +49,9 @@ public class HeroesVars {
     private static class ExpBarVar extends Var {
         @Keys(keys = {"HEBar", "HEb"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return Messaging.createExperienceBar(hero, hero.getHeroClass());
             }
 
@@ -58,8 +62,9 @@ public class HeroesVars {
     private static class HealthVar extends Var {
         @Keys(keys = {"HHealth", "HH"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return String.valueOf(hero.getPlayer().getHealth());
             }
 
@@ -70,8 +75,9 @@ public class HeroesVars {
     private static class HealthBarVar extends Var {
         @Keys(keys = {"HHBar", "HHB"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return Messaging.createHealthBar(hero.getPlayer().getHealth(), hero.getPlayer().getMaxHealth());
             }
 
@@ -82,8 +88,9 @@ public class HeroesVars {
     private static class LevelVar extends Var {
         @Keys(keys = {"HLevel", "HL"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return String.valueOf(hero.getLevel());
             }
 
@@ -94,8 +101,9 @@ public class HeroesVars {
     private static class ManaVar extends Var {
         @Keys(keys = {"HMana", "HMn"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return String.valueOf(hero.getMana());
             }
 
@@ -106,8 +114,9 @@ public class HeroesVars {
     private static class ManaBarVar extends Var {
         @Keys(keys = {"HMBar", "HMb"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return Messaging.createManaBar(hero.getMana(), hero.getMaxMana());
             }
 
@@ -118,8 +127,9 @@ public class HeroesVars {
     private static class MasteredVar extends Var {
         @Keys(keys = {"HMastered", "HMa"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.isMaster(hero.getHeroClass()) && (hero.getSecondClass() == null || hero.isMaster(hero.getSecondClass()))
                         ? LocaleType.MESSAGE_HEROES_TRUE.getVal() : LocaleType.MESSAGE_HEROES_FALSE.getVal();
             }
@@ -131,8 +141,9 @@ public class HeroesVars {
     private static class PartyVar extends Var {
         @Keys(keys = {"HParty", "HPa"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.getParty() != null ? hero.getParty().toString() : "";
             }
 
@@ -143,8 +154,9 @@ public class HeroesVars {
     private static class SecClassVar extends Var {
         @Keys(keys = {"HSecClass", "HSC"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.getSecondClass() != null ? hero.getSecondClass().getName() : "";
             }
 
@@ -155,8 +167,9 @@ public class HeroesVars {
     private static class SecExpVar extends Var {
         @Keys(keys = {"HSecExp", "HSEx"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.getSecondClass() != null ? String.valueOf(hero.getExperience(hero.getSecondClass())) : "";
             }
 
@@ -167,8 +180,9 @@ public class HeroesVars {
     private static class SecExpBarVar extends Var {
         @Keys(keys = {"HSecEBar", "HSEb"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.getSecondClass() != null ? Messaging.createExperienceBar(hero, hero.getSecondClass()) : "";
             }
 
@@ -179,8 +193,9 @@ public class HeroesVars {
     private static class SecLevelVar extends Var {
         @Keys(keys = {"HSecLevel", "HSL"})
         public Object getValue(Object obj) {
-            if (obj != null && obj instanceof Player) {
-                Hero hero = manager.getHero((Player) obj);
+            Player player = Bukkit.getPlayer(obj.toString());
+            if (player != null) {
+                Hero hero = manager.getHero(player);
                 return hero.getSecondClass() != null ? String.valueOf(hero.getLevel(hero.getSecondClass())) : "";
             }
 

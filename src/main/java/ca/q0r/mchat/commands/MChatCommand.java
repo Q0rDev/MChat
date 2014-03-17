@@ -21,8 +21,9 @@ public class MChatCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length == 0)
+        if (args.length == 0) {
             return false;
+        }
 
         if (args[0].equalsIgnoreCase("version")) {
             if (!CommandUtil.hasCommandPerm(sender, "mchat.version")) {
