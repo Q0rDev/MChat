@@ -35,7 +35,7 @@ public class MChatCommand implements CommandExecutor {
             MessageUtil.sendMessage(sender, "&6Full Version: &1" + plugin.pdfFile.getVersion());
             MessageUtil.sendMessage(sender, "&6MineCraft Version: &2" + vArray[0]);
             MessageUtil.sendMessage(sender, "&6Release Version: &2" + vArray[1]);
-            MessageUtil.sendMessage(sender, "&6Jenkins Build &5#&6:&2 " + (vArray.length < 4 ? vArray[2] : vArray[3]));
+            MessageUtil.sendMessage(sender, "&6Travis Build &5#&6:&2 " + (vArray.length < 4 ? vArray[2] : vArray[3]));
             MessageUtil.sendMessage(sender, "&6Release: &2" + (vArray.length < 4));
 
             return true;
