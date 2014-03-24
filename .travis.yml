@@ -12,6 +12,10 @@ before_install:
 install: ./target/travis/build.sh
 script: true
 
+# Push artifacts to AWS.
+after_success:
+  - travis-artifacts upload --path target/*.jar --target-path artifacts/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER
+
 notifications:
   # Disable build status email notifications, until the issue with forks is fixed.
   email: false
