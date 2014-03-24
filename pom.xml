@@ -33,7 +33,7 @@
         <repository>
             <id>oss-nexus-releases</id>
             <name>OSS Releases</name>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
         <snapshotRepository>
             <id>oss-nexus-snapshots</id>
