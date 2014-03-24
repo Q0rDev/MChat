@@ -1,6 +1,6 @@
 name: MChat
 main: ca.q0r.mchat.MChat
-version: ${version}-${build.number}
+version: ${version}-${buildNumber}
 author: MiracleM4n
 authors: [MiracleM4n]
 website: http://q0r.ca/
