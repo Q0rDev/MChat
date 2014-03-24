@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <build.number>b0jnks</build.number>
+        <buildNumber>b0trvs</buildNumber>
     </properties>
 
     <!-- Source code -->
@@ -77,7 +77,7 @@
     </repositories>
 
     <build>
-        <defaultGoal>package</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <!-- Resources -->
         <resources>
             <resource>
@@ -95,17 +95,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
             <!-- JAR creation plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>2.4</version>
             </plugin>
         </plugins>
     </build>
