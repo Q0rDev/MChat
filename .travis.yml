@@ -15,7 +15,7 @@ script: true
 
 # Push artifacts to AWS.
 after_success:
-  - travis-artifacts upload --path target/*.jar --target-path artifacts/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER
+  - "cd target && travis-artifacts upload --path *.jar --target-path artifacts/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER"
 
 notifications:
   # Disable build status email notifications, until the issue with forks is fixed.
