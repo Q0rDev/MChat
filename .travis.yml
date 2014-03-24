@@ -3,7 +3,7 @@ language: java
 jdk: oraclejdk7
 
 # Get files for use with build, namely the custom Maven settings.xml.
-before install:
+before_install:
   - "git clone https://github.com/Q0rDev/travis-ci-resources.git target/travis"
   - "chmod +x target/travis/build.sh"
   - "gem install travis-artifacts"
