@@ -64,7 +64,7 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
-        <repository>
+        <!--repository>
             <id>vault-repo</id>
             <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
             <releases>
@@ -73,7 +73,7 @@
             <snapshots>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-        </repository>
+        </repository-->
     </repositories>
 
     <build>
