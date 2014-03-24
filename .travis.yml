@@ -6,6 +6,7 @@ jdk: oraclejdk7
 before_install:
   - "git clone https://github.com/Q0rDev/travis-ci-resources.git target/travis"
   - "chmod +x target/travis/build.sh"
+  - "gem install --version 0.8.0 faraday"
   - "gem install travis-artifacts"
 
 # Compile and package JAR and set build properties.
