@@ -164,46 +164,6 @@ public class Metrics {
     //Copied from vault, lets see what vault plugins our users use, that we can now hook into!
     public void findCustomData() {
         // Create our Permission Graph and Add our permission Plotters
-        Graph permGraph = createGraph("Permission");
-        Graph chatGraph = createGraph("Chat");
-
-        RegisteredServiceProvider<Permission> rspPerm = null;
-        RegisteredServiceProvider<Chat> rspChat = null;
-
-        if (API.isPluginEnabled(PluginType.VAULT)) {
-            rspPerm = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
-            rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
-        }
-
-        Permission perm = null;
-        Chat chat = null;
-
-        if (rspPerm != null) {
-            perm = rspPerm.getProvider();
-        }
-
-        if (rspChat != null) {
-            chat = rspChat.getProvider();
-        }
-
-        final String permName = perm != null ? perm.getName() : "No Permissions";
-        final String chatName = chat != null ? chat.getName() : "No Chat";
-
-        permGraph.addPlotter(new Metrics.Plotter(permName) {
-
-            @Override
-            public int getValue() {
-                return 1;
-            }
-        });
-
-        chatGraph.addPlotter(new Metrics.Plotter(chatName) {
-
-            @Override
-            public int getValue() {
-                return 1;
-            }
-        });
 
         Graph loadedPlugins = createGraph("Plugins");
         Plugin[] plugins = Bukkit.getServer().getPluginManager().getPlugins();
@@ -249,6 +209,46 @@ public class Metrics {
 
         Graph APIOnly = createGraph("APIOnly");
         APIOnly.addPlotter(new Metrics.Plotter(ConfigType.MCHAT_API_ONLY.getBoolean() ? "true" : "false") {
+            @Override
+            public int getValue() {
+                return 1;
+            }
+        });
+
+        if (!API.isPluginEnabled(PluginType.VAULT)) {
+            return;
+        }
+
+        Graph permGraph = createGraph("Permission");
+        Graph chatGraph = createGraph("Chat");
+
+        RegisteredServiceProvider<Permission> rspPerm = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Chat> rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
+
+        Permission perm = null;
+        Chat chat = null;
+
+        if (rspPerm != null) {
+            perm = rspPerm.getProvider();
+        }
+
+        if (rspChat != null) {
+            chat = rspChat.getProvider();
+        }
+
+        final String permName = perm != null ? perm.getName() : "No Permissions";
+        final String chatName = chat != null ? chat.getName() : "No Chat";
+
+        permGraph.addPlotter(new Metrics.Plotter(permName) {
+
+            @Override
+            public int getValue() {
+                return 1;
+            }
+        });
+
+        chatGraph.addPlotter(new Metrics.Plotter(chatName) {
+
             @Override
             public int getValue() {
                 return 1;
@@ -402,8 +402,14 @@ public class Metrics {
      * @return the File object for the config file
      */
     public File getConfigFile() {
+        // I believe the easiest way to get the base folder (e.g craftbukkit set via -P) for plugins to use
+        // is to abuse the plugin object we already have
+        // plugin.getDataFolder() => base/plugins/PluginA/
+        // pluginsFolder => base/plugins/
+        // The base is not necessarily relative to the startup directory.
         File pluginsFolder = plugin.getDataFolder().getParentFile();
 
+        // return => base/plugins/PluginMetrics/config.yml
         return new File(new File(pluginsFolder, "PluginMetrics"), "config.yml");
     }
 
