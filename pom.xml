@@ -3,60 +3,31 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Project information -->
-    <groupId>ca.q0r</groupId>
-    <artifactId>MChat</artifactId>
-    <version>1.7.2-R0.1-SNAPSHOT</version>
     <name>MChat</name>
-    <url>http://q0r.ca/</url>
+    <artifactId>MChat</artifactId>
+    <packaging>jar</packaging>
+    <version>1.7.2-R1.0.0-SNAPSHOT</version>
+    <url>https://github.com/Q0rDev/MChat</url>
     <description>Chat Formatting for Bukkit</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <buildNumber>b0trvs</buildNumber>
-    </properties>
+    <!-- Parent information -->
+    <parent>
+        <groupId>ca.q0r</groupId>
+        <artifactId>q0rdev-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
-    <!-- Source code -->
-    <scm>
-        <developerConnection>scm:git:git@github.com:Q0rDev/${project.name}.git</developerConnection>
-        <connection>scm:git:git://github.com/Q0rDev/${project.name}.git</connection>
-        <url>https://github.com/Q0rDev/${project.name}</url>
-    </scm>
-
-    <!-- Continuous integration -->
-    <ciManagement>
-        <system>travis</system>
-        <url>https://travis-ci.org/Q0rDev/${project.name}</url>
-    </ciManagement>
-
-    <!-- Maven repository -->
-    <distributionManagement>
-        <repository>
-            <id>oss-nexus-releases</id>
-            <name>OSS Releases</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>oss-nexus-snapshots</id>
-            <name>OSS Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <!-- Issue management -->
+    <issueManagement>
+        <system>jira</system>
+        <url>https://q0rdev.atlassian.net/browse/MCHAT</url>
+    </issueManagement>
 
     <!-- Repository locations -->
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>q0r-repo</id>
-            <url>http://nexus.q0r.ca/content/groups/public</url>
+            <id>oss-repo</id>
+            <url>https://oss.sonatype.org/content/groups/public</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -75,41 +46,6 @@
             </snapshots>
         </repository-->
     </repositories>
-
-    <build>
-        <defaultGoal>clean install</defaultGoal>
-        <!-- Resources -->
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources/</directory>
-                <includes>
-                    <include>*.yml</include>
-                </includes>
-            </resource>
-        </resources>
-        <!-- Plugins -->
-        <plugins>
-            <!-- Compile plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <showWarnings>true</showWarnings>
-                </configuration>
-            </plugin>
-            <!-- JAR creation plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-        </plugins>
-    </build>
 
     <!-- Dependencies -->
     <dependencies>
