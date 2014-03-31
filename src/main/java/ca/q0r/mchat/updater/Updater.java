@@ -362,9 +362,14 @@ public class Updater {
      */
     private boolean versionCheck(String title) {
         if (this.type != UpdateType.NO_VERSION_CHECK) {
-            String version = plugin.getDescription().getVersion().split("b")[1].split("jnks")[0];
-            if (title.split(" b").length == 2) {
-                final String remoteVersion = title.split(" b")[1].split(" ")[0]; // Get the newest file's version number
+            Integer length = plugin.getDescription().getVersion().split("-").length;
+            String version = plugin.getDescription().getVersion().split("-")[length - 1].split("git")[0];
+
+            System.out.println("V: " + version);
+            System.out.println("T: " + title.split(" ")[1]);
+
+            if (title.split(" ").length == 2) {
+                final String remoteVersion = title.split(" ")[1]; // Get the newest file's version number
 
                 if (this.hasTag(version) || version.equalsIgnoreCase(remoteVersion)) {
                     // We already have the latest version, or this build is tagged for no-update

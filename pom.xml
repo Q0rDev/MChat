@@ -6,7 +6,7 @@
     <name>MChat</name>
     <artifactId>MChat</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.2-R1.0.0-BETA</version>
+    <version>1.7.2-R0.0.1-SNAPSHOT</version>
     <url>https://github.com/Q0rDev/MChat</url>
     <description>Chat Formatting for Bukkit</description>
 
@@ -35,16 +35,6 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
-        <!--repository>
-            <id>vault-repo</id>
-            <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository-->
     </repositories>
 
     <!-- Dependencies -->
