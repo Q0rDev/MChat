@@ -116,7 +116,7 @@ public class Reader {
     @SuppressWarnings("unchecked")
     public static List<Object> getRawGroups(String name, InfoType type, String world) {
         Object info = getRawInfo(name, type, world, "groups");
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
 
         if (info instanceof ArrayList<?>) {
             list = (List<Object>) getRawInfo(name, type, world, "groups");
@@ -184,7 +184,7 @@ public class Reader {
     @SuppressWarnings("unchecked")
     public static List<String> getGroups(String name, InfoType type, String world) {
         Object info = getRawInfo(name, type, world, "groups");
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         if (info instanceof List<?>) {
             List<Object> inf = (List<Object>) info;
@@ -241,7 +241,7 @@ public class Reader {
 
     private static Object getLeveledInfo(String name, String world, String info) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
-        HashMap<Integer, String> iMap = new HashMap<Integer, String>();
+        HashMap<Integer, String> iMap = new HashMap<>();
 
         if (API.isPluginEnabled(PluginType.PERMISSIONS_BUKKIT)) {
             if (info.equals("group") || info.equals("groups")) {
@@ -323,7 +323,7 @@ public class Reader {
 
         try {
             if (info.equals("groups")) {
-                ArrayList<String> list = new ArrayList<String>();
+                ArrayList<String> list = new ArrayList<>();
 
                 for (Group group : pGroups) {
                     list.add(group.getName());
@@ -346,7 +346,7 @@ public class Reader {
 
         try {
             if (info.equals("groups")) {
-                ArrayList<String> list = new ArrayList<String>();
+                ArrayList<String> list = new ArrayList<>();
 
                 for (net.krinsoft.privileges.groups.Group group : pGroups) {
                     list.add(group.getName());

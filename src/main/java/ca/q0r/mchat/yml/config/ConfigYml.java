@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 public class ConfigYml extends Yml {
-    private ArrayList<String> meAliases = new ArrayList<String>();
+    private ArrayList<String> meAliases = new ArrayList<>();
     //private ArrayList<String> userAliases = new ArrayList<String>();
     //private ArrayList<String> groupAliases = new ArrayList<String>();
 
-    private HashMap<String, List<String>> aliasMap = new HashMap<String, List<String>>();
+    private HashMap<String, List<String>> aliasMap = new HashMap<>();
 
     public ConfigYml() {
         super(new File("plugins/MChat/config.yml"), "MChat Config");

@@ -61,7 +61,7 @@ public class API {
     public static void initialize() {
         setupPlugins();
 
-        spying = new HashMap<String, Boolean>();
+        spying = new HashMap<>();
     }
 
     /**
@@ -103,7 +103,7 @@ public class API {
      * @return Map of Custom Variables.
      */
     public static SortedMap<String, Object> getGlobalVarMap() {
-        SortedMap<String, Object> map = new TreeMap<String, Object>();
+        SortedMap<String, Object> map = new TreeMap<>();
 
         synchronized (gVarMap) {
             map.putAll(Collections.unmodifiableSortedMap(gVarMap));
@@ -153,7 +153,7 @@ public class API {
      * @return Map of Custom Variables.
      */
     public static SortedMap<String, Object> getPlayerVarMap() {
-        SortedMap<String, Object> map = new TreeMap<String, Object>();
+        SortedMap<String, Object> map = new TreeMap<>();
 
         synchronized (pVarMap) {
             map.putAll(Collections.unmodifiableSortedMap(pVarMap));

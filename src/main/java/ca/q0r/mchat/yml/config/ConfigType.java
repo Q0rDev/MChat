@@ -123,7 +123,7 @@ public enum ConfigType {
      */
     public List<String> getList() {
         List<String> list = YmlManager.getYml(YmlType.CONFIG_YML).getConfig().getStringList(option);
-        List<String> l = new ArrayList<String>();
+        List<String> l = new ArrayList<>();
 
         for (String string : list) {
             l.add(MessageUtil.addColour(string));
