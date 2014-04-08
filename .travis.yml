@@ -5,8 +5,11 @@ jdk: oraclejdk7
 # Get files for use with build, namely the custom Maven settings.xml.
 before_install:
   - "git clone https://github.com/Q0rDev/travis-ci-resources.git target/travis"
+  - "git clone https://github.com/Q0rDev/q0rdev-javadocs.git -b gh-pages target/doxy"
   - "chmod +x target/travis/build.sh"
   - "chmod +x target/travis/upload.sh"
+  #- "chmod +x target/travis/doxy.sh"
+  - "echo $TRAVIS_COMMIT_MESSAGE"
 
 # Compile and package JAR and set build properties.
 install: ./target/travis/build.sh
@@ -15,6 +18,7 @@ script: true
 # Upload to DBO if release build.
 after_success:
   - "./target/travis/upload.sh"
+  #- "./target/travis/doxy.sh"
 
 notifications:
   # Disable build status email notifications, until the issue with forks is fixed.
@@ -30,3 +34,5 @@ env:
     - secure: "rZyXfKEOV2udqyNTfJYbRhffdn9FAFus/R9sgniGTUlGf1sWLbkHt251o+cbjveFtyGUQrtU0j4mS0hFOXqonfm24jtN0aTMkf8yfdDjnpIGU3eV0BNe/81VnxpNaaYy8LWd8OnKOCFAAzI68FmdBPuihYGPcnjY3ZYGANL0wF8="
     # Bukkit
     - secure: "WvmHJ+p7d1/4ucllyMMXTjUhWQePg4SvksHlI9NHft5bVCG2B5jggoxkaNRGEYJgXOG82HFNu6IjGbpSZDOY5uD80WBmddeovoBfy1FdI4Z0CLu5HoXqTp99uBbtaKWSpv4FT+1xe+WXEVJfaZQgsUSJNpbF4bTtRjoueOITEqA="
+    # GitHub
+    - secure: "o9R8WoYKDfp0aQzg33BAMLqikm/J3AXml1qtgtbj9dMM2AfuhrlT40drdx7uvr8YaOb4vgP7OxeWtr957oz+7F4Nm79dm6TCw6cqRi5YO63iSqTNEAEJj9galj+P9B2NgkvjiitjoOkSQJVAd/7qirmACxCbNxILQjTlSuasm1k="

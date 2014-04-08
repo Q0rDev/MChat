@@ -365,9 +365,6 @@ public class Updater {
             Integer length = plugin.getDescription().getVersion().split("-").length;
             String version = plugin.getDescription().getVersion().split("-")[length - 1].split("git")[0];
 
-            System.out.println("V: " + version);
-            System.out.println("T: " + title.split(" ")[1]);
-
             if (title.split(" ").length == 2) {
                 final String remoteVersion = title.split(" ")[1]; // Get the newest file's version number
 
