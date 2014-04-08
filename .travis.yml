@@ -8,8 +8,7 @@ before_install:
   - "git clone https://github.com/Q0rDev/q0rdev-javadocs.git -b gh-pages target/doxy"
   - "chmod +x target/travis/build.sh"
   - "chmod +x target/travis/upload.sh"
-  #- "chmod +x target/travis/doxy.sh"
-  - "echo $TRAVIS_COMMIT_MESSAGE"
+  - "chmod +x target/travis/doxy.sh"
 
 # Compile and package JAR and set build properties.
 install: ./target/travis/build.sh
@@ -18,7 +17,7 @@ script: true
 # Upload to DBO if release build.
 after_success:
   - "./target/travis/upload.sh"
-  #- "./target/travis/doxy.sh"
+  - "./target/travis/doxy.sh"
 
 notifications:
   # Disable build status email notifications, until the issue with forks is fixed.
