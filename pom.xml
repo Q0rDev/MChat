@@ -123,12 +123,5 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.p000ison.dev.simpleclans2</groupId>
-            <artifactId>SimpleClansChat</artifactId>
-            <version>1.0.2</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
