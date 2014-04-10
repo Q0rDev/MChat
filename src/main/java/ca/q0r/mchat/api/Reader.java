@@ -608,6 +608,8 @@ public class Reader {
      */
     public static String getEventMessage(EventType type) {
         switch (type) {
+            case FIRSTJOIN:
+              return LocaleType.MESSAGE_EVENT_FIRSTJOIN.getRaw();
             case JOIN:
                 return LocaleType.MESSAGE_EVENT_JOIN.getRaw();
             case KICK:

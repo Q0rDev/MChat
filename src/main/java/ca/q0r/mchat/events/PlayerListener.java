@@ -29,7 +29,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-
+        final EventType eventtype = (player.hasPlayedBefore()) ? EventType.JOIN : EventType.JOIN;
         String world = player.getWorld().getName();
         String msg = event.getJoinMessage();
         String pName = player.getName();
@@ -63,10 +63,10 @@ public class PlayerListener implements Listener {
 
         if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (ConfigType.SUPPRESS_USE_JOIN.getBoolean()) {
-                suppressEventMessage(Parser.parseEvent(pName, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getInteger());
+                suppressEventMessage(Parser.parseEvent(pName, world, eventtype), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getInteger());
                 event.setJoinMessage(null);
             } else {
-                event.setJoinMessage(Parser.parseEvent(pName, world, EventType.JOIN));
+                event.setJoinMessage(Parser.parseEvent(pName, world, eventtype));
             }
         }
     }
