@@ -9,7 +9,6 @@ import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -226,8 +225,11 @@ public class API {
      * @param node   Permission Node being checked.
      * @return Player has Node.
      */
-    public static Boolean checkPermissions(Player player, World world, String node) {
-        return checkPermissions(player.getUniqueId(), world.getName(), node) || player.hasPermission(node) || player.isOp();
+    public static Boolean checkPermissions(Player player, String world, String node) {
+        return vaultB && vPerm.has(player, node)
+                || gmB && gmWH.getWorldPermissions(player).has(player, node)
+                || pexB && pexPermissions.has(player, node, world)
+                || player.hasPermission(node) || player.isOp();
     }
 
     /**
@@ -238,6 +240,8 @@ public class API {
      * @param node  Permission Node being checked.
      * @return Player has Node.
      */
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public static Boolean checkPermissions(String pName, String world, String node) {
         return vaultB && vPerm.has(world, pName, node)
                 || gmB && gmWH.getWorldPermissions(pName).getPermissionBoolean(pName, node)
@@ -254,7 +258,7 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(UUID uuid, String world, String node) {
-        return checkPermissions(Bukkit.getPlayer(uuid).getName(), world, node);
+        return checkPermissions(Bukkit.getPlayer(uuid), world, node);
     }
 
     /**

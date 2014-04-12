@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
  * Command Utility Class. Used for Command related tasks.
  */
@@ -34,9 +36,29 @@ public class CommandUtil {
      * @param player Player to check for.
      * @return Result of Online Check.
      */
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public static Boolean isOnlineForCommand(CommandSender sender, String player) {
         if (Bukkit.getServer().getPlayer(player) == null) {
             MessageUtil.sendMessage(sender, "&4Player &e'" + player + "'&4 not Found.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if player is online before sending command.
+     *
+     * @param sender Object sending command.
+     * @param uuid UUID to check for.
+     * @return Result of Online Check.
+     */
+    @Deprecated
+    @SuppressWarnings("deprecation")
+    public static Boolean isOnlineForCommand(CommandSender sender, UUID uuid) {
+        if (API.getPlayer(uuid.toString()) == null) {
+            MessageUtil.sendMessage(sender, "&4Player &e'" + uuid + "'&4 not Found.");
             return false;
         }
 

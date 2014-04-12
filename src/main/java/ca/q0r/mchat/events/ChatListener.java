@@ -11,6 +11,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.UUID;
+
 public class ChatListener implements Listener {
     private MChat plugin;
 
@@ -43,7 +45,7 @@ public class ChatListener implements Listener {
             for (Player players : plugin.getServer().getOnlinePlayers()) {
                 if (players.getWorld() != player.getWorld()
                         || players.getLocation().distance(player.getLocation()) > ConfigType.MCHAT_CHAT_DISTANCE.getDouble()) {
-                    if (isSpy(players.getName(), players.getWorld().getName())) {
+                    if (isSpy(players.getUniqueId(), players.getWorld().getName())) {
                         players.sendMessage(eventFormat.replace(LocaleType.FORMAT_LOCAL.getVal(), LocaleType.FORMAT_FORWARD.getVal()));
                     }
 
@@ -55,13 +57,13 @@ public class ChatListener implements Listener {
         event.setFormat(eventFormat);
     }
 
-    private Boolean isSpy(String player, String world) {
-        if (API.checkPermissions(player, world, "mchat.spy")) {
-            API.getSpying().put(player, true);
+    private Boolean isSpy(UUID uuid, String world) {
+        if (API.checkPermissions(uuid, world, "mchat.spy")) {
+            API.getSpying().put(uuid.toString(), true);
             return true;
         }
 
-        API.getSpying().put(player, false);
+        API.getSpying().put(uuid.toString(), false);
         return false;
     }
 
