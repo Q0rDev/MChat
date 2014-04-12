@@ -27,14 +27,4 @@ public enum InfoType {
     public String getConfValue() {
         return name;
     }
-
-    /*public static InfoType fromName(String name) {
-        for (InfoType type : InfoType.values()) {
-            if (type.name.contains(name)) {
-                return type;
-            }
-        }
-
-        return null;
-    }*/
 }

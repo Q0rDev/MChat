@@ -22,7 +22,7 @@ public class Parser {
     /**
      * Core Formatting
      *
-     * @param uuid   Name of Player being reflected upon.
+     * @param uuid   UUID of Player being reflected upon.
      * @param world  Player's World.
      * @param msg    Message being displayed.
      * @param format Resulting Format.

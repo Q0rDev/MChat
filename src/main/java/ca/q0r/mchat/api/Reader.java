@@ -30,7 +30,7 @@ public class Reader {
     /**
      * Raw Info Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
      * @param type  InfoType being reflected upon.
      * @param info  Info Variable being resolved.
@@ -75,7 +75,7 @@ public class Reader {
     /**
      * Raw Prefix Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Prefix.
@@ -87,7 +87,7 @@ public class Reader {
     /**
      * Raw Suffix Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Suffix.
@@ -99,7 +99,7 @@ public class Reader {
     /**
      * Raw Group Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Group.
@@ -111,7 +111,7 @@ public class Reader {
     /**
      * Raw Info Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Player's World.
      * @param info  Info Variable being resolved.
@@ -124,7 +124,7 @@ public class Reader {
     /**
      * Formatted Prefix Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Prefix.
@@ -136,7 +136,7 @@ public class Reader {
     /**
      * Formatted Suffix Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Suffix.
@@ -148,7 +148,7 @@ public class Reader {
     /**
      * Formatted Group Resolving
      *
-     * @param uuid  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
      * @return Formatted Group.
      */
@@ -518,7 +518,7 @@ public class Reader {
     /**
      * Player Name Resolver
      *
-     * @param uuid Name of Player to be Resolved.
+     * @param uuid UUID of Player to be Resolved.
      * @return Player Name's MChat Alias.
      */
     public static String getMName(UUID uuid) {
