@@ -6,6 +6,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.UUID;
 
 /**
  * Var class used for all Variable processing.
@@ -14,12 +15,12 @@ public abstract class Var {
     /**
      * Variable Processor.
      *
-     * @param obj Object used to parse Variable. (Usually Bukkit Player object).
+     * @param uuid UUID of Player used to parse Variable.
      * @return Variable's Value after processing.
      */
     @Keys
     @Meta
-    public abstract Object getValue(Object obj);
+    public abstract String getValue(UUID uuid);
 
     /**
      * Used to define Variable's Keys.

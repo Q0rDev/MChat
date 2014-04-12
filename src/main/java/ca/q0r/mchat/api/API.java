@@ -49,8 +49,8 @@ public class API {
     static Boolean pBukkitB;
 
     // Var Map
-    private static final SortedMap<String, Object> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, Object>());
-    private static final SortedMap<String, Object> pVarMap = Collections.synchronizedSortedMap(new TreeMap<String, Object>());
+    private static final SortedMap<String, String> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
+    private static final SortedMap<String, String> pVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
 
     // Maps
     private static HashMap<String, Boolean> spying;
@@ -70,7 +70,7 @@ public class API {
      * @param var   Name of Variable being added.
      * @param value Value of Variable being added.
      */
-    public static void addGlobalVar(String var, Object value) {
+    public static void addGlobalVar(String var, String value) {
         if (var == null || var.isEmpty()) {
             return;
         }
@@ -115,11 +115,11 @@ public class API {
     /**
      * Player Variable Addition
      *
-     * @param pName Name of Player this Variable is being added for.
+     * @param uuid  UUID of Player this Variable is being added for.
      * @param var   Name of Variable being added.
      * @param value Value of Variable being added.
      */
-    public static void addPlayerVar(String pName, String var, Object value) {
+    public static void addUuidVar(UUID uuid, String var, String value) {
         if (var == null || var.isEmpty()) {
             return;
         }
@@ -129,20 +129,20 @@ public class API {
         }
 
         synchronized (pVarMap) {
-            pVarMap.put(pName + "|" + var, value);
+            pVarMap.put(uuid.toString() + "|" + var, value);
         }
     }
 
     /**
      * Player Variable Removal
      *
-     * @param pName Name of Player this Variable is being removed from.
-     * @param var   Name of Variable being removed.
+     * @param uuid UUID of Player this Variable is being removed from.
+     * @param var  Name of Variable being removed.
      */
-    public static void removePlayerVar(String pName, String var) {
+    public static void removeUuidVar(UUID uuid, String var) {
         synchronized (pVarMap) {
-            if (pVarMap.get(pName + "|" + var) != null) {
-                pVarMap.remove(pName + "|" + var);
+            if (pVarMap.get(uuid.toString() + "|" + var) != null) {
+                pVarMap.remove(uuid.toString() + "|" + var);
             }
         }
     }
@@ -152,8 +152,8 @@ public class API {
      *
      * @return Map of Custom Variables.
      */
-    public static SortedMap<String, Object> getPlayerVarMap() {
-        SortedMap<String, Object> map = new TreeMap<>();
+    public static SortedMap<String, String> getUuidVarMap() {
+        SortedMap<String, String> map = new TreeMap<>();
 
         synchronized (pVarMap) {
             map.putAll(Collections.unmodifiableSortedMap(pVarMap));
@@ -227,7 +227,7 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(Player player, World world, String node) {
-        return checkPermissions(player.getName(), world.getName(), node) || player.hasPermission(node) || player.isOp();
+        return checkPermissions(player.getUniqueId(), world.getName(), node) || player.hasPermission(node) || player.isOp();
     }
 
     /**
@@ -243,6 +243,18 @@ public class API {
                 || gmB && gmWH.getWorldPermissions(pName).getPermissionBoolean(pName, node)
                 || pexB && pexPermissions.has(pName, world, node)
                 || Bukkit.getServer().getPlayer(pName) != null && Bukkit.getServer().getPlayer(pName).hasPermission(node);
+    }
+
+    /**
+     * Permission Checking
+     *
+     * @param uuid  UUID of Player being checked.
+     * @param world Name of Player's World.
+     * @param node  Permission Node being checked.
+     * @return Player has Node.
+     */
+    public static Boolean checkPermissions(UUID uuid, String world, String node) {
+        return checkPermissions(Bukkit.getPlayer(uuid).getName(), world, node);
     }
 
     /**
@@ -328,11 +340,28 @@ public class API {
     /**
      * Spying HashMap.
      *
-     * @return Map of Player's Spying status.
+     * @return Map of Spying statuses.
      */
-    public static HashMap<String, Boolean> isSpying() {
+    public static HashMap<String, Boolean> getSpying() {
         return spying;
     }
+
+    /**
+     * Gets Player based on partial UUID.
+     *
+     * @param uuid Partial or complete UUID to lookup.
+     * @return Player object or null if not found.
+     */
+    public static Player getPlayer(String uuid) {
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            if (player.getUniqueId().toString().startsWith(uuid.toLowerCase())) {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
 
     private static void setupPlugins() {
         PluginManager pm = Bukkit.getServer().getPluginManager();

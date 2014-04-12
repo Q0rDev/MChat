@@ -6,16 +6,20 @@ import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 
-public class MChatCommand implements CommandExecutor {
+import java.util.Arrays;
+import java.util.List;
+
+public class MChatCommand implements TabExecutor {
     private MChat plugin;
 
     public MChatCommand(MChat instance) {
         plugin = instance;
     }
 
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equalsIgnoreCase("mchat")) {
             return true;
@@ -92,5 +96,18 @@ public class MChatCommand implements CommandExecutor {
         }
 
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1) {
+            return Arrays.asList("version", "reload");
+        }
+
+        if (args.length == 2 && (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r"))) {
+            return Arrays.asList("config", "censor", "info", "locale", "all");
+        }
+
+        return Arrays.asList();
     }
 }

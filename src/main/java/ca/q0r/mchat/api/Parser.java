@@ -11,6 +11,7 @@ import ca.q0r.mchat.yml.config.ConfigType;
 import ca.q0r.mchat.yml.locale.LocaleType;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,16 +22,16 @@ public class Parser {
     /**
      * Core Formatting
      *
-     * @param pName  Name of Player being reflected upon.
+     * @param uuid   Name of Player being reflected upon.
      * @param world  Player's World.
      * @param msg    Message being displayed.
      * @param format Resulting Format.
      * @return Formatted Message.
      */
-    public static String parseMessage(String pName, String world, String msg, String format) {
+    public static String parseMessage(UUID uuid, String world, String msg, String format) {
         msg = msg != null ? msg : "";
 
-        format = parseVars(format, pName, world);
+        format = parseVars(format, uuid, world);
 
         msg = msg.replaceAll("%", "%%");
 
@@ -40,7 +41,7 @@ public class Parser {
 
         Integer cInt = ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger();
 
-        if (!API.checkPermissions(pName, world, "mchat.bypass.clock") && cInt > 0) {
+        if (!API.checkPermissions(uuid, world, "mchat.bypass.clock") && cInt > 0) {
             msg = fixCaps(msg, cInt);
         }
 
@@ -48,16 +49,16 @@ public class Parser {
             return msg;
         }
 
-        if (API.checkPermissions(pName, world, "mchat.coloredchat")) {
+        if (API.checkPermissions(uuid, world, "mchat.coloredchat")) {
             msg = MessageUtil.addColour(msg);
         }
 
-        if (!API.checkPermissions(pName, world, "mchat.censorbypass")) {
+        if (!API.checkPermissions(uuid, world, "mchat.censorbypass")) {
             msg = replaceCensoredWords(msg);
         }
 
-        format = VariableManager.replaceCustVars(pName, format);
-        format = VariableManager.replaceVars(format, pName, msg, true);
+        format = VariableManager.replaceCustVars(uuid, format);
+        format = VariableManager.replaceVars(format, uuid, msg, true);
 
         return format;
     }
@@ -65,70 +66,70 @@ public class Parser {
     /**
      * Chat Formatting
      *
-     * @param pName Name of Player being reflected upon.
+     * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @param msg   Message being displayed.
      * @return Formatted Chat Message.
      */
-    public static String parseChatMessage(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, LocaleType.FORMAT_CHAT.getRaw());
+    public static String parseChatMessage(UUID uuid, String world, String msg) {
+        return parseMessage(uuid, world, msg, LocaleType.FORMAT_CHAT.getRaw());
     }
 
     /**
      * Player Name Formatting
      *
-     * @param pName Name of Player being reflected upon.
+     * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted Player Name.
      */
-    public static String parsePlayerName(String pName, String world) {
-        return parseMessage(pName, world, "", LocaleType.FORMAT_NAME.getRaw());
+    public static String parsePlayerName(UUID uuid, String world) {
+        return parseMessage(uuid, world, "", LocaleType.FORMAT_NAME.getRaw());
     }
 
     /**
      * Event Message Formatting
      *
-     * @param pName Name of Player being reflected upon.
+     * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @param type  Event Type being formatted.
      * @return Formatted Event Message.
      */
-    public static String parseEvent(String pName, String world, EventType type) {
-        return parseMessage(pName, world, "", API.replace(Reader.getEventMessage(type), "player", parsePlayerName(pName, world), IndicatorType.LOCALE_VAR));
+    public static String parseEvent(UUID uuid, String world, EventType type) {
+        return parseMessage(uuid, world, "", API.replace(Reader.getEventMessage(type), "player", parsePlayerName(uuid, world), IndicatorType.LOCALE_VAR));
     }
 
     /**
      * TabbedList Formatting
      *
-     * @param pName Name of Player being reflected upon.
+     * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted TabbedList Name.
      */
-    public static String parseTabbedList(String pName, String world) {
-        return parseMessage(pName, world, "", LocaleType.FORMAT_TABBED_LIST.getRaw());
+    public static String parseTabbedList(UUID uuid, String world) {
+        return parseMessage(uuid, world, "", LocaleType.FORMAT_TABBED_LIST.getRaw());
     }
 
     /**
      * ListCommand Formatting.
      *
-     * @param pName Name of Player being reflected upon.
+     * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @return Formatted ListCommand Name.
      */
-    public static String parseListCmd(String pName, String world) {
-        return parseMessage(pName, world, "", LocaleType.FORMAT_LIST_CMD.getRaw());
+    public static String parseListCmd(UUID uuid, String world) {
+        return parseMessage(uuid, world, "", LocaleType.FORMAT_LIST_CMD.getRaw());
     }
 
     /**
      * Me Formatting.
      *
-     * @param pName Name of Player being reflected upon.
+     * @param uuid  UUID of Player being reflected upon.
      * @param world Name of Player's World.
      * @param msg   Message being displayed.
      * @return Formatted Me Message.
      */
-    public static String parseMe(String pName, String world, String msg) {
-        return parseMessage(pName, world, msg, LocaleType.FORMAT_ME.getRaw());
+    public static String parseMe(UUID uuid, String world, String msg) {
+        return parseMessage(uuid, world, msg, LocaleType.FORMAT_ME.getRaw());
     }
 
     private static String fixCaps(String format, Integer range) {
@@ -151,14 +152,14 @@ public class Parser {
         return format;
     }
 
-    private static String parseVars(String format, String pName, String world) {
+    private static String parseVars(String format, UUID uuid, String world) {
         String vI = "\\" + IndicatorType.MISC_VAR.getValue();
         Pattern pattern = Pattern.compile(vI + "<(.*?)>");
         Matcher matcher = pattern.matcher(format);
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String var = Reader.getRawInfo(pName, InfoType.USER, world, matcher.group(1)).toString();
+            String var = Reader.getRawInfo(uuid, InfoType.USER, world, matcher.group(1));
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
         }
 

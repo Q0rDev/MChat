@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import uk.org.whoami.geoip.GeoIPLookup;
 
+import java.util.UUID;
+
 public class GeoIpVars {
     static GeoIPLookup geoip;
 
@@ -19,8 +21,8 @@ public class GeoIpVars {
 
     private static class CountryName extends Var {
         @Keys(keys = {"geoCountry"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return geoip.getLocation((player).getAddress().getAddress()).countryName;
             }
@@ -31,8 +33,8 @@ public class GeoIpVars {
 
     private static class CountryCode extends Var {
         @Keys(keys = {"geoCountryCode"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return geoip.getLocation((player).getAddress().getAddress()).countryCode;
             }
@@ -43,8 +45,8 @@ public class GeoIpVars {
 
     private static class Region extends Var {
         @Keys(keys = {"geoRegion"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 Location location = geoip.getLocation((player).getAddress().getAddress());
                 return regionName.regionNameByCode(location.countryCode, location.region);
@@ -56,8 +58,8 @@ public class GeoIpVars {
 
     private static class City extends Var {
         @Keys(keys = {"geoCity"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return geoip.getLocation((player).getAddress().getAddress()).city;
             }

@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class PlayerVars {
     public static void addVars() {
@@ -25,11 +26,10 @@ public class PlayerVars {
 
     private static class GroupVar extends Var {
         @Keys(keys = {"group", "g"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
-
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getRawGroup(player.getName(), InfoType.USER, player.getWorld().getName());
+                return Reader.getRawGroup(uuid, InfoType.USER, player.getWorld().getName());
             }
 
             return "";
@@ -38,10 +38,10 @@ public class PlayerVars {
 
     private static class PrefixVar extends Var {
         @Keys(keys = {"prefix", "p"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getRawPrefix(player.getName(), InfoType.USER, player.getWorld().getName());
+                return Reader.getRawPrefix(uuid, InfoType.USER, player.getWorld().getName());
             }
 
             return "";
@@ -50,10 +50,10 @@ public class PlayerVars {
 
     private static class SuffixVar extends Var {
         @Keys(keys = {"suffix", "s"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getRawSuffix(player.getName(), InfoType.USER, player.getWorld().getName());
+                return Reader.getRawSuffix(uuid, InfoType.USER, player.getWorld().getName());
             }
 
             return "";
@@ -62,10 +62,10 @@ public class PlayerVars {
 
     private static class MNameVar extends Var {
         @Keys(keys = {"mname", "mn"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getMName(player.getName());
+                return Reader.getMName(uuid);
             }
 
             return "";
@@ -74,8 +74,8 @@ public class PlayerVars {
 
     private static class PNameVar extends Var {
         @Keys(keys = {"pname", "n"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return player.getName();
             }
@@ -86,8 +86,8 @@ public class PlayerVars {
 
     private static class DNameVar extends Var {
         @Keys(keys = {"displayname", "dname", "dn"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return player.getDisplayName();
             }
@@ -98,8 +98,8 @@ public class PlayerVars {
 
     private static class ExpVar extends Var {
         @Keys(keys = {"experience", "exp"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return String.valueOf(player.getExp()) + "/" + ((player.getLevel() + 1) * 10);
             }
@@ -110,8 +110,8 @@ public class PlayerVars {
 
     private static class ExpBarVar extends Var {
         @Keys(keys = {"experiencebar", "expb", "ebar"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return API.createBasicBar(player.getExp(), ((player.getLevel() + 1) * 10), 10);
             }
@@ -122,8 +122,8 @@ public class PlayerVars {
 
     private static class GameModeVar extends Var {
         @Keys(keys = {"gamemode", "gm"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return player.getGameMode() != null && player.getGameMode().name() != null ? player.getGameMode().name() : "";
             }
@@ -134,8 +134,8 @@ public class PlayerVars {
 
     private static class HealthVar extends Var {
         @Keys(keys = {"health", "h"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return String.valueOf(player.getHealth());
             }
@@ -146,8 +146,8 @@ public class PlayerVars {
 
     private static class HealthBarVar extends Var {
         @Keys(keys = {"healthbar", "hb"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return API.createHealthBar(player);
             }
@@ -158,8 +158,8 @@ public class PlayerVars {
 
     private static class HungerVar extends Var {
         @Keys(keys = {"hunger"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return String.valueOf(player.getFoodLevel());
             }
@@ -170,8 +170,8 @@ public class PlayerVars {
 
     private static class HungerBarVar extends Var {
         @Keys(keys = {"hungerbar", "hub"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return API.createBasicBar(player.getFoodLevel(), 20, 10);
             }
@@ -182,8 +182,8 @@ public class PlayerVars {
 
     private static class LevelVar extends Var {
         @Keys(keys = {"level", "l"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return String.valueOf(player.getLevel());
             }
@@ -194,8 +194,8 @@ public class PlayerVars {
 
     private static class LocVar extends Var {
         @Keys(keys = {"location", "loc"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return "X: " + player.getLocation().getX() + ", " + "Y: " + player.getLocation().getY() + ", " + "Z: " + player.getLocation().getZ();
             }
@@ -206,8 +206,8 @@ public class PlayerVars {
 
     private static class TotalExpVar extends Var {
         @Keys(keys = {"totalexp", "texp", "te"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return String.valueOf(player.getTotalExperience());
             }
@@ -218,8 +218,8 @@ public class PlayerVars {
 
     private static class WorldVar extends Var {
         @Keys(keys = {"world", "w"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return player.getWorld().getName();
             }
@@ -230,10 +230,10 @@ public class PlayerVars {
 
     private static class GroupNameVar extends Var {
         @Keys(keys = {"Groupname", "Gname", "G"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getGroupName(Reader.getRawGroup(player.getName(), InfoType.USER, player.getWorld().getName()).toString());
+                return Reader.getGroupName(Reader.getRawGroup(uuid, InfoType.USER, player.getWorld().getName()));
             }
 
             return "";
@@ -242,8 +242,8 @@ public class PlayerVars {
 
     private static class WorldNameVar extends Var {
         @Keys(keys = {"Worldname", "Wname", "W"})
-        public Object getValue(Object obj) {
-            Player player = Bukkit.getPlayer(obj.toString());
+        public String getValue(UUID uuid) {
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 return Reader.getWorldName(player.getWorld().getName());
             }
@@ -256,14 +256,14 @@ public class PlayerVars {
         @Keys(keys = {"mnameformat", "mnf"})
         @Meta(type = IndicatorType.MISC_VAR,
                 priority = ResolvePriority.FIRST)
-        public Object getValue(Object obj) {
+        public String getValue(UUID uuid) {
             return LocaleType.FORMAT_NAME.getVal();
         }
     }
 
     private static class TimeFormat extends Var {
         @Keys(keys = {"time", "t"})
-        public Object getValue(Object obj) {
+        public String getValue(UUID uuid) {
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat(LocaleType.FORMAT_DATE.getRaw());
 
@@ -273,15 +273,15 @@ public class PlayerVars {
 
     private static class SpyFormat extends Var {
         @Keys(keys = {"spying", "spy"})
-        public Object getValue(Object obj) {
+        public String getValue(UUID uuid) {
             String sType = "";
 
-            Player player = Bukkit.getPlayer(obj.toString());
+            Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
                 String pName = player.getName();
 
-                if (API.isSpying().get(pName) != null
-                        && API.isSpying().get(pName)) {
+                if (API.getSpying().get(pName) != null
+                        && API.getSpying().get(pName)) {
                     sType = LocaleType.FORMAT_SPY.getVal();
                 }
             }
@@ -292,7 +292,7 @@ public class PlayerVars {
 
     private static class DistanceType extends Var {
         @Keys(keys = {"distancetype", "dtype"})
-        public Object getValue(Object obj) {
+        public String getValue(UUID uuid) {
             String dType = "";
 
             if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
