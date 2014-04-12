@@ -67,7 +67,7 @@ public class ReplaceEvent extends Event implements Cancellable {
      *
      * @param value Value being processed.
      */
-    public void getValue(String value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
