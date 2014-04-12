@@ -1,6 +1,7 @@
 package ca.q0r.mchat.variables;
 
 import ca.q0r.mchat.api.API;
+import ca.q0r.mchat.events.custom.ReplaceEvent;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.variables.vars.*;
@@ -189,12 +190,14 @@ public class VariableManager {
      */
     public static String replaceCustVars(UUID uuid, String format) {
         for (Map.Entry<String, String> entry : API.getUuidVarMap().entrySet()) {
-            String pName = Bukkit.getPlayer(uuid).getName();
-            String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
+            String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(uuid.toString() + "|", "");
             String value = entry.getValue();
 
-            if (format.contains(pKey)) {
-                format = format.replace(pKey, MessageUtil.addColour(value));
+            ReplaceEvent event = new ReplaceEvent(pKey, value, format);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                format = event.getReplacedFormat();
             }
         }
 
@@ -202,8 +205,11 @@ public class VariableManager {
             String gKey = IndicatorType.CUS_VAR.getValue() + entry.getKey();
             String value = entry.getValue().toString();
 
-            if (format.contains(gKey)) {
-                format = format.replace(gKey, MessageUtil.addColour(value));
+            ReplaceEvent event = new ReplaceEvent(gKey, value, format);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                format = event.getReplacedFormat();
             }
         }
 
@@ -219,7 +225,12 @@ public class VariableManager {
                 value = MessageUtil.addColour(value);
             }
 
-            format = format.replace(key, value);
+            ReplaceEvent event = new ReplaceEvent(key, value, format);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                format = event.getReplacedFormat();
+            }
         }
 
         return format;

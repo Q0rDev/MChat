@@ -1,19 +1,12 @@
 package ca.q0r.mchat.api;
 
+import ca.q0r.mchat.events.custom.ParseEvent;
 import ca.q0r.mchat.types.EventType;
 import ca.q0r.mchat.types.IndicatorType;
-import ca.q0r.mchat.types.InfoType;
-import ca.q0r.mchat.util.MessageUtil;
-import ca.q0r.mchat.variables.VariableManager;
-import ca.q0r.mchat.yml.YmlManager;
-import ca.q0r.mchat.yml.YmlType;
-import ca.q0r.mchat.yml.config.ConfigType;
 import ca.q0r.mchat.yml.locale.LocaleType;
+import org.bukkit.Bukkit;
 
-import java.util.Map;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class used to parse messages / events / misc.
@@ -29,38 +22,11 @@ public class Parser {
      * @return Formatted Message.
      */
     public static String parseMessage(UUID uuid, String world, String msg, String format) {
-        msg = msg != null ? msg : "";
+        ParseEvent event = new ParseEvent(uuid, world, msg, format);
 
-        format = parseVars(format, uuid, world);
+        Bukkit.getServer().getPluginManager().callEvent(event);
 
-        msg = msg.replaceAll("%", "%%");
-
-        format = format.replaceAll("%", "%%");
-
-        format = MessageUtil.addColour(format);
-
-        Integer cInt = ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger();
-
-        if (!API.checkPermissions(uuid, world, "mchat.bypass.clock") && cInt > 0) {
-            msg = fixCaps(msg, cInt);
-        }
-
-        if (format == null) {
-            return msg;
-        }
-
-        if (API.checkPermissions(uuid, world, "mchat.coloredchat")) {
-            msg = MessageUtil.addColour(msg);
-        }
-
-        if (!API.checkPermissions(uuid, world, "mchat.censorbypass")) {
-            msg = replaceCensoredWords(msg);
-        }
-
-        format = VariableManager.replaceCustVars(uuid, format);
-        format = VariableManager.replaceVars(format, uuid, msg, true);
-
-        return format;
+        return event.getParsed();
     }
 
     /**
@@ -130,73 +96,5 @@ public class Parser {
      */
     public static String parseMe(UUID uuid, String world, String msg) {
         return parseMessage(uuid, world, msg, LocaleType.FORMAT_ME.getRaw());
-    }
-
-    private static String fixCaps(String format, Integer range) {
-        if (range < 1) {
-            return format;
-        }
-
-        Pattern pattern = Pattern.compile("([A-Z]{" + range + ",300})");
-        Matcher matcher = pattern.matcher(format);
-        StringBuffer sb = new StringBuffer();
-
-        while (matcher.find()) {
-            matcher.appendReplacement(sb, Matcher.quoteReplacement(matcher.group().toLowerCase()));
-        }
-
-        matcher.appendTail(sb);
-
-        format = sb.toString();
-
-        return format;
-    }
-
-    private static String parseVars(String format, UUID uuid, String world) {
-        String vI = "\\" + IndicatorType.MISC_VAR.getValue();
-        Pattern pattern = Pattern.compile(vI + "<(.*?)>");
-        Matcher matcher = pattern.matcher(format);
-        StringBuffer sb = new StringBuffer();
-
-        while (matcher.find()) {
-            String var = Reader.getRawInfo(uuid, InfoType.USER, world, matcher.group(1));
-            matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
-        }
-
-        matcher.appendTail(sb);
-
-        return sb.toString();
-    }
-
-    private static String replaceCensoredWords(String msg) {
-        if (ConfigType.MCHAT_IP_CENSOR.getBoolean()) {
-            msg = replacer(msg, "([0-9]{1,3}\\.){3}([0-9]{1,3})", "*.*.*.*");
-        }
-
-        for (Map.Entry<String, Object> entry : YmlManager.getYml(YmlType.CENSOR_YML).getConfig().getValues(true).entrySet()) {
-            if (!(entry.getValue() instanceof String)) {
-                continue;
-            }
-
-            msg = replacer(msg, "(?i)" + entry.getKey(), entry.getValue().toString());
-        }
-
-        return msg;
-    }
-
-    private static String replacer(String msg, String regex, String replacement) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(msg);
-        StringBuffer sb = new StringBuffer();
-
-        while (matcher.find()) {
-            matcher.appendReplacement(sb, Matcher.quoteReplacement(replacement));
-        }
-
-        matcher.appendTail(sb);
-
-        msg = sb.toString();
-
-        return msg;
     }
 }

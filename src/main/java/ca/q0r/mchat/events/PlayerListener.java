@@ -4,6 +4,7 @@ import ca.q0r.mchat.MChat;
 import ca.q0r.mchat.api.API;
 import ca.q0r.mchat.api.Parser;
 import ca.q0r.mchat.api.Writer;
+import ca.q0r.mchat.events.custom.ParseEvent;
 import ca.q0r.mchat.types.EventType;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.types.InfoType;
@@ -124,6 +125,14 @@ public class PlayerListener implements Listener {
         } else {
             event.setQuitMessage(Parser.parseEvent(uuid, world, EventType.QUIT));
         }
+    }
+
+    @EventHandler
+    public void onParse(ParseEvent event) {
+        System.out.println(event.getFormat());
+        System.out.println(event.getMessage());
+        System.out.println(event.getUuid());
+        System.out.println(event.getParsed());
     }
 
     private void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
