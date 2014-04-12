@@ -1,16 +1,23 @@
 package ca.q0r.mchat.commands;
 
+import ca.q0r.mchat.api.API;
 import ca.q0r.mchat.api.Writer;
 import ca.q0r.mchat.types.InfoEditType;
 import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.util.CommandUtil;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.yml.locale.LocaleType;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 
-public class InfoAlterCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class InfoAlterCommand implements TabExecutor {
     private InfoType type;
     private String cmd;
 
@@ -19,6 +26,7 @@ public class InfoAlterCommand implements CommandExecutor {
         cmd = command;
     }
 
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!command.getName().equalsIgnoreCase(cmd)) {
             return true;
@@ -34,11 +42,29 @@ public class InfoAlterCommand implements CommandExecutor {
         String p = "user";
         String t = "player";
         String T = "Player";
+        String uuid = "";
 
         if (type == InfoType.GROUP) {
             p = "group";
             t = "group";
             T = "Group";
+        }
+
+        if (args.length > 2) {
+            if (type == InfoType.GROUP) {
+                uuid = args[2];
+            } else {
+                Player player = API.getPlayer(args[2]) != null
+                        ? API.getPlayer(args[2]) : Bukkit.getServer().getPlayer(args[2]);
+
+                if (player == null) {
+                    MessageUtil.sendMessage(sender, "Player '" + args[2] + "' is offline for this command.");
+                    MessageUtil.sendMessage(sender, "Until Proper API's have been released Players will have to be online.");
+                    return true;
+                } else {
+                    uuid = player.getUniqueId().toString();
+                }
+            }
         }
 
         if (args[0].equalsIgnoreCase("a")
@@ -63,7 +89,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.addBase(args[2], type);
+                Writer.addBase(uuid, type);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("iVar")
@@ -79,7 +105,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.setInfoVar(args[2], type, args[3], combineArgs(args, 4));
+                Writer.setInfoVar(uuid, type, args[3], combineArgs(args, 4));
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
@@ -95,7 +121,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.addWorld(args[2], type, args[3]);
+                Writer.addWorld(uuid, type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("wVar")
@@ -111,7 +137,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.setWorldVar(args[2], type, args[3], args[4], combineArgs(args, 5));
+                Writer.setWorldVar(uuid, type, args[3], args[4], combineArgs(args, 5));
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             }
@@ -137,7 +163,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.removeBase(args[2], type);
+                Writer.removeBase(uuid, type);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("iVar")
@@ -153,7 +179,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.removeInfoVar(args[2], type, args[3]);
+                Writer.removeInfoVar(uuid, type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("w")
@@ -169,7 +195,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.removeWorld(args[2], type, args[3]);
+                Writer.removeWorld(uuid, type, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             } else if (args[1].equalsIgnoreCase("wVar")
@@ -185,7 +211,7 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.removeWorldVar(args[2], type, args[3], args[4]);
+                Writer.removeWorldVar(uuid, type, args[3], args[4]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             }
@@ -208,13 +234,60 @@ public class InfoAlterCommand implements CommandExecutor {
                     return true;
                 }
 
-                Writer.setGroup(args[2], args[3]);
+                Writer.setGroup(uuid, args[3]);
                 MessageUtil.sendMessage(sender, LocaleType.MESSAGE_INFO_ALTERATION.getVal());
                 return true;
             }
         }
 
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1) {
+            if (type == InfoType.USER) {
+                return Arrays.asList("add", "set", "remove");
+            } else {
+                return Arrays.asList("add", "remove");
+            }
+        }
+
+        String t = "player";
+
+        if (type == InfoType.GROUP) {
+            t = "group";
+        }
+
+        if (args.length == 2) {
+            if (type == InfoType.USER && (args[0].equalsIgnoreCase("s") || args[0].equalsIgnoreCase("set"))) {
+                return Arrays.asList("group");
+            } else {
+                return Arrays.asList(t, "ivar", "world", "wvar");
+            }
+        }
+
+        List<String> uuids = new ArrayList<>();
+
+        if (args.length > 2 && !args[2].isEmpty()) {
+            if (type == InfoType.GROUP) {
+                uuids.add(args[2]);
+            } else {
+                for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                    if (player.getUniqueId().toString().startsWith(args[2].toLowerCase())) {
+                        uuids.add(player.getUniqueId().toString());
+                    } else if (player.getName().toLowerCase().startsWith(args[2].toLowerCase())) {
+                        uuids.add(player.getName());
+                    }
+                }
+            }
+        }
+
+        if (args.length == 3) {
+            return uuids;
+        }
+
+        return Arrays.asList();
     }
 
     private String combineArgs(String[] args, Integer startingPoint) {

@@ -30,7 +30,7 @@ public class ChatListener implements Listener {
 
         String world = player.getWorld().getName();
         String msg = event.getMessage();
-        String eventFormat = Parser.parseChatMessage(pName, world, msg);
+        String eventFormat = Parser.parseChatMessage(player.getUniqueId(), world, msg);
 
         if (msg == null) {
             return;
@@ -57,16 +57,16 @@ public class ChatListener implements Listener {
 
     private Boolean isSpy(String player, String world) {
         if (API.checkPermissions(player, world, "mchat.spy")) {
-            API.isSpying().put(player, true);
+            API.getSpying().put(player, true);
             return true;
         }
 
-        API.isSpying().put(player, false);
+        API.getSpying().put(player, false);
         return false;
     }
 
     private void setListName(Player player) {
-        String listName = Parser.parseTabbedList(player.getName(), player.getWorld().getName());
+        String listName = Parser.parseTabbedList(player.getUniqueId(), player.getWorld().getName());
 
         try {
             if (listName.length() > 15) {
@@ -75,6 +75,7 @@ public class ChatListener implements Listener {
             }
 
             player.setPlayerListName(listName);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 }

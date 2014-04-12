@@ -5,6 +5,7 @@ import ca.q0r.mchat.yml.Yml;
 import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import ca.q0r.mchat.yml.config.ConfigType;
+import org.bukkit.entity.Player;
 
 /**
  * Class used to write to <b>info.yml</b>.
@@ -14,7 +15,7 @@ public class Writer {
      * Used to set the Base values of an InfoType.
      *
      * @param type Type of Base you want to set.
-     * @param name Defining value of the base(Also known as Name).
+     * @param name Defining value of the base (Also known as name/uuid).
      */
     public static void addBase(String name, InfoType type) {
         Yml yml = YmlManager.getYml(YmlType.INFO_YML);
@@ -30,36 +31,32 @@ public class Writer {
         save();
 
         if (type.equals(InfoType.USER)) {
-            setDGroup(ConfigType.INFO_DEFAULT_GROUP.getString());
+            checkGroup(ConfigType.INFO_DEFAULT_GROUP.getString());
         }
     }
 
     /**
      * Used to add the Base for a Player with a custom DefaultGroup.
      *
-     * @param player      Player's name.
-     * @param group       Default Group to set to the Base(Only needed if doing for InfoType.USER).
-     * @param createBlank Whether or not to create blank prefix / suffix.
+     * @param uuid  Player's uuid.
+     * @param group Default Group to set to the Base(Only needed if doing for InfoType.USER).
      */
-    public static void addBase(String player, String group, Boolean createBlank) {
+    public static void addBase(String uuid, String group) {
         Yml yml = YmlManager.getYml(YmlType.INFO_YML);
 
-        yml.set("users." + player + ".group", group);
+        addBase(uuid, InfoType.USER);
 
-        if (createBlank) {
-            yml.set("users." + player + ".info.prefix", "");
-            yml.set("users." + player + ".info.suffix", "");
-        }
+        yml.set("users." + uuid + ".group", group);
 
         save();
 
-        setDGroup(group);
+        checkGroup(group);
     }
 
     /**
      * Used to add a World to a Base.
      *
-     * @param name  Defining value of the Base(Also known as name).
+     * @param name  Defining value of the base (Also known as name/uuid).
      * @param type  Type of Base you want to set.
      * @param world Name of the World you are trying to add.
      */
@@ -80,7 +77,7 @@ public class Writer {
     /**
      * Used to add an Info Variable to a Base.
      *
-     * @param name  Defining value of the Base(Also known as name).
+     * @param name  Defining value of the base (Also known as name/uuid).
      * @param type  Type of Base you want to set.
      * @param var   Name of the Variable you are trying to add.
      * @param value Value of the Variable you are trying to add.
@@ -101,7 +98,7 @@ public class Writer {
     /**
      * Used to add a World Variable to a Base.
      *
-     * @param name  Defining value of the Base(Also known as name).
+     * @param name  Defining value of the base (Also known as name/uuid).
      * @param type  Type of Base you want to set.
      * @param world Name of the World you are trying to add the Variable to.
      * @param var   Name of the Variable you are trying to add.
@@ -123,17 +120,17 @@ public class Writer {
     /**
      * Used to set the Group of a Player.
      *
-     * @param player Player's name.
-     * @param group  Group to be set to Player.
+     * @param uuid  Player's uuid.
+     * @param group Group to be set to Player.
      */
-    public static void setGroup(String player, String group) {
+    public static void setGroup(String uuid, String group) {
         Yml yml = YmlManager.getYml(YmlType.INFO_YML);
 
-        if (!yml.getConfig().isSet(player + "." + group)) {
-            addBase(player, group, false);
+        if (!yml.getConfig().isSet(uuid + "." + group)) {
+            addBase(uuid, group);
         }
 
-        yml.set("users." + player + ".group", group);
+        yml.set("users." + uuid + ".group", group);
 
         save();
     }
@@ -141,7 +138,7 @@ public class Writer {
     /**
      * Used to remove a Base.
      *
-     * @param name Defining value of the Base(Also known as name).
+     * @param name Defining value of the base (Also known as name/uuid).
      * @param type Type of Base you want to remove.
      */
     public static void removeBase(String name, InfoType type) {
@@ -158,7 +155,7 @@ public class Writer {
     /**
      * Used to remove an Info Variable from a Base.
      *
-     * @param name Defining value of the Base(Also known as name).
+     * @param name Defining value of the base (Also known as name/uuid).
      * @param type Type of Base you want to remove from.
      * @param var  Name of the Variable you are trying to remove.
      */
@@ -169,7 +166,7 @@ public class Writer {
     /**
      * Used to remove a World from a Base.
      *
-     * @param name  Defining value of the Base(Also known as name).
+     * @param name  Defining value of the base (Also known as name/uuid).
      * @param type  Type of Base you want to remove from.
      * @param world Name of the World you are trying to remove.
      */
@@ -188,7 +185,7 @@ public class Writer {
     /**
      * Used to remove a World Variable from a Base.
      *
-     * @param name  Defining value of the Base(Also known as name).
+     * @param name  Defining value of the base (Also known as name/uuid).
      * @param type  Type of Base you want to remove from.
      * @param world Name of the World you are trying to remove from.
      * @param var   Name of the Variable you are trying to remove.
@@ -197,7 +194,26 @@ public class Writer {
         setWorldVar(name, type, world, var, null);
     }
 
-    private static void setDGroup(String group) {
+    /**
+     * Used to convert a Player's Base to UUID format.
+     *
+     * @param player Player whose Base is going to be converted to UUID format.
+     */
+    public static void convertBase(Player player) {
+        Yml yml = YmlManager.getYml(YmlType.INFO_YML);
+        String base = InfoType.USER.getConfValue();
+        String uuid = player.getUniqueId().toString();
+        String name = player.getName();
+
+        if (yml.getConfig().isSet(base + "." + name)) {
+            yml.set(base + "." + uuid, yml.getConfig().get(base + "." + name));
+            yml.set(base + "." + name, null);
+
+            save();
+        }
+    }
+
+    private static void checkGroup(String group) {
         Yml yml = YmlManager.getYml(YmlType.INFO_YML);
 
         if (!yml.getConfig().isSet("groups." + group)) {

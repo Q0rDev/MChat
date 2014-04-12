@@ -18,7 +18,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionUser;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Class used to read from <b>info.yml</b> and various other Plugins.
@@ -27,14 +30,14 @@ public class Reader {
     /**
      * Raw Info Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
      * @param type  InfoType being reflected upon.
      * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
-    public static Object getRawInfo(String name, InfoType type, String world, String info) {
-        if (name == null) {
+    public static String getRawInfo(UUID uuid, InfoType type, String world, String info) {
+        if (uuid == null) {
             return "";
         }
 
@@ -51,201 +54,151 @@ public class Reader {
         }
 
         if (API.isPluginEnabled(PluginType.LEVELED_NODES)) {
-            return getLeveledInfo(name, world, info);
+            return getLeveledInfo(uuid, world, info);
         } else if (API.isPluginEnabled(PluginType.OLD_NODES)) {
-            return getBukkitInfo(name, world, info);
+            return getBukkitInfo(uuid, world, info);
         } else if (API.isPluginEnabled(PluginType.NEW_INFO)) {
-            return getMChatInfo(name, type, world, info);
+            return getMChatInfo(uuid, type, world, info);
         } else if (API.isPluginEnabled(PluginType.GROUP_MANAGER)) {
-            return getGroupManagerInfo(name, type, world, info);
+            return getGroupManagerInfo(uuid, type, world, info);
         } else if (API.isPluginEnabled(PluginType.PERMISSIONS_EX)) {
-            return getPEXInfo(name, type, world, info);
+            return getPEXInfo(uuid, type, world, info);
         } else if (API.isPluginEnabled(PluginType.BPERMISSIONS)) {
-            return getbPermInfo(name, type, world, info);
+            return getbPermInfo(uuid, type, world, info);
         } else if (API.isPluginEnabled(PluginType.VAULT_CHAT)) {
-            return getVaultInfo(name, type, world, info);
+            return getVaultInfo(uuid, type, world, info);
         }
 
-        return getMChatInfo(name, type, world, info);
+        return getMChatInfo(uuid, type, world, info);
     }
 
     /**
      * Raw Prefix Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Prefix.
      */
-    public static Object getRawPrefix(String name, InfoType type, String world) {
-        return getRawInfo(name, type, world, "prefix");
+    public static String getRawPrefix(UUID uuid, InfoType type, String world) {
+        return getRawInfo(uuid, type, world, "prefix");
     }
 
     /**
      * Raw Suffix Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Suffix.
      */
-    public static Object getRawSuffix(String name, InfoType type, String world) {
-        return getRawInfo(name, type, world, "suffix");
+    public static String getRawSuffix(UUID uuid, InfoType type, String world) {
+        return getRawInfo(uuid, type, world, "suffix");
     }
 
     /**
      * Raw Group Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Raw Group.
      */
-    public static Object getRawGroup(String name, InfoType type, String world) {
-        return getRawInfo(name, type, world, "group");
-    }
-
-    /**
-     * Raw Groups Resolving
-     *
-     * @param name  Defining value of the InfoType(Also known as Name).
-     * @param type  InfoType being reflected upon.
-     * @param world Name of the InfoType's World.
-     * @return Raw Groups.
-     */
-    @SuppressWarnings("unchecked")
-    public static List<Object> getRawGroups(String name, InfoType type, String world) {
-        Object info = getRawInfo(name, type, world, "groups");
-        List<Object> list = new ArrayList<>();
-
-        if (info instanceof ArrayList<?>) {
-            list = (List<Object>) getRawInfo(name, type, world, "groups");
-        }
-
-        return list;
+    public static String getRawGroup(UUID uuid, InfoType type, String world) {
+        return getRawInfo(uuid, type, world, "group");
     }
 
     /**
      * Raw Info Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Player's World.
      * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
-    public static String getInfo(String name, InfoType type, String world, String info) {
-        return MessageUtil.addColour(getRawInfo(name, type, world, info).toString());
+    public static String getInfo(UUID uuid, InfoType type, String world, String info) {
+        return MessageUtil.addColour(getRawInfo(uuid, type, world, info));
     }
 
     /**
      * Formatted Prefix Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Prefix.
      */
-    public static String getPrefix(String name, InfoType type, String world) {
-        return getInfo(name, type, world, "prefix");
+    public static String getPrefix(UUID uuid, InfoType type, String world) {
+        return getInfo(uuid, type, world, "prefix");
     }
 
     /**
      * Formatted Suffix Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param type  InfoType being reflected upon.
      * @param world Name of the InfoType's World.
      * @return Formatted Suffix.
      */
-    public static String getSuffix(String name, InfoType type, String world) {
-        return getInfo(name, type, world, "suffix");
+    public static String getSuffix(UUID uuid, InfoType type, String world) {
+        return getInfo(uuid, type, world, "suffix");
     }
 
     /**
      * Formatted Group Resolving
      *
-     * @param name  Defining value of the InfoType(Also known as Name).
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
      * @param world Name of the InfoType's World.
      * @return Formatted Group.
      */
-    public static String getGroup(String name, String world) {
-        return getInfo(name, InfoType.USER, world, "group");
+    public static String getGroup(UUID uuid, String world) {
+        return getInfo(uuid, InfoType.USER, world, "group");
     }
 
-    /**
-     * Raw Groups Resolving
-     *
-     * @param name  Defining value of the InfoType(Also known as Name).
-     * @param type  InfoType being reflected upon.
-     * @param world Name of the InfoType's World.
-     * @return Raw Groups.
-     */
-    @SuppressWarnings("unchecked")
-    public static List<String> getGroups(String name, InfoType type, String world) {
-        Object info = getRawInfo(name, type, world, "groups");
-        List<String> list = new ArrayList<>();
-
-        if (info instanceof List<?>) {
-            List<Object> inf = (List<Object>) info;
-
-            for (Object obj : inf) {
-                list.add(MessageUtil.addColour(obj.toString()));
-            }
-        }
-
-        return list;
-    }
-
-    private static Object getMChatInfo(String name, InfoType type, String world, String info) {
-        if (info.equals("group") || info.equals("groups")) {
-            return getMChatGroup(name, info);
+    private static String getMChatInfo(UUID uuid, InfoType type, String world, String info) {
+        if (info.equals("group")) {
+            return getMChatGroup(uuid);
         }
 
         String iType = type.getConfValue();
 
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (infoConfig.isSet(iType + "." + name + ".info." + info)) {
-            return infoConfig.get(iType + "." + name + ".info." + info);
-        } else if (infoConfig.isSet(iType + "." + name + ".worlds." + world + "." + info)) {
-            return infoConfig.get(iType + "." + name + ".worlds." + world + "." + info);
-        } else if (infoConfig.isSet("users." + name + ".group")) {
-            String group = infoConfig.getString("users." + name + ".group");
+        if (infoConfig.isSet(iType + "." + uuid.toString() + ".info." + info)) {
+            return infoConfig.getString(iType + "." + uuid.toString() + ".info." + info);
+        } else if (infoConfig.isSet(iType + "." + uuid.toString() + ".worlds." + world + "." + info)) {
+            return infoConfig.getString(iType + "." + uuid.toString() + ".worlds." + world + "." + info);
+        } else if (infoConfig.isSet("users." + uuid.toString() + ".group")) {
+            String group = infoConfig.getString("users." + uuid + ".group");
 
             if (infoConfig.isSet("groups." + group + ".info." + info)) {
-                return infoConfig.get("groups." + group + ".info." + info);
+                return infoConfig.getString("groups." + group + ".info." + info);
             } else if (infoConfig.isSet("groups." + group + ".worlds." + world + "." + info)) {
-                return infoConfig.get("groups." + group + ".worlds." + world + "." + info);
+                return infoConfig.getString("groups." + group + ".worlds." + world + "." + info);
             }
         }
 
         return "";
     }
 
-    private static Object getMChatGroup(String name, String info) {
+    private static String getMChatGroup(UUID uuid) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (info.equals("groups")) {
-            if (infoConfig.isSet("users." + name + ".groups")) {
-                return infoConfig.getStringList("users." + name + ".groups");
-            }
-        }
-
-        if (infoConfig.isSet("users." + name + ".group")) {
-            return infoConfig.get("users." + name + ".group");
+        if (infoConfig.isSet("users." + uuid.toString() + ".group")) {
+            return infoConfig.getString("users." + uuid.toString() + ".group");
         }
 
         return "";
     }
 
-    private static Object getLeveledInfo(String name, String world, String info) {
+    private static String getLeveledInfo(UUID uuid, String world, String info) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
         HashMap<Integer, String> iMap = new HashMap<>();
 
         if (API.isPluginEnabled(PluginType.PERMISSIONS_BUKKIT)) {
-            if (info.equals("group") || info.equals("groups")) {
-                return getPermBukkitGroup(name, info);
+            if (info.equals("group")) {
+                return getPermBukkitGroup(uuid);
             }
         }
 
@@ -254,12 +207,12 @@ public class Reader {
         }
 
         if (!infoConfig.isSet("rank." + info)) {
-            return getBukkitInfo(name, world, info);
+            return getBukkitInfo(uuid, world, info);
         }
 
         for (Map.Entry<String, Object> entry : infoConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + ".")) {
-                if (API.checkPermissions(name, world, entry.getKey())) {
+                if (API.checkPermissions(uuid, world, entry.getKey())) {
                     String rVal = entry.getKey().replaceFirst("mchat\\.", "rank.");
 
                     if (!infoConfig.isSet(rVal)) {
@@ -280,17 +233,17 @@ public class Reader {
             }
         }
 
-        return getBukkitInfo(name, world, info);
+        return getBukkitInfo(uuid, world, info);
     }
 
-    private static Object getBukkitInfo(String name, String world, String info) {
+    private static String getBukkitInfo(UUID uuid, String world, String info) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (info.equals("group") || info.equals("groups")) {
+        if (info.equals("group")) {
             if (API.isPluginEnabled(PluginType.PERMISSIONS_BUKKIT)) {
-                return getPermBukkitGroup(name, info);
+                return getPermBukkitGroup(uuid);
             } else if (API.isPluginEnabled(PluginType.PRIVILEGES)) {
-                return getPrivGroup(name, info);
+                return getPrivGroup(uuid);
             }
         }
 
@@ -300,8 +253,8 @@ public class Reader {
 
         for (Map.Entry<String, Object> entry : infoConfig.getValues(true).entrySet()) {
             if (entry.getKey().contains("mchat." + info + ".")) {
-                if (API.checkPermissions(name, world, entry.getKey())) {
-                    Object infoResolve = entry.getValue();
+                if (API.checkPermissions(uuid, world, entry.getKey())) {
+                    String infoResolve = entry.getValue().toString();
 
                     if (infoResolve != null && !info.isEmpty()) {
                         return infoResolve;
@@ -315,57 +268,39 @@ public class Reader {
         return "";
     }
 
-    private static Object getPermBukkitGroup(String name, String info) {
+    private static String getPermBukkitGroup(UUID uuid) {
         PermissionsPlugin pBukkit =
                 (PermissionsPlugin) Bukkit.getServer().getPluginManager().getPlugin("PermissionsBukkit");
 
-        List<Group> pGroups = pBukkit.getGroups(name);
+        List<Group> pGroups = pBukkit.getGroups(Bukkit.getServer().getPlayer(uuid).getName());
 
         try {
-            if (info.equals("groups")) {
-                ArrayList<String> list = new ArrayList<>();
-
-                for (Group group : pGroups) {
-                    list.add(group.getName());
-                }
-
-                return list;
-            }
-
             return pGroups.get(0).getName();
         } catch (Exception ignored) {
             return "";
         }
     }
 
-    private static Object getPrivGroup(String name, String info) {
+    private static String getPrivGroup(UUID uuid) {
         Privileges priv =
                 (Privileges) Bukkit.getServer().getPluginManager().getPlugin("Privileges");
 
-        net.krinsoft.privileges.groups.Group[] pGroups = priv.getPlayerManager().getPlayer(name).getGroups();
+        net.krinsoft.privileges.groups.Group[] pGroups = priv.getPlayerManager()
+                .getPlayer(Bukkit.getServer().getPlayer(uuid).getName()).getGroups();
 
         try {
-            if (info.equals("groups")) {
-                ArrayList<String> list = new ArrayList<>();
-
-                for (net.krinsoft.privileges.groups.Group group : pGroups) {
-                    list.add(group.getName());
-                }
-
-                return list;
-            }
-
             return pGroups[0].getName();
         } catch (Exception ignored) {
             return "";
         }
     }
 
-    private static Object getGroupManagerInfo(String name, InfoType type, String world, String info) {
+    private static String getGroupManagerInfo(UUID uuid, InfoType type, String world, String info) {
         OverloadedWorldHolder gmPermissions = API.gmWH.getWorldData(world);
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
 
-        if (info.equals("group") || info.equals("groups")) {
-            return getGroupManagerGroups(name, world, info);
+        if (info.equals("group")) {
+            return getGroupManagerGroup(uuid, world);
         }
 
         String infoString = "";
@@ -381,19 +316,9 @@ public class Reader {
         return infoString;
     }
 
-    private static Object getGroupManagerGroups(String name, String world, String info) {
+    private static String getGroupManagerGroup(UUID uuid, String world) {
         OverloadedWorldHolder gmPermissions = API.gmWH.getWorldData(world);
-
-        if (info.equals("groups")) {
-            List<String> list = gmPermissions.getUser(name).subGroupListStringCopy();
-
-            if (list == null) {
-                return new ArrayList<String>();
-            }
-
-            return list;
-        }
-
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
         String group = gmPermissions.getUser(name).getGroup().getName();
 
         if (group == null) {
@@ -403,48 +328,53 @@ public class Reader {
         return group;
     }
 
-    private static Object getPEXInfo(String name, InfoType type, String world, String info) {
-        Object infoString = "";
+    private static String getPEXInfo(UUID uuid, InfoType type, String world, String info) {
+        String infoString = "";
 
-        if (name == null || name.isEmpty()) {
+        if (uuid == null) {
             return infoString;
         }
 
         if (info.equals("group") || info.equals("groups")) {
-            return getPEXGroup(name, info);
+            return getPEXGroup(uuid);
         }
 
         if (type == InfoType.USER) {
-            PermissionUser user = API.pexPermissions.getUser(name);
+            PermissionUser user = API.pexPermissions.getUser(Bukkit.getServer().getPlayer(uuid).getName());
 
-            if (info.equals("prefix")) {
-                infoString = user.getPrefix(world);
-            } else if (info.equals("suffix")) {
-                infoString = user.getSuffix(world);
-            } else {
-                infoString = user.getOption(info, world);
+            switch (info) {
+                case "prefix":
+                    infoString = user.getPrefix(world);
+                    break;
+                case "suffix":
+                    infoString = user.getSuffix(world);
+                    break;
+                default:
+                    infoString = user.getOption(info, world);
+                    break;
             }
         } else if (type == InfoType.GROUP) {
-            PermissionGroup group = API.pexPermissions.getGroup(name);
+            PermissionGroup group = API.pexPermissions.getGroup(Bukkit.getServer().getPlayer(uuid).getName());
 
-            if (info.equals("prefix")) {
-                infoString = group.getPrefix(world);
-            } else if (info.equals("suffix")) {
-                infoString = group.getSuffix(world);
-            } else {
-                infoString = group.getOption(info, world);
+            switch (info) {
+                case "prefix":
+                    infoString = group.getPrefix(world);
+                    break;
+                case "suffix":
+                    infoString = group.getSuffix(world);
+                    break;
+                default:
+                    infoString = group.getOption(info, world);
+                    break;
             }
         }
 
         return infoString;
     }
 
-    private static Object getPEXGroup(String name, String info) {
+    private static String getPEXGroup(UUID uuid) {
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
         String[] groupNames = API.pexPermissions.getUser(name).getGroupsNames();
-
-        if (info.equals("groups")) {
-            return Arrays.asList(groupNames);
-        }
 
         String group = "";
 
@@ -455,12 +385,14 @@ public class Reader {
         return group;
     }
 
-    private static Object getbPermInfo(String name, InfoType type, String world, String info) {
-        if (info.equals("group") || info.equals("groups")) {
-            return getbPermGroup(name, world, info);
+    private static String getbPermInfo(UUID uuid, InfoType type, String world, String info) {
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
+
+        if (info.equals("group")) {
+            return getbPermGroup(uuid, world);
         }
 
-        Object userString = "";
+        String userString = "";
 
         if (type == InfoType.USER) {
             userString = ApiLayer.getValue(world, CalculableType.USER, name, info);
@@ -471,12 +403,9 @@ public class Reader {
         return userString;
     }
 
-    private static Object getbPermGroup(String name, String world, String info) {
+    private static String getbPermGroup(UUID uuid, String world) {
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
         String[] groupNames = ApiLayer.getGroups(world, CalculableType.USER, name);
-
-        if (info.equals("groups")) {
-            return Arrays.asList(groupNames);
-        }
 
         String group = "";
 
@@ -487,55 +416,59 @@ public class Reader {
         return group;
     }
 
-    private static Object getVaultInfo(String name, InfoType type, String world, String info) {
-        Object infoString = "";
+    private static String getVaultInfo(UUID uuid, InfoType type, String world, String info) {
+        String infoString = "";
 
         if (type == InfoType.USER) {
-            infoString = getVaultUserInfo(name, world, info);
-        }
-
-        if (infoString.equals("")) {
-            if (!API.vChat.getName().equals("MChat")) {
-                name = API.vChat.getPrimaryGroup(world, name);
-            }
+            infoString = getVaultUserInfo(uuid, world, info);
         }
 
         if (type == InfoType.GROUP || infoString.equals("")) {
-            getVaultGroupInfo(name, world, info);
+            getVaultGroupInfo(uuid, world, info);
         }
 
         return infoString;
     }
 
-    private static Object getVaultUserInfo(String name, String world, String info) {
-        Object infoString = "";
+    private static String getVaultUserInfo(UUID uuid, String world, String info) {
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
+        String infoString = "";
 
         if (!API.vChat.getName().equals("MChat")) {
-            if (info.equals("group")) {
-                infoString = API.vChat.getPrimaryGroup(world, name);
-            } else if (info.equals("groups")) {
-                infoString = API.vChat.getPlayerGroups(world, name);
-            } else if (info.equals("prefix")) {
-                infoString = API.vChat.getPlayerPrefix(world, name);
-            } else if (info.equals("suffix")) {
-                infoString = API.vChat.getPlayerSuffix(world, name);
-            } else {
-                infoString = API.vChat.getPlayerInfoString(world, name, info, "");
+            switch (info) {
+                case "group":
+                    infoString = API.vChat.getPrimaryGroup(world, name);
+                    break;
+                case "prefix":
+                    infoString = API.vChat.getPlayerPrefix(world, name);
+                    break;
+                case "suffix":
+                    infoString = API.vChat.getPlayerSuffix(world, name);
+                    break;
+                default:
+                    infoString = API.vChat.getPlayerInfoString(world, name, info, "");
+                    break;
             }
         }
 
         return infoString;
     }
 
-    private static Object getVaultGroupInfo(String name, String world, String info) {
-        Object infoString = "";
+    private static String getVaultGroupInfo(UUID uuid, String world, String info) {
+        String name = Bukkit.getServer().getPlayer(uuid).getName();
+        String infoString = "";
+
         if (!API.vChat.getName().equals("MChat")) {
-            if (info.equals("prefix")) {
-                infoString = API.vChat.getGroupPrefix(world, name);
-            } else if (info.equals("suffix")) {
-                infoString = API.vChat.getGroupSuffix(world, name);
-            } else {
-                infoString = API.vChat.getGroupInfoString(world, name, info, "");
+            switch (info) {
+                case "prefix":
+                    infoString = API.vChat.getGroupPrefix(world, name);
+                    break;
+                case "suffix":
+                    infoString = API.vChat.getGroupSuffix(world, name);
+                    break;
+                default:
+                    infoString = API.vChat.getGroupInfoString(world, name, info, "");
+                    break;
             }
         }
 
@@ -585,19 +518,19 @@ public class Reader {
     /**
      * Player Name Resolver
      *
-     * @param name Name of Player to be Resolved.
+     * @param uuid UUID of Player to be Resolved.
      * @return Player Name's MChat Alias.
      */
-    public static String getMName(String name) {
+    public static String getMName(UUID uuid) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (infoConfig.isSet("mname." + name)) {
-            if (!(infoConfig.getString("mname." + name).isEmpty())) {
-                return infoConfig.getString("mname." + name);
+        if (infoConfig.isSet("mname." + uuid)) {
+            if (!(infoConfig.getString("mname." + uuid).isEmpty())) {
+                return infoConfig.getString("mname." + uuid);
             }
         }
 
-        return name;
+        return Bukkit.getServer().getPlayer(uuid).getName();
     }
 
     /**

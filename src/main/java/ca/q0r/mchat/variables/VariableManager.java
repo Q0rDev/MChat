@@ -1,6 +1,7 @@
 package ca.q0r.mchat.variables;
 
 import ca.q0r.mchat.api.API;
+import ca.q0r.mchat.events.custom.ReplaceEvent;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.variables.vars.*;
@@ -102,15 +103,15 @@ public class VariableManager {
      * Variable Replacer.
      *
      * @param format   String to be replaced.
-     * @param pName   Name of Player being formatted against.
+     * @param uuid     Name of Player being formatted against.
      * @param msg      Message being relayed.
      * @param doColour Whether or not to colour replacement value.
      * @return String with Variables replaced.
      */
-    public static String replaceVars(String format, String pName, String msg, Boolean doColour) {
-        NavigableMap<String, Object> fVarMap = new TreeMap<>();
-        NavigableMap<String, Object> nVarMap = new TreeMap<>();
-        NavigableMap<String, Object> lVarMap = new TreeMap<>();
+    public static String replaceVars(String format, UUID uuid, String msg, Boolean doColour) {
+        NavigableMap<String, String> fVarMap = new TreeMap<>();
+        NavigableMap<String, String> nVarMap = new TreeMap<>();
+        NavigableMap<String, String> lVarMap = new TreeMap<>();
 
         for (Var var : varSet) {
             Method[] methods = var.getClass().getMethods();
@@ -127,9 +128,9 @@ public class VariableManager {
                     keys = vKeys.keys();
 
                     if (msg != null && var instanceof MessageVars.MessageVar) {
-                        value = var.getValue(msg).toString();
+                        value = msg;
                     } else {
-                        value = var.getValue(pName).toString();
+                        value = var.getValue(uuid);
                     }
                 }
 
@@ -183,17 +184,20 @@ public class VariableManager {
     /**
      * Custom Variable Replacer.
      *
-     * @param pName  Player's Name.
+     * @param uuid   Player's UUID.
      * @param format String to be replaced.
      * @return String with Custom Variables replaced.
      */
-    public static String replaceCustVars(String pName, String format) {
-        for (Map.Entry<String, Object> entry : API.getPlayerVarMap().entrySet()) {
-            String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(pName + "|", "");
-            String value = entry.getValue().toString();
+    public static String replaceCustVars(UUID uuid, String format) {
+        for (Map.Entry<String, String> entry : API.getUuidVarMap().entrySet()) {
+            String pKey = IndicatorType.CUS_VAR.getValue() + entry.getKey().replace(uuid.toString() + "|", "");
+            String value = entry.getValue();
 
-            if (format.contains(pKey)) {
-                format = format.replace(pKey, MessageUtil.addColour(value));
+            ReplaceEvent event = new ReplaceEvent(pKey, value, format);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                format = event.getReplacedFormat();
             }
         }
 
@@ -201,24 +205,32 @@ public class VariableManager {
             String gKey = IndicatorType.CUS_VAR.getValue() + entry.getKey();
             String value = entry.getValue().toString();
 
-            if (format.contains(gKey)) {
-                format = format.replace(gKey, MessageUtil.addColour(value));
+            ReplaceEvent event = new ReplaceEvent(gKey, value, format);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                format = event.getReplacedFormat();
             }
         }
 
         return format;
     }
 
-    private static String replacer(String format, Map<String, Object> map, Boolean doColour) {
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
+    private static String replacer(String format, Map<String, String> map, Boolean doColour) {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
             String key = entry.getKey();
-            String value = entry.getValue().toString();
+            String value = entry.getValue();
 
             if (doColour) {
                 value = MessageUtil.addColour(value);
             }
 
-            format = format.replace(key, value);
+            ReplaceEvent event = new ReplaceEvent(key, value, format);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                format = event.getReplacedFormat();
+            }
         }
 
         return format;

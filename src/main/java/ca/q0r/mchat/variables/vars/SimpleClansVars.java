@@ -6,6 +6,8 @@ import com.p000ison.dev.simpleclans2.chat.SimpleClansChat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class SimpleClansVars {
     private static SimpleClansChat chat;
 
@@ -17,14 +19,15 @@ public class SimpleClansVars {
 
     private static class ClanVar extends Var {
         @Keys(keys = {"-clan"})
-        public Object getValue(Object obj) {
+        public String getValue(UUID uuid) {
             try {
-                Player player = Bukkit.getPlayer(obj.toString());
+                Player player = Bukkit.getPlayer(uuid);
                 if (player != null) {
                     return chat.formatVariable("-clan",
                             chat.getClanPlayerManager().getClanPlayer(player).getClan().getTag());
                 }
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
 
             return "";
         }
@@ -32,14 +35,15 @@ public class SimpleClansVars {
 
     private static class RankVar extends Var {
         @Keys(keys = {"-rank"})
-        public Object getValue(Object obj) {
+        public String getValue(UUID uuid) {
             try {
-                Player player = Bukkit.getPlayer(obj.toString());
+                Player player = Bukkit.getPlayer(uuid);
                 if (player != null) {
                     return chat.formatVariable("-rank",
                             chat.getClanPlayerManager().getClanPlayer(player).getRank().getTag());
                 }
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
 
             return "";
         }

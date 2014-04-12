@@ -6,6 +6,7 @@ import ca.q0r.mchat.api.Parser;
 import ca.q0r.mchat.api.Writer;
 import ca.q0r.mchat.types.EventType;
 import ca.q0r.mchat.types.IndicatorType;
+import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
@@ -18,6 +19,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class PlayerListener implements Listener {
     MChat plugin;
@@ -32,9 +35,9 @@ public class PlayerListener implements Listener {
 
         String world = player.getWorld().getName();
         String msg = event.getJoinMessage();
-        String pName = player.getName();
+        UUID uuid = player.getUniqueId();
 
-        if (plugin.update && API.checkPermissions(pName, world, "mchat.update")) {
+        if (plugin.update && API.checkPermissions(uuid, world, "mchat.update")) {
             plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -50,8 +53,8 @@ public class PlayerListener implements Listener {
         }
 
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
-            if (YmlManager.getYml(YmlType.INFO_YML).getConfig().get("users." + pName) == null) {
-                Writer.addBase(pName, ConfigType.INFO_DEFAULT_GROUP.getString(), false);
+            if (YmlManager.getYml(YmlType.INFO_YML).getConfig().get("users." + uuid) == null) {
+                Writer.addBase(uuid.toString(), InfoType.USER);
             }
         }
 
@@ -63,10 +66,10 @@ public class PlayerListener implements Listener {
 
         if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (ConfigType.SUPPRESS_USE_JOIN.getBoolean()) {
-                suppressEventMessage(Parser.parseEvent(pName, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getInteger());
+                suppressEventMessage(Parser.parseEvent(uuid, world, EventType.JOIN), "mchat.suppress.join", "mchat.bypass.suppress.join", ConfigType.SUPPRESS_MAX_JOIN.getInteger());
                 event.setJoinMessage(null);
             } else {
-                event.setJoinMessage(Parser.parseEvent(pName, world, EventType.JOIN));
+                event.setJoinMessage(Parser.parseEvent(uuid, world, EventType.JOIN));
             }
         }
     }
@@ -81,7 +84,7 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        String pName = event.getPlayer().getName();
+        UUID uuid = event.getPlayer().getUniqueId();
         String world = event.getPlayer().getWorld().getName();
         String msg = event.getLeaveMessage();
 
@@ -91,7 +94,7 @@ public class PlayerListener implements Listener {
 
         String reason = event.getReason();
 
-        String kickMsg = Parser.parseEvent(pName, world, EventType.KICK).replace(IndicatorType.MISC_VAR.getValue() + "reason", reason).replace(IndicatorType.MISC_VAR.getValue() + "r", reason);
+        String kickMsg = Parser.parseEvent(uuid, world, EventType.KICK).replace(IndicatorType.MISC_VAR.getValue() + "reason", reason).replace(IndicatorType.MISC_VAR.getValue() + "r", reason);
 
         if (ConfigType.SUPPRESS_USE_KICK.getBoolean()) {
             suppressEventMessage(kickMsg, "mchat.suppress.kick", "mchat.bypass.suppress.kick", ConfigType.SUPPRESS_MAX_KICK.getInteger());
@@ -103,7 +106,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        String pName = event.getPlayer().getName();
+        UUID uuid = event.getPlayer().getUniqueId();
         String world = event.getPlayer().getWorld().getName();
         String msg = event.getQuitMessage();
 
@@ -116,22 +119,22 @@ public class PlayerListener implements Listener {
         }
 
         if (ConfigType.SUPPRESS_USE_QUIT.getBoolean()) {
-            suppressEventMessage(Parser.parseEvent(pName, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getInteger());
+            suppressEventMessage(Parser.parseEvent(uuid, world, EventType.QUIT), "mchat.suppress.quit", "mchat.bypass.suppress.quit", ConfigType.SUPPRESS_MAX_QUIT.getInteger());
             event.setQuitMessage(null);
         } else {
-            event.setQuitMessage(Parser.parseEvent(pName, world, EventType.QUIT));
+            event.setQuitMessage(Parser.parseEvent(uuid, world, EventType.QUIT));
         }
     }
 
     private void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            if (API.checkPermissions(player.getName(), player.getWorld().getName(), overrideNode)) {
+            if (API.checkPermissions(player.getUniqueId(), player.getWorld().getName(), overrideNode)) {
                 player.sendMessage(format);
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max)) {
-                if (!API.checkPermissions(player.getName(), player.getWorld().getName(), permNode)) {
+                if (!API.checkPermissions(player.getUniqueId(), player.getWorld().getName(), permNode)) {
                     player.sendMessage(format);
                 }
             }
@@ -141,7 +144,7 @@ public class PlayerListener implements Listener {
     }
 
     private void setListName(Player player) {
-        String listName = Parser.parseTabbedList(player.getName(), player.getWorld().getName());
+        String listName = Parser.parseTabbedList(player.getUniqueId(), player.getWorld().getName());
 
         try {
             if (listName.length() > 15) {
@@ -150,6 +153,7 @@ public class PlayerListener implements Listener {
             }
 
             player.setPlayerListName(listName);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
     }
 }

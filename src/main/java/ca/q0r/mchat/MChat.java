@@ -18,7 +18,7 @@ import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import ca.q0r.mchat.yml.config.ConfigType;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -71,9 +71,9 @@ public class MChat extends JavaPlugin {
 
         // Add All Players To Info.yml
         if (ConfigType.INFO_ADD_NEW_PLAYERS.getBoolean()) {
-            for (Player players : getServer().getOnlinePlayers()) {
-                if (YmlManager.getYml(YmlType.INFO_YML).getConfig().get("users." + players.getName()) == null) {
-                    Writer.addBase(players.getName(), ConfigType.INFO_DEFAULT_GROUP.getString(), false);
+            for (Player player : getServer().getOnlinePlayers()) {
+                if (YmlManager.getYml(YmlType.INFO_YML).getConfig().get("users." + player.getUniqueId().toString()) == null) {
+                    Writer.addBase(player.getUniqueId().toString(), InfoType.USER);
                 }
             }
         }
@@ -124,11 +124,9 @@ public class MChat extends JavaPlugin {
 
     private void registerEvents() {
         if (!ConfigType.MCHAT_API_ONLY.getBoolean()) {
-            pm.registerEvents(new PlayerListener(this), this);
-
             pm.registerEvents(new ChatListener(this), this);
-
             pm.registerEvents(new CommandListener(), this);
+            pm.registerEvents(new PlayerListener(this), this);
         }
     }
 
@@ -146,12 +144,13 @@ public class MChat extends JavaPlugin {
         regCommands("mchatuser", new InfoAlterCommand("mchatuser", InfoType.USER));
         regCommands("mchatgroup", new InfoAlterCommand("mchatgroup", InfoType.GROUP));
 
-        regCommands("mchatme", new MeCommand(this));
+        regCommands("mchatme", new MeCommand());
     }
 
-    private void regCommands(String command, CommandExecutor executor) {
+    private void regCommands(String command, TabExecutor executor) {
         if (getCommand(command) != null) {
             getCommand(command).setExecutor(executor);
+            getCommand(command).setTabCompleter(executor);
         }
     }
 
