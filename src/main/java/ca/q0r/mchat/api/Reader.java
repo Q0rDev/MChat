@@ -170,7 +170,7 @@ public class Reader {
         } else if (infoConfig.isSet(iType + "." + uuid.toString() + ".worlds." + world + "." + info)) {
             return infoConfig.getString(iType + "." + uuid.toString() + ".worlds." + world + "." + info);
         } else if (infoConfig.isSet("users." + uuid.toString() + ".group")) {
-            String group = infoConfig.getString("users." + uuid + ".group");
+            String group = infoConfig.getString("users." + uuid.toString() + ".group");
 
             if (infoConfig.isSet("groups." + group + ".info." + info)) {
                 return infoConfig.getString("groups." + group + ".info." + info);
