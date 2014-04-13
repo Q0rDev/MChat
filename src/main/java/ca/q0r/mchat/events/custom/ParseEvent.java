@@ -22,9 +22,19 @@ import java.util.regex.Pattern;
  */
 public class ParseEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
+
+    /** Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
     public HandlerList getHandlers() {
         return handlers;
     }
+
+    /** Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
     public static HandlerList getHandlerList() {
         return handlers;
     }
@@ -37,6 +47,7 @@ public class ParseEvent extends Event {
      * @param uuid UUID of player that is executing this event.
      * @param world World the Player is in.
      * @param message Message being relayed.
+     * @param format Format to be parsed.
      */
     public ParseEvent(UUID uuid, String world, String message, String format) {
         this.uuid = uuid;
@@ -85,6 +96,10 @@ public class ParseEvent extends Event {
         this.format = format;
     }
 
+    /** Gets fully parsed message.
+     *
+     * @return Fully parsed message.
+     */
     public String getParsed() {
         return parse(uuid, world, message, format);
     }

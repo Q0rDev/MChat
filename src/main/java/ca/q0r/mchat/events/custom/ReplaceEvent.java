@@ -4,11 +4,24 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Event that is fired when Variables are replaced.
+ */
 public class ReplaceEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+
+    /** Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
     public HandlerList getHandlers() {
         return handlers;
     }
+
+    /** Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
     public static HandlerList getHandlerList() {
         return handlers;
     }

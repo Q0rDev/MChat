@@ -11,9 +11,19 @@ import java.util.UUID;
  */
 public class MeEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
+
+    /** Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
     public HandlerList getHandlers() {
         return handlers;
     }
+
+    /** Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
     public static HandlerList getHandlerList() {
         return handlers;
     }
