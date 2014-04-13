@@ -1,4 +1,4 @@
-package ca.q0r.mchat.events;
+package ca.q0r.mchat.events.bukkit;
 
 import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;

@@ -1,4 +1,4 @@
-package ca.q0r.mchat.events;
+package ca.q0r.mchat.events.bukkit;
 
 import ca.q0r.mchat.MChat;
 import ca.q0r.mchat.api.API;
