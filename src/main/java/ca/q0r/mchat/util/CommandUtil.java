@@ -54,8 +54,6 @@ public class CommandUtil {
      * @param uuid UUID to check for.
      * @return Result of Online Check.
      */
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public static Boolean isOnlineForCommand(CommandSender sender, UUID uuid) {
         if (API.getPlayer(uuid.toString()) == null) {
             MessageUtil.sendMessage(sender, "&4Player &e'" + uuid + "'&4 not Found.");

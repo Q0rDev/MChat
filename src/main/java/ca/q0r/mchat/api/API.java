@@ -351,14 +351,17 @@ public class API {
     }
 
     /**
-     * Gets Player based on partial UUID.
+     * Gets Player based on partial UUID/Name.
      *
-     * @param uuid Partial or complete UUID to lookup.
+     * @param find Partial or complete UUID/Name to lookup.
      * @return Player object or null if not found.
      */
-    public static Player getPlayer(String uuid) {
+    @SuppressWarnings("deprecation")
+    public static Player getPlayer(String find) {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            if (player.getUniqueId().toString().startsWith(uuid.toLowerCase())) {
+            if (player.getUniqueId().toString().toLowerCase().startsWith(find.toLowerCase())) {
+                return player;
+            } else if (player.getName().toLowerCase().startsWith(find.toLowerCase())) {
                 return player;
             }
         }
