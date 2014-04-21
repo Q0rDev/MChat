@@ -35,3 +35,5 @@ env:
     - secure: "WvmHJ+p7d1/4ucllyMMXTjUhWQePg4SvksHlI9NHft5bVCG2B5jggoxkaNRGEYJgXOG82HFNu6IjGbpSZDOY5uD80WBmddeovoBfy1FdI4Z0CLu5HoXqTp99uBbtaKWSpv4FT+1xe+WXEVJfaZQgsUSJNpbF4bTtRjoueOITEqA="
     # GitHub
     - secure: "AYCXuujOveX2+FqpxFirRHhxEdNHEL3iyByu6kOFlvoMPi74J2DxV4jFAyXhKtg5b/hBBn6qXfMByp/9JYArBun2qMfckY6yaVq/IN2htemZ1ZfcOGzoxZ6h9Uh1nuNRpIw3Zj2SbysYXZaI9OtgGLP5WYkRR2KqddgRdMDpdq0="
+    # AWS
+    - secure: "JTOyPDronSxViB9PqtzSV5psvSNOdZzUFKZGRgjhjLme4/LLsoenYTBfiL2DJxfndR4I8QQmTGI+b/rxF32pGHwhi6gN9Y9pEhdDNRVmw8+rY+PxiyqWeX1TkXeb7nfQNOuuqBMywrv6eF9RJGurFux+7oaro6Lbsh10KfRzrVM="
