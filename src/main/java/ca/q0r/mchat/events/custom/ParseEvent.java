@@ -167,7 +167,9 @@ public class ParseEvent extends Event {
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String var = Reader.getRawInfo(uuid, InfoType.USER, world, matcher.group(1));
+            String info = Reader.getRawInfo(uuid, InfoType.USER, world, matcher.group(1));
+            String var = info != null ? info : "";
+
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
         }
 

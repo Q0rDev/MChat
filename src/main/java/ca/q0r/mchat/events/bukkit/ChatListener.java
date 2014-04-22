@@ -28,7 +28,6 @@ public class ChatListener implements Listener {
         }
 
         Player player = event.getPlayer();
-        String pName = player.getName();
 
         String world = player.getWorld().getName();
         String msg = event.getMessage();
