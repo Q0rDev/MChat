@@ -31,6 +31,8 @@ public class MChat extends JavaPlugin {
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
 
+    Test AWS Breakage.
+
     public Boolean update = false;
 
     public void onEnable() {
