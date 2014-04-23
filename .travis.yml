@@ -14,10 +14,14 @@ before_install:
 install: ./target/travis/build.sh
 script: true
 
-# Upload to DBO if release build.
+# Upload to DBO if release build / Upload to AWS always / Create Doxy files.
 after_success:
   - "./target/travis/upload.sh"
   - "./target/travis/doxy.sh"
+
+# Upload to AWS Always
+after_failure:
+  - "./target/travis/upload.sh"
 
 notifications:
   # Disable build status email notifications, until the issue with forks is fixed.
