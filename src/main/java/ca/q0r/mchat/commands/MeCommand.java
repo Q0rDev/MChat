@@ -40,7 +40,10 @@ public class MeCommand implements TabExecutor {
                 MeEvent event = new MeEvent(player.getUniqueId(), world.getName(), message);
 
                 Bukkit.getServer().getPluginManager().callEvent(event);
-                Bukkit.getServer().broadcastMessage(event.getFormat());
+
+                if (!event.isCancelled()) {
+                    Bukkit.getServer().broadcastMessage(event.getFormat());
+                }
 
                 return true;
             } else {

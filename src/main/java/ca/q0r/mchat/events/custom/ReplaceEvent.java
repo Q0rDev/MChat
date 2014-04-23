@@ -40,7 +40,15 @@ public class ReplaceEvent extends Event implements Cancellable {
         this.value = value;
         this.format = format;
 
-        cancelled = false;
+        this.cancelled = false;
+    }
+
+    /** Checks whether the Event is cancelled.
+     *
+     * @return Event cancellation state.
+     */
+    public boolean isCancelled() {
+        return cancelled;
     }
 
     /** Get Variable being processed.
@@ -82,14 +90,6 @@ public class ReplaceEvent extends Event implements Cancellable {
      */
     public void setValue(String value) {
         this.value = value;
-    }
-
-    /** Checks whether the Event is cancelled.
-     *
-     * @return Event cancellation state.
-     */
-    public boolean isCancelled() {
-        return cancelled;
     }
 
     /** Sets Format being replaced.
