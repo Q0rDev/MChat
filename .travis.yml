@@ -11,6 +11,7 @@ before_install:
   - "chmod +x target/travis/doxy.sh"
 
 # Compile and package JAR and set build properties.
+install: true
 script: ./target/travis/build.sh
 
 # Upload to DBO if release build / Upload to AWS always / Create Doxy files.
