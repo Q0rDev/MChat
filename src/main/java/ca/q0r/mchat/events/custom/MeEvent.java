@@ -13,7 +13,8 @@ import java.util.UUID;
 public class MeEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
-    /** Forced Override of HandlerList
+    /**
+     * Forced Override of HandlerList
      *
      * @return HandlerList
      */
@@ -21,7 +22,8 @@ public class MeEvent extends Event implements Cancellable {
         return handlers;
     }
 
-    /** Forced Override of HandlerList
+    /**
+     * Forced Override of HandlerList
      *
      * @return HandlerList
      */
@@ -33,10 +35,11 @@ public class MeEvent extends Event implements Cancellable {
     private String world, message;
     private boolean cancelled;
 
-    /** Instantiates Event
+    /**
+     * Instantiates Event
      *
-     * @param uuid UUID of player that is executing this event.
-     * @param world World the Player is in.
+     * @param uuid    UUID of player that is executing this event.
+     * @param world   World the Player is in.
      * @param message Message being relayed.
      */
     public MeEvent(UUID uuid, String world, String message) {
@@ -47,7 +50,8 @@ public class MeEvent extends Event implements Cancellable {
         this.cancelled = false;
     }
 
-    /** Checks whether the Event is cancelled.
+    /**
+     * Checks whether the Event is cancelled.
      *
      * @return Event cancellation state.
      */
@@ -55,7 +59,8 @@ public class MeEvent extends Event implements Cancellable {
         return cancelled;
     }
 
-    /** Gets UUID of Player.
+    /**
+     * Gets UUID of Player.
      *
      * @return UUID of Player.
      */
@@ -63,7 +68,8 @@ public class MeEvent extends Event implements Cancellable {
         return uuid;
     }
 
-    /** Gets Message the player is sending.
+    /**
+     * Gets Message the player is sending.
      *
      * @return Message the player is sending.
      */
@@ -71,7 +77,8 @@ public class MeEvent extends Event implements Cancellable {
         return message;
     }
 
-    /** Gets format being used.
+    /**
+     * Gets format being used.
      *
      * @return Format being used.
      */
@@ -79,7 +86,8 @@ public class MeEvent extends Event implements Cancellable {
         return Parser.parseMe(uuid, world, message);
     }
 
-    /** Sets Message being sent.
+    /**
+     * Sets Message being sent.
      *
      * @param message Message being sent.
      */
@@ -87,7 +95,8 @@ public class MeEvent extends Event implements Cancellable {
         this.message = message;
     }
 
-    /** Sets whether the Event is cancelled.
+    /**
+     * Sets whether the Event is cancelled.
      *
      * @param cancel Event cancellation state.
      */

@@ -23,7 +23,8 @@ import java.util.regex.Pattern;
 public class ParseEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
-    /** Forced Override of HandlerList
+    /**
+     * Forced Override of HandlerList
      *
      * @return HandlerList
      */
@@ -31,7 +32,8 @@ public class ParseEvent extends Event {
         return handlers;
     }
 
-    /** Forced Override of HandlerList
+    /**
+     * Forced Override of HandlerList
      *
      * @return HandlerList
      */
@@ -42,12 +44,13 @@ public class ParseEvent extends Event {
     private UUID uuid;
     private String world, message, format;
 
-    /** Instantiates Event
+    /**
+     * Instantiates Event
      *
-     * @param uuid UUID of player that is executing this event.
-     * @param world World the Player is in.
+     * @param uuid    UUID of player that is executing this event.
+     * @param world   World the Player is in.
      * @param message Message being relayed.
-     * @param format Format to be parsed.
+     * @param format  Format to be parsed.
      */
     public ParseEvent(UUID uuid, String world, String message, String format) {
         this.uuid = uuid;
@@ -56,7 +59,8 @@ public class ParseEvent extends Event {
         this.format = format;
     }
 
-    /** Gets UUID of Player.
+    /**
+     * Gets UUID of Player.
      *
      * @return UUID of Player.
      */
@@ -64,7 +68,8 @@ public class ParseEvent extends Event {
         return uuid;
     }
 
-    /** Gets Message the player is sending.
+    /**
+     * Gets Message the player is sending.
      *
      * @return Message the player is sending.
      */
@@ -72,7 +77,8 @@ public class ParseEvent extends Event {
         return message;
     }
 
-    /** Gets format being used.
+    /**
+     * Gets format being used.
      *
      * @return Format being used.
      */
@@ -80,7 +86,8 @@ public class ParseEvent extends Event {
         return format;
     }
 
-    /** Sets Message being sent.
+    /**
+     * Sets Message being sent.
      *
      * @param message Message being sent.
      */
@@ -88,7 +95,8 @@ public class ParseEvent extends Event {
         this.message = message;
     }
 
-    /** Sets format to be used.
+    /**
+     * Sets format to be used.
      *
      * @param format Format being set.
      */
@@ -96,7 +104,8 @@ public class ParseEvent extends Event {
         this.format = format;
     }
 
-    /** Gets fully parsed message.
+    /**
+     * Gets fully parsed message.
      *
      * @return Fully parsed message.
      */

@@ -51,7 +51,7 @@ public class CommandUtil {
      * Checks if player is online before sending command.
      *
      * @param sender Object sending command.
-     * @param uuid UUID to check for.
+     * @param uuid   UUID to check for.
      * @return Result of Online Check.
      */
     public static Boolean isOnlineForCommand(CommandSender sender, UUID uuid) {
