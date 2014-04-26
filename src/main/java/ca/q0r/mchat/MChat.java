@@ -27,6 +27,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class MChat extends JavaPlugin {
+    TEST FAILED BUILD
+
     // Default Plugin Data
     public PluginManager pm;
     public PluginDescriptionFile pdfFile;
