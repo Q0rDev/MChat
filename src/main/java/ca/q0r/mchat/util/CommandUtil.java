@@ -3,7 +3,6 @@ package ca.q0r.mchat.util;
 import ca.q0r.mchat.api.API;
 import ca.q0r.mchat.types.IndicatorType;
 import ca.q0r.mchat.yml.locale.LocaleType;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -37,9 +36,8 @@ public class CommandUtil {
      * @return Result of Online Check.
      */
     @Deprecated
-    @SuppressWarnings("deprecation")
     public static Boolean isOnlineForCommand(CommandSender sender, String player) {
-        if (Bukkit.getServer().getPlayer(player) == null) {
+        if (API.getPlayer(player) == null) {
             MessageUtil.sendMessage(sender, "&4Player &e'" + player + "'&4 not Found.");
             return false;
         }

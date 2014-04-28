@@ -54,8 +54,7 @@ public class InfoAlterCommand implements TabExecutor {
             if (type == InfoType.GROUP) {
                 uuid = args[2];
             } else {
-                Player player = API.getPlayer(args[2]) != null
-                        ? API.getPlayer(args[2]) : Bukkit.getServer().getPlayer(args[2]);
+                Player player = API.getPlayer(args[2]);
 
                 if (player == null) {
                     MessageUtil.sendMessage(sender, "Player '" + args[2] + "' is offline for this command.");

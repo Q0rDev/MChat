@@ -356,7 +356,6 @@ public class API {
      * @param find Partial or complete UUID/Name to lookup.
      * @return Player object or null if not found.
      */
-    @SuppressWarnings("deprecation")
     public static Player getPlayer(String find) {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.getUniqueId().toString().toLowerCase().startsWith(find.toLowerCase())) {
