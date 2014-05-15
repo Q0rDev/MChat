@@ -13,26 +13,6 @@ public enum PluginType {
      */
     VAULT_CHAT,
     /**
-     * GroupManager Plugin.
-     */
-    GROUP_MANAGER,
-    /**
-     * PermissionsEx Plugin.
-     */
-    PERMISSIONS_EX,
-    /**
-     * bPermissions Plugin.
-     */
-    BPERMISSIONS,
-    /**
-     * Privileges Plugin.
-     */
-    PRIVILEGES,
-    /**
-     * PermissionsBukkit Plugin.
-     */
-    PERMISSIONS_BUKKIT,
-    /**
      * Leveled Nodes MChat Plugin.
      */
     LEVELED_NODES,

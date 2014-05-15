@@ -5,7 +5,7 @@ author: MiracleM4n
 authors: [MiracleM4n]
 website: http://q0r.ca/
 thread: http://forums.bukkit.org/threads/22958/
-softdepend: [GroupManager, PermissionsBukkit, bPermissions, PermissionsEx, GeoIPTools, Heroes, Towny, Vault, SimpleClans2, SimpleClansChat]
+softdepend: [GeoIPTools, Heroes, Towny, Vault, SimpleClans2, SimpleClansChat]
 description: Chat Formatting for Bukkit
 commands:
     mchat:

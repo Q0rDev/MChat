@@ -37,7 +37,7 @@ public class PlayerListener implements Listener {
         String msg = event.getJoinMessage();
         UUID uuid = player.getUniqueId();
 
-        if (plugin.update && API.checkPermissions(uuid, world, "mchat.update")) {
+        if (plugin.update && API.checkPermissions(uuid, "mchat.update")) {
             plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -128,13 +128,13 @@ public class PlayerListener implements Listener {
 
     private void suppressEventMessage(String format, String permNode, String overrideNode, Integer max) {
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            if (API.checkPermissions(player.getUniqueId(), player.getWorld().getName(), overrideNode)) {
+            if (API.checkPermissions(player.getUniqueId(), overrideNode)) {
                 player.sendMessage(format);
                 continue;
             }
 
             if (!(plugin.getServer().getOnlinePlayers().length > max)) {
-                if (!API.checkPermissions(player.getUniqueId(), player.getWorld().getName(), permNode)) {
+                if (!API.checkPermissions(player.getUniqueId(), permNode)) {
                     player.sendMessage(format);
                 }
             }

@@ -126,7 +126,7 @@ public class ParseEvent extends Event {
 
         Integer cInt = ConfigType.MCHAT_CAPS_LOCK_RANGE.getInteger();
 
-        if (!API.checkPermissions(uuid, world, "mchat.bypass.clock") && cInt > 0) {
+        if (!API.checkPermissions(uuid, "mchat.bypass.clock") && cInt > 0) {
             message = fixCaps(message, cInt);
         }
 
@@ -134,11 +134,11 @@ public class ParseEvent extends Event {
             return message;
         }
 
-        if (API.checkPermissions(uuid, world, "mchat.coloredchat")) {
+        if (API.checkPermissions(uuid, "mchat.coloredchat")) {
             message = MessageUtil.addColour(message);
         }
 
-        if (!API.checkPermissions(uuid, world, "mchat.censorbypass")) {
+        if (!API.checkPermissions(uuid, "mchat.censorbypass")) {
             message = replaceCensoredWords(message);
         }
 

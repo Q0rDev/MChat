@@ -6,16 +6,12 @@ import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.yml.config.ConfigType;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
-import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.*;
 
@@ -29,23 +25,6 @@ public class API {
 
     static Chat vChat = null;
     static Boolean vChatB = false;
-
-    // GroupManager
-    static WorldsHolder gmWH;
-    static Boolean gmB;
-
-    //PEX
-    static PermissionManager pexPermissions;
-    static Boolean pexB;
-
-    // bPerms
-    static Boolean bPermB;
-
-    // Privileges
-    static Boolean privB;
-
-    // PermissionsBukkit
-    static Boolean pBukkitB;
 
     // Var Map
     private static final SortedMap<String, String> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
@@ -221,14 +200,11 @@ public class API {
      * Permission Checking
      *
      * @param player Player being checked.
-     * @param world  Player's World.
      * @param node   Permission Node being checked.
      * @return Player has Node.
      */
-    public static Boolean checkPermissions(Player player, String world, String node) {
+    public static Boolean checkPermissions(Player player, String node) {
         return vaultB && vPerm.has(player, node)
-                || gmB && gmWH.getWorldPermissions(player).has(player, node)
-                || pexB && pexPermissions.has(player, node, world)
                 || player.hasPermission(node) || player.isOp();
     }
 
@@ -244,8 +220,6 @@ public class API {
     @SuppressWarnings("deprecation")
     public static Boolean checkPermissions(String pName, String world, String node) {
         return vaultB && vPerm.has(world, pName, node)
-                || gmB && gmWH.getWorldPermissions(pName).getPermissionBoolean(pName, node)
-                || pexB && pexPermissions.has(pName, world, node)
                 || Bukkit.getServer().getPlayer(pName) != null && Bukkit.getServer().getPlayer(pName).hasPermission(node);
     }
 
@@ -253,12 +227,11 @@ public class API {
      * Permission Checking
      *
      * @param uuid  UUID of Player being checked.
-     * @param world Name of Player's World.
      * @param node  Permission Node being checked.
      * @return Player has Node.
      */
-    public static Boolean checkPermissions(UUID uuid, String world, String node) {
-        return checkPermissions(Bukkit.getPlayer(uuid), world, node);
+    public static Boolean checkPermissions(UUID uuid, String node) {
+        return checkPermissions(Bukkit.getPlayer(uuid), node);
     }
 
     /**
@@ -320,16 +293,6 @@ public class API {
                 return vaultB;
             case VAULT_CHAT:
                 return vChatB;
-            case GROUP_MANAGER:
-                return gmB;
-            case PERMISSIONS_EX:
-                return pexB;
-            case BPERMISSIONS:
-                return bPermB;
-            case PRIVILEGES:
-                return privB;
-            case PERMISSIONS_BUKKIT:
-                return pBukkitB;
             case LEVELED_NODES:
                 return ConfigType.INFO_USE_LEVELED_NODES.getBoolean();
             case OLD_NODES:
@@ -393,35 +356,8 @@ public class API {
             vChatB = vChat != null;
         }
 
-        pBukkitB = setupPermPlugin(pm.getPlugin("PermissionsBukkit"));
-        bPermB = setupPermPlugin(pm.getPlugin("bPermissions"));
-        pexB = setupPermPlugin(pm.getPlugin("PermissionsEx"));
-
-        if (pexB) {
-            pexPermissions = PermissionsEx.getPermissionManager();
-        }
-
-        pluginTest = pm.getPlugin("GroupManager");
-        gmB = pluginTest != null;
-        if (gmB) {
-            gmWH = ((GroupManager) pluginTest).getWorldsHolder();
-            MessageUtil.logFormatted("<Permissions> " + pluginTest.getDescription().getName() + " v" + pluginTest.getDescription().getVersion() + " hooked!.");
-
-        }
-
-        privB = setupPermPlugin(pm.getPlugin("Privileges"));
-
-        if (!(vaultB || pBukkitB || bPermB || pexB || gmB)) {
+        if (!(vaultB)) {
             MessageUtil.logFormatted("<Permissions> SuperPerms hooked!.");
         }
-    }
-
-    private static Boolean setupPermPlugin(Plugin plugin) {
-        if (plugin != null) {
-            MessageUtil.logFormatted("<Permissions> " + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " hooked!.");
-            return true;
-        }
-
-        return false;
     }
 }

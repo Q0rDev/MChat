@@ -6,7 +6,7 @@
     <name>MChat</name>
     <artifactId>MChat</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.9-R0.0.1-SNAPSHOT</version>
+    <version>1.7.9-R0.1.1-BETA</version>
     <url>https://github.com/Q0rDev/MChat</url>
     <description>Chat Formatting for Bukkit</description>
 
@@ -42,35 +42,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit-permissions</artifactId>
-            <version>0.1.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.anjocaido</groupId>
-            <artifactId>GroupManager</artifactId>
-            <version>1.9</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>ru.tehkode</groupId>
-            <artifactId>PermissionsEx</artifactId>
-            <version>1.18</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.bananaco</groupId>
-            <artifactId>bPermissions</artifactId>
-            <version>v2.12-DEV</version>
+            <version>1.7.9-R0.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -83,8 +55,8 @@
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
-            <version>1.2.27</version>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.3.01</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -99,13 +71,6 @@
             <groupId>uk.org.whoami</groupId>
             <artifactId>GeoIPTools</artifactId>
             <version>1.0.1</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.krinsoft.privileges</groupId>
-            <artifactId>Privileges</artifactId>
-            <version>1.7.5-b158</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

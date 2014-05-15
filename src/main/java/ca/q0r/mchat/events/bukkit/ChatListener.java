@@ -57,7 +57,7 @@ public class ChatListener implements Listener {
     }
 
     private Boolean isSpy(UUID uuid, String world) {
-        if (API.checkPermissions(uuid, world, "mchat.spy")) {
+        if (API.checkPermissions(uuid, "mchat.spy")) {
             API.getSpying().put(uuid.toString(), true);
             return true;
         }
