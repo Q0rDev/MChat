@@ -8,6 +8,7 @@ import ca.q0r.mchat.yml.YmlManager;
 import ca.q0r.mchat.yml.YmlType;
 import ca.q0r.mchat.yml.locale.LocaleType;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.HashMap;
@@ -254,22 +255,22 @@ public class Reader {
     }
 
     private static String getVaultUserInfo(UUID uuid, String world, String info) {
-        String name = Bukkit.getServer().getPlayer(uuid).getName();
+        OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(uuid);
         String infoString = "";
 
         if (!API.vChat.getName().equals("MChat")) {
             switch (info) {
                 case "group":
-                    infoString = API.vChat.getPrimaryGroup(world, name);
+                    infoString = API.vChat.getPrimaryGroup(world, player);
                     break;
                 case "prefix":
-                    infoString = API.vChat.getPlayerPrefix(world, name);
+                    infoString = API.vChat.getPlayerPrefix(world, player);
                     break;
                 case "suffix":
-                    infoString = API.vChat.getPlayerSuffix(world, name);
+                    infoString = API.vChat.getPlayerSuffix(world, player);
                     break;
                 default:
-                    infoString = API.vChat.getPlayerInfoString(world, name, info, "");
+                    infoString = API.vChat.getPlayerInfoString(world, player, info, "");
                     break;
             }
         }
