@@ -231,7 +231,8 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(UUID uuid, String node) {
-        return checkPermissions(Bukkit.getPlayer(uuid), node);
+        Player player = Bukkit.getPlayer(uuid);
+        return player != null && checkPermissions(Bukkit.getPlayer(uuid), node);
     }
 
     /**
