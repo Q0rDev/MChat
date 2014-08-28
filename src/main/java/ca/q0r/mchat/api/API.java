@@ -21,7 +21,7 @@ import java.util.*;
 public class API {
     // Vault
     static Permission vPerm;
-    static Boolean vaultB;
+    static Boolean vPermB;
 
     static Chat vChat = null;
     static Boolean vChatB = false;
@@ -204,7 +204,7 @@ public class API {
      * @return Player has Node.
      */
     public static Boolean checkPermissions(Player player, String node) {
-        return vaultB && vPerm.has(player, node)
+        return vPermB && vPerm.has(player, node)
                 || player.hasPermission(node) || player.isOp();
     }
 
@@ -219,7 +219,7 @@ public class API {
     @Deprecated
     @SuppressWarnings("deprecation")
     public static Boolean checkPermissions(String pName, String world, String node) {
-        return vaultB && vPerm.has(world, pName, node)
+        return vPermB && vPerm.has(world, pName, node)
                 || Bukkit.getServer().getPlayer(pName) != null && Bukkit.getServer().getPlayer(pName).hasPermission(node);
     }
 
@@ -242,7 +242,7 @@ public class API {
      * @return Sender has Node.
      */
     public static Boolean checkPermissions(CommandSender sender, String node) {
-        return vaultB && vPerm.has(sender, node)
+        return vPermB && vPerm.has(sender, node)
                 || sender.hasPermission(node);
     }
 
@@ -289,8 +289,8 @@ public class API {
         }
 
         switch (type) {
-            case VAULT:
-                return vaultB;
+            case VAULT_PERM:
+                return vPermB;
             case VAULT_CHAT:
                 return vChatB;
             case LEVELED_NODES:
@@ -337,8 +337,7 @@ public class API {
         Plugin pluginTest;
 
         pluginTest = pm.getPlugin("Vault");
-        vaultB = pluginTest != null;
-        if (vaultB) {
+        if (pluginTest != null) {
             RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
             RegisteredServiceProvider<Chat> chatProvider = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
 
@@ -352,11 +351,11 @@ public class API {
                 vPerm = permissionProvider.getProvider();
             }
 
-            vaultB = vPerm != null;
+            vPermB = vPerm != null;
             vChatB = vChat != null;
         }
 
-        if (!(vaultB)) {
+        if (pluginTest == null) {
             MessageUtil.logFormatted("<Permissions> SuperPerms hooked!.");
         }
     }

@@ -215,45 +215,43 @@ public class Metrics {
             }
         });
 
-        if (!API.isPluginEnabled(PluginType.VAULT)) {
-            return;
-        }
+        if (API.isPluginEnabled(PluginType.VAULT_PERM)) {
+            RegisteredServiceProvider<Permission> rspPerm = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
+            Graph permGraph = createGraph("Permission");
+            Permission perm = null;
 
-        Graph permGraph = createGraph("Permission");
-        Graph chatGraph = createGraph("Chat");
-
-        RegisteredServiceProvider<Permission> rspPerm = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
-        RegisteredServiceProvider<Chat> rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
-
-        Permission perm = null;
-        Chat chat = null;
-
-        if (rspPerm != null) {
-            perm = rspPerm.getProvider();
-        }
-
-        if (rspChat != null) {
-            chat = rspChat.getProvider();
-        }
-
-        final String permName = perm != null ? perm.getName() : "No Permissions";
-        final String chatName = chat != null ? chat.getName() : "No Chat";
-
-        permGraph.addPlotter(new Metrics.Plotter(permName) {
-
-            @Override
-            public int getValue() {
-                return 1;
+            if (rspPerm != null) {
+                perm = rspPerm.getProvider();
             }
-        });
 
-        chatGraph.addPlotter(new Metrics.Plotter(chatName) {
+            final String permName = perm != null ? perm.getName() : "No Permissions";
 
-            @Override
-            public int getValue() {
-                return 1;
+            permGraph.addPlotter(new Metrics.Plotter(permName) {
+                @Override
+                public int getValue() {
+                    return 1;
+                }
+            });
+        }
+
+        if (API.isPluginEnabled(PluginType.VAULT_PERM)) {
+            RegisteredServiceProvider<Chat> rspChat = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
+            Graph chatGraph = createGraph("Chat");
+            Chat chat = null;
+
+            if (rspChat != null) {
+                chat = rspChat.getProvider();
             }
-        });
+
+            final String chatName = chat != null ? chat.getName() : "No Chat";
+
+            chatGraph.addPlotter(new Metrics.Plotter(chatName) {
+                @Override
+                public int getValue() {
+                    return 1;
+                }
+            });
+        }
     }
 
     /**

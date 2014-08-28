@@ -5,9 +5,9 @@ package ca.q0r.mchat.types;
  */
 public enum PluginType {
     /**
-     * Vault Plugin.
+     * Vault Perm Plugin.
      */
-    VAULT,
+    VAULT_PERM,
     /**
      * Vault Chat Plugin.
      */

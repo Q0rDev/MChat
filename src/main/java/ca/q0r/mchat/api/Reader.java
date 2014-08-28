@@ -45,8 +45,8 @@ public class Reader {
             info = "prefix";
         }
 
-        if (API.isPluginEnabled(PluginType.VAULT)) {
-            return getVaultInfo(uuid, type, world, info);
+        if (API.isPluginEnabled(PluginType.VAULT_CHAT)) {
+            return getVaultChatInfo(uuid, type, world, info);
         } else if (API.isPluginEnabled(PluginType.LEVELED_NODES)) {
             return getLeveledInfo(uuid, info);
         } else if (API.isPluginEnabled(PluginType.OLD_NODES)) {
@@ -240,21 +240,21 @@ public class Reader {
         return "";
     }
 
-    private static String getVaultInfo(UUID uuid, InfoType type, String world, String info) {
+    private static String getVaultChatInfo(UUID uuid, InfoType type, String world, String info) {
         String infoString = "";
 
         if (type == InfoType.USER) {
-            infoString = getVaultUserInfo(uuid, world, info);
+            infoString = getVaultChatUserInfo(uuid, world, info);
         }
 
         if (type == InfoType.GROUP || infoString.equals("")) {
-            getVaultGroupInfo(uuid, world, info);
+            getVaultChatGroupInfo(uuid, world, info);
         }
 
         return infoString;
     }
 
-    private static String getVaultUserInfo(UUID uuid, String world, String info) {
+    private static String getVaultChatUserInfo(UUID uuid, String world, String info) {
         OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(uuid);
         String infoString = "";
 
@@ -278,7 +278,7 @@ public class Reader {
         return infoString;
     }
 
-    private static String getVaultGroupInfo(UUID uuid, String world, String info) {
+    private static String getVaultChatGroupInfo(UUID uuid, String world, String info) {
         String name = Bukkit.getServer().getPlayer(uuid).getName();
         String infoString = "";
 
