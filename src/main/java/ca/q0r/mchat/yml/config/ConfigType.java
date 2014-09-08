@@ -21,6 +21,9 @@ public enum ConfigType {
      * Whether or not to Alter Events.
      */MCHAT_ALTER_EVENTS("mchat.alter.events"),
     /**
+     * Whether or not to Alter Tabbed List.
+     */MCHAT_ALTER_LIST("mchat.alter.list"),
+    /**
      * Distance Based Chat Value. Negative or 0 disables.
      */MCHAT_CHAT_DISTANCE("mchat.chatDistance"),
     /**

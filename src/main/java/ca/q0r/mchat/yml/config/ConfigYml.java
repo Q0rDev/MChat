@@ -40,6 +40,7 @@ public class ConfigYml extends Yml {
         checkOption("mchat.apiOnly", false);
         checkOption("mchat.updateCheck", true);
         checkOption("mchat.alter.events", true);
+        checkOption("mchat.alter.list", true);
         checkOption("mchat.chatDistance", -1.0);
         checkOption("mchat.varIndicator", "+");
         checkOption("mchat.cusVarIndicator", "-");

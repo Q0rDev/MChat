@@ -58,11 +58,14 @@ public class PlayerListener implements Listener {
             }
         }
 
-        plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
-            public void run() {
-                setListName(player);
-            }
-        }, 20L);
+
+        if (ConfigType.MCHAT_ALTER_LIST.getBoolean()) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
+                public void run() {
+                    setListName(player);
+                }
+            }, 20L);
+        }
 
         if (ConfigType.MCHAT_ALTER_EVENTS.getBoolean()) {
             if (ConfigType.SUPPRESS_USE_JOIN.getBoolean()) {

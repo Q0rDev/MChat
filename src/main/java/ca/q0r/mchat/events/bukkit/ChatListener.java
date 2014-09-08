@@ -37,7 +37,9 @@ public class ChatListener implements Listener {
             return;
         }
 
-        setListName(player);
+        if (ConfigType.MCHAT_ALTER_LIST.getBoolean()) {
+            setListName(player);
+        }
 
         // Chat Distance Stuff
         if (ConfigType.MCHAT_CHAT_DISTANCE.getDouble() > 0) {
