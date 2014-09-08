@@ -22,25 +22,6 @@ import java.util.regex.Pattern;
  */
 public class ParseEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
-
-    /**
-     * Forced Override of HandlerList
-     *
-     * @return HandlerList
-     */
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    /**
-     * Forced Override of HandlerList
-     *
-     * @return HandlerList
-     */
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
     private UUID uuid;
     private String world, message, format;
 
@@ -57,6 +38,24 @@ public class ParseEvent extends Event {
         this.world = world;
         this.message = message;
         this.format = format;
+    }
+
+    /**
+     * Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    /**
+     * Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
+    public HandlerList getHandlers() {
+        return handlers;
     }
 
     /**
@@ -78,21 +77,21 @@ public class ParseEvent extends Event {
     }
 
     /**
-     * Gets format being used.
-     *
-     * @return Format being used.
-     */
-    public String getFormat() {
-        return format;
-    }
-
-    /**
      * Sets Message being sent.
      *
      * @param message Message being sent.
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     * Gets format being used.
+     *
+     * @return Format being used.
+     */
+    public String getFormat() {
+        return format;
     }
 
     /**

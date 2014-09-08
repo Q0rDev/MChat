@@ -42,7 +42,7 @@ public class VariableManager {
      * Initializes Manager.
      */
     public static void initialize() {
-        varSet = new HashSet<>();
+        varSet = new HashSet<Var>();
 
         setupPlugins();
 
@@ -109,9 +109,9 @@ public class VariableManager {
      * @return String with Variables replaced.
      */
     public static String replaceVars(String format, UUID uuid, String msg, Boolean doColour) {
-        NavigableMap<String, String> fVarMap = new TreeMap<>();
-        NavigableMap<String, String> nVarMap = new TreeMap<>();
-        NavigableMap<String, String> lVarMap = new TreeMap<>();
+        NavigableMap<String, String> fVarMap = new TreeMap<String, String>();
+        NavigableMap<String, String> nVarMap = new TreeMap<String, String>();
+        NavigableMap<String, String> lVarMap = new TreeMap<String, String>();
 
         for (Var var : varSet) {
             Method[] methods = var.getClass().getMethods();

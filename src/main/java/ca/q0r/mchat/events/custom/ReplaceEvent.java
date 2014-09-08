@@ -9,25 +9,6 @@ import org.bukkit.event.HandlerList;
  */
 public class ReplaceEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-
-    /**
-     * Forced Override of HandlerList
-     *
-     * @return HandlerList
-     */
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    /**
-     * Forced Override of HandlerList
-     *
-     * @return HandlerList
-     */
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
     private String var, value, format;
     private boolean cancelled;
 
@@ -47,12 +28,39 @@ public class ReplaceEvent extends Event implements Cancellable {
     }
 
     /**
+     * Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    /**
+     * Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    /**
      * Checks whether the Event is cancelled.
      *
      * @return Event cancellation state.
      */
     public boolean isCancelled() {
         return cancelled;
+    }
+
+    /**
+     * Sets whether the Event is cancelled.
+     *
+     * @param cancel Event cancellation state.
+     */
+    public void setCancelled(boolean cancel) {
+        cancelled = cancel;
     }
 
     /**
@@ -74,31 +82,21 @@ public class ReplaceEvent extends Event implements Cancellable {
     }
 
     /**
-     * Get Format being replaced.
-     *
-     * @return Format being replaced.
-     */
-    public String getFormat() {
-        return format;
-    }
-
-    /**
-     * Get Replaced Format after processing.
-     *
-     * @return Replaced Format after processing.
-     */
-    public String getReplacedFormat() {
-        return format.replace(var, value);
-
-    }
-
-    /**
      * Sets Value being processed.
      *
      * @param value Value being processed.
      */
     public void setValue(String value) {
         this.value = value;
+    }
+
+    /**
+     * Get Format being replaced.
+     *
+     * @return Format being replaced.
+     */
+    public String getFormat() {
+        return format;
     }
 
     /**
@@ -111,11 +109,12 @@ public class ReplaceEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets whether the Event is cancelled.
+     * Get Replaced Format after processing.
      *
-     * @param cancel Event cancellation state.
+     * @return Replaced Format after processing.
      */
-    public void setCancelled(boolean cancel) {
-        cancelled = cancel;
+    public String getReplacedFormat() {
+        return format.replace(var, value);
+
     }
 }

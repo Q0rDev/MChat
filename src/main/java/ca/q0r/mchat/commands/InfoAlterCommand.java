@@ -266,7 +266,7 @@ public class InfoAlterCommand implements TabExecutor {
             }
         }
 
-        List<String> uuids = new ArrayList<>();
+        List<String> uuids = new ArrayList<String>();
 
         if (args.length > 2 && !args[2].isEmpty()) {
             if (type == InfoType.GROUP) {

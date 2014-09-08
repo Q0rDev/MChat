@@ -19,17 +19,14 @@ import java.util.*;
  * Class used for various tasks not covered by other classes.
  */
 public class API {
-    // Vault
-    static Permission vPerm;
-    static Boolean vPermB;
-
-    static Chat vChat = null;
-    static Boolean vChatB = false;
-
     // Var Map
     private static final SortedMap<String, String> gVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
     private static final SortedMap<String, String> pVarMap = Collections.synchronizedSortedMap(new TreeMap<String, String>());
-
+    // Vault
+    static Permission vPerm;
+    static Boolean vPermB;
+    static Chat vChat = null;
+    static Boolean vChatB = false;
     // Maps
     private static HashMap<String, Boolean> spying;
 
@@ -39,7 +36,7 @@ public class API {
     public static void initialize() {
         setupPlugins();
 
-        spying = new HashMap<>();
+        spying = new HashMap<String, Boolean>();
     }
 
     /**
@@ -81,7 +78,7 @@ public class API {
      * @return Map of Custom Variables.
      */
     public static SortedMap<String, Object> getGlobalVarMap() {
-        SortedMap<String, Object> map = new TreeMap<>();
+        SortedMap<String, Object> map = new TreeMap<String, Object>();
 
         synchronized (gVarMap) {
             map.putAll(Collections.unmodifiableSortedMap(gVarMap));
@@ -131,7 +128,7 @@ public class API {
      * @return Map of Custom Variables.
      */
     public static SortedMap<String, String> getUuidVarMap() {
-        SortedMap<String, String> map = new TreeMap<>();
+        SortedMap<String, String> map = new TreeMap<String, String>();
 
         synchronized (pVarMap) {
             map.putAll(Collections.unmodifiableSortedMap(pVarMap));
@@ -226,8 +223,8 @@ public class API {
     /**
      * Permission Checking
      *
-     * @param uuid  UUID of Player being checked.
-     * @param node  Permission Node being checked.
+     * @param uuid UUID of Player being checked.
+     * @param node Permission Node being checked.
      * @return Player has Node.
      */
     public static Boolean checkPermissions(UUID uuid, String node) {

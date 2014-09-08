@@ -12,29 +12,9 @@ import java.util.UUID;
  */
 public class MeEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-
-    /**
-     * Forced Override of HandlerList
-     *
-     * @return HandlerList
-     */
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    /**
-     * Forced Override of HandlerList
-     *
-     * @return HandlerList
-     */
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
     private UUID uuid;
     private String world, message;
     private boolean cancelled;
-
     /**
      * Instantiates Event
      *
@@ -51,12 +31,39 @@ public class MeEvent extends Event implements Cancellable {
     }
 
     /**
+     * Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    /**
+     * Forced Override of HandlerList
+     *
+     * @return HandlerList
+     */
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    /**
      * Checks whether the Event is cancelled.
      *
      * @return Event cancellation state.
      */
     public boolean isCancelled() {
         return cancelled;
+    }
+
+    /**
+     * Sets whether the Event is cancelled.
+     *
+     * @param cancel Event cancellation state.
+     */
+    public void setCancelled(boolean cancel) {
+        cancelled = cancel;
     }
 
     /**
@@ -78,15 +85,6 @@ public class MeEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets format being used.
-     *
-     * @return Format being used.
-     */
-    public String getFormat() {
-        return Parser.parseMe(uuid, world, message);
-    }
-
-    /**
      * Sets Message being sent.
      *
      * @param message Message being sent.
@@ -96,11 +94,11 @@ public class MeEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets whether the Event is cancelled.
+     * Gets format being used.
      *
-     * @param cancel Event cancellation state.
+     * @return Format being used.
      */
-    public void setCancelled(boolean cancel) {
-        cancelled = cancel;
+    public String getFormat() {
+        return Parser.parseMe(uuid, world, message);
     }
 }

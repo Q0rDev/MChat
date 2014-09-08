@@ -180,7 +180,7 @@ public class Reader {
 
     private static String getLeveledInfo(UUID uuid, String info) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
-        HashMap<Integer, String> iMap = new HashMap<>();
+        HashMap<Integer, String> iMap = new HashMap<Integer, String>();
 
         if (!infoConfig.isSet("mchat." + info)) {
             return "";
@@ -259,19 +259,14 @@ public class Reader {
         String infoString = "";
 
         if (!API.vChat.getName().equals("MChat")) {
-            switch (info) {
-                case "group":
-                    infoString = API.vChat.getPrimaryGroup(world, player);
-                    break;
-                case "prefix":
-                    infoString = API.vChat.getPlayerPrefix(world, player);
-                    break;
-                case "suffix":
-                    infoString = API.vChat.getPlayerSuffix(world, player);
-                    break;
-                default:
-                    infoString = API.vChat.getPlayerInfoString(world, player, info, "");
-                    break;
+            if (info.equals("group")) {
+                infoString = API.vChat.getPrimaryGroup(world, player);
+            } else if (info.equals("prefix")) {
+                infoString = API.vChat.getPlayerPrefix(world, player);
+            } else if (info.equals("suffix")) {
+                infoString = API.vChat.getPlayerSuffix(world, player);
+            } else {
+                infoString = API.vChat.getPlayerInfoString(world, player, info, "");
             }
         }
 
@@ -283,16 +278,12 @@ public class Reader {
         String infoString = "";
 
         if (!API.vChat.getName().equals("MChat")) {
-            switch (info) {
-                case "prefix":
-                    infoString = API.vChat.getGroupPrefix(world, name);
-                    break;
-                case "suffix":
-                    infoString = API.vChat.getGroupSuffix(world, name);
-                    break;
-                default:
-                    infoString = API.vChat.getGroupInfoString(world, name, info, "");
-                    break;
+            if (info.equals("prefix")) {
+                infoString = API.vChat.getGroupPrefix(world, name);
+            } else if (info.equals("suffix")) {
+                infoString = API.vChat.getGroupSuffix(world, name);
+            } else {
+                infoString = API.vChat.getGroupInfoString(world, name, info, "");
             }
         }
 
