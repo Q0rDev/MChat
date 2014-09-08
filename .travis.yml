@@ -1,6 +1,6 @@
 # Source language and JDK version to use.
 language: java
-jdk: oraclejdk6
+jdk: oraclejdk7
 
 # Get files for use with build, namely the custom Maven settings.xml.
 before_install:
