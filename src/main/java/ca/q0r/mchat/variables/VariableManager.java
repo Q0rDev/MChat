@@ -221,6 +221,10 @@ public class VariableManager {
             String key = entry.getKey();
             String value = entry.getValue();
 
+            if (value == null) {
+                value = "";
+            }
+
             if (doColour) {
                 value = MessageUtil.addColour(value);
             }

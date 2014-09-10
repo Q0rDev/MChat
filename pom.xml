@@ -6,7 +6,7 @@
     <name>MChat</name>
     <artifactId>MChat</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.9-R0.5-SNAPSHOT</version>
+    <version>1.7.9-R0.6-SNAPSHOT</version>
     <url>https://github.com/Q0rDev/MChat</url>
     <description>Chat Formatting for Bukkit</description>
 
