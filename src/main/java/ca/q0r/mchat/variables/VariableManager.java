@@ -100,6 +100,42 @@ public class VariableManager {
     }
 
     /**
+     * Removes Var from VarSet by their Keys.
+     *
+     * @param key Key of Var to be removed.
+     */
+    public static void removeVar(String key) {
+        Set<Var> set = new HashSet<Var>();
+
+        for (Var var : varSet) {
+            Method[] methods = var.getClass().getMethods();
+
+            for (Method method : methods) {
+                if (method.isAnnotationPresent(Var.Keys.class)) {
+                    Var.Keys vKeys = method.getAnnotation(Var.Keys.class);
+
+                    if (Arrays.asList(vKeys.keys()).contains(key)) {
+                        set.add(var);
+                    }
+                }
+            }
+        }
+
+        varSet.removeAll(set);
+    }
+
+    /**
+     * Removes Vars from VarSet by their Keys.
+     *
+     * @param keys Keys of Vars to be removed.
+     */
+    public static void removeVars(String[] keys) {
+        for (String key : keys) {
+            removeVar(key);
+        }
+    }
+
+    /**
      * Variable Replacer.
      *
      * @param format   String to be replaced.
