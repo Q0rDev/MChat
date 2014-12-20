@@ -33,11 +33,10 @@ notifications:
 env:
   global:
     # Nexus Deployment
-    - secure: "P2DfYLNXIXpfs99pwVTIIHB4a3yZ2Dpkxvz7dLsH27yAC4/AojgH7oIh5HfLuRUz1zMliTNEtGYKFwTh/Gtd38yJbrHDrnwlEQYUz5asHhsZGLZ3Sfbt8eSoALQOvjVITlezul9fLlN6r55q8svMNw853R/FBywdndEKckVDdeM="
     - secure: "rZyXfKEOV2udqyNTfJYbRhffdn9FAFus/R9sgniGTUlGf1sWLbkHt251o+cbjveFtyGUQrtU0j4mS0hFOXqonfm24jtN0aTMkf8yfdDjnpIGU3eV0BNe/81VnxpNaaYy8LWd8OnKOCFAAzI68FmdBPuihYGPcnjY3ZYGANL0wF8="
     # Bukkit
     - secure: "WvmHJ+p7d1/4ucllyMMXTjUhWQePg4SvksHlI9NHft5bVCG2B5jggoxkaNRGEYJgXOG82HFNu6IjGbpSZDOY5uD80WBmddeovoBfy1FdI4Z0CLu5HoXqTp99uBbtaKWSpv4FT+1xe+WXEVJfaZQgsUSJNpbF4bTtRjoueOITEqA="
     # GitHub
-    - secure: "AYCXuujOveX2+FqpxFirRHhxEdNHEL3iyByu6kOFlvoMPi74J2DxV4jFAyXhKtg5b/hBBn6qXfMByp/9JYArBun2qMfckY6yaVq/IN2htemZ1ZfcOGzoxZ6h9Uh1nuNRpIw3Zj2SbysYXZaI9OtgGLP5WYkRR2KqddgRdMDpdq0="
+    - secure: "IHYzxGZl/ZO8eODRfBeXw0+RWGtLp1dhga6romPbnURMVbHA3gxI4Hth3b+M7+Zc1eWfoA5YtGWDSX34doM028mCtWIHtYdimDr/qTdPAR2+3oOPr9FRNJzXYBnq5d3pQu0LjDD43LsiJS+stWJUqwL9xgmQynyEwx+Q8ZEPw1s="
     # AWS
     - secure: "JTOyPDronSxViB9PqtzSV5psvSNOdZzUFKZGRgjhjLme4/LLsoenYTBfiL2DJxfndR4I8QQmTGI+b/rxF32pGHwhi6gN9Y9pEhdDNRVmw8+rY+PxiyqWeX1TkXeb7nfQNOuuqBMywrv6eF9RJGurFux+7oaro6Lbsh10KfRzrVM="
