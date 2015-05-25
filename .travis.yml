@@ -5,10 +5,10 @@ jdk: oraclejdk7
 # Get files for use with build, namely the custom Maven settings.xml.
 before_install:
   - "git clone https://github.com/Q0rDev/travis-ci-resources.git target/travis"
-  - "git clone https://github.com/Q0rDev/q0rdev-javadocs.git -b gh-pages target/doxy"
+  #- "git clone https://github.com/Q0rDev/q0rdev-javadocs.git -b gh-pages target/doxy"
   - "chmod +x target/travis/build.sh"
   - "chmod +x target/travis/upload.sh"
-  - "chmod +x target/travis/doxy.sh"
+  #- "chmod +x target/travis/doxy.sh"
 
 # Compile and package JAR and set build properties.
 install: true
@@ -17,7 +17,7 @@ script: ./target/travis/build.sh
 # Upload to DBO if release build / Upload to AWS always / Create Doxy files.
 after_success:
   - "./target/travis/upload.sh"
-  - "./target/travis/doxy.sh"
+  #- "./target/travis/doxy.sh"
 
 # Upload to AWS Always
 after_failure:

@@ -6,7 +6,7 @@
     <name>MChat</name>
     <artifactId>MChat</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.9-R0.7-SNAPSHOT</version>
+    <version>1.8.0-R0.1-SNAPSHOT</version>
     <url>https://github.com/Q0rDev/MChat</url>
     <description>Chat Formatting for Bukkit</description>
 
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.2</version>
+            <version>1.8-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -57,6 +57,13 @@
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.4</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.tehkode</groupId>
+            <artifactId>PermissionsEx</artifactId>
+            <version>1.22.6</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

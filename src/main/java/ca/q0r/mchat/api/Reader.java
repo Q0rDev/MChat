@@ -28,13 +28,22 @@ public class Reader {
      * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
+    @Deprecated
     public static String getRawInfo(UUID uuid, InfoType type, String world, String info) {
+        return getRawInfo(uuid, world, info);
+    }
+
+    /**
+     * Raw Info Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Name of the InfoType's World.
+     * @param info  Info Variable being resolved.
+     * @return Raw Info.
+     */
+    public static String getRawInfo(UUID uuid, String world, String info) {
         if (uuid == null) {
             return "";
-        }
-
-        if (type == null) {
-            type = InfoType.USER;
         }
 
         if (world == null) {
@@ -46,16 +55,16 @@ public class Reader {
         }
 
         if (API.isPluginEnabled(PluginType.VAULT_CHAT)) {
-            return getVaultChatInfo(uuid, type, world, info);
+            return getVaultChatInfo(uuid, world, info);
         } else if (API.isPluginEnabled(PluginType.LEVELED_NODES)) {
             return getLeveledInfo(uuid, info);
         } else if (API.isPluginEnabled(PluginType.OLD_NODES)) {
             return getBukkitInfo(uuid, info);
         } else if (API.isPluginEnabled(PluginType.NEW_INFO)) {
-            return getMChatInfo(uuid, type, world, info);
+            return getMChatInfo(uuid, world, info);
         }
 
-        return getMChatInfo(uuid, type, world, info);
+        return getMChatInfo(uuid, world, info);
     }
 
     /**
@@ -66,8 +75,20 @@ public class Reader {
      * @param world Name of the InfoType's World.
      * @return Raw Prefix.
      */
+    @Deprecated
     public static String getRawPrefix(UUID uuid, InfoType type, String world) {
-        return getRawInfo(uuid, type, world, "prefix");
+        return getRawInfo(uuid, world, "prefix");
+    }
+
+    /**
+     * Raw Prefix Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Name of the InfoType's World.
+     * @return Raw Prefix.
+     */
+    public static String getRawPrefix(UUID uuid, String world) {
+        return getRawInfo(uuid, world, "prefix");
     }
 
     /**
@@ -78,8 +99,20 @@ public class Reader {
      * @param world Name of the InfoType's World.
      * @return Raw Suffix.
      */
+    @Deprecated
     public static String getRawSuffix(UUID uuid, InfoType type, String world) {
-        return getRawInfo(uuid, type, world, "suffix");
+        return getRawInfo(uuid, world, "suffix");
+    }
+
+    /**
+     * Raw Suffix Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Name of the InfoType's World.
+     * @return Raw Suffix.
+     */
+    public static String getRawSuffix(UUID uuid, String world) {
+        return getRawInfo(uuid, world, "suffix");
     }
 
     /**
@@ -90,8 +123,20 @@ public class Reader {
      * @param world Name of the InfoType's World.
      * @return Raw Group.
      */
+    @Deprecated
     public static String getRawGroup(UUID uuid, InfoType type, String world) {
-        return getRawInfo(uuid, type, world, "group");
+        return getRawInfo(uuid, world, "group");
+    }
+
+    /**
+     * Raw Group Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Name of the InfoType's World.
+     * @return Raw Group.
+     */
+    public static String getRawGroup(UUID uuid, String world) {
+        return getRawInfo(uuid, world, "group");
     }
 
     /**
@@ -103,8 +148,21 @@ public class Reader {
      * @param info  Info Variable being resolved.
      * @return Raw Info.
      */
+    @Deprecated
     public static String getInfo(UUID uuid, InfoType type, String world, String info) {
-        return MessageUtil.addColour(getRawInfo(uuid, type, world, info));
+        return MessageUtil.addColour(getRawInfo(uuid, world, info));
+    }
+
+    /**
+     * Raw Info Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Player's World.
+     * @param info  Info Variable being resolved.
+     * @return Raw Info.
+     */
+    public static String getInfo(UUID uuid, String world, String info) {
+        return MessageUtil.addColour(getRawInfo(uuid, world, info));
     }
 
     /**
@@ -115,8 +173,20 @@ public class Reader {
      * @param world Name of the InfoType's World.
      * @return Formatted Prefix.
      */
+    @Deprecated
     public static String getPrefix(UUID uuid, InfoType type, String world) {
-        return getInfo(uuid, type, world, "prefix");
+        return getInfo(uuid, world, "prefix");
+    }
+
+    /**
+     * Formatted Prefix Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Name of the InfoType's World.
+     * @return Formatted Prefix.
+     */
+    public static String getPrefix(UUID uuid, String world) {
+        return getInfo(uuid, world, "prefix");
     }
 
     /**
@@ -127,9 +197,22 @@ public class Reader {
      * @param world Name of the InfoType's World.
      * @return Formatted Suffix.
      */
+    @Deprecated
     public static String getSuffix(UUID uuid, InfoType type, String world) {
-        return getInfo(uuid, type, world, "suffix");
+        return getInfo(uuid, world, "suffix");
     }
+
+    /**
+     * Formatted Suffix Resolving
+     *
+     * @param uuid  Defining value of the InfoType (Also known as name/uuid).
+     * @param world Name of the InfoType's World.
+     * @return Formatted Suffix.
+     */
+    public static String getSuffix(UUID uuid, String world) {
+        return getInfo(uuid, world, "suffix");
+    }
+
 
     /**
      * Formatted Group Resolving
@@ -139,22 +222,20 @@ public class Reader {
      * @return Formatted Group.
      */
     public static String getGroup(UUID uuid, String world) {
-        return getInfo(uuid, InfoType.USER, world, "group");
+        return getInfo(uuid, world, "group");
     }
 
-    private static String getMChatInfo(UUID uuid, InfoType type, String world, String info) {
+    private static String getMChatInfo(UUID uuid, String world, String info) {
         if (info.equals("group")) {
             return getMChatGroup(uuid);
         }
 
-        String iType = type.getConfValue();
-
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (infoConfig.isSet(iType + "." + uuid.toString() + ".info." + info)) {
-            return infoConfig.getString(iType + "." + uuid.toString() + ".info." + info);
-        } else if (infoConfig.isSet(iType + "." + uuid.toString() + ".worlds." + world + "." + info)) {
-            return infoConfig.getString(iType + "." + uuid.toString() + ".worlds." + world + "." + info);
+        if (infoConfig.isSet("users." + uuid.toString() + ".info." + info)) {
+            return infoConfig.getString("users." + uuid.toString() + ".info." + info);
+        } else if (infoConfig.isSet("users." + uuid.toString() + ".worlds." + world + "." + info)) {
+            return infoConfig.getString("users." + uuid.toString() + ".worlds." + world + "." + info);
         } else if (infoConfig.isSet("users." + uuid.toString() + ".group")) {
             String group = infoConfig.getString("users." + uuid.toString() + ".group");
 
@@ -228,7 +309,7 @@ public class Reader {
                 if (API.checkPermissions(uuid, entry.getKey())) {
                     String infoResolve = entry.getValue().toString();
 
-                    if (infoResolve != null && !info.isEmpty()) {
+                    if (!info.isEmpty()) {
                         return infoResolve;
                     }
 
@@ -240,21 +321,7 @@ public class Reader {
         return "";
     }
 
-    private static String getVaultChatInfo(UUID uuid, InfoType type, String world, String info) {
-        String infoString = "";
-
-        if (type == InfoType.USER) {
-            infoString = getVaultChatUserInfo(uuid, world, info);
-        }
-
-        if (type == InfoType.GROUP || infoString.equals("")) {
-            getVaultChatGroupInfo(uuid, world, info);
-        }
-
-        return infoString;
-    }
-
-    private static String getVaultChatUserInfo(UUID uuid, String world, String info) {
+    private static String getVaultChatInfo(UUID uuid, String world, String info) {
         OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(uuid);
         String infoString = "";
 
@@ -273,23 +340,6 @@ public class Reader {
         return infoString;
     }
 
-    private static String getVaultChatGroupInfo(UUID uuid, String world, String info) {
-        String name = Bukkit.getServer().getPlayer(uuid).getName();
-        String infoString = "";
-
-        if (!API.vChat.getName().equals("MChat")) {
-            if (info.equals("prefix")) {
-                infoString = API.vChat.getGroupPrefix(world, name);
-            } else if (info.equals("suffix")) {
-                infoString = API.vChat.getGroupSuffix(world, name);
-            } else {
-                infoString = API.vChat.getGroupInfoString(world, name, info, "");
-            }
-        }
-
-        return infoString;
-    }
-
     /**
      * Group Name Resolver
      *
@@ -299,7 +349,7 @@ public class Reader {
     public static String getGroupName(String group) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (group.isEmpty()) {
+        if (group == null || group.isEmpty()) {
             return "";
         }
 
@@ -319,7 +369,7 @@ public class Reader {
     public static String getWorldName(String world) {
         YamlConfiguration infoConfig = YmlManager.getYml(YmlType.INFO_YML).getConfig();
 
-        if (world.isEmpty()) {
+        if (world == null || world.isEmpty()) {
             return "";
         }
 

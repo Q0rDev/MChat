@@ -18,7 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
@@ -38,7 +37,7 @@ public class PlayerListener implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (plugin.update && API.checkPermissions(uuid, "mchat.update")) {
-            plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
+            plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
                     MessageUtil.sendMessage(player, "An update is available! Please check");
@@ -60,7 +59,7 @@ public class PlayerListener implements Listener {
 
 
         if (ConfigType.MCHAT_ALTER_LIST.getBoolean()) {
-            plugin.getServer().getScheduler().runTaskLater(plugin, new BukkitRunnable() {
+            plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                 public void run() {
                     setListName(player);
                 }
@@ -136,7 +135,7 @@ public class PlayerListener implements Listener {
                 continue;
             }
 
-            if (!(plugin.getServer().getOnlinePlayers().length > max)) {
+            if (!(plugin.getServer().getOnlinePlayers().size() > max)) {
                 if (!API.checkPermissions(player.getUniqueId(), permNode)) {
                     player.sendMessage(format);
                 }

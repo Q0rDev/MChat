@@ -3,7 +3,6 @@ package ca.q0r.mchat.variables.vars;
 import ca.q0r.mchat.api.API;
 import ca.q0r.mchat.api.Reader;
 import ca.q0r.mchat.types.IndicatorType;
-import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.variables.ResolvePriority;
 import ca.q0r.mchat.variables.Var;
 import ca.q0r.mchat.variables.VariableManager;
@@ -29,7 +28,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getRawGroup(uuid, InfoType.USER, player.getWorld().getName());
+                return Reader.getRawGroup(uuid, player.getWorld().getName());
             }
 
             return "";
@@ -41,7 +40,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getRawPrefix(uuid, InfoType.USER, player.getWorld().getName());
+                return Reader.getRawPrefix(uuid, player.getWorld().getName());
             }
 
             return "";
@@ -53,7 +52,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getRawSuffix(uuid, InfoType.USER, player.getWorld().getName());
+                return Reader.getRawSuffix(uuid, player.getWorld().getName());
             }
 
             return "";
@@ -233,7 +232,7 @@ public class PlayerVars {
         public String getValue(UUID uuid) {
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                return Reader.getGroupName(Reader.getRawGroup(uuid, InfoType.USER, player.getWorld().getName()));
+                return Reader.getGroupName(Reader.getRawGroup(uuid, player.getWorld().getName()));
             }
 
             return "";

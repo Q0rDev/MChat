@@ -24,7 +24,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class MChat extends JavaPlugin {
     // Default Plugin Data
@@ -45,7 +44,7 @@ public class MChat extends JavaPlugin {
         killEss();
 
         // Initialize Metrics
-        getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
+        getServer().getScheduler().runTaskLater(this, new Runnable() {
             @Override
             public void run() {
                 try {
@@ -80,7 +79,7 @@ public class MChat extends JavaPlugin {
 
         // Updater
         if (ConfigType.MCHAT_UPDATE_CHECK.getBoolean()) {
-            getServer().getScheduler().runTaskLater(this, new BukkitRunnable() {
+            getServer().getScheduler().runTaskLater(this, new Runnable() {
                 @Override
                 public void run() {
                     MChat mchat = (MChat) Bukkit.getPluginManager().getPlugin("MChat");

@@ -36,7 +36,6 @@ public class API {
     public static void initialize() {
         setupPlugins();
 
-        spying = new HashMap<String, Boolean>();
     }
 
     /**

@@ -3,7 +3,6 @@ package ca.q0r.mchat.events.custom;
 import ca.q0r.mchat.api.API;
 import ca.q0r.mchat.api.Reader;
 import ca.q0r.mchat.types.IndicatorType;
-import ca.q0r.mchat.types.InfoType;
 import ca.q0r.mchat.util.MessageUtil;
 import ca.q0r.mchat.variables.VariableManager;
 import ca.q0r.mchat.yml.YmlManager;
@@ -175,7 +174,7 @@ public class ParseEvent extends Event {
         StringBuffer sb = new StringBuffer();
 
         while (matcher.find()) {
-            String info = Reader.getRawInfo(uuid, InfoType.USER, world, matcher.group(1));
+            String info = Reader.getRawInfo(uuid, world, matcher.group(1));
             String var = info != null ? info : "";
 
             matcher.appendReplacement(sb, Matcher.quoteReplacement(var));
