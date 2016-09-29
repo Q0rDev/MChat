@@ -256,6 +256,11 @@ public class VariableManager {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
+            
+            if (value == null) {
+                value = "";
+            }
+
 
             if (value == null) {
                 value = "";
